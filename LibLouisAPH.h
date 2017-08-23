@@ -78,12 +78,14 @@ int louis_add_paths(const char *paths);
 
 /* Performs forward translation, using table_names and conversion_name, of at
  * most chars_len of chars and stores at most dots_len of the result in dots.
+ * The result is not NULL terminated.
  *
  * Mappings are stored in chars_to_dots_map and dots_to_chars_map if they both
  * are not NULL.  If only one is NULL, mapping is still not done.
  *
- * Returns the length of the resulting translation, 0 if no processing was done
- * and no translation was performed, and -1 if an error occurred.
+ * Returns the length of the resulting forward translation, 0 if no processing
+ * was done and no forward translation was performed, and -1 if an error
+ * occurred.
 */
 int louis_translate_forward(
 	unsigned short *dots,
@@ -98,13 +100,15 @@ int louis_translate_forward(
 
 
 /* Performs backward translation, using table_names and conversion_name, of at
- * most chars_len of chars and stores at most dots_len of the result in dots.
+ * most dots_len of dots and stores at most chars_len of the result in chars.
+ * The result is not NULL terminated.
  *
- * Mappings are stored in chars_to_dots_map and dots_to_chars_map if they both
+ * Mappings are stored in dots_to_chars_map and chars_to_dots_map if they both
  * are not NULL.  If only one is NULL, mapping is still not done.
  *
- * Returns the length of the resulting translation, 0 if no processing was done
- * and no translation was performed, and -1 if an error occurred.
+ * Returns the length of the resulting backward translation, 0 if no processing
+ * was done and no backward translation was performed, and -1 if an error
+ * occurred.
 */
 int louis_translate_backward(
 	unsigned short *chars,

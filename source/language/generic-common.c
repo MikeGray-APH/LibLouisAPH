@@ -456,10 +456,6 @@ int generic_process(struct translate *translate, const enum table_hash_type hash
 	translate->output_len = 0;
 	while(translate->input_crs < translate->input_len)
 	{
-		/*   end of input   */
-		if(!translate->input[translate->input_crs])
-			break;
-
 		/*   nocontract word stops on space   */
 		if(nocontract_state == WORD)
 		if(table_get_unichar_attributes(table, translate->input[translate->input_crs]) & CHAR_SPACE)

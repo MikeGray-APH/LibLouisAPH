@@ -1754,10 +1754,6 @@ static int add_indicators_numeric(struct translate *translate)
 	translate->output_len = 0;
 	while(translate->input_crs < translate->input_len)
 	{
-		/*   end of input   */
-		if(!translate->input[translate->input_crs])
-			break;
-
 		/*   numeric passages   */
 		if(!numeric_passage_in)
 		{

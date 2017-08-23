@@ -357,11 +357,16 @@ int translate_start(Unicode *dots,
                     int *cursor)
 {
 	struct translate translate_auto;
-	int i, status;
+	int input_len, i, status;
 
 	/*   nothing to translate   */
 	if(chars_len == 0)
 		return 0;
+
+	/*   get true chars_len   */
+	for(input_len = 0; input_len < chars_len; input_len++)
+	if(!chars[input_len])
+		break;
 
 	memset(&translate_auto, 0, sizeof(struct translate));
 
@@ -381,21 +386,21 @@ int translate_start(Unicode *dots,
 
 	/*   initialize input/output   */
 
-	translate_auto.input = MALLOC((chars_len + 1) * sizeof(Unicode));
+	translate_auto.input = MALLOC((input_len + 1) * sizeof(Unicode));
 	if(!translate_auto.input)
 	{
 		LOG_ALLOCATE_FAIL
 		return -1;
 	}
-	utf16_copy(translate_auto.input, chars, (chars_len + 1));
-	translate_auto.input_len = chars_len;
+	utf16_copy(translate_auto.input, chars, (input_len + 1));
+	translate_auto.input_len = input_len;
 	translate_auto.input_crs = 0;
 
-	translate_auto.output_max = chars_len;
+	translate_auto.output_max = input_len;
 	translate_auto.output_inc = ((translate_auto.output_max * 3) / 2) - translate_auto.output_max;
 	if(translate_auto.output_inc < 0x100)
 		translate_auto.output_inc = 0x100;
-	translate_auto.output_max += translate_auto.output_inc - chars_len;
+	translate_auto.output_max += translate_auto.output_inc - input_len;
 	translate_auto.output = MALLOC(translate_auto.output_max * sizeof(Unicode));
 	if(!translate_auto.output)
 	{
@@ -409,13 +414,13 @@ int translate_start(Unicode *dots,
 		translate_auto.cursor_pos = *cursor;
 
 #ifndef CHECK_FOR_CHANGE
-	utf16_copy(translate_auto.output, chars, (chars_len + 1));
-	translate_auto.output_len = chars_len;
+	utf16_copy(translate_auto.output, chars, (input_len + 1));
+	translate_auto.output_len = input_len;
 #endif
 
 	if(translate_auto.maps_use)
 	{
-		translate_auto.input_map = MALLOC((chars_len + 1) * sizeof(int));
+		translate_auto.input_map = MALLOC((input_len + 1) * sizeof(int));
 		if(!translate_auto.input_map)
 		{
 			LOG_ALLOCATE_FAIL
@@ -423,13 +428,10 @@ int translate_start(Unicode *dots,
 			FREE(translate_auto.output);
 			return -1;
 		}
-		for(i = 0; i <= chars_len; i++)
-		if(chars[i])
+		for(i = 0; i <= input_len; i++)
 			translate_auto.input_map[i] = i;
-		else
-			break;
 
-		translate_auto.input_to_output_map = MALLOC((chars_len + 1) * sizeof(int));
+		translate_auto.input_to_output_map = MALLOC((input_len + 1) * sizeof(int));
 		if(!translate_auto.input_to_output_map)
 		{
 			LOG_ALLOCATE_FAIL
@@ -440,11 +442,8 @@ int translate_start(Unicode *dots,
 		}
 
 		/*   prevent input block mappings   */
-		for(i = 0; i <= chars_len; i++)
-		if(chars[i])
+		for(i = 0; i <= input_len; i++)
 			translate_auto.input_to_output_map[i] = i;
-		else
-			break;
 
 		translate_auto.output_to_input_map = MALLOC(translate_auto.output_max * sizeof(int));
 		if(!translate_auto.output_to_input_map)
@@ -459,8 +458,8 @@ int translate_start(Unicode *dots,
 		DB_MEMSET(translate_auto.output_to_input_map, 0, translate_auto.output_max * sizeof(int));
 
 #ifndef CHECK_FOR_CHANGE
-		ASSERT(translate_auto.output_max >= chars_len + 1)
-		memcpy(translate_auto.output_to_input_map, translate_auto.input_map, (chars_len + 1) * sizeof(int));
+		ASSERT(translate_auto.output_max >= input_len + 1)
+		memcpy(translate_auto.output_to_input_map, translate_auto.input_map, (input_len + 1) * sizeof(int));
 #endif
 	}
 
@@ -507,7 +506,7 @@ int translate_start(Unicode *dots,
 
 	memcpy(dots, translate_auto.output, translate_auto.output_len * sizeof(Unicode));
 	if(chars_to_dots_map)
-		memcpy(chars_to_dots_map, translate_auto.input_to_output_map, chars_len * sizeof(int));
+		memcpy(chars_to_dots_map, translate_auto.input_to_output_map, input_len * sizeof(int));
 	if(dots_to_chars_map)
 		memcpy(dots_to_chars_map, translate_auto.output_to_input_map, translate_auto.output_len * sizeof(int));
 
