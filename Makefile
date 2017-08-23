@@ -34,6 +34,8 @@ LIB-LINUX32  := dists/i686-linux/liblouisAPH.a
 DLL-LINUX32  := dists/i686-linux/liblouisAPH.so
 DLL-WIN64    := dists/x86_64-win/liblouisAPH.dll
 DLL-WIN32    := dists/i686-win/liblouisAPH.dll
+DLL-MAC64    := dists/x86_64-mac/liblouisAPH.dylib
+DLL-MAC32    := dists/i386-mac/liblouisAPH.dylib
 
 EXE := exe
 
@@ -491,6 +493,88 @@ dists/i686-win:
 
 ################################################################################
 
+dist-mac64: dll-mac64 translate-mac64 table-mac64 convert-mac64
+	cp -R tables/ dists/x86_64-mac/
+
+dll-mac64: $(DLL-MAC64)
+
+$(DLL-MAC64): CC = x86_64-apple-darwin15-cc
+$(DLL-MAC64): CFLAGS += -O3 $(CWARNS_OPT)
+$(DLL-MAC64): $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE) | dists/x86_64-mac
+	$(CC) -o $(DLL-MAC64) -shared $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE)
+
+convert-mac64: CC = x86_64-apple-darwin15-cc
+convert-mac64: CPPFLAGS += -I source/output -D OUTPUT
+convert-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+convert-mac64: dists/x86_64-mac/lou_convert
+
+dists/x86_64-mac/lou_convert: $(OBJS_CONVERT) | build/tools dists/x86_64-mac
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT)
+
+table-mac64: CC = x86_64-apple-darwin15-cc
+table-mac64: CPPFLAGS += -I source/output -D OUTPUT
+table-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+table-mac64: dists/x86_64-mac/lou_table
+
+dists/x86_64-mac/lou_table: $(OBJS_TABLE) | build/tools dists/x86_64-mac
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE)
+
+translate-mac64: CC = x86_64-apple-darwin15-cc
+translate-mac64: CPPFLAGS += -I source/output -D OUTPUT
+translate-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+translate-mac64: dists/x86_64-mac/lou_translate
+
+dists/x86_64-mac/lou_translate: $(OBJS_TRANSLATE) | build/tools dists/x86_64-mac
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE)
+
+dists/x86_64-mac:
+	mkdir -p dists/x86_64-mac
+
+.PHONY: dist-mac64 dll-mac64 convert-mac64 table-mac64 translate-mac64
+
+################################################################################
+
+dist-mac32: dll-mac32 translate-mac32 table-mac32 convert-mac32
+	cp -R tables/ dists/i386-mac/
+
+dll-mac32: $(DLL-MAC32)
+
+$(DLL-MAC32): CC = i386-apple-darwin15-cc
+$(DLL-MAC32): CFLAGS += -O3 $(CWARNS_OPT)
+$(DLL-MAC32): $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE) | dists/i386-mac
+	$(CC) -o $(DLL-MAC32) -shared $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE)
+
+convert-mac32: CC = i386-apple-darwin15-cc
+convert-mac32: CPPFLAGS += -I source/output -D OUTPUT
+convert-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+convert-mac32: dists/i386-mac/lou_convert
+
+dists/i386-mac/lou_convert: $(OBJS_CONVERT) | build/tools dists/i386-mac
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT)
+
+table-mac32: CC = i386-apple-darwin15-cc
+table-mac32: CPPFLAGS += -I source/output -D OUTPUT
+table-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+table-mac32: dists/i386-mac/lou_table
+
+dists/i386-mac/lou_table: $(OBJS_TABLE) | build/tools dists/i386-mac
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE)
+
+translate-mac32: CC = i386-apple-darwin15-cc
+translate-mac32: CPPFLAGS += -I source/output -D OUTPUT
+translate-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+translate-mac32: dists/i386-mac/lou_translate
+
+dists/i386-mac/lou_translate: $(OBJS_TRANSLATE) | build/tools dists/i386-mac
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE)
+
+dists/i386-mac:
+	mkdir -p dists/i386-mac
+
+.PHONY: dist-mac32 dll-mac32 convert-mac32 table-mac32 translate-mac32
+
+################################################################################
+
 dists: FORCE
 	$(MAKE) dist-linux64
 	$(MAKE) clean
@@ -499,6 +583,10 @@ dists: FORCE
 	$(MAKE) dist-win64
 	$(MAKE) clean
 	$(MAKE) dist-win32
+	$(MAKE) clean
+	$(MAKE) dist-mac64
+	$(MAKE) clean
+	$(MAKE) dist-mac32
 	$(MAKE) clean
 
 LibLouisAPH-linux64-$(VERSION).tar.bz2:
@@ -533,6 +621,22 @@ LibLouisAPH-win32-$(VERSION).zip:
 	zip -r -9 $@ LibLouisAPH-win32-$(VERSION)/
 	rm -rf LibLouisAPH-win32-$(VERSION)/
 
+LibLouisAPH-mac64-$(VERSION).zip:
+	rm -rf LibLouisAPH-mac64-$(VERSION)/
+	mkdir LibLouisAPH-mac64-$(VERSION)/
+	cp -R dists/x86_64-mac/* LibLouisAPH-mac64-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER LibLouisAPH-mac64-$(VERSION)/
+	zip -r -9 $@ LibLouisAPH-mac64-$(VERSION)/
+	rm -rf LibLouisAPH-mac64-$(VERSION)/
+
+LibLouisAPH-mac32-$(VERSION).zip:
+	rm -rf LibLouisAPH-mac32-$(VERSION)/
+	mkdir LibLouisAPH-mac32-$(VERSION)/
+	cp -R dists/i386-mac/* LibLouisAPH-mac32-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER LibLouisAPH-mac32-$(VERSION)/
+	zip -r -9 $@ LibLouisAPH-mac32-$(VERSION)/
+	rm -rf LibLouisAPH-mac32-$(VERSION)/
+
 LibLouisAPH-source-$(VERSION).zip:
 	rm -rf LibLouisAPH-source-$(VERSION)/
 	mkdir LibLouisAPH-source-$(VERSION)/
@@ -540,7 +644,7 @@ LibLouisAPH-source-$(VERSION).zip:
 	zip -r -9 $@ LibLouisAPH-source-$(VERSION)/
 	rm -rf LibLouisAPH-source-$(VERSION)/
 
-releases: cleanse LibLouisAPH-source-$(VERSION).zip dists LibLouisAPH-linux64-$(VERSION).tar.bz2 LibLouisAPH-linux32-$(VERSION).tar.bz2 LibLouisAPH-win64-$(VERSION).zip LibLouisAPH-win32-$(VERSION).zip
+releases: cleanse LibLouisAPH-source-$(VERSION).zip dists LibLouisAPH-linux64-$(VERSION).tar.bz2 LibLouisAPH-linux32-$(VERSION).tar.bz2 LibLouisAPH-win64-$(VERSION).zip LibLouisAPH-win32-$(VERSION).zip LibLouisAPH-mac64-$(VERSION).zip LibLouisAPH-mac32-$(VERSION).zip
 
 .PHONY: dists releases
 

@@ -31,10 +31,14 @@ make dist-win32
 ```
 will place the libraries, executables, and tables in the `dists/x86_64-win` and `dists/i686-win` directories respectively.
 
-You can build all at once with:
+To build the libraries and tools for apple systems using `osxcross`:
 ```
-make dists
+make dist-mac64
 ```
+```
+make dist-mac32
+```
+will place the libraries, executables, and tables in the `dists/x86_64-mac` and `dists/i386-mac` directories respectively.
 
 ## Development
 
