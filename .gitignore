@@ -1,11 +1,6 @@
 
 /build/
 /dists/
-/exe.*
-/*.bz2
-/*.zip
-/*.asc
-/*.sig
 /*.txt
 /*.log
 
