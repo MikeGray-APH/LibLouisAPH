@@ -105,6 +105,7 @@ end
 
 #ena $translate_generic_backward_bpnum
 
+ena $create_path_file_name_bpnum
 #ena $lookup_tables_bpnum
 #ena $lookup_table_bpnum
 #ena $lookup_open_file_bpnum

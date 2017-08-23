@@ -191,35 +191,36 @@ int lookup_add_paths(const char *paths)
 /*   used to iterate through the current paths   */
 static int create_path_file_name(
 	char *path,
-	const int path_len,
+	const int path_max,
 	const char *paths,
 	const int paths_len,
 	const char *file_name,
 	const int file_name_len)
 {
-	int off, crs, len, i;
+	int len, i;
 
 	if(!paths_len)
 		return 0;
 
-	off = 0;
-	for(crs = 0; crs < paths_len; crs++)
-	if(paths[crs] == PATH_SEPARATOR_CHAR)
+	/*   find path separator   */
+	for(len = 0; len < paths_len; len++)
+	if(paths[len] == PATH_SEPARATOR_CHAR)
 		break;
-	len = crs - off;
 
 	/*   no more paths   */
-	if(crs >= paths_len)
+	if(len >= paths_len)
 		len--;
 
-	if(len >= path_len)
+	/*   no more space   */
+	if(len >= path_max)
 		return 0;
 
+	/*   copy to path   */
 	ASSERT(len > 0)
 	for(i = 0; i < len; i++)
 		path[i] = paths[i];
 	path[i] = FILE_SEPARATOR_CHAR;
-	strncpy(&path[i + 1], file_name, file_name_len);
+	strncpy(&path[i + 1], file_name, path_max - len - 1 - file_name_len);
 
 	return i;
 }

@@ -588,7 +588,7 @@ int main(void)
 
 	//unsetenv("LOUIS_TABLEPATH");
 	//setenv("LOUIS_TABLEPATH", "tables", 0);
-	//lookup_path_add("tables");
+	//lookup_add_paths("test/tables:tables");
 	//table = lookup_table("ueb-grade2.rst");  if(!table) return 1; don't free table
 
 	//table = table_compile_from_file("debug/table.rst");  if(!table) return 1;

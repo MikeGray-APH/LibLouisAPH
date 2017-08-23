@@ -19,52 +19,42 @@
 
 ################################################################################
 
-define out_lookup_tables
+define out_create_path_file_name
 
-	if names > 0
-		printf "names       = %s\n", names
-		printf "names[off]  = %s\n", &names[off]
-		printf "names[crs]  = %s\n", &names[crs]
-	else
-		printf "names       =\n"
-		printf "names[off]  =\n"
-		printf "names[crs]  =\n"
+	printf "file_name[%2d]  = %s\n", file_name_len, file_name
+	if paths > 0
+		printf "paths[%2d]      = %s\n", paths_len, paths
 	end
-	printf "names_len  = %d\n", names_len
-	printf "table_cnt  = %d\n", *table_cnt
-	printf "len        = %d\n", len
-	printf "off        = %d\n", off
-	printf "crs        = %d\n", crs
-	printf "i          = %d\n", i
+	printf "path[%4d]     = %s\n", path_max, path
+
+	printf "\n"
+
+	printf "len            = %d  %s\n", len, &paths[len]
+	printf "i              = %d\n", i
 
 	printf "\n"
 
 end
 
 
-define n_lookup_tables
+define n_create_path_file_name
 	next
 	spacer
-	out_lookup_tables
+	out_create_path_file_name
 end
 
 
-break lookup_tables
+break create_path_file_name
 commands $bpnum
 
-	set names = (void*)0
-	set tables = (void*)0
-	set *table_cnt = 0
 	set len = 0
-	set 'off' = 0
-	set crs = 0
 
 	spacer
-	out_lookup_tables
+	out_create_path_file_name
 
 end
-set $lookup_tables_bpnum = $bpnum
-dis $lookup_tables_bpnum
+set $create_path_file_name_bpnum = $bpnum
+dis $create_path_file_name_bpnum
 
 ########################################
 
@@ -114,6 +104,55 @@ commands $bpnum
 end
 set $lookup_table_bpnum = $bpnum
 dis $lookup_table_bpnum
+
+########################################
+
+define out_lookup_tables
+
+	if names > 0
+		printf "names       = %s\n", names
+		printf "names[off]  = %s\n", &names[off]
+		printf "names[crs]  = %s\n", &names[crs]
+	else
+		printf "names       =\n"
+		printf "names[off]  =\n"
+		printf "names[crs]  =\n"
+	end
+	printf "names_len  = %d\n", names_len
+	printf "table_cnt  = %d\n", *table_cnt
+	printf "len        = %d\n", len
+	printf "off        = %d\n", off
+	printf "crs        = %d\n", crs
+	printf "i          = %d\n", i
+
+	printf "\n"
+
+end
+
+
+define n_lookup_tables
+	next
+	spacer
+	out_lookup_tables
+end
+
+
+break lookup_tables
+commands $bpnum
+
+	set names = (void*)0
+	set tables = (void*)0
+	set *table_cnt = 0
+	set len = 0
+	set 'off' = 0
+	set crs = 0
+
+	spacer
+	out_lookup_tables
+
+end
+set $lookup_tables_bpnum = $bpnum
+dis $lookup_tables_bpnum
 
 ########################################
 
