@@ -37,6 +37,14 @@ int louis_get_version(char *version, const int version_max);
 */
 void louis_set_log_callback(void (*callback)(const int level, const char *message));
 
+#define LOUIS_LOG_ALL      1
+#define LOUIS_LOG_TRACE    2
+#define LOUIS_LOG_DEBUG    3
+#define LOUIS_LOG_INFO     4
+#define LOUIS_LOG_WARNING  5
+#define LOUIS_LOG_ERROR    6
+#define LOUIS_LOG_FATAL    7
+
 
 /* Copies at most paths_max - 1 of the current paths into paths.  The copied
  * paths will be zero terminated.
@@ -105,12 +113,16 @@ int louis_translate_backward(
 
 /* Converts at most chars_len of chars from text to braille cells using
  * conversion_name.
+ *
+ * Returns 1 on successful conversion, 0 otherwise.
 */
 int louis_convert_to(unsigned short *chars, const int chars_len, const char *conversion_name);
 
 
 /* Deconverts at most dots_len of dots from braille cells to text using
  * conversion_name.
+ *
+ * Returns 1 on successful deconversion, 0 otherwise.
 */
 int louis_convert_from(unsigned short *dots, const int dots_len, const char *conversion_name);
 

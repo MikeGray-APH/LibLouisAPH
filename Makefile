@@ -25,12 +25,14 @@ CPPFLAGS = -D VERSION=\"$(VERSION)\" -I source -I source/language
 CFLAGS = -std="c11"
 LDFLAGS =
 
+DLL          := build/liblouisAPH.so
+LIB          := build/liblouisAPH.a
 LIB-LINUX64  := dists/x86_64-linux/liblouisAPH.a
 DLL-LINUX64  := dists/x86_64-linux/liblouisAPH.so
 LIB-LINUX32  := dists/i686-linux/liblouisAPH.a
 DLL-LINUX32  := dists/i686-linux/liblouisAPH.so
-DLL-WIN64 := dists/x86_64-win/liblouisAPH.dll
-DLL-WIN32 := dists/i686-win/liblouisAPH.dll
+DLL-WIN64    := dists/x86_64-win/liblouisAPH.dll
+DLL-WIN32    := dists/i686-win/liblouisAPH.dll
 
 EXE := exe
 
@@ -69,6 +71,8 @@ OBJS_TEST := \
 	build/test/ueb.o \
 
 OBJ_TEST_MAIN := build/test/main.o
+
+OBJ_TEST_LINK := build/test/link.o
 
 OBJS_CONVERT := \
 	build/utf-convert.o \
@@ -188,6 +192,46 @@ db: $(EXE).db
 	gdb --command=debug/gdb/main.gdb $(EXE).db
 
 
+build/dll/build/%.o: source/%.c | build/dll/build
+	@echo $(CC) $<
+	@$(CC) -fpic -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+
+build/dll/build/language/%.o: source/language/%.c | build/dll/build/language
+	@echo $(CC) $<
+	@$(CC) -fpic -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+
+build/dll/build/output/%.o: source/output/%.c | build/dll/build/output
+	@echo $(CC) $<
+	@$(CC) -fpic -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+
+build/dll/build/debug/%.o: debug/%.c | build/dll/build/debug
+	@echo $(CC) $<
+	@$(CC) -fpic -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+
+build/dll/build/language: | build/dll/build
+	@mkdir -p build/dll/build/language
+
+build/dll/build/output: | build/dll/build
+	@mkdir -p build/dll/build/output
+
+build/dll/build/debug: | build/dll/build
+	@mkdir -p build/dll/build/debug
+
+build/dll/build: | build
+	@mkdir -p build/dll/build
+
+dll: $(DLL)
+
+$(DLL): CFLAGS += -fpic -ggdb $(CWARNS_DEBUG) -fstack-protector
+$(DLL): $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), build/dll/$(OBJ)) | build
+	$(CC) -o $(DLL) -shared $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), build/dll/$(OBJ))
+
+lib: $(LIB)
+
+$(LIB): CFLAGS +=  -ggdb $(CWARNS_DEBUG) -fstack-protector
+$(LIB): $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE) | build
+	ar -rcv $(LIB) $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE)
+
 
 build/test/%.o: test/%.c | build/test
 	@echo $(CC) $<
@@ -198,8 +242,18 @@ build/test: | build
 
 test: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
 test: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test: $(EXE).test
+test: test-link $(EXE).test
 	./$(EXE).test
+
+test-link: CPPFLAGS += -I . -I source/output -D DEBUG #-D DEBUG_MEMORY
+test-link: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+test-link: LDFLAGS += -L build -llouisAPH
+test-link: $(DLL) $(EXE).link
+	env LD_LIBRARY_PATH=build ./$(EXE).link
+
+$(EXE).link: $(OBJ_TEST_LINK) | build
+	$(CC) -o $(EXE).link $(OBJ_TEST_LINK) $(LDFLAGS)
+
 
 test-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
 test-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
@@ -218,7 +272,7 @@ $(EXE).test: $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST) 
 deps: build/Makedeps
 	@cat build/Makedeps
 
-build/Makedeps: CPPFLAGS += -I source/output -D OUTPUT
+build/Makedeps: CPPFLAGS += -I . -I source/output -D OUTPUT
 build/Makedeps: | build
 	@rm -f build/Makedeps
 	@for SRC in `ls source/*.c source/language/*.c source/output/*.c tools/*.c test/*.c debug/*.c`; do \
@@ -235,7 +289,7 @@ clean: FORCE
 cleanse: clean
 	rm -rf dists/ LibLouisAPH-*.bz2 LibLouisAPH-*.zip LibLouisAPH-*.asc LibLouisAPH-*.sig
 
-.PHONY: db test test-db test-opt deps clean cleanse
+.PHONY: db dll lib test test-link test-db test-opt deps clean cleanse
 
 ################################################################################
 
@@ -274,22 +328,14 @@ build/tools/lou_translate: $(OBJS_TRANSLATE) | build/tools
 
 dist:  dist-linux64
 
-dll:  dll-linux64
-
-lib:  lib-linux64
-
-dist-linux64: FORCE
-	$(MAKE) clean
-	$(MAKE) dll-linux64
-	$(MAKE) clean
-	$(MAKE) lib-linux64 translate-linux64 table-linux64 convert-linux64
+dist-linux64: dll-linux64 lib-linux64 translate-linux64 table-linux64 convert-linux64
 	cp -R tables/ dists/x86_64-linux/
 
 dll-linux64: $(DLL-LINUX64)
 
 $(DLL-LINUX64): CFLAGS += -O3 -fPIC $(CWARNS_OPT) -fvisibility=hidden
-$(DLL-LINUX64): $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE) | dists/x86_64-linux
-	$(CC) -o $(DLL-LINUX64) -shared -s -fvisibility=hidden $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE)
+$(DLL-LINUX64): $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), build/dll/$(OBJ)) | dists/x86_64-linux
+	$(CC) -o $(DLL-LINUX64) -shared -s -fvisibility=hidden $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), build/dll/$(OBJ))
 
 lib-linux64: $(LIB-LINUX64)
 
@@ -321,7 +367,7 @@ dists/x86_64-linux/lou_translate: $(OBJS_TRANSLATE) | build/tools dists/x86_64-l
 dists/x86_64-linux:
 	mkdir -p dists/x86_64-linux
 
-.PHONY: dist dll lib dist-linux64 dll-linux64 lib-linux64 convert-linux64 table-linux64 translate-linux64
+.PHONY: dist dist-linux64 dll-linux64 lib-linux64 convert-linux64 table-linux64 translate-linux64
 
 ################################################################################
 

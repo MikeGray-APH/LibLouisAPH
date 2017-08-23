@@ -26,6 +26,7 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 /******************************************************************************/
 
+/*   must be kept in sync with LibLouisAPH.h   */
 enum log_level
 {
 	LOG_ALL = 1,
