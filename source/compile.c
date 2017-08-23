@@ -32,8 +32,8 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 #include "lookup.h"
 #include "log.h"
 
-#define INPUT_LINE_MAX     1024
-#define INCLUDE_DEPTH_MAX     8
+#define INPUT_LINE_MAX     0x1000
+#define INCLUDE_DEPTH_MAX       8
 
 static struct table *table;
 static const char *table_file_names[INCLUDE_DEPTH_MAX];
@@ -1842,10 +1842,10 @@ static int do_macro(void)
 						log_message(LOG_ERROR, "%s:%d  $%d over argument count %d for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], arg + 1, args_cnt, macro->ctag, macro->file_name, macro->file_line);
 						return 0;
 					}
-					if(args_lens[arg] + crs >= INPUT_LINE_MAX)
+					if(args_lens[arg] + crs >= INPUT_LINE_MAX - 2)
 					{
 						macro->processing = 0;
-						log_message(LOG_FATAL, "%s:%d  $%d caused buffer overflow for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], arg + 1, macro->ctag, macro->file_name, macro->file_line);
+						log_message(LOG_ERROR, "%s:%d  $%d caused buffer overflow for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], arg + 1, macro->ctag, macro->file_name, macro->file_line);
 						return 0;
 					}
 					for(j = 0; j < args_lens[arg]; j++)
@@ -1858,8 +1858,13 @@ static int do_macro(void)
 
 				/*   fall through to just copy character after offset   */
 			}
-			line[crs++] = macro->lines[i][off++];
+			else if(crs < INPUT_LINE_MAX - 2)
+				line[crs++] = macro->lines[i][off++];
+			else
+				break;
 		}
+
+		/*   add two NULL characters for parseing   */
 		line[crs] =
 		line[crs + 1] = 0;
 
@@ -1931,7 +1936,7 @@ static void file_read(FILE *file, const char *file_name)
 {
 	FILE *include_file;
 	char cchars[INPUT_LINE_MAX], path_name[INPUT_LINE_MAX];
-	int pause, crs, i;
+	int pause, len, crs, i;
 
 	if(include_depth >= INCLUDE_DEPTH_MAX - 1)
 	{
@@ -1948,6 +1953,26 @@ static void file_read(FILE *file, const char *file_name)
 	while(fgets(cchars, INPUT_LINE_MAX, file))
 	{
 		table_file_lines[include_depth]++;
+
+		len = strlen(cchars);
+		if(cchars[len - 1] != '\n' && cchars[len - 1] != '\r')
+		{
+			/*   last line not empty   */
+			if(fgets(cchars, INPUT_LINE_MAX, file))
+			{
+				/*   input too long   */
+				log_message(LOG_ERROR, "%s:%d  line too long", table_file_names[include_depth], table_file_lines[include_depth]);
+				log_included_file_errors();
+
+				len = strlen(cchars);
+				while(cchars[len - 1] != '\n' && cchars[len - 1] != '\r')
+				if(fgets(cchars, INPUT_LINE_MAX, file))
+					len = strlen(cchars);
+				else
+					break;
+				continue;
+			}
+		}
 
 		if(pause)
 		{
@@ -2173,7 +2198,7 @@ struct conversion* conversion_compile_from_file(const char *file_name)
 	FILE *file;
 	char cchars[INPUT_LINE_MAX];
 	struct conversion conversion_auto, *conversion;
-	int file_name_len;
+	int file_name_len, cchars_len;
 
 	file = fopen(file_name, "r");
 	if(!file)
@@ -2192,6 +2217,26 @@ struct conversion* conversion_compile_from_file(const char *file_name)
 	while(fgets(cchars, INPUT_LINE_MAX, file))
 	{
 		table_file_lines[0]++;
+
+		cchars_len = strlen(cchars);
+		if(cchars[cchars_len - 1] != '\n' && cchars[cchars_len - 1] != '\r')
+		{
+			/*   last line not empty   */
+			if(fgets(cchars, INPUT_LINE_MAX, file))
+			{
+				/*   input too long   */
+				log_message(LOG_ERROR, "%s:%d  line too long", table_file_names[include_depth], table_file_lines[include_depth]);
+				log_included_file_errors();
+
+				cchars_len = strlen(cchars);
+				while(cchars[cchars_len - 1] != '\n' && cchars[cchars_len - 1] != '\r')
+				if(fgets(cchars, INPUT_LINE_MAX, file))
+					cchars_len = strlen(cchars);
+				else
+					break;
+				continue;
+			}
+		}
 
 		if(cchars[0] == '#')
 			continue;
