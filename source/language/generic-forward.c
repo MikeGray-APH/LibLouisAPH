@@ -717,7 +717,7 @@ static struct indicator_node* add_indicators_node(struct indicator_node *nodes, 
 
 			if(   node_crs->indicator->type != EMP_SYMBOL
 			   && node_crs->indicator->type != EMP_WORD
-			   && node_crs->indicator->type != EMP_WORD | EMP_END
+			   && node_crs->indicator->type != (EMP_WORD | EMP_END)
 			   && node_crs->indicator->type != EMP_END)
 				goto insert_first;
 			indicator_crs = node_crs->indicator;
@@ -725,7 +725,7 @@ static struct indicator_node* add_indicators_node(struct indicator_node *nodes, 
 			{
 				if(   indicator_crs->type != EMP_SYMBOL
 				   && indicator_crs->type != EMP_WORD
-				   && indicator_crs->type != EMP_WORD | EMP_END
+				   && indicator_crs->type != (EMP_WORD | EMP_END)
 				   && indicator_crs->type != EMP_END)
 					break;
 				indicator_crs = indicator_crs->nxt;
@@ -740,14 +740,14 @@ static struct indicator_node* add_indicators_node(struct indicator_node *nodes, 
 
 			if(   node_crs->indicator->type != EMP_SYMBOL
 			   && node_crs->indicator->type != EMP_WORD
-			   && node_crs->indicator->type != EMP_WORD | EMP_END)
+			   && node_crs->indicator->type != (EMP_WORD | EMP_END))
 				goto insert_first;
 			indicator_crs = node_crs->indicator;
 			while(indicator_crs->nxt)
 			{
 				if(   indicator_crs->type != EMP_SYMBOL
 				   && indicator_crs->type != EMP_WORD
-				   && indicator_crs->type != EMP_WORD | EMP_END)
+				   && indicator_crs->type != (EMP_WORD | EMP_END))
 					break;
 				indicator_crs = indicator_crs->nxt;
 			}
@@ -759,13 +759,13 @@ static struct indicator_node* add_indicators_node(struct indicator_node *nodes, 
 			word_at = at;
 
 			if(   node_crs->indicator->type != EMP_SYMBOL
-			   && node_crs->indicator->type != EMP_WORD | EMP_END)
+			   && node_crs->indicator->type != (EMP_WORD | EMP_END))
 				goto insert_first;
 			indicator_crs = node_crs->indicator;
 			while(indicator_crs->nxt)
 			{
 				if(   indicator_crs->type != EMP_SYMBOL
-				   && indicator_crs->type != EMP_WORD | EMP_END)
+				   && indicator_crs->type != (EMP_WORD | EMP_END))
 					break;
 				indicator_crs = indicator_crs->nxt;
 			}

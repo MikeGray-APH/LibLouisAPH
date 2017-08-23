@@ -187,8 +187,8 @@ int utf16le_convert_to_utf8(char *cchars, const int cchars_max, const Unicode *u
 			/*   ensure there is enough space   */
 			if(crs > cchars_max - 3)
 				break;
-			cchars[crs++] = (uchars[i] >> 6) & 0x1f  | 0xc0;
-			cchars[crs++] = (uchars[i]       & 0x3f) | 0x80;
+			cchars[crs++] = ((uchars[i] >> 6) & 0x1f) | 0xc0;
+			cchars[crs++] = (uchars[i]        & 0x3f) | 0x80;
 		}
 
 		/*   there will be no UTF16 sequences   */
@@ -197,9 +197,9 @@ int utf16le_convert_to_utf8(char *cchars, const int cchars_max, const Unicode *u
 			/*   ensure there is enough space   */
 			if(crs > cchars_max - 4)
 				break;
-			cchars[crs++] = (uchars[i] >> 12) & 0x0f  | 0xe0;
-			cchars[crs++] = ((uchars[i] >> 6) & 0x3f) | 0x80;
-			cchars[crs++] = (uchars[i]        & 0x3f) | 0x80;
+			cchars[crs++] = ((uchars[i] >> 12) & 0x0f) | 0xe0;
+			cchars[crs++] = ((uchars[i] >>  6) & 0x3f) | 0x80;
+			cchars[crs++] = (uchars[i]         & 0x3f) | 0x80;
 		}
 		//else if(uchars[i] < 0x110000)
 		//{
