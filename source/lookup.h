@@ -37,6 +37,11 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 void lookup_fini(void);
 
 
+/* Returns the number of characters in current paths.
+*/
+int lookup_get_paths_length(void);
+
+
 /* Copies at most paths_max - 1 of the current paths into path.  The copied
  * paths will be NULL terminated.
  *

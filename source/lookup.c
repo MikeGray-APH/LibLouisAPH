@@ -106,6 +106,13 @@ void lookup_fini(void)
 
 /******************************************************************************/
 
+int lookup_get_paths_length(void)
+{
+	check_env();
+
+	return table_paths_len;
+}
+
 int lookup_get_paths(char *paths, const int paths_max)
 {
 	int len;
