@@ -71,14 +71,14 @@ static void lookup_env(void)
 		return;
 	}
 
-	table_paths_len = strlen(env) + 1;
-	table_paths = MALLOC(table_paths_len);
+	table_paths_len = strlen(env);
+	table_paths = MALLOC(table_paths_len + 1);
 	if(!table_paths)
 	{
 		LOG_ALLOCATE_FAIL
 		return;
 	}
-	strncpy(table_paths, env, table_paths_len);
+	strncpy(table_paths, env, table_paths_len + 1);
 }
 
 static inline void check_env(void)
@@ -113,15 +113,18 @@ int lookup_get_paths(char *paths, const int paths_max)
 	check_env();
 
 	if(!table_paths)
+	{
+		paths[0] = 0;
 		return 0;
+	}
 
-	if(table_paths_len > paths_max)
-		len = paths_max;
+	if(table_paths_len > paths_max - 1)
+		len = paths_max - 1;
 	else
 		len = table_paths_len;
 
-	strncpy(paths, table_paths, len - 1);
-	paths[len - 1] = 0;
+	strncpy(paths, table_paths, len);
+	paths[len] = 0;
 
 	return len;
 }
@@ -140,14 +143,14 @@ int lookup_set_paths(const char *paths)
 		return 1;
 	}
 
-	table_paths_len = strlen(paths) + 1;
-	table_paths = MALLOC(table_paths_len);
+	table_paths_len = strlen(paths);
+	table_paths = MALLOC(table_paths_len + 1);
 	if(!table_paths)
 	{
 		LOG_ALLOCATE_FAIL
 		return 0;
 	}
-	strncpy(table_paths, paths, table_paths_len);
+	strncpy(table_paths, paths, table_paths_len + 1);
 
 	return table_paths_len;
 }
@@ -158,30 +161,19 @@ int lookup_add_paths(const char *paths)
 
 	check_env();
 
-	len = strlen(paths) + 1;
-
 	if(!table_paths)
-	{
-		table_paths_len = len;
-		table_paths = MALLOC(table_paths_len);
-		if(!table_paths)
-		{
-			LOG_ALLOCATE_FAIL
-			return 0;
-		}
-		strncpy(table_paths, paths, table_paths_len);
-		return table_paths_len;
-	}
+		return lookup_set_paths(paths);
 
-	table_paths_len += len;
-	table_paths = REALLOC(table_paths, table_paths_len);
+	len = strlen(paths);
+	table_paths_len += len + 1;
+	table_paths = REALLOC(table_paths, table_paths_len + 1);
 	if(!table_paths)
 	{
 		LOG_ALLOCATE_FAIL
 		return 0;
 	}
-	strncat(table_paths, PATH_SEPARATOR_STRING, 1);
-	strncat(table_paths, paths, len);
+	strncat(table_paths, PATH_SEPARATOR_STRING, 2);
+	strncat(table_paths, paths, len + 1);
 
 	return table_paths_len;
 }
@@ -197,9 +189,9 @@ static int create_path_file_name(
 	const char *file_name,
 	const int file_name_len)
 {
-	int len, i;
+	int len;
 
-	if(!paths_len)
+	if(paths_len < 1)
 		return 0;
 
 	/*   find path separator   */
@@ -207,22 +199,17 @@ static int create_path_file_name(
 	if(paths[len] == PATH_SEPARATOR_CHAR)
 		break;
 
-	/*   no more paths   */
-	if(len >= paths_len)
-		len--;
-
-	/*   no more space   */
-	if(len >= path_max)
+	/*   check space   */
+	if(len >= path_max - (file_name_len + 1))
 		return 0;
 
-	/*   copy to path   */
+	/*   create path name   */
 	ASSERT(len > 0)
-	for(i = 0; i < len; i++)
-		path[i] = paths[i];
-	path[i] = FILE_SEPARATOR_CHAR;
-	strncpy(&path[i + 1], file_name, path_max - len - 1 - file_name_len);
+	strncpy(path, paths, len);
+	path[len] = FILE_SEPARATOR_CHAR;
+	strncpy(&path[len + 1], file_name, file_name_len + 1);
 
-	return i;
+	return len;
 }
 
 /******************************************************************************/
@@ -235,7 +222,7 @@ struct table* lookup_table(const char *file_name)
 
 	ASSERT(file_name)
 
-	file_name_len = strlen(file_name) + 1;
+	file_name_len = strlen(file_name);
 
 	/*   has table already been loaded   */
 	table = table_list;
@@ -257,7 +244,7 @@ struct table* lookup_table(const char *file_name)
 	{
 		paths = table_paths;
 		paths_len = table_paths_len;
-		while(len = create_path_file_name(path, PATH_NAME_MAX - 1, paths, paths_len, file_name, file_name_len))
+		while(len = create_path_file_name(path, PATH_NAME_MAX, paths, paths_len, file_name, file_name_len))
 		{
 			table = table_compile_from_file(path);
 			if(table)
@@ -287,12 +274,12 @@ struct table** lookup_tables(int *table_cnt, const char *table_names)
 	ASSERT(table_names)
 
 	/*   parse table_names   */
-	names_len = strlen(table_names) + 1;
-	names = MALLOC(names_len);
+	names_len = strlen(table_names);
+	names = MALLOC(names_len + 1);
 	LOG_ALLOCATE_FAIL_RETURN_NULL(names)
 
 	*table_cnt = 1;
-	strncpy(names, table_names, names_len);
+	strncpy(names, table_names, names_len + 1);
 	len = 0;
 	for(i = 0; i < names_len; i++)
 	if(names[i] == '~')
@@ -379,7 +366,7 @@ struct conversion* lookup_conversion(const char *file_name)
 
 	ASSERT(file_name)
 
-	file_name_len = strlen(file_name) + 1;
+	file_name_len = strlen(file_name);
 
 	/*   has conversion already been loaded   */
 	conversion = conversion_list;
@@ -432,7 +419,7 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 
 	ASSERT(file_name)
 
-	file_name_len = strlen(file_name) + 1;
+	file_name_len = strlen(file_name);
 
 	/*   try file_name directly   */
 	file = fopen(file_name, "r");
@@ -451,13 +438,16 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 		if(paths)
 		{
 			paths++;
-			strncpy(paths, file_name, PATH_NAME_MAX - (paths - path) - file_name_len);
-			file = fopen(path, "r");
-			if(file)
+			if((paths - path) + file_name_len + 1 <= PATH_NAME_MAX)
 			{
-				strncpy(path_name, path, path_name_max);
-				path_name[path_name_max - 1] = 0;
-				return file;
+				strncpy(paths, file_name, file_name_len + 1);
+				file = fopen(path, "r");
+				if(file)
+				{
+					strncpy(path_name, path, path_name_max);
+					path_name[path_name_max - 1] = 0;
+					return file;
+				}
 			}
 		}
 	}

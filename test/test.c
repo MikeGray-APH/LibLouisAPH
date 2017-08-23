@@ -498,8 +498,8 @@ static Unicode* test_input_uchars(
 	int trans_len;
 
 	trans_len = uchars_len * 31;
-	trans  = MALLOC(trans_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
 
 	*trans_len_ref = translate_start(trans, trans_len, uchars, uchars_len, &table, 1, conversion, direction, NULL, NULL, NULL);
 	if(*trans_len_ref == -1)
@@ -588,8 +588,8 @@ int test_back_from_file(
 		uchars = token_line;
 
 		original_len = uchars_len;
-		original = MALLOC(original_len * sizeof(Unicode));
-		memset(original, 0, original_len * sizeof(Unicode));
+		original = MALLOC((original_len + 1) * sizeof(Unicode));
+		memset(original, 0, (original_len + 1) * sizeof(Unicode));
 		original_len = strip_input(original, uchars, uchars_len, table);
 
 		trans = test_input_uchars(output, &trans_len, table, conversion, uchars, uchars_len, FORWARD);
@@ -760,8 +760,8 @@ int test_expect_from_file(
 		uchars_len = token_len;
 
 		original_len = uchars_len;
-		original = MALLOC(original_len * sizeof(Unicode));
-		memset(original, 0, original_len * sizeof(Unicode));
+		original = MALLOC((original_len + 1) * sizeof(Unicode));
+		memset(original, 0, (original_len + 1) * sizeof(Unicode));
 		original_len = strip_input(original, uchars, uchars_len, table);
 
 		token_parse();

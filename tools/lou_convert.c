@@ -71,12 +71,12 @@ static void convert_digits_to_unicode(const char *dots)
 	Unicode cell;
 	int crs, off;
 
-	dots_len = strlen(dots) + 1;
-	uchars_len = dots_len + 1;
-	cchars_len = uchars_len * 11 + 1;
-	uchars = malloc(uchars_len * sizeof(Unicode));
-	cchars = malloc(cchars_len);
-	utf8_convert_to_utf16le(uchars, uchars_len, dots, dots_len);
+	dots_len = strlen(dots);
+	uchars_len = dots_len;
+	cchars_len = uchars_len * 11;
+	uchars = malloc((uchars_len + 1) * sizeof(Unicode));
+	cchars = malloc(cchars_len + 1);
+	utf8_convert_to_utf16le(uchars, (uchars_len + 1), dots, dots_len);
 
 	cell = 0;
 	crs = 0;
@@ -113,7 +113,7 @@ static void convert_digits_to_unicode(const char *dots)
 		cell = 0;
 	}
 	uchars[crs] = 0;
-	utf16le_convert_to_utf8(cchars, cchars_len, uchars, crs);
+	utf16le_convert_to_utf8(cchars, (cchars_len + 1), uchars, crs);
 	printf("%s\n", cchars);
 	free(uchars);
 	free(cchars);
@@ -125,12 +125,12 @@ static void convert_unicode_to_digits(const char *dots)
 	char *cchars;
 	int dots_len, cchars_len, uchars_len, crs, off;
 
-	dots_len = strlen(dots) + 1;
-	uchars_len = dots_len + 1;
-	cchars_len = uchars_len * 11 + 1;
-	uchars = malloc(uchars_len * sizeof(Unicode));
-	cchars = malloc(cchars_len);
-	utf8_convert_to_utf16le(uchars, uchars_len, dots, dots_len);
+	dots_len = strlen(dots);
+	uchars_len = dots_len;
+	cchars_len = uchars_len * 11;
+	uchars = malloc((uchars_len + 1) * sizeof(Unicode));
+	cchars = malloc(cchars_len + 1);
+	utf8_convert_to_utf16le(uchars, (uchars_len + 1), dots, dots_len);
 
 	crs = 0;
 	for(off = 0; off < uchars_len; off++)

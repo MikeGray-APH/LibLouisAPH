@@ -39,9 +39,9 @@ void utf16le_output(FILE *output, const Unicode *uchars, const int uchars_len)
 		return;
 
 	cchars_len = uchars_len * 8;
-	cchars = MALLOC(cchars_len);
+	cchars = MALLOC(cchars_len + 1);
 
-	utf16le_convert_to_utf8(cchars, cchars_len, uchars, uchars_len);
+	utf16le_convert_to_utf8(cchars, (cchars_len + 1), uchars, uchars_len);
 	fprintf(output, "%s", cchars);
 	fflush(output);
 

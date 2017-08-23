@@ -57,17 +57,17 @@ static void test_input(const struct table *const*tables, const int table_cnt, co
 	int input_len, uchars_len, trans_len, len;
 
 	input_len = strlen(input);
-	uchars_len = input_len + 1;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
-	uchars = MALLOC(uchars_len * sizeof(Unicode));
-	trans  = MALLOC(trans_len * sizeof(Unicode));
+	uchars = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	uchars_len = table_convert_escape_markers(tables[table_cnt - 1], uchars, uchars_len);
 	uchars_len = utf16le_convert_escapes(uchars, uchars_len);
 
@@ -101,20 +101,20 @@ static void test_input_both(const struct table *const*tables, const int table_cn
 	int input_len, uchars_len, trans_len, reverse_len;
 
 	input_len = strlen(input);
-	uchars_len = input_len + 1;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
 	reverse_len = uchars_len * 5;
-	uchars   = MALLOC(uchars_len * sizeof(Unicode));
-	trans    = MALLOC(trans_len * sizeof(Unicode));
-	reverse  = MALLOC(reverse_len * sizeof(Unicode));
+	uchars   = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans    = MALLOC((trans_len + 1) * sizeof(Unicode));
+	reverse  = MALLOC((reverse_len + 1) * sizeof(Unicode));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
-	memset(reverse, 0, reverse_len * sizeof(Unicode));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
+	memset(reverse, 0, (reverse_len + 1) * sizeof(Unicode));
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	uchars_len = table_convert_escape_markers(tables[table_cnt - 1], uchars, uchars_len);
 	uchars_len = utf16le_convert_escapes(uchars, uchars_len);
 
@@ -158,20 +158,20 @@ static int test_input_both_pass(const struct table *const*tables, const int tabl
 	int pass;
 
 	input_len = strlen(input);
-	uchars_len = input_len + 1;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
 	reverse_len = uchars_len * 5;
-	uchars   = MALLOC(uchars_len * sizeof(Unicode));
-	trans    = MALLOC(trans_len * sizeof(Unicode));
-	reverse  = MALLOC(reverse_len * sizeof(Unicode));
+	uchars   = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans    = MALLOC((trans_len + 1) * sizeof(Unicode));
+	reverse  = MALLOC((reverse_len + 1) * sizeof(Unicode));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
-	memset(reverse, 0, reverse_len * sizeof(Unicode));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
+	memset(reverse, 0, (reverse_len + 1) * sizeof(Unicode));
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	uchars_len = table_convert_escape_markers(tables[table_cnt - 1], uchars, uchars_len);
 	uchars_len = utf16le_convert_escapes(uchars, uchars_len);
 
@@ -216,9 +216,9 @@ static void test_input_uchars(const struct table *const*tables, const int table_
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
-	trans  = MALLOC(trans_len * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
 
-	memset(trans, 0, trans_len * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
 
 	len = translate_start(trans, trans_len, uchars, uchars_len, tables, table_cnt, conversion, FORWARD, NULL, NULL, NULL);
 	if(len == -1)
@@ -244,21 +244,21 @@ static void test_input_mapping(const struct table *const*tables, const int table
 	int input_len, uchars_len, trans_len, len, i;
 
 	input_len = strlen(input);
-	uchars_len = input_len + 100;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
-	uchars = MALLOC(uchars_len * sizeof(Unicode));
-	trans  = MALLOC(trans_len * sizeof(Unicode));
-	chars_to_dots_map = MALLOC(uchars_len * sizeof(int));
-	dots_to_chars_map = MALLOC(trans_len * sizeof(int));
+	uchars = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
+	chars_to_dots_map = MALLOC((uchars_len + 1) * sizeof(int));
+	dots_to_chars_map = MALLOC((trans_len + 1) * sizeof(int));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
-	memset(chars_to_dots_map, 0, uchars_len * sizeof(int));
-	memset(dots_to_chars_map, 0, trans_len * sizeof(int));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
+	memset(chars_to_dots_map, 0, (uchars_len + 1) * sizeof(int));
+	memset(dots_to_chars_map, 0, (trans_len + 1) * sizeof(int));
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	len = translate_start(trans, trans_len, uchars, uchars_len, tables, table_cnt, conversion, FORWARD, chars_to_dots_map, dots_to_chars_map, NULL);
 	if(len == -1)
 	{
@@ -310,28 +310,28 @@ static void test_input_both_mapping(const struct table *const*tables, const int 
 	int input_len, uchars_len, trans_len, reverse_len, i;
 
 	input_len = strlen(input);
-	uchars_len = input_len + 1;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
 	reverse_len = uchars_len * 5;
-	uchars   = MALLOC(uchars_len * sizeof(Unicode));
-	trans    = MALLOC(trans_len * sizeof(Unicode));
-	reverse  = MALLOC(reverse_len * sizeof(Unicode));
-	chars_to_dots_fmap = MALLOC(uchars_len * sizeof(int));
-	dots_to_chars_fmap = MALLOC(trans_len * sizeof(int));
-	chars_to_dots_bmap = MALLOC(trans_len * sizeof(int));
-	dots_to_chars_bmap = MALLOC(reverse_len * sizeof(int));
+	uchars   = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans    = MALLOC((trans_len + 1) * sizeof(Unicode));
+	reverse  = MALLOC((reverse_len + 1) * sizeof(Unicode));
+	chars_to_dots_fmap = MALLOC((uchars_len + 1) * sizeof(int));
+	dots_to_chars_fmap = MALLOC((trans_len + 1) * sizeof(int));
+	chars_to_dots_bmap = MALLOC((trans_len + 1) * sizeof(int));
+	dots_to_chars_bmap = MALLOC((reverse_len + 1) * sizeof(int));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
-	memset(reverse, 0, reverse_len * sizeof(Unicode));
-	memset(chars_to_dots_fmap, 0, uchars_len * sizeof(int));
-	memset(dots_to_chars_fmap, 0, trans_len * sizeof(int));
-	memset(chars_to_dots_bmap, 0, trans_len * sizeof(int));
-	memset(dots_to_chars_bmap, 0, reverse_len * sizeof(int));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
+	memset(reverse, 0, (reverse_len + 1) * sizeof(Unicode));
+	memset(chars_to_dots_fmap, 0, (uchars_len + 1) * sizeof(int));
+	memset(dots_to_chars_fmap, 0, (trans_len + 1) * sizeof(int));
+	memset(chars_to_dots_bmap, 0, (trans_len + 1) * sizeof(int));
+	memset(dots_to_chars_bmap, 0, (reverse_len + 1) * sizeof(int));
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	uchars_len = table_convert_escape_markers(tables[table_cnt - 1], uchars, uchars_len);
 	uchars_len = utf16le_convert_escapes(uchars, uchars_len);
 
@@ -421,21 +421,21 @@ static void test_input_mapping_vert(const struct table *const*tables, const int 
 	test_input(tables, table_cnt, conversion, input);
 
 	input_len = strlen(input);
-	uchars_len = input_len + 100;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
-	uchars = MALLOC(uchars_len * sizeof(Unicode));
-	trans  = MALLOC(trans_len * sizeof(Unicode));
-	chars_to_dots_map = MALLOC(uchars_len * sizeof(int));
-	dots_to_chars_map = MALLOC(trans_len * sizeof(int));
+	uchars = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
+	chars_to_dots_map = MALLOC((uchars_len + 1) * sizeof(int));
+	dots_to_chars_map = MALLOC((trans_len + 1) * sizeof(int));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
-	memset(chars_to_dots_map, 0, uchars_len * sizeof(int));
-	memset(dots_to_chars_map, 0, trans_len * sizeof(int));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
+	memset(chars_to_dots_map, 0, (uchars_len + 1) * sizeof(int));
+	memset(dots_to_chars_map, 0, (trans_len + 1) * sizeof(int));
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	uchars_len = table_convert_escape_markers(tables[table_cnt - 1], uchars, uchars_len);
 	uchars_len = utf16le_convert_escapes(uchars, uchars_len);
 
@@ -495,18 +495,18 @@ static void test_input_cursor(const struct table *const*tables, const int table_
 	int input_len, uchars_len, trans_len, len, crs, i;
 
 	input_len = strlen(input);
-	uchars_len = input_len + 1;
+	uchars_len = input_len;
 	trans_len = uchars_len * 5;
 	if(trans_len < 0x100)
 		trans_len = 0x100;
-	uchars = MALLOC(uchars_len * sizeof(Unicode));
-	trans  = MALLOC(trans_len * sizeof(Unicode));
+	uchars = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
 
-	memset(uchars, 0, uchars_len * sizeof(Unicode));
-	memset(trans, 0, trans_len * sizeof(Unicode));
+	memset(uchars, 0, (uchars_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
 	crs = cursor;
 
-	uchars_len = utf8_convert_to_utf16le(uchars, uchars_len, input, input_len);
+	uchars_len = utf8_convert_to_utf16le(uchars, (uchars_len + 1), input, input_len);
 	uchars_len = utf16le_convert_escapes(uchars, uchars_len);
 	len = translate_start(trans, trans_len, uchars, uchars_len, tables, table_cnt, conversion, BACKWARD, NULL, NULL, &crs);
 	if(len == -1)

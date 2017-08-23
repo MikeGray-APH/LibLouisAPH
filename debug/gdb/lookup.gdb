@@ -26,11 +26,7 @@ define out_create_path_file_name
 		printf "paths[%2d]      = %s\n", paths_len, paths
 	end
 	printf "path[%4d]     = %s\n", path_max, path
-
-	printf "\n"
-
 	printf "len            = %d  %s\n", len, &paths[len]
-	printf "i              = %d\n", i
 
 	printf "\n"
 
@@ -60,6 +56,8 @@ dis $create_path_file_name_bpnum
 
 define out_lookup_table
 
+	printf "file_name      = %s\n", file_name
+	printf "file_name_len  = %d\n", file_name_len
 	printf "table          = 0x%x", table
 	if table > 0
 		printf "  %s", table->file_name
@@ -74,7 +72,6 @@ define out_lookup_table
 
 	printf "path           = %s\n", path
 	printf "len            = %d\n", len
-	printf "file_name_len  = %d\n", file_name_len
 
 	printf "\n"
 

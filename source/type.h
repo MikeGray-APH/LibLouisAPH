@@ -83,7 +83,7 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #define PUTS(s)  { puts( #s );   fflush(stdout); }
 #define PRINT(s) { printf( #s ); fflush(stdout); }
-#define VAR(v,t) { printf( #v " = %" #t "\n", (v)); fflush(stdout); }
+#define VAR(v,t) { printf( "--> " #v " = %" #t "\n", (v)); fflush(stdout); }
 #define HERE \
 { \
         printf("--> %s:%i\t%s\n", __FILE__, __LINE__, __func__); \

@@ -37,6 +37,111 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 /******************************************************************************/
 
+int test_lookup_path(FILE *output)
+{
+	char paths[0x100];
+	int paths_len, status;
+
+	memset(paths, 0, 0x100);
+	status = 0;
+
+	if(output != stdout)
+		printf("test_lookup_path:  ");
+
+	fputs("test_lookup_path\n\n", output);
+
+	lookup_fini();
+	unsetenv("LOUIS_TABLEPATH");
+
+	paths_len = lookup_get_paths(paths, 0x100);
+	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
+	if(paths_len != 0)
+	{
+		fprintf(output, "paths_len = %d != 0\n", paths_len);
+		goto return_fail;
+	}
+
+	lookup_fini();
+	setenv("LOUIS_TABLEPATH", "test/tables", 0);
+	fprintf(output, "env:  [%d]\ttest/tables\n", (int)strlen("test/tables"));
+	paths_len = lookup_get_paths(paths, 12);
+	fprintf(output, "get:  [%d]\t%s   max = 12\n", paths_len, paths);
+	if(paths_len != 11)
+	{
+		fprintf(output, "paths_len = %d != 0\n", paths_len);
+		goto return_fail;
+	}
+	if(strncmp(paths, "test/tables", 12))
+	{
+		fprintf(output, "paths = %s != test/tables\n", paths);
+		goto return_fail;
+	}
+	paths[0] = 0;
+	paths_len = lookup_get_paths(paths, 11);
+	fprintf(output, "get:  [%d]\t%s   max = 11\n", paths_len, paths);
+	if(paths_len != 10)
+	{
+		fprintf(output, "paths_len = %d != 0\n", paths_len);
+		goto return_fail;
+	}
+	if(strncmp(paths, "test/table", 11))
+	{
+		fprintf(output, "paths = %s != test/tables\n", paths);
+		goto return_fail;
+	}
+
+	paths_len = lookup_set_paths("tables");
+	fprintf(output, "set:  [%d]\ttables\n", paths_len);
+	paths[0] = 0;
+	paths_len = lookup_get_paths(paths, 0x100);
+	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
+	if(paths_len != 6)
+	{
+		fprintf(output, "paths_len = %d != 6\n", paths_len);
+		goto return_fail;
+	}
+	if(strncmp(paths, "tables", 7))
+	{
+		fprintf(output, "paths = %s != tables\n", paths);
+		goto return_fail;
+	}
+
+	paths_len = lookup_add_paths("test/tables");
+	fprintf(output, "add:  [%d]\ttest/tables\n", paths_len);
+	paths[0] = 0;
+	paths_len = lookup_get_paths(paths, 0x100);
+	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
+	if(paths_len != 18)
+	{
+		fprintf(output, "paths_len = %d != 18\n", paths_len);
+		goto return_fail;
+	}
+	if(strncmp(paths, "tables:test/tables", 19))
+	{
+		fprintf(output, "paths = %s != tables:test/tables\n", paths);
+		goto return_fail;
+	}
+
+	status = 1;
+
+	return_fail:
+	lookup_fini();
+	unsetenv("LOUIS_TABLEPATH");
+
+	fputs("\n", output);
+	fflush(output);
+
+	if(output != stdout)
+	if(status)
+		puts("PASS");
+	else
+		puts("FAIL");
+
+	return status;
+}
+
+/******************************************************************************/
+
 int test_rule_sort(FILE *output)
 {
 	struct table *table;
@@ -219,7 +324,7 @@ int test_table_include_with_environment(FILE *output)
 	if(tables)
 		FREE(tables);
 	lookup_fini();
-	//unsetenv("LOUIS_TABLEPATH");
+	unsetenv("LOUIS_TABLEPATH");
 
 	fputs("\n", output);
 	fflush(output);
@@ -639,6 +744,7 @@ int test_library(FILE *output)
 	pass_cnt =
 	try_cnt = 0;
 
+	try_cnt++;  pass_cnt += test_lookup_path(output);
 	try_cnt++;  pass_cnt += test_rule_sort(output);
 	try_cnt++;  pass_cnt += test_table_include(output);
 	try_cnt++;  pass_cnt += test_table_include_with_environment(output);
