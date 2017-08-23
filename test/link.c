@@ -91,6 +91,7 @@ int utf16le_convert_to_utf8(char *cchars, const int cchars_max, const unsigned s
 
 int main(void)
 {
+	void (*callback)(const int level, const char *message);
 	unsigned short trans[] = u"⠕⠪⠀⠕⠪⠕⠪⠀⠕⠕⠪⠪⠀⠕⠪⠕⠪⠀⠕⠪";
 	unsigned short snart[] = u"x xx xxx xx x";
 	unsigned short convert[] = u">< ><>< >><< ><>< ><";
@@ -100,9 +101,19 @@ int main(void)
 	unsigned short uchars[0x100] = {0};
 	int uchars_len, i;
 
+	puts("test link");
+
+	puts("louis_set_log_callback");
 	louis_set_log_callback(log_callback);
 
-	puts("test link");
+	printf("louis_get_log_callback");
+	callback = louis_get_log_callback();
+	printf("    = 0x%lx\n", (unsigned long)callback);
+	if(callback != log_callback)
+	{
+		fprintf(stderr, "ERROR:  louis_get_log_callback\n");
+		return 1;
+	}
 
 	louis_get_version(cchars, 0x100);
 	printf("version                   = %s\n", cchars);

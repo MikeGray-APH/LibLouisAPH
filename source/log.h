@@ -51,6 +51,16 @@ enum log_level
 
 /******************************************************************************/
 
+/* Returns the callback function for log messages, or NULL is not set.
+*/
+void (*log_get_callback(void))(const int level, const char *message);
+
+
+/* Sets the callback function for log messages.  Unsets if callback is NULL.
+*/
+void log_set_callback(void (*callback)(const int level, const char *message));
+
+
 /* Log message at log_level level.  Formatting with v*printf is used.
 */
 void log_message(const enum log_level level, const char *format, ...);
@@ -61,11 +71,6 @@ void log_message(const enum log_level level, const char *format, ...);
  * of token to UTF-8.
 */
 void log_message_with_token(const enum log_level level, const Unicode *token, const int token_len, const char *format, ...);
-
-
-/* Sets the callback function for log messages.  Unsets if callback is NULL.
-*/
-void log_set_callback(void (*callback)(const int level, const char *message));
 
 /******************************************************************************/
 

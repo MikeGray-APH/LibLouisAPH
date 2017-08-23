@@ -25,6 +25,7 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 #define _XOPEN_SOURCE 600
 
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 #include "translate.h"
@@ -98,6 +99,8 @@ int test_rule_sort(FILE *output)
 	return status;
 }
 
+/******************************************************************************/
+
 int test_table_include(FILE *output)
 {
 	struct table *table;
@@ -159,6 +162,8 @@ int test_table_include(FILE *output)
 
 	return status;
 }
+
+/******************************************************************************/
 
 int test_table_include_with_environment(FILE *output)
 {
@@ -228,6 +233,8 @@ int test_table_include_with_environment(FILE *output)
 	return status;
 }
 
+/******************************************************************************/
+
 int test_table_override(FILE *output)
 {
 	struct table *tables[2];
@@ -287,6 +294,8 @@ int test_table_override(FILE *output)
 	return status;
 }
 
+/******************************************************************************/
+
 int test_table_override_with_lookup(FILE *output)
 {
 	struct table **tables;
@@ -340,6 +349,8 @@ int test_table_override_with_lookup(FILE *output)
 
 	return status;
 }
+
+/******************************************************************************/
 
 int test_cursor(FILE *output)
 {
@@ -396,6 +407,8 @@ int test_cursor(FILE *output)
 	return status;
 }
 
+/******************************************************************************/
+
 int test_mapping_with_capital(FILE *output)
 {
 	struct table *table;
@@ -450,6 +463,163 @@ int test_mapping_with_capital(FILE *output)
 
 /******************************************************************************/
 
+#define MESSAGES_LEN  63
+#define MESSAGES_MAX  100
+#define MESSAGE_MAX   0x100
+
+static char  messages[MESSAGES_MAX][MESSAGE_MAX];
+static int   message_crs;
+
+static void log_callback(const int level, const char *message)
+{
+	if(message_crs >= MESSAGES_MAX)
+	{
+		message_crs++;
+		return;
+	}
+
+	switch(level)
+	{
+	case LOG_ALL:      snprintf(messages[message_crs++], MESSAGE_MAX, "ALL:  %s", message);      break;
+	case LOG_TRACE:    snprintf(messages[message_crs++], MESSAGE_MAX, "TRACE:  %s", message);    break;
+	case LOG_DEBUG:    snprintf(messages[message_crs++], MESSAGE_MAX, "DEBUG:  %s", message);    break;
+	case LOG_INFO:     snprintf(messages[message_crs++], MESSAGE_MAX, "INFO:  %s", message);     break;
+	case LOG_WARNING:  snprintf(messages[message_crs++], MESSAGE_MAX, "WARNING:  %s", message);  break;
+	case LOG_ERROR:    snprintf(messages[message_crs++], MESSAGE_MAX, "ERROR:  %s", message);    break;
+	case LOG_FATAL:    snprintf(messages[message_crs++], MESSAGE_MAX, "FATAL:  %s", message);    break;
+	}
+}
+
+int test_table_errors(FILE *output)
+{
+	const char *errors[MESSAGES_MAX] =
+	{
+		"ERROR:  test/tables/errors.rst:2  unknown opcode UNKNOWN_OPCODE",
+		"ERROR:  test/tables/errors.rst:4  include missing file name",
+		"ERROR:  test/tables/errors.rst:5  unable to open include file UNKNOWN_FILE",
+		"ERROR:  test/tables/errors.rst:8  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:10  missing indicator name",
+		"ERROR:  test/tables/errors.rst:11  missing indicators",
+		"ERROR:  test/tables/errors.rst:12  invalid dot character",
+		"ERROR:  test/tables/errors.rst:13  indicator too long",
+		"ERROR:  test/tables/errors.rst:14  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:16  invalid characters",
+		"ERROR:  test/tables/errors.rst:17  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:19  missing join index",
+		"ERROR:  test/tables/errors.rst:20  missing character",
+		"ERROR:  test/tables/errors.rst:21  missing character",
+		"ERROR:  test/tables/errors.rst:22  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:23  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:24  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:25  join index out of range",
+		"ERROR:  test/tables/errors.rst:27  invalid attribute",
+		"ERROR:  test/tables/errors.rst:28  invalid value INVALID_VALUE",
+		"ERROR:  test/tables/errors.rst:30  invalid pattern",
+		"ERROR:  test/tables/errors.rst:31  invalid pattern name",
+		"ERROR:  test/tables/errors.rst:32  invalid pattern",
+		"ERROR:  test/tables/errors.rst:34  invalid filter",
+		"ERROR:  test/tables/errors.rst:35  invalid filter",
+		"ERROR:  test/tables/errors.rst:36  invalid filter",
+		"ERROR:  test/tables/errors.rst:37  invalid filter name",
+		"ERROR:  test/tables/errors.rst:38  invalid filter",
+		"ERROR:  test/tables/errors.rst:39  invalid filter",
+		"ERROR:  test/tables/errors.rst:41  filter INVALID_FILTER not found",
+		"ERROR:  test/tables/errors.rst:42  filter INVALID_FILTER not found",
+		"ERROR:  test/tables/errors.rst:44  invalid uses",
+		"ERROR:  test/tables/errors.rst:45  invalid uses",
+		"ERROR:  test/tables/errors.rst:46  filter INVALID_FILTER not found",
+		"ERROR:  test/tables/errors.rst:46  invalid uses",
+		"ERROR:  test/tables/errors.rst:47  filter INVALID_FILTER not found",
+		"ERROR:  test/tables/errors.rst:47  invalid uses",
+		"ERROR:  test/tables/errors.rst:49  invalid rule",
+		"ERROR:  test/tables/errors.rst:50  invalid rule",
+		"ERROR:  test/tables/errors.rst:51  invalid rule",
+		"ERROR:  test/tables/errors.rst:52  invalid rule",
+		"ERROR:  test/tables/errors.rst:53  invalid rule type UNKNOWN_TYPE",
+		"ERROR:  test/tables/errors.rst:54  invalid rule",
+		"ERROR:  test/tables/errors.rst:55  invalid rule",
+		"ERROR:  test/tables/errors.rst:57  invalid match",
+		"ERROR:  test/tables/errors.rst:58  invalid match",
+		"ERROR:  test/tables/errors.rst:59  invalid match",
+		"ERROR:  test/tables/errors.rst:60  invalid match",
+		"ERROR:  test/tables/errors.rst:61  invalid match",
+		"ERROR:  test/tables/errors.rst:62  invalid match",
+		"ERROR:  test/tables/errors.rst:63  invalid match",
+		"ERROR:  test/tables/errors.rst:64  invalid match type UNKNOWN_TYPE",
+		"ERROR:  test/tables/errors.rst:65  invalid match",
+		"ERROR:  test/tables/errors.rst:66  invalid match",
+		"ERROR:  test/tables/errors.rst:67  invalid match",
+		"ERROR:  test/tables/errors.rst:68  invalid match",
+		"ERROR:  test/tables/errors.rst:69  invalid match",
+		"ERROR:  test/tables/errors.rst:70  invalid match",
+		"ERROR:  test/tables/errors.rst:72  missing macro tag",
+		"ERROR:  test/tables/errors.rst:77  recursive macro @macro, defined at test/tables/errors.rst:74",
+		"ERROR:  test/tables/errors.rst:82  too many args for macro @args, defined at test/tables/errors.rst:79",
+		"ERROR:  test/tables/errors.rst:83  $1 over argument count 0 for macro @args, defined at test/tables/errors.rst:79",
+		"ERROR:  test/tables/errors.rst:84  $2 over argument count 1 for macro @args, defined at test/tables/errors.rst:79",
+	};
+	void (*log_callback_prv)(const int level, const char *message);
+	struct table *table;
+	int status, i;
+
+	status = 0;
+
+	if(output != stdout)
+		printf("test_table_errors:  ");
+
+	fputs("test_table_errors\n\n", output);
+
+	log_callback_prv = log_get_callback();
+	log_set_callback(log_callback);
+
+	memset(messages, 0, sizeof(messages));
+	message_crs = 0;
+
+	table = table_compile_from_file("test/tables/errors.rst");
+
+	for(i = 0; i < MESSAGES_LEN; i++)
+	{
+		if(i >= message_crs)
+		{
+			fputs("too few errors logged\n", output);
+			goto free_and_return;
+		}
+		if(strncmp(errors[i], messages[i], MESSAGE_MAX))
+		{
+			fprintf(output, "- %s\n  %s\n", messages[i], errors[i]);
+			goto free_and_return;
+		}
+		fprintf(output, "+ %s\n", messages[i]);
+	}
+	if(i < message_crs)
+	{
+		fputs("too many errors logged\n", output);
+		for( ; i < message_crs; i++)
+			fprintf(output, "- %s\n", messages[i]);
+		goto free_and_return;
+	}
+
+	status = 1;
+
+	free_and_return:
+	log_set_callback(log_callback_prv);
+	if(table)
+		table_free(table);
+
+	fputs("\n", output);
+	fflush(output);
+
+	if(output != stdout)
+	if(status)
+		puts("PASS");
+	else
+		puts("FAIL");
+
+	return status;
+}
+
+/******************************************************************************/
+
 int test_library(FILE *output)
 {
 	int pass_cnt, try_cnt;
@@ -476,6 +646,7 @@ int test_library(FILE *output)
 	try_cnt++;  pass_cnt += test_table_override_with_lookup(output);
 	try_cnt++;  pass_cnt += test_cursor(output);
 	try_cnt++;  pass_cnt += test_mapping_with_capital(output);
+	try_cnt++;  pass_cnt += test_table_errors(output);
 
 	if(output != stdout)
 	{

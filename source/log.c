@@ -36,14 +36,23 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 #define LOG_MESSAGE_MAX 0x200
 
+/* Because there is no log_init, this need to be set when library is loaded.
+*/
+static void (*log_callback)(const int level, const char *message) = NULL;
+
 /******************************************************************************/
 
-static void (*log_callback)(const int level, const char *message) = NULL;
+void (*log_get_callback(void))(const int level, const char *message)
+{
+	return log_callback;
+}
 
 void log_set_callback(void (*callback)(const int level, const char *message))
 {
 	log_callback = callback;
 }
+
+/******************************************************************************/
 
 void log_message(const enum log_level level, const char *format, ...)
 {

@@ -32,11 +32,6 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 int louis_get_version(char *version, const int version_max);
 
 
-/* Sets the function called whenever a log message is called, or NULL to clear
- * the function.
-*/
-void louis_set_log_callback(void (*callback)(const int level, const char *message));
-
 #define LOUIS_LOG_ALL      1
 #define LOUIS_LOG_TRACE    2
 #define LOUIS_LOG_DEBUG    3
@@ -44,6 +39,18 @@ void louis_set_log_callback(void (*callback)(const int level, const char *messag
 #define LOUIS_LOG_WARNING  5
 #define LOUIS_LOG_ERROR    6
 #define LOUIS_LOG_FATAL    7
+
+
+/* Returns the function called whenever a log message is called, or NULL if none
+ * is set.
+*/
+void (*louis_get_log_callback(void))(const int level, const char *message);
+
+
+/* Sets the function called whenever a log message is called, or NULL to clear
+ * the function.
+*/
+void louis_set_log_callback(void (*callback)(const int level, const char *message));
 
 
 /* Copies at most paths_max - 1 of the current paths into paths.  The copied

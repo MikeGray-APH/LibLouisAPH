@@ -587,10 +587,7 @@ static int compile_mode(void)
 	name_len = token_len;
 
 	if(!mode_compile(&mode_auto))
-	{
-		FREE(name);
 		return 0;
-	}
 
 	if(utf16_is_equal_cchars(name, name_len, "nocontract", 10))
 	{
@@ -833,6 +830,12 @@ static int compile_pattern(void)
 	if(!token_parse())
 		goto return_fail;
 
+	token_convert_escapes();
+	if(token_len <= 0)
+	{
+		log_message(LOG_ERROR, "%s:%d  invalid pattern name", table_file_names[include_depth], table_file_lines[include_depth]);
+		return 0;
+	}
 	token_tag = token_crs;
 	tag_len = token_len;
 
@@ -923,6 +926,11 @@ static int compile_filter(void)
 		goto return_fail;
 
 	token_convert_escapes();
+	if(token_len <= 0)
+	{
+		log_message(LOG_ERROR, "%s:%d  invalid filter name", table_file_names[include_depth], table_file_lines[include_depth]);
+		return 0;
+	}
 	name = token_crs;
 	name_len = token_len;
 
@@ -940,7 +948,7 @@ static int compile_filter(void)
 			goto return_fail;
 		before_len = pattern_compile(pattern, PATTERN_MAX, token_crs, token_len, table->attrs_chars, table->subpatterns);
 		if(!before_len)
-			goto return_fail_free;
+			goto return_fail;
 		pattern_reverse(pattern);
 		before = MALLOC((before_len + 1) * sizeof(Unicode));
 		if(!before)
@@ -965,7 +973,7 @@ static int compile_filter(void)
 			goto return_fail;
 		after_len = pattern_compile(pattern, PATTERN_MAX, token_crs, token_len, table->attrs_chars, table->subpatterns);
 		if(!after_len)
-			goto return_fail_free;
+			goto return_fail;
 		after = MALLOC((after_len + 1) * sizeof(Unicode));
 		if(!after)
 		{
@@ -1084,7 +1092,11 @@ static int compile_uses(void)
 	if(token_is_equal("-", 1))
 		rule_filter_forward = NULL;
 	else if(!token_is_equal("=", 1))
+	{
 		rule_filter_forward = token_get_filter();
+		if(!rule_filter_forward)
+			goto return_fail;
+	}
 
 	if(!token_parse())
 	{
@@ -1095,7 +1107,11 @@ static int compile_uses(void)
 	if(token_is_equal("-", 1))
 		rule_filter_backward = NULL;
 	else if(!token_is_equal("=", 1))
+	{
 		rule_filter_backward = token_get_filter();
+		if(!rule_filter_backward)
+			goto return_fail;
+	}
 
 	if(!token_parse())
 	{
@@ -1792,7 +1808,7 @@ static int do_macro(void)
 		if(args_cnt >= MACRO_ARGUMENTS_MAX)
 		{
 			macro->processing = 0;
-			log_message(LOG_ERROR, "%s:%d  too mant args for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], macro->ctag, macro->file_name, macro->file_line);
+			log_message(LOG_ERROR, "%s:%d  too many args for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], macro->ctag, macro->file_name, macro->file_line);
 			return 0;
 		}
 	}
@@ -1822,10 +1838,16 @@ static int do_macro(void)
 					arg = 8 - (u'9' - macro->lines[i][off]);
 					if(arg >= args_cnt)
 					{
-						log_message(LOG_ERROR, "%s:%d  $%d over argument count %d for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], arg, args_cnt, macro->ctag, macro->file_name, macro->file_line);
-						continue;
+						macro->processing = 0;
+						log_message(LOG_ERROR, "%s:%d  $%d over argument count %d for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], arg + 1, args_cnt, macro->ctag, macro->file_name, macro->file_line);
+						return 0;
 					}
-					ASSERT(args_lens[arg] + crs < INPUT_LINE_MAX)
+					if(args_lens[arg] + crs >= INPUT_LINE_MAX)
+					{
+						macro->processing = 0;
+						log_message(LOG_FATAL, "%s:%d  $%d caused buffer overflow for macro @%s, defined at %s:%d", table_file_names[include_depth], table_file_lines[include_depth], arg + 1, macro->ctag, macro->file_name, macro->file_line);
+						return 0;
+					}
 					for(j = 0; j < args_lens[arg]; j++)
 						line[crs++] = args[arg][j];
 					off++;
@@ -2058,7 +2080,8 @@ struct table* table_compile_from_file(const char *file_name)
 	macro_free(macros);
 	macros = NULL;
 
-	/*   this could happen if file_name was a directory   */
+	/*   this could happen if file_name was a directory
+	     or an empty file   */
 	if(!table_file_lines[0])
 	{
 		FREE(table->file_name);

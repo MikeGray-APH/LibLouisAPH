@@ -39,6 +39,12 @@ int louis_get_version(char *version, const int version_max)
 }
 
 ATTRIBUTE_DLL_EXPORT
+void (*louis_get_log_callback(void))(const int level, const char *message)
+{
+	return log_get_callback();
+}
+
+ATTRIBUTE_DLL_EXPORT
 void louis_set_log_callback(void (*callback)(const int level, const char *message))
 {
 	log_set_callback(callback);
