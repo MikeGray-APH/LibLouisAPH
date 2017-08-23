@@ -78,7 +78,8 @@ int louis_translate_forward(
 	const char *table_names,
 	const char *conversion_name,
 	int *chars_to_dots_map,
-	int *dots_to_chars_map);
+	int *dots_to_chars_map,
+	int *cursor);
 
 
 /* Performs backward translation, using table_names and conversion_name, of at
@@ -98,7 +99,8 @@ int louis_translate_backward(
 	const char *table_names,
 	const char *conversion_name,
 	int *dots_to_chars_map,
-	int *chars_to_dots_map);
+	int *chars_to_dots_map,
+	int *cursor);
 
 
 /* Converts at most chars_len of chars from text to braille cells using
