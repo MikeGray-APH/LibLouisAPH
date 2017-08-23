@@ -33,9 +33,14 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 ATTRIBUTE_DLL_EXPORT
 int louis_get_version(char *version, const int version_max)
 {
-	strncpy(version, VERSION, version_max);
-	version[version_max - 1] = 0;
-	return 5;
+	int version_len;
+
+	version_len = strlen(VERSION);
+	if(version_len > version_max - 1)
+		version_len = version_max - 1;
+	strncpy(version, VERSION, version_len + 1);
+	version[version_len] = 0;
+	return version_len;
 }
 
 ATTRIBUTE_DLL_EXPORT
