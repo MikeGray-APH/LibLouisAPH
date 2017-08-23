@@ -212,7 +212,7 @@ build/tools:
 
 ################################################################################
 
-test: test-lib test-link
+test: test-lib test-link test-tools
 
 test-lib: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
 test-lib: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
@@ -238,6 +238,9 @@ test-link: dll build/exe-test-link | build/test
 build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
 	$(CC) -o $@ build/objects/$(OBJ_TEST_LINK) $(LDFLAGS)
 
+test-tools: tools | build/test
+	@./test/tools.sh
+
 test-opt: CPPFLAGS += -I source/output -D OUTPUT
 test-opt: CFLAGS += -O3 $(CWARNS_OPT)
 test-opt: build/exe-test-opt | build/test
@@ -251,7 +254,7 @@ build/exe-test-opt: $(OBJS_TEST_OPT_BUILD)
 build/test:
 	mkdir -p build/test
 
-.PHONY: test test-lib test-db test-link test-opt
+.PHONY: test test-lib test-db test-link test-tools test-opt
 
 ################################################################################
 
