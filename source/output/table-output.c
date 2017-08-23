@@ -398,7 +398,7 @@ static void rules_output(FILE *output, const struct rule *const*rule_hash, const
 	fprintf(output, "most = %d\n", most);
 }
 
-void table_output(FILE *output, const struct table const *table)
+void table_output(FILE *output, const struct table *table)
 {
 	int i;
 

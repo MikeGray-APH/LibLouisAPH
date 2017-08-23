@@ -30,7 +30,7 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 /******************************************************************************/
 
-void conversion_output(FILE *output, const struct conversion const*conversion);
+void conversion_output(FILE *output, const struct conversion *conversion);
 
 /******************************************************************************/
 

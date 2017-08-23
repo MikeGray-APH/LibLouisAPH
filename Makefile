@@ -21,6 +21,7 @@
 
 VERSION := 0.0.0
 
+CC = gcc
 CPPFLAGS = -D VERSION=\"$(VERSION)\" -I source -I source/language
 CFLAGS = -std="c11"
 LDFLAGS =
@@ -106,8 +107,6 @@ OBJS_TRANSLATE := \
 	build/output/utf-output.o \
 	build/tools/lou_translate.o \
 
-CC = gcc
-
 ################################################################################
 
 CWARNS_DEBUG := \
@@ -117,21 +116,18 @@ CWARNS_DEBUG := \
 	-Wcast-align \
 	-Wcast-qual \
 	-Wfloat-equal \
+	-Wlogical-op \
 	-Wredundant-decls \
 	-Wshadow \
 	-Wstrict-prototypes \
 	-Wundef \
 	-Wwrite-strings \
-	-Wlogical-op \
+	-Wunused \
 	-Wno-parentheses \
+	-Wno-unknown-warning-option \
 	-Wno-unused-function \
 	-Wno-unused-variable \
 	-Wno-unused-but-set-variable \
-
-#	-Wno-unused-label \
-#	-Wno-unused-value \
-#	-Wno-unused-parameter \
-#	-Wno-unused-but-set-parameter \
 
 CWARNS_OPT := \
 	-Werror \
@@ -141,17 +137,16 @@ CWARNS_OPT := \
 	-Wcast-align \
 	-Wcast-qual \
 	-Wfloat-equal \
+	-Wlogical-op \
 	-Wredundant-decls \
 	-Wshadow \
 	-Wstrict-prototypes \
 	-Wundef \
 	-Wwrite-strings \
-	-Wlogical-op \
-	-Winline \
 	-Wunused \
-	-Wwrite-strings \
-	-Wno-parentheses \
 	-Wno-inline \
+	-Wno-parentheses \
+	-Wno-unknown-warning-option \
 
 ################################################################################
 

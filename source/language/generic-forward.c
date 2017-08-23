@@ -165,7 +165,7 @@ static int convert_user_indicators(struct translate *translate)
 
 /******************************************************************************/
 
-static int get_after_next_delimiter(const struct translate *translate, const struct table *table UNUSED, const int at)
+static int get_after_next_delimiter(const struct translate *translate, const int at)
 {
 	int i;
 
@@ -188,7 +188,7 @@ static int is_word_start(const unsigned char *words, const struct translate *tra
 		return 0;
 
 	if(translate_on_marker_at(translate, at))
-		return is_word_start(words, translate, get_after_next_delimiter(translate, NULL, at));
+		return is_word_start(words, translate, get_after_next_delimiter(translate, at));
 
 	if(!translate_has_attributes_at(translate, at, CHAR_SPACE))
 		return 1;

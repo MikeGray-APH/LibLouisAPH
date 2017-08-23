@@ -30,7 +30,7 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 /******************************************************************************/
 
-void table_output(FILE *output, const struct table const*table);
+void table_output(FILE *output, const struct table *table);
 
 /******************************************************************************/
 

@@ -39,30 +39,26 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 /******************************************************************************/
 
-/*   specific gcc macros   */
+/*   specific gnu macros   */
 #ifdef __GNUC__
-
-/*   temporary unused to be removed for release builds   */
-#define UNUSED  __attribute__((unused))
 
 #define ATTRIBUTE_FUNCTION_MALLOC         __attribute__((malloc))
 #define ATTRIBUTE_UNUSED                  __attribute__((unused))
 
 #if defined __MINGW32__ || defined __MINGW64__
 #define ATTRIBUTE_DLL_EXPORT              __attribute__((dllexport))
-//#define ATTRIBUTE_DLL_EXPORT              __declspec(dllexport)
 #else
 #define ATTRIBUTE_DLL_EXPORT              __attribute__((visibility("default")))
 #endif
 
-#else /*   __GNUC__   */
+#else
 
 #define ATTRIBUTE_FUNCTION_MALLOC
 #define ATTRIBUTE_DLL_EXPORT
 #define ATTRIBUTE_UNUSED
 #define ATTRIBUTE_DLL_EXPORT
 
-#endif /*   __GNUC__   */
+#endif
 
 /******************************************************************************/
 

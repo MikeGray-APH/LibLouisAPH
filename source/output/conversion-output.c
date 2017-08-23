@@ -31,7 +31,7 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 /******************************************************************************/
 
 #if 1
-void conversion_output(FILE *output, const struct conversion const*conversion)
+void conversion_output(FILE *output, const struct conversion *conversion)
 {
 	Unicode uchar, cell;
 	int x, y;
@@ -67,7 +67,7 @@ void conversion_output(FILE *output, const struct conversion const*conversion)
 	fflush(output);
 }
 #else
-void conversion_output(FILE *output, const struct conversion const*conversion)
+void conversion_output(FILE *output, const struct conversion *conversion)
 {
 	int x, y;
 
