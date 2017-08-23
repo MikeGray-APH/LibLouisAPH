@@ -1,0 +1,107 @@
+#   9.2.1 page 93
+##the set of real numbers, ℝ
+##! set ( r1l numb}s1 `2;,r
+
+\Bitalic\Bp\Eitalic\Eneumonia .2PNEUMONIA
+"\Bitalic\B8\Eitalic\E chickens!" ".2#H *ICK5S6"
+"stor\Buline\By\Euline\E stor\Buline\Bi\Euline\Ees" "/OR_2Y /OR_2IES"
+"24 should be \Buline\B3\Euline\E4" "#BD %D 2 _2#CD"
+"\Bbold\Bb\Ebold\Eright \Bbold\Bb\Ebold\Elue \Bbold\Bb\Ebold\Eall" "^2B\"R ^2BLUE ^2BALL"
+#27\Buline\B.\E9uline\E #BG_24#I
+"Stop\Bbold\B!\Ebold\E May I help\Bbold\B?\Ebold\E" ",/OP^26 ,MAY ,I HELP^28"
+83\Buline\B%\Euline\E #HC_2.0
+"It will cost \Bbold\B$\Ebold\E45 not \Bbold\B€\Ebold\E45." ",X W CO/ ^2@S#DE N ^2@E#DE4"
+"For help, click the \Bbold\B?\Ebold\E icon." ",= HELP1 CLICK ! ^2;8 ICON4"
+"change \Bitalic\By\Eitalic\E to \Bitalic\Bi\Eitalic\E" "*ANGE .2;Y TO .2I"
+"5\Bbold\B5\Ebold\E not 5\Bbold\B6\Ebold\E" "#E^2#E N #E^2#F"
+
+#   9.2.2 page 94
+
+"\Buline\BI\Euline\E \Buline\Bh\Euline\Eave \Buline\Be\Euline\Enough \Buline\Bk\Euline\Enowledge." "_2,I _2H _25 _2K4"
+"(\"\Bitalic\BB\Eitalic\Eeyond \Bitalic\Bb\Eitalic\Eelief!\")" "\"<8.2,2Y .22LIEF60\">"
+"\Bbold\BW\Ebold\Ehi\Bbold\Bc\Ebold\Eh b\Bbold\Bo\Ebold\Ewl is brok\Bbold\Be\Ebold\En?" "^2,:I^2* B^2[L IS BROK^258"
+"M is for \Bitalic\BM\Eitalic\Eother" ";,M IS = .2,\"M"
+
+#   9.2.3 page 94
+
+"mothe\Bbold\Br\Ebold\E  mo\Bbold\Bt\Ebold\Eher  moth\Bbold\Be\Ebold\Er  mot\Bbold\Bh\Ebold\Eer" "MO!^2R  MO^2!R  MO?^2]  MOT^2H]"
+
+#   9.3.2 page 94
+
+"Who is \Buline\Bfor\Euline\E the people?" ",:O IS _1= ! P8"
+"She \Bbold\Bwas\Ebold\E right." ",%E ^10 \"R4"
+\Bitalic\BR.S.V.P.\Eitalic\E .1,R4,S4,V4,P4
+"\Bitalic\Bl'oeil-de-boeuf\Eitalic\E (Fr.: bull's eye)" ".1L'OEIL-DE-BOEUF \"<;,FR43 BULL'S EYE\">"
+"\Bitalic\Bone two–three\Eitalic\E" ".1\"O .1TWO,-?REE"
+"\Buline\B1,500,000\Euline\E \Buline\B1⠐500⠐000\Euline\E" "_1#A1EJJ1JJJ _1#A\"EJJ\"JJJ"
+\Bitalic\B1939-1945\Eitalic\E .1#AICI-#AIDE
+
+##on the paper was written
+##on ! pap} 0 writt5 `1#eee"aihb
+
+brief\Bitalic\Bly\Eitalic\E BRIEF.1LY
+day\Buline\Btime\Euline\E \"D_1\"T
+
+#~bold
+#    +++++++
+#ac4h~1#ffff444
+
+"Go to \Bitalic\Bhttp://www.wikipedia.org\Eitalic\E for general information." ",G TO .1HTTP3_/_/WWW4WIKIP$IA4ORG = G5]AL 9=MA;N4"
+"the \Bitalic\Bionogenic\Eitalic\E (ion-forming) \Bitalic\Bform\Eitalic\E" "! .1IONOG5IC \"<ION-=M+\"> .1=M"
+##   switched italic and bold
+##   444 ref}r$ to z ~1sea ~1waves or "<f ! ,japanese"> ~1.1tsunami4
+"… referred to as \Bbold\Bsea waves\Ebold\E or (from the Japanese) \Bitalic\B\Bbold\Btsunami.\Ebold\E\Eitalic\E" "444 REF]R$ TO Z ^1SEA ^1WAVES OR \"<F ! ,JAPANESE\"> .1^1TSUNAMI4"
+HarperCollins\Bitalic\BPublishers\Eitalic\E ,H>P],COLL9S.1,PUBLI%]S
+"\Bbold\BN(\Bitalic\BS\Eitalic\E)\Ebold\E is called the \Bbold\Bempty set\Ebold\E or \Bbold\Bnull set.\Ebold\E" "^1,N\"<.2,S\"> IS CALL$ ! ^1EMPTY ^1SET OR ^1NULL ^1SET4"
+
+#   9.4.4 page 96
+
+##Today's lunchbox note says
+##,td's lun*box note says `7,y c d x6`'
+"Charles Dickens wrote \Bitalic\BOliver Twist, Great Expectations\Eitalic\E and \Bitalic\BA Tale of Two Cities.\Eitalic\E" ",*>LES ,DICK5S WROTE .7,OLIV] ,TWI/1 ,GRT ,EXPECTA;NS.' & .7,A ,TALE ( ,TWO ,CITIES4.'"
+"\Bbold\BMaybe\Ebold\E as an adverb is one word: \Bitalic\BMaybe it will rain tomorrow.\Eitalic\E \Bbold\BMay be\Ebold\E as a verb phrase is two words: \Bitalic\BHe may be home soon.\Eitalic\E" "^1,MAYBE Z AN ADV]B IS \"O ^W3 .7,MAYBE X W RA9 TM4.' ^1,MAY ^12 Z A V]B PHRASE IS TWO ^WS3 .7,HE MAY 2 HOME SOON4.'"
+"Click the \Bbold\BUp One Level\Ebold\E button." ",CLICK ! ^7,UP ,\"O ,LEVEL^' BUTTON4"
+"When using the typewriter, \Buline\Bwords were underlined\Euline\E but, when using a word processor, \Bitalic\Bthe italic font is preferred.\Eitalic\E" ",:5 US+ ! TYPEWRIT]1 _7^WS 7 \"UL9$_' B1 :5 US+ A ^W PROCESSOR1 .7! ITALIC FONT IS PREF]R$4.'"
+##"In C:\\My Documents\\\Buline\Bletter to dad 041023\Euline\E.doc, the underlined part is the filename." ",9 ,C3_*,MY ,DOCU;TS_*_7LETT]\"\" TO DAD #JDAJBC_'4DOC1 ! \"UL9$ \"P IS ! FILE\"N4"
+"In C:\\My Documents\\\Buline\Bletter to dad 041023\Euline\E.doc, the underlined part is the filename." ",9 ,C3_*,MY ,DOCU;TS_*_7LETT] TO DAD #JDAJBC_'4DOC1 ! \"UL9$ \"P IS ! FILE\"N4"
+\Bbold\Btext\Ebold\Ebook ^1TEXT^'BOOK
+\Buline\Band\Euline\E/or _1&_'_/OR
+"\Buline\Bsyl\Euline\Elable \Buline\Bem\Euline\Ephasis" "_1SYL_'LABLE _1EM_'PHASIS"
+"\Bitalic\BRadar\Eitalic\E is from \Bitalic\Bra\Eitalic\Edio \Bitalic\Bd\Eitalic\Eetecting \Bitalic\Ba\Eitalic\End \Bitalic\Br\Eitalic\Eanging." ".1,RAD> IS F .1RA.'DIO .2DETECT+ .2& .2RANG+4"
+Harper\Bitalic\BFlamingo\Eitalic\ECanada ,H>P].1,FLAM+O.',CANADA
+"the \Bitalic\BGlobe\Eitalic\E's business section" "! .1,GLOBE.''S BUSI;S SEC;N"
+
+#   9.7.1 page 99
+
+#~italic
+#               ++++++++++++++++
+#~passage_break
+#       +                       +
+#plays (such as Romeo and Juliet)
+#plays "<s* z .7,romeo & ,juliet.'">
+#~passage_break
+# +                       +
+#~bold
+# ++++++++++++++++++++++++
+#"Venite exultemus Domino!" his father sang.
+#8~7,venite exultemus ,domino6~'0 8 "f sang4
+
+#   9.7.2 page 99
+
+"\Bitalic\BHänsel und Gretel,\Eitalic\E a fairy tale" ".7,H^3ANSEL UND ,GRETEL1.' A FAIRY TALE"
+out-\Bitalic\Bof-the\Eitalic\E-way \\-.1(-!.'-WAY
+
+##~passage_break
+##                           +
+#~italic
+#+++++++++++++++++++++++++++
+#"Brevity is the soul of wit.–Shakespeare" ".7,BREV;Y IS ! S\\L ( WIT4.',,%AKESPE>E"
+
+"Remember \Bitalic\BDo unto others\Eitalic\E …" ",REMEMB] .7,D UNTO O!RS.' 444"
+
+#   9.7.3 page 100
+
+"Did you read \Buline\BHamlet?\Euline\E" ",DID Y R1D _1,HAMLET8"
+"\"\Bitalic\BHelp!\Eitalic\E I'm \Bitalic\Bfalling.\"\Eitalic\E" "8.1,HELP6 ,I'M .1FALL+40"
+"The object of the following sentence is underlined: Lucy Maud Montgomery wrote \Bitalic\B\Buline\BAnne of Green Gables.\Euline\E\Eitalic\E" ",! OBJECT ( ! FOLL[+ S5T;E IS \"UL9$3 ,LUCY ,MAUD ,MONTGOM]Y WROTE .7_7,ANNE ( ,GRE5 ,GABLES4_'.'"
+"the bank's dictum: \Bitalic\B\Bbold\BPecunia Felicitatibus Honoratur.\Ebold\E Money welcomed gladly.\Eitalic\E" "! BANK'S DICTUM3 .7^7,PECUNIA ,FELICITATIBUS ,HONORATUR4^' ,M\"OY WELCOM$ GLADLY4.'"

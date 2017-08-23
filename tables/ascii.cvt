@@ -1,0 +1,91 @@
+# LibLouisAPH Braille Translation and Back-Translation Library
+#
+# Copyright (C) 2017 American Printing House for the Blind, Inc.
+#
+# This file is part of LibLouisAPH.
+#
+# LibLouisAPH is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation, either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# LibLouisAPH is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
+
+################################################################################
+
+unknown ¿
+
+convert 0         \s
+convert 2346      !
+convert 5         "
+convert 3456      #
+convert 1246      $
+convert 146       %
+convert 12346     &
+convert 3         '
+convert 12356     (
+convert 23456     )
+convert 16        *
+convert 346       +
+convert 6         ,
+convert 36        -
+convert 46        .
+convert 34        /
+
+convert 356       0
+convert 2         1
+convert 23        2
+convert 25        3
+convert 256       4
+convert 26        5
+convert 235       6
+convert 2356      7
+convert 236       8
+convert 35        9
+
+convert 156       :
+convert 56        ;
+convert 126       <
+convert 123456    =
+convert 345       >
+convert 1456      ?
+convert 4         @   `
+
+convert 1         A
+convert 12        B
+convert 14        C
+convert 145       D
+convert 15        E
+convert 124       F
+convert 1245      G
+convert 125       H
+convert 24        I
+convert 245       J
+convert 13        K
+convert 123       L
+convert 134       M
+convert 1345      N
+convert 135       O
+convert 1234      P
+convert 12345     Q
+convert 1235      R
+convert 234       S
+convert 2345      T
+convert 136       U
+convert 1236      V
+convert 2456      W
+convert 1346      X
+convert 13456     Y
+convert 1356      Z
+
+convert 246       [   {
+convert 1256      \\   |
+convert 12456     ]   }
+convert 45        ^   ~
+convert 456       _

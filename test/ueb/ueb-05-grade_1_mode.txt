@@ -1,0 +1,128 @@
+#   5.2.1 page 51
+
+"the vowels are: a, e, i, o and u" "! V[ELS >E3 A1 ;E1 I1 O & ;U"
+"Mrs X and Mr O" ",MRS ;,X & ,MR ,O"
+"J. S. Bach" ";,J4 ;,S4 ,BA*"
+"22b 22B 22p" "#BB;B #BB,B #BBP"
+"adagio e cantabile" "ADAGIO ;E CANTABILE"
+"Add either ? or ! to each sentence." ",ADD EI ;8 OR 6 TO EA* S5T;E4"
+##"In Smith⁵⁶ we find …" ",9 ,smi?;9#ef we f9d 444"
+"jim@take2.com" "JIM@ATAKE#B4;COM"
+
+#   5.3.2 page 52
+
+##"I spell it u-n-t-i-d-y." ",i spell x ;;u-n-t-i-d-y4"
+"I spell it \H⠰⠰\Hu-n-t-i-d-y." ",I SPELL X ;;U-N-T-I-D-Y4"
+
+##E
+##-
+##R
+##replace I with R E
+##replace ,i ) ;;(,e./,r)
+
+#   5.4.2 page 52
+
+##"He spelt H-o C-h-i M-i-n-h City." ",HE SPELT ;;;,H-O ,C-H-I ,M-I-N-H;' ,C;Y4"
+"He spelt \H⠰⠰⠰\HH-o C-h-i M-i-n-h\H⠰⠄\H City." ",HE SPELT ;;;,H-O ,C-H-I ,M-I-N-H;' ,C;Y4"
+
+##"Factorise: y = x²−4; y = x²−2x; y = x−x²." ",factorise3 ;;;y \"7 x9#b\"-#d2  y \"7 x9#b\"-#bx2 y \"7 x\"-x9#b4;'"
+
+#   5.5.2 page 53
+
+##p-p-p-p-p-p-p-perishing ;;p-p-p-p-p-p-p-;'p}i%+
+\H⠰⠰\Hp-p-p-p-p-p-p-\H⠰⠄\Hperishing ;;P-P-P-P-P-P-P-;'P]I%+
+
+#   5.6.1 page 53
+
+1st #AST
+shopping4you %OPP+#DYOU
+4starhotel@webnet.com #DSTARHOTEL@AWEBNET4COM
+
+#   5.6.2 page 53
+
+##"I'll go 3rd–you go 4th." ",I'LL G #CRD,-Y G #DTH4"
+"I'll go 3rd-you go 4th." ",I'LL G #CRD-Y G #DTH4"
+3-D #C-;,D
+3-dimensional #C-DIM5.NAL
+"5-CD set" "#E-;,,CD SET"
+##c:\\personal\\2009finances C3_*P]SONAL_*#BJJI;'F9.ES
+c:\\personal\\2009\H⠰⠄\Hfinances C3_*P]SONAL_*#BJJI;'F9.ES
+
+#   5.7.1 page 54
+
+b–e ;B,-;E
+b-1 ;B-#A
+B-team ;,B-T1M
+ev-er-y-which-way EV-]-;Y-:-WAY
+"ending in –s or –es" "5D+ 9 ,-;S OR ,-ES"
+V–VII ;,V,-,,VII
+viii-x VIII-;X
+"What have you d–" ",:AT H Y ;D,-"
+"What have you d…" ",:AT H Y ;D444"
+"p. 7" ";P4 #G"
+##.7 #4G   6.2.1 page 60
+##p.7 P4#G
+p7 P#G
+"the letters \"a\" to \"g\"" "! LRS 8A0 TO 8;G0"
+"Sections (H)
+"Did 'e 'n' Ma get to 't?" ",DID ';E ';N' ,MA GET TO ';T8"
+"c/o maître d'" "C_/O MA^%ITRE ;D'"
+"the people's right" "! P'S \"R"
+"p's and q's." ";P'S & ;Q'S4"
+"letter \Bitalic\Bd\Eitalic\E" "LR .2;D"
+"\Bitalic\B\"X marks the spot.\"\Eitalic\E" ".78;,X M>KS ! SPOT40.'"
+"Dr J. F. Smith, M.D." ",DR ;,J4 ;,F4 ,SMI?1 ,M4,D4"
+##s-p-e-l-l-i-n-g ;;S-P-E-L-L-I-N-G
+\H⠰⠰\Hs-p-e-l-l-i-n-g ;;S-P-E-L-L-I-N-G
+
+#   5.7.2 page 55
+
+"CD-ROM" ";,,CD-,,ROM"
+"“Hm!” he mused." "8;,HM60 HE MUS$4"
+"Could you buy a CD/DVD?" ",CD Y BUY A ,,CD_/,,DVD8"
+"My friends are Fr Ted and Sr Ann." ",MY FRS >E ;,FR ,T$ & ,SR ,ANN4"
+"the Imm family" "! ;,IMM FAMILY"
+"al dente" ";AL D5TE"
+"Use the ALT key." ",USE ! ;,,ALT KEY4"
+"NEC (National Executive Committee)" ";,,NEC \"<,NA;NAL ,EXECUTIVE ,COMMITTEE\">"
+##"ozbrl (Australian listserve)" ";;OZBRL \"<,AU/RALIAN LI/S]VE\">"
+"\H⠰⠰\Hozbrl (Australian listserve)" ";;OZBRL \"<,AU/RALIAN LI/S]VE\">"
+
+#   5.8.1
+
+"T-SHIRTS FOR SALE" ";,,,T-%IRTS = SALE,'"
+
+#   5.9.1 page 56
+
+##un-e-mo-tion-al ;;un-e-mo-tion-al [rather than] un-;e-mo-tion-;al
+##c-h-e-e-s-e ;;C-H-E-E-S-E
+\H⠰⠰\Hc-h-e-e-s-e ;;C-H-E-E-S-E
+##br-r-r-r ;;BR-R-R-R
+\H⠰⠰\Hbr-r-r-r ;;BR-R-R-R
+d-don’t ;D-DON'T
+##d-d-d-don’t ;;D-D-D-DON'T
+\H⠰⠰\Hd-d-d-don’t ;;D-D-D-DON'T
+##about-f-f-f-face AB-;;F-F-F-FACE
+about-\H⠰⠰\Hf-f-f-face AB-;;F-F-F-FACE
+
+##d-d-d-dictionary ;d-;d-;d-dic;n>y [rather than] ;;d-d-d-;'dic;n>y
+##p-p-please ;p-;p-pl1se [rather than] ;;p-p-please
+
+##s-s-s-s-super-st-stition ;;S-S-S-S-;'SUP]-ST-/I;N
+\H⠰⠰\Hs-s-s-s-\H⠰⠄\Hsuper-st-stition ;;S-S-S-S-;'SUP]-ST-/I;N
+
+#   5.9.2 page 56
+##xyxba= ;;;x9(a./b)y "7 x;' [or] ;;x9(a./b)y "7 ;x [rather than] x;9;(a./b;)y "7 ;x
+
+#   5.10.1 page 57
+##"The engine stuttered rm-m-m-m-m then rm-mm-mm-mm then settled into r-mmmmmmm." ",! 5G9E /UTT]$ ;;RM-M-M-M-M !N ;;RM-MM-MM-MM !N SETTL$ 9TO ;;R-MMMMMMM4"
+"The engine stuttered \H⠰⠰\Hrm-m-m-m-m then \H⠰⠰\Hrm-mm-mm-mm then settled into \H⠰⠰\Hr-mmmmmmm." ",! 5G9E /UTT]$ ;;RM-M-M-M-M !N ;;RM-MM-MM-MM !N SETTL$ 9TO ;;R-MMMMMMM4"
+
+#   5.11.1 page 57
+##TODO:  set mode for entire translation
+##"\H⠰⠰⠰\HC is for candy." ";;;,C IS FOR CANDY4"
+##"\S⠰⠰⠰\SC is for candy." ",C IS FOR CANDY4"
+##"C is for candy." ",C IS FOR CANDY4"
+##"Question 3c" ",QUESTION #C;C"
+
+#   5.10.1 page 57

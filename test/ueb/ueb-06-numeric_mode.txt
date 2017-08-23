@@ -1,0 +1,125 @@
+#   6.2.1 page 60
+
+62 #FB
+1959 #AIEI
+3,500 #C1EJJ
+8.93 #H4IC
+.7 #4G
+0.7 #J4G
+8,93 #H1IC
+,7 #1G
+0,7 #J1G
+"par. 4.2.2" "P>4 #D4B4B"
+##"4 500 000" "#D\"EJJ\"JJJ"
+4⠐500⠐000 #D\"EJJ\"JJJ
+"The temperature of the universe was 100,000,000,000,000,000,000,000,000,000,000°C." ",! TEMP]ATURE ( ! UNIV]SE 0 #AJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ^J,C4"
+##"The temperature of the universe was  100 000 000 000 000 000 000 000 000 000 000°C." ",! TEMP]ATURE ( ! UNIV]SE 0 #AJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ^J,C4"
+"The temperature of the universe was 100⠐000⠐000⠐000⠐000⠐000⠐000⠐000⠐000⠐000⠐000°C." ",! TEMP]ATURE ( ! UNIV]SE 0 #AJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ^J,C4"
+⅜ #C/H
+5⅜ #E#C/H
+
+#   6.3.1 page 61
+
+"7:30 a.m." "#G3#CJ A4M4"
+10:12:2009 #AJ3#AB3#BJJI
+9-10 #I-#AJ
+1914–18 #AIAD,-#AH
+2.5-5 #B4E-#E
+"8-cab fleet" "#H-CAB FLEET"
+"The score was 4–3" ",! SCORE 0 #D,-#C"
+"7−5 = 2" "#G\"-#E \"7 #B"
+2-½ #B-#A/B
+"¼-½ tsp" "#A/D-#A/B TSP"
+"6¼–6½" "#F#A/D,-#F#A/B"
+"1/4 cup" "#A_/#D CUP"
+"model 09/52" "MODEL #JI_/#EB"
+"on call 24/7" "ON CALL #BD_/#G"
+7(2) #G\"<#B\">
+7(b) #G\"<B\">
+4–7 #D,-#G
+4..7 #D44G
+4\Buline\B56\Euline\E7 #D_1#EF_'#G
+
+#   6.4.1 page 61
+
+##FAIL:  need way to mark period as not decimal
+"Piano Sonata No.16 in C major is K.545." ",PIANO ,SONATA ,NO4#AF 9 ;,C MAJOR IS ,K4#EDE4"
+"⅜ = .375" "#C/H \"7 #4CGE"
+
+#   6.5.2 page 62
+
+32 #CB
+3b #C;B
+3B #C,B
+3m #CM
+4.2 #D4B
+4.b #D4;B
+4.B #D4,B
+4.m #D4M
+report3.doc REPORT#C4;DOC
+report3.xls REPORT#C4XLS
+##"… in the Second World War² 1939–1945.³" "444 9 ! ,second ,_w ,w>;9#b #aici,-#aide49#c"
+
+#   6.5.3 page 62
+
+houses4lease H\\SES#DLEASE
+
+"He came 4th in the race." ",HE CAME #DTH 9 ! RACE4"
+
+#   6.5.4 page 63
+
+"If you go 1st–will I go 2nd?" ",IF Y G #AST,-W ,I G #BND8"
+##"If you go 1st‒will I go 2nd?" ",IF Y G #AST,-W ,I G #BND8"
+"I have a 6-CD boxed set." ",I H A #F-;,,CD BOX$ SET4"
+"There are 3 beds in this 4-bed ward." ",\"! >E #C B$S 9 ? #D-B$ W>D4"
+"in 1970–about March" "9 #AIGJ,-AB ,M>*"
+3-dimensional #C-DIM5.NAL
+3-D #C-;,D
+"The 6-can pack–under seat 6-c." ",! #F-C PACK,-\"U S1T #F-;C4"
+"only 4–more please" "ONLY #D,-M PL1SE"
+4-m #D-;M
+"20-yr period" "#BJ-;YR P]IOD"
+"20yr period" "#BJYR P]IOD"
+
+#   6.6.1 page 64
+
+##"population: 3 245 000" "POPULA;N3 #C\"BDE\"JJJ"
+"population: 3⠐245⠐000" "POPULA;N3 #C\"BDE\"JJJ"
+##"ISBN: 978⠐1⠐55468⠐513⠐4" ",,ISBN3 #IGH\"A\"EEDFH\"EAC\"D"
+"ISBN: 978⠐1⠐55468⠐513⠐4" ",,ISBN3 #IGH\"A\"EEDFH\"EAC\"D"
+##"phone: (61) 3⠐1234⠐5678" "PH\"O3 \"<#FA\"> #C\"ABCD\"EFGH"
+"phone: (61) 3⠐1234⠐5678" "PH\"O3 \"<#FA\"> #C\"ABCD\"EFGH"
+##"date: 1947⠐08⠐31" "DATE3 #AIDG\"JH\"CA"
+"date: 1947⠐08⠐31" "DATE3 #AIDG\"JH\"CA"
+"time: 16⠐00" "\"T3 #AF\"JJ"
+
+#   6.7.1 page 64
+
+7/11/59 #G_/#AA_/#EI
+7.11.59 #G4AA4EI
+1960's #AIFJ'S
+"'70s and '80s" "'#GJS & '#HJS"
+"10:30 a.m." "#AJ3#CJ A4M4"
+"10.30 am" "#AJ4CJ AM"
+$8.75 @S#H4GE
+£8.75 @L#H4GE
+R8,75 ,R#H1GE
+$1,500.00 @S#A1EJJ4JJ
+€1.500,00 @E#A4EJJ1JJ
+2nd #BND
+2d #B;D
+1er #A;ER
+"M4G 3E8" ",M#D,G #C,E#H"
+"W1N 9LF" ",W#A,N #I,,LF"
+"N12 7BT" ",N#AB #G,,BT"
+"(416) 486-2500" "\"<#DAF\"> #DHF-#BEJJ"
+"For a taxi call 13-cabs." ",= A TAXI CALL #AC-CABS4"
+"telephone 1300-vision" "TELEPH\"O #ACJJ-VI.N"
+1-800-SLEEP88 #A-#HJJ-,,SLEEP#HH
+"ISBN 0-14-300414-X" ",,ISBN #J-#AD-#CJJDAD-;,X"
+
+#   6.10.5 page 66
+
+"The temperature of the universe was 100,000,000,000,000,000,000,000,000,000,000°C." ",! TEMP]ATURE ( ! UNIV]SE 0 #AJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ1JJJ^J,C4"
+##"The temperature of the universe was 100 000 000 000 000 000 000 000 000 000 000°C." ",! TEMP]ATURE ( ! UNIV]SE 0 #AJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ^J,C4"
+"The temperature of the universe was 100⠐000⠐000⠐000⠐000⠐000⠐000⠐000⠐000⠐000⠐000°C." ",! TEMP]ATURE ( ! UNIV]SE 0 #AJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ\"JJJ^J,C4"

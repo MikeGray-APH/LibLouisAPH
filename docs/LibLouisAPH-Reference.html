@@ -1,0 +1,1187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+  <!-- This file was converted to xhtml by Writer2xhtml ver. 1.0.2. See http://writer2latex.sourceforge.net for more info. -->
+  <head>
+    <title></title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+    <style media="all" type="text/css">
+      body {font-family:'Liberation Serif',serif;font-size:12.0pt}
+      p.Standard {margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;border:none;padding:0;font-size:12.0pt}
+      p.TableContents {margin-left:0;margin-right:0;margin-top:0;margin-bottom:0;border:none;padding:0;font-size:12.0pt}
+      p.Title {margin-left:0;margin-right:0;margin-top:0.1665in;margin-bottom:0.0835in;border:none;padding:0;text-align:center;font-family:'Liberation Sans',sans-serif;font-weight:bold;font-size:28.0pt}
+      p.Heading {margin-left:0;margin-right:0;margin-top:0.1665in;margin-bottom:0.0835in;border:none;padding:0;font-family:'Liberation Sans',sans-serif;font-size:14.0pt}
+      p.HorizontalLine {margin-left:0;margin-right:0;margin-top:0.0in;margin-bottom:0.1965in;border-top:none;border-bottom:0.14pt double #808080;border-left:none;border-right:none;padding:0.0in;font-size:6.0pt}
+      h1 {margin-left:0;margin-right:0;margin-top:0.1665in;margin-bottom:0.0835in;border:none;padding:0;font-family:'Liberation Sans',sans-serif;font-weight:bold;font-size:18.2pt;clear:left}
+      h2 {margin-left:0;margin-right:0;margin-top:0.139in;margin-bottom:0.0835in;border:none;padding:0;font-family:'Liberation Sans',sans-serif;font-weight:bold;font-size:16.1pt;clear:left}
+    </style>
+  </head>
+  <body dir="ltr">
+    <p class="Title">LibLouisAPH</p>
+    <h1 id="toc0">Reference</h1>
+    <p class="Standard"> </p>
+    <h2 id="toc1">API</h2>
+    <p class="Standard"> </p>
+    <p class="Heading">Functions</p>
+    <p class="Standard"> </p>
+    <p class="Standard">LibLouisAPH keeps a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span> that is used to search for table and conversion files.  It is a string containing directory names separated by the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">path separator</span>.  The <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">path separator</span> is <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-style:normal;font-weight:normal">:</span> for POSIX systems (Linux and Macs), and <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-style:normal;font-weight:normal">;</span> for Windows systems.</p>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table9table" style="margin-top:0;margin-bottom:0;margin-right:auto;width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:100.0%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">void louis_get_version(char *version,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                       const int version_max)</p>
+          <table cellspacing="0" id="Table6table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">version</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Stored a copy of the library's version.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">version_max</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">The maximum number of characters that can be stored in <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">version</span>.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-size:12.0pt"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">void louis_set_log_callback(void (*callback)(const int level,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                                             const char *message))</p>
+          <table cellspacing="0" id="Table19table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">callback</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Function called when <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">message</span> is written to log with <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">level</span>, may be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-size:12.0pt"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-size:12.0pt">int louis_get_paths(unsigned short *paths,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-size:12.0pt">                   const int paths_max)</p>
+          <table cellspacing="0" id="Table1table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths</p>
+              </td>
+              <td style="border:none;padding:0.0382in;background-color:transparent;vertical-align:top;width:4.7264004in">
+                <p class="TableContents">Stored a copy of the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths_max</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">The maximum number of characters that can be stored in <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif">Returns the number of characters stored in <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths</span>.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard">
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">int </span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">louis_set_path</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">s</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">(</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">const unsigned short *paths)</span>
+          </p>
+          <table cellspacing="0" id="Table2table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="TableContents" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Sets the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span>.  Clears the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span> if <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths</span> is <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif">Returns the number of characters stored in the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span>, or 0 if an error occurred</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard">
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">int </span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">louis_add_path</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">s</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">(</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">const unsigned short *paths)</span>
+          </p>
+          <table cellspacing="0" id="Table7table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="TableContents" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">paths</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Appended to the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span> with <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">path separator</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="TableContents" style="font-family:&#39;Liberation Serif&#39;,serif">Returns the length of the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal;text-decoration:underline">current path list</span>.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">int louis_translate_forward(unsigned short *dots,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            const int dots_len,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            const unsigned short *chars,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            const int chars_len,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            const char *table_names,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            const char *conversion_name,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            int *chars_to_dots_map,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            int *dots_to_chars_map,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                            int *cursor)</p>
+          <table cellspacing="0" id="Table8table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="TableContents" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Stored the resulting forward translation in UTF-16LE.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_len</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Maximum number of characters that can be stored in dots.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="TableContents" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Text to be translated.  The text must be UTF-16LE.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_len</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Number of characters in chars.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">table_names</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Table file name list used for translation.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">conversion_name</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Conversion file name.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_to_dots_map</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Buffer to store mapping from chars to dots, may be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span> if <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_to_chars_map</span> is also <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_to_chars_map</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Buffer to store mapping from dots to chars, may be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span> if <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_to_dots_map</span> is also <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">cursor</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Stores the pre-translation cursor position and reset to the post-translation cursor position.  May be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif">Returns the length of the resulting forward translation, 0 if no processing was done and no forward translation was performed, and -1 if an error occurred.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard">
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">int </span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">louis_translate_</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">back</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">ward(unsigned short *</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">char</span>
+            <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">s,</span>
+          </p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             const int chars_len,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             const unsigned short *dots,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             const int dots_len,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             const char *table_names,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             const char *conversion_name,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             int *chars_to_dots_map,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             int *dots_to_chars_map,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">                             int *cursor)</p>
+          <table cellspacing="0" id="Table3table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="TableContents" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Stored the resulting backward translation UTF-16LE .</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_len</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Maximum number of characters that can be stored in dots.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="TableContents" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Text to be translated.  The text must be UTF-16LE.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_len</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Number of characters in chars.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">table_names</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Table file name list used for translation.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">conversion_name</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Conversion file name.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_to_dots_map</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Buffer to store mapping from chars to dots, may be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span> if <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_to_chars_map</span> is also <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_to_chars_map</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Buffer to store mapping from dots to chars, may be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span> if <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_to_dots_map</span> is also <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">cursor</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Stores the pre-translation cursor position and reset to the post-translation cursor position.  May be <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">NULL</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif">Returns the length of the resulting backward translation, 0 if no processing was done and no backward translation was performed, and -1 if an error occurred.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-size:12.0pt">int louis_convert_to(unsigned short *chars,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-size:12.0pt">                     const int chars_len)</p>
+          <table cellspacing="0" id="Table4table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars</p>
+              </td>
+              <td style="border:none;padding:0.0382in;background-color:transparent;vertical-align:top;width:4.7264004in">
+                <p class="TableContents">Characters to be converted.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars_len</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">The number of characters in <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">chars</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">conversion_name</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Conversion file name.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif">Returns 1 if successful, 0 if an error occurred.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-size:12.0pt">int louis_convert_from(unsigned short *dots,</p>
+          <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace;font-size:12.0pt">                       const int dots_len)</p>
+          <table cellspacing="0" id="Table5table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:30.002556%" />
+            <col style="width:69.997444%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dot</p>
+              </td>
+              <td style="border:none;padding:0.0382in;background-color:transparent;vertical-align:top;width:4.7264004in">
+                <p class="TableContents">Characters to be converted.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dots_len</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">The number of characters in <span style="font-family:&#39;Courier 10 Pitch&#39;,monospace">dot</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.9826in">
+                <p class="Standard" style="font-family:&#39;Courier 10 Pitch&#39;,monospace">conversion_name</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.7264004in">
+                <p class="Standard">Conversion file name.</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="border:none;padding:0.0382in;vertical-align:top">
+                <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif">Returns 1 if successful, 0 if an error occurred.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard"> </p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <p class="Heading">Control Characters</p>
+    <p class="Standard" style="margin-left:0.0in;margin-right:0.0in;text-indent:0.0in">The control characters can be changed in the table using the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">config</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">control</span> opcode.</p>
+    <p class="Standard" style="margin-left:0.0in;margin-right:0.0in;text-indent:0.0in"> </p>
+    <table cellspacing="0" id="Table25table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:15.001381%" />
+      <col style="width:29.998158%" />
+      <col style="width:55.00046%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">U+F001</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:2.0042in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">USER</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:3.7375002in">
+          <p style="margin:0;font-size:1px"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">U+F002</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:2.0042in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">BEGIN</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:3.7375002in">
+          <p style="margin:0;font-size:1px"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">U+F003</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:2.0042in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">END</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:3.7375002in">
+          <p style="margin:0;font-size:1px"> </p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <h2 id="toc2">Table</h2>
+    <p class="Standard"> </p>
+    <p class="Standard">When compiling, LibLouisAPH maintains a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule attributes</span> which is an attribute <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span> that is set for every <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">rule</span> or <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">match</span>.  LibLouisAPH also maintains <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule filters</span> which represents <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span>s that are applied to every <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">rule</span> or <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">match</span>.  The <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule filters</span> are two <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER</span>s, both forward and backwards, each containing two <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span>s that are checked against the characters that are before and after a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span>.</p>
+    <p class="Standard"> </p>
+    <p class="Standard">Blank lines and lines starting with <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">#</span> are ignored.  Also any characters after an opcode’s defined parameters are ignored, unless there are a variable number of parameters.  All table files are required to be in UTF-8 format.</p>
+    <p class="Standard"> </p>
+    <p class="Standard">Definitions:</p>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table10table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:25.003454%" />
+      <col style="width:74.996544%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">A single UTF16 character.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">A string of UTF16 characters.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOT</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">A string of digits from 1 to 8 or a single UTF16 character between U+2800 to U+28FF.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">A combination of strings of digits from 1 to 8 separated by a hyphen, or UTF16 characters between U+2800 to U+28FF.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARDOTS</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS</span> that may contain <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span> surrounded by semicolons, that are following the escape character <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">\</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span> that determine whether a rule is to be applied during forward translation.  Acts as <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span> during backward translation.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span> that are to replace <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span> when applying a rule during forward translation.  Acts as <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span> during backward translation.  Note that for rule type <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">trans</span>, <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span> are expected instead of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">An integer that may be represented as digits, a variable prefixed with a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">$</span>, or <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">bit##</span> representing a single bit.  Digits may be prefixed with a 0 for octal base and 0x for hexadecimal base.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">An expression used to filter rules when matching.  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> may be just a hyphen to specify that no filtering is to be done.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Two <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span>s that are checked against the characters that are before and after a given <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span>.</p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <p class="Heading">Main Opcodes</p>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table11table" style="margin-top:0;margin-bottom:0;margin-left:auto;margin-right:auto;width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:100.0%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">rule</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">[OPTIONS] TYPE </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Defines a translation from <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span> to <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span>.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">OPTIONS</p>
+          <table cellspacing="0" id="Table12table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:24.998844%" />
+            <col style="width:75.00116%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">-forward</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Forward translation only.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">-backward</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Backward translation only.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">-after</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Placed after similar rules.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TYPE</p>
+          <table cellspacing="0" id="Table13table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:24.998844%" />
+            <col style="width:75.00116%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">init</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">premode</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">postmode</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">pretrans</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">trans</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span> instead of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOT</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">S</span><span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal"> </span><span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">for </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">posttrans</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">fini</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">match</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">[OPTIONS] TYPE PATTERN </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> PATTERN PATTERN </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> PATTERN</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Like <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">rule</span>, but includes <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span>s to further filtering.  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">OPTIONS</span> and <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TYPE</span> are the same as rule.  The first <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> is checked against the characters before <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal"> </span>during forward translation.  The second <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> is checked against the characters after <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal"> </span>during forward translation.  The third <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> is checked against the characters before <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal"> </span>during backward translation.  The fourth <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> is checked against the characters after <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal"> </span>during backward translation.  The equal sign may be used for any <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> to designate that the corresponding portion of the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule filters</span> should be used.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">chars</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS INTEGER </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">[INTEGER</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">...</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">]</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Takes the current attribute for each <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS</span> and it is or'ed with <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>.  Multiple <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>s  may be used, with each <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span> being or'ed to the current attribute, and the list can be terminated with a single <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">#</span>.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">attrs</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">=</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">|</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">+</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">|</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">- INTEGER</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Modifies the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule attributes</span> for every rule that follows.</p>
+          <table cellspacing="0" id="Table14table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:24.998844%" />
+            <col style="width:75.00116%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">=</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Sets the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule attributes</span> to <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">+</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Sets the bits of the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule attributes</span> that are set in <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">-</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Unsets the bits of the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule attributes</span> that are set in <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>.</p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">join</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER CHAR CHAR [INTEGER [INTEGER]]</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Connects both <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">s</span> at join index <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>.  If present, the bits of the first <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span> are set in the first <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span> attributes.  If present, the bits of the second <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span> are set in the second <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span> attributes.</p>
+          <p class="Standard"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">mode</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME BEGIN END [WORD TERM SYMBOL LENGTH]</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Sets the indicators for a mode named <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span>.  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span> is used to specify the mode when using streaming control characters while translating.  There are three special modes that are processed separately:</p>
+          <table cellspacing="0" id="Table15table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:24.998844%" />
+            <col style="width:75.00116%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">nocontract</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">capital</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6388999in">
+                <p class="TableContents" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">numeric</p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:5.0701003in">
+                <p style="margin:0;font-size:1px"> </p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <p class="Heading">Supplementary Opcodes</p>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table16table" style="margin-top:0;margin-bottom:0;margin-left:auto;margin-right:auto;width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:100.0%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">set</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME INTEGER</span></p>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none">Creates a variable <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span> with value <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span>.  A variable can be used in place of an <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">INTEGER</span> via <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">$</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span>.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">pattern</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Defines a subpattern <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> with <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span> that can used inside other following patterns.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">filter</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME P</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTERN PATTERN</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Creates a filter <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span>.  The first <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">P</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTERN</span> is checked against a characters before a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span> or <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">REPLACEMENT</span>, and the second <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">P</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTERN</span> is checked against the characters after a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TARGET</span> or<span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal"> </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic;font-weight:normal">REPLACEMENT</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal">.</span></p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">use</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER FILTER</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Sets the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule filters</span> that are applied to every rule that follows.  The first <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER</span> is used when translating forward; can be just a hyphen to specify no filtering.  The second <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER</span> is used when translating backward; can be just a hyphen or left blank to specify no filtering.  Both <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER</span>s can be left blank to specify no filtering.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">uses</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER FILTER</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">rule</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif">|</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">match</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Overrides the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;text-decoration:underline">current rule filters</span> one time for <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">rule</span> or <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">match</span>.  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILTER</span> can be just a hyphen to specify no filtering.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">macro</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span></p>
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">LINES</p>
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">...</p>
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">eom</p>
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">@<span style="font-style:italic">NAME </span><span style="font-style:italic">[CHARS...]</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Defines a macro <span style="font-style:italic">NAME</span> that represents the <span style="font-style:italic">LINES</span> between <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">macro</span> and <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">eom</span>.  The macro can be used via <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">@</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span>.  If present, the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS</span> replace occurrences of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">$1</span>, <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">$2</span>, <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">$3</span>, up to <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">$9</span>, in the order they are listed, in <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">LINES</span>.  Macros cannot define other macros, but can use other macros, provided no macro is used recursively.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">include</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILE</span></p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Compiles the rules in <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">FILE</span> in place as if they were part of the current file being compiled.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">config</p>
+          <p class="Standard"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Miscellaneous settings.</p>
+          <table cellspacing="0" id="Table17table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+            <col style="width:34.999294%" />
+            <col style="width:65.00071%" />
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:2.325in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">attrs_chars <span style="font-style:italic">CHARS</span></p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.3840003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">String <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS</span> used to represent specific character attribute bits in patterns.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:2.325in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif">control </span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TYPE</span> <span style="font-style:italic">CHAR</span></p>
+              </td>
+              <td style="border:none;padding:0.0382in;vertical-align:top;width:4.3840003in">
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">Sets streaming control character <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TYPE</span> to <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span>.</p>
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+                <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in">
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">TYPE</span>
+                  <span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">:  </span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">user</span>
+                  <span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">|</span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">begin</span>
+                  <span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">|</span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">end</span>
+                  <span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">|</span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">hard</span>
+                  <span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">|</span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">soft</span>
+                  <span style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal">|</span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">modifier</span>
+                  <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal">|internal</span>
+                </p>
+              </td>
+            </tr>
+          </table>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in"> </p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <p class="Heading">Pattern Expressions</p>
+    <p class="Standard">Definitions:</p>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table23table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:25.002302%" />
+      <col style="width:74.997696%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Same as table.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARDOTS</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Same as table.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTR</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span> that represents a specific attribute, more specifically the bit the signifies a specific character attribute that was set via the <span style="font-family:&#39;Liberation Mono&#39;,monospace;font-weight:bold">chars</span> opcode. By default, bits 0 to 31 are represented by the characters: <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">0123456789ABCDEFGHIJKLMNOPQRSTUV</span>.  These can be changed using the <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">config</span> opcode with <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">attrs_chars</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTRS</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">String of <span style="font-family:&#39;Liberation Mono&#39;,monospace;font-style:italic">ATTR</span>s</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Name of a <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">PATTERN</span> that was previously defined using the <span style="font-family:&#39;Liberation Mono&#39;,monospace;font-weight:bold">pattern</span> opcode.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Sequence of one or more of the following expressions described below.</p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <p class="Standard">Expressions:</p>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table20table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:14.996186%" />
+      <col style="width:19.996185%" />
+      <col style="width:65.00763%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARDOTS</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p style="margin:0;font-size:1px"> </p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Match exactly the string <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">\</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">\<span style="font-style:italic">CHAR</span></p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Escape; match literal <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">[ ]</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">[<span style="font-style:italic">CHARS</span><span style="font-style:italic">DOTS</span>]</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Match one of the characters in the string <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHARS</span><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOTS</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">.</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p style="margin:0;font-size:1px"> </p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Match any character.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">^</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p style="margin:0;font-size:1px"> </p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Match beginning or end of input.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">%</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">%<span style="font-style:italic">ATTR</span></p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Match <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTR</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">%[ ]</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif">%[<span style="font-style:italic">ATTRS</span>]</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4319in">
+          <p class="TableContents">Match any of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">ATTRS</span>.</p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table21table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:14.997467%" />
+      <col style="width:19.998158%" />
+      <col style="width:65.00437%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">( )</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:normal;font-weight:normal">(<span style="font-style:italic">EXPR...</span>)</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">Treat the group of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</span>s as one <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">!</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">!<span style="font-style:italic">EXPR</span></p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">Not <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">*</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal"><span style="font-style:italic">EXPR</span>*</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">Zero or more of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</span>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">+</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal"><span style="font-style:italic">EXPR</span>+</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">One or more of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR.</span></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">?</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal"><span style="font-style:italic">EXPR</span>?</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">Zero or one of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR.</span></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">|</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal"><span style="font-style:italic">EXPR</span>|<span style="font-style:italic">EXPR</span></p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">Either first <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</span> or second <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">EXPR</span>.</p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <table cellspacing="0" id="Table22table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:14.997467%" />
+      <col style="width:19.998158%" />
+      <col style="width:65.00437%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">@[ ]</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">@[<span style="font-style:italic">NAME</span>]</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents">Use subpattern <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span> during compilation.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:0.9639in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">@{ }</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.3104in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:normal">@{<span style="font-style:italic">NAME</span>}</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:4.4312in">
+          <p class="TableContents"><span style="font-weight:bold">EXPERIMENTAL</span>  Use subpattern <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">NAME</span> during checking.</p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <h2 id="toc3">Conversion</h2>
+    <p class="Standard"> </p>
+    <p class="Standard">Blank lines and lines starting with <span style="font-family:&#39;Liberation Sans&#39;,sans-serif">#</span> are ignored.  All conversion files are required to be in UTF-8 format.</p>
+    <p class="Standard"> </p>
+    <p class="Standard">Definitions:</p>
+    <table cellspacing="0" id="Table24table" style="margin-top:0;margin-bottom:0;margin-left:auto;width:95%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:25.003454%" />
+      <col style="width:74.996544%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="TableContents" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Same as table.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:1.6575999in">
+          <p class="Standard" style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOT</p>
+        </td>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:5.1243005in">
+          <p class="Standard">Same as table.</p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+    <table cellspacing="0" id="Table18table" style="margin-top:0;margin-bottom:0;margin-left:auto;margin-right:auto;width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed">
+      <col style="width:100.0%" />
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">convert</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOT CHAR</span></p>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none">Sets the conversion of <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">DOT</span> to <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span>.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border:none;padding:0.0382in;vertical-align:top;width:7.2236004in">
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"><span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-weight:bold">unknown</span> <span style="font-family:&#39;Liberation Sans&#39;,sans-serif;font-style:italic">CHAR</span></p>
+          <p class="Standard" style="font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none">Sets the conversion of any unknown character to CHAR.</p>
+          <p class="Standard" style="margin-left:0.5in;margin-right:0.0in;text-indent:0.0in;font-family:&#39;Liberation Serif&#39;,serif;font-style:normal;font-weight:normal;text-decoration:none"> </p>
+        </td>
+      </tr>
+    </table>
+    <p class="Standard"> </p>
+    <p class="Standard"> </p>
+    <p class="HorizontalLine"> </p>
+    <p class="Standard">Copyright © 2017 LibLouisAPH, American Printing House for the Blind, Inc.</p>
+    <p class="Standard"> </p>
+  </body>
+</html>

@@ -1,0 +1,708 @@
+
+#   letters
+
+a i o o i a
+a e i o u w y
+b c d
+## ⱥ ƶ ă ā ç à â å ã ä á ǎ æ
+ⱥ
+ƶ
+ă
+ā
+ç
+à
+â
+å
+ã
+ä
+á
+ǎ
+æ
+## ȼ ƀ ĕ ē ȩ è ê ů ẽ ë é ě
+ȼ
+ƀ
+ĕ
+ē
+ȩ
+è
+ê
+ů
+ẽ
+ë
+é
+ě
+
+#   capital
+
+A
+AA
+AA AA AA
+AA A
+AA AA
+A AA
+AA A AA
+A AA A
+AA AA ::
+AA :: AA
+:: AA AA
+AA AA AA ::
+AA AA :: AA
+AA :: AA AA
+:: AA AA AA
+A A ::
+A :: A
+:: A A
+A A A ::
+A A :: A
+A :: A A
+:: A A A
+
+
+X
+XX
+XX XX XX
+XX X
+XX XX
+X XX
+XX X XX
+X XX X
+XX XX ::
+XX :: XX
+:: XX XX
+XX XX XX ::
+XX XX :: XX
+XX :: XX XX
+:: XX XX XX
+X X ::
+X :: X
+:: X X
+X X X ::
+X X :: X
+X :: X X
+:: X X X
+
+#   numeric
+
+3
+33
+3x
+3o
+3 3
+3 o
+3333
+33xx
+33oo
+33cc
+33 33
+33 oo
+33 cc
+3 3 3
+3 o 3
+3 c 3
+33 33 33
+33 oo 33
+33 cc 33
+
+3.c
+c.3
+3.C
+C.3
+
+3c
+3C
+3ç
+3Ç
+c3
+C3
+ç3
+Ç3
+3c3
+3C3
+3ç3
+3Ç3
+c3c
+C3C
+ç3ç
+Ç3Ç
+c3C
+C3c
+ç3Ç
+Ç3ç
+
+
+##¼ ½ ¾ ⅐ ⅑ ⅒ ⅓ ⅔ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅛ ⅜ ⅝ ⅞ ⅟  ↉
+¼
+½
+¾
+⅐
+⅑
+⅒
+##⅓ 1⅓ 11⁄3 1/3 11/3   last two not simple fraction slash \x2044
+⅓
+1⅓
+11⁄3
+1/3
+11/3
+⅔
+⅕
+⅖
+⅗
+⅘
+⅙
+⅚
+⅛
+⅜
+⅝
+⅞
+##⅟
+↉
+
+
+#   lower wordsigns
+
+\Bitalic\Bbe\Eitalic\E
+\Bbold\Bbe\Ebold\E
+\Buline\Bbe\Euline\E
+\Bscript\Bbe\Escript\E
+\Btrans1\Bbe\Etrans1\E
+\Btrans2\Bbe\Etrans2\E
+\Btrans3\Bbe\Etrans3\E
+\Btrans4\Bbe\Etrans4\E
+\Btnote\Bbe\Etnote\E
+\Bitalic\Bbe be be\Eitalic\E
+\Bbold\Bbe be be\Ebold\E
+\Buline\Bbe be be\Euline\E
+\Bscript\Bbe be be\Escript\E
+\Btrans1\Bbe be be\Etrans1\E
+\Btrans2\Bbe be be\Etrans2\E
+\Btrans3\Bbe be be\Etrans3\E
+\Btrans4\Bbe be be\Etrans4\E
+\Btnote\Bbe be be\Etnote\E
+ be be
+{be be}
+“be be”
+“{be be}”
+{“be be”}
+?be be?
+?{be be}?
+{?be be?}
+;be be;
+;{be be};
+{;be be;}
+:be be:
+:{be be}:
+{:be be:}
+.be be.
+.{be be}.
+{.be be.}
+\Bitalic\Benough\Eitalic\E
+\Bbold\Benough\Ebold\E
+\Buline\Benough\Euline\E
+\Bscript\Benough\Escript\E
+\Btrans1\Benough\Etrans1\E
+\Btrans2\Benough\Etrans2\E
+\Btrans3\Benough\Etrans3\E
+\Btrans4\Benough\Etrans4\E
+\Btnote\Benough\Etnote\E
+\Bitalic\Benough enough enough\Eitalic\E
+\Bbold\Benough enough enough\Ebold\E
+\Buline\Benough enough enough\Euline\E
+\Bscript\Benough enough enough\Escript\E
+\Btrans1\Benough enough enough\Etrans1\E
+\Btrans2\Benough enough enough\Etrans2\E
+\Btrans3\Benough enough enough\Etrans3\E
+\Btrans4\Benough enough enough\Etrans4\E
+\Btnote\Benough enough enough\Etnote\E
+ enough enough
+{enough enough}
+“enough enough”
+“{enough enough}”
+{“enough enough”}
+?enough enough?
+?{enough enough}?
+{?enough enough?}
+;enough enough;
+;{enough enough};
+{;enough enough;}
+:enough enough:
+:{enough enough}:
+{:enough enough:}
+.enough enough.
+.{enough enough}.
+{.enough enough.}
+\Bitalic\Bhis\Eitalic\E
+\Bbold\Bhis\Ebold\E
+\Buline\Bhis\Euline\E
+\Bscript\Bhis\Escript\E
+\Btrans1\Bhis\Etrans1\E
+\Btrans2\Bhis\Etrans2\E
+\Btrans3\Bhis\Etrans3\E
+\Btrans4\Bhis\Etrans4\E
+\Btnote\Bhis\Etnote\E
+\Bitalic\Bhis his his\Eitalic\E
+\Bbold\Bhis his his\Ebold\E
+\Buline\Bhis his his\Euline\E
+\Bscript\Bhis his his\Escript\E
+\Btrans1\Bhis his his\Etrans1\E
+\Btrans2\Bhis his his\Etrans2\E
+\Btrans3\Bhis his his\Etrans3\E
+\Btrans4\Bhis his his\Etrans4\E
+\Btnote\Bhis his his\Etnote\E
+ his his
+{his his}
+“his his”
+“{his his}”
+{“his his”}
+?his his?
+?{his his}?
+{?his his?}
+;his his;
+;{his his};
+{;his his;}
+:his his:
+:{his his}:
+{:his his:}
+.his his.
+.{his his}.
+{.his his.}
+\Bitalic\Bin\Eitalic\E
+\Bbold\Bin\Ebold\E
+\Buline\Bin\Euline\E
+\Bscript\Bin\Escript\E
+\Btrans1\Bin\Etrans1\E
+\Btrans2\Bin\Etrans2\E
+\Btrans3\Bin\Etrans3\E
+\Btrans4\Bin\Etrans4\E
+\Btnote\Bin\Etnote\E
+\Bitalic\Bin in in\Eitalic\E
+\Bbold\Bin in in\Ebold\E
+\Buline\Bin in in\Euline\E
+\Bscript\Bin in in\Escript\E
+\Btrans1\Bin in in\Etrans1\E
+\Btrans2\Bin in in\Etrans2\E
+\Btrans3\Bin in in\Etrans3\E
+\Btrans4\Bin in in\Etrans4\E
+\Btnote\Bin in in\Etnote\E
+ in in
+{in in}
+“in in”
+“{in in}”
+{“in in”}
+?in in?
+?{in in}?
+{?in in?}
+;in in;
+;{in in};
+{;in in;}
+:in in:
+:{in in}:
+{:in in:}
+.in in.
+.{in in}.
+{.in in.}
+\Bitalic\Bwas\Eitalic\E
+\Bbold\Bwas\Ebold\E
+\Buline\Bwas\Euline\E
+\Bscript\Bwas\Escript\E
+\Btrans1\Bwas\Etrans1\E
+\Btrans2\Bwas\Etrans2\E
+\Btrans3\Bwas\Etrans3\E
+\Btrans4\Bwas\Etrans4\E
+\Btnote\Bwas\Etnote\E
+\Bitalic\Bwas was was\Eitalic\E
+\Bbold\Bwas was was\Ebold\E
+\Buline\Bwas was was\Euline\E
+\Bscript\Bwas was was\Escript\E
+\Btrans1\Bwas was was\Etrans1\E
+\Btrans2\Bwas was was\Etrans2\E
+\Btrans3\Bwas was was\Etrans3\E
+\Btrans4\Bwas was was\Etrans4\E
+\Btnote\Bwas was was\Etnote\E
+ was was
+{was was}
+“was was”
+“{was was}”
+{“was was”}
+?was was?
+?{was was}?
+{?was was?}
+;was was;
+;{was was};
+{;was was;}
+:was was:
+:{was was}:
+{:was was:}
+.was was.
+.{was was}.
+{.was was.}
+\Bitalic\Bwere\Eitalic\E
+\Bbold\Bwere\Ebold\E
+\Buline\Bwere\Euline\E
+\Bscript\Bwere\Escript\E
+\Btrans1\Bwere\Etrans1\E
+\Btrans2\Bwere\Etrans2\E
+\Btrans3\Bwere\Etrans3\E
+\Btrans4\Bwere\Etrans4\E
+\Btnote\Bwere\Etnote\E
+\Bitalic\Bwere were were\Eitalic\E
+\Bbold\Bwere were were\Ebold\E
+\Buline\Bwere were were\Euline\E
+\Bscript\Bwere were were\Escript\E
+\Btrans1\Bwere were were\Etrans1\E
+\Btrans2\Bwere were were\Etrans2\E
+\Btrans3\Bwere were were\Etrans3\E
+\Btrans4\Bwere were were\Etrans4\E
+\Btnote\Bwere were were\Etnote\E
+ were were
+{were were}
+“were were”
+“{were were}”
+{“were were”}
+?were were?
+?{were were}?
+{?were were?}
+;were were;
+;{were were};
+{;were were;}
+:were were:
+:{were were}:
+{:were were:}
+.were were.
+.{were were}.
+{.were were.}
+
+
+#   lower groupsigns
+
+bex
+being
+beẍ
+beō
+ bex
+ being
+ beẍ
+ beō
+-bex
+-being
+-beẍ
+-beō
+–bex
+–being
+–beẍ
+–beō
+—bex
+—being
+—beẍ
+—beō
+,bex
+,being
+,beẍ
+,beō
+.bex
+.being
+.beẍ
+.beō
+!bex
+!being
+!beẍ
+!beō
+;bex
+;being
+;beẍ
+;beō
+:bex
+:being
+:beẍ
+:beō
+BEx
+beX
+beXX
+BEẍ
+beẌ
+beẌẌ
+BEō
+beŌ
+beŌŌ
+
+conx
+coning
+conẍ
+conō
+ conx
+ coning
+ conẍ
+ conō
+-conx
+-coning
+-conẍ
+-conō
+–conx
+–coning
+–conẍ
+–conō
+—conx
+—coning
+—conẍ
+—conō
+,conx
+,coning
+,conẍ
+,conō
+.conx
+.coning
+.conẍ
+.conō
+!conx
+!coning
+!conẍ
+!conō
+;conx
+;coning
+;conẍ
+;conō
+:conx
+:coning
+:conẍ
+:conō
+CONx
+conX
+conXX
+CONẍ
+conẌ
+conẌẌ
+CONō
+conŌ
+conŌŌ
+
+disx
+dising
+disẍ
+disō
+ disx
+ dising
+ disẍ
+ disō
+-disx
+-dising
+-disẍ
+-disō
+–disx
+–dising
+–disẍ
+–disō
+—disx
+—dising
+—disẍ
+—disō
+,disx
+,dising
+,disẍ
+,disō
+.disx
+.dising
+.disẍ
+.disō
+!disx
+!dising
+!disẍ
+!disō
+;disx
+;dising
+;disẍ
+;disō
+:disx
+:dising
+:disẍ
+:disō
+DISx
+disX
+disXX
+DISẍ
+disẌ
+disẌẌ
+DISō
+disŌ
+disŌŌ
+
+xbbx
+forbbx
+xbbing
+forbbing
+ẍbbx
+xbbẍ
+ẍbbẍ
+xxBBX
+XXbbx
+xxbbX
+xxbbXX
+XXBBx
+
+xccx
+forccx
+xccing
+forccing
+ẍccx
+xccẍ
+ẍccẍ
+xxCCX
+XXccx
+xxccX
+xxccXX
+XXCCx
+
+xeax
+foreax
+xeaing
+foreaing
+ẍeax
+xeaẍ
+ẍeaẍ
+xxEAX
+XXeax
+xxeaX
+xxeaXX
+XXEAx
+
+xffx
+forffx
+xffing
+forffing
+ẍffx
+xffẍ
+ẍffẍ
+xxFFX
+XXffx
+xxffX
+xxffXX
+XXFFx
+
+xggx
+forggx
+xgging
+forgging
+ẍggx
+xggẍ
+ẍggẍ
+xxGGX
+XXggx
+xxggX
+xxggXX
+XXGGx
+
+
+#   emphasis
+
+\Buline\Bxx\Euline\E
+\Buline\Bxx xx\Euline\E
+\Buline\Bxx xx xx\Euline\E
+\Buline\Bx\Euline\E
+\Buline\Bxx x\Euline\E
+\Buline\Bx xx\Euline\E
+\Buline\Bx x\Euline\E
+\Buline\Bxx x xx\Euline\E
+\Buline\Bx xx x\Euline\E
+\Buline\Bx x x\Euline\E
+
+\Buline\Bxx \Bbold\Bxx\Ebold\E xx\Euline\E
+\Buline\Bxx \Bbold\Bxx xx\Ebold\E xx\Euline\E
+\Buline\Bxx \Bbold\Bxx xx xx\Ebold\E xx\Euline\E
+
+\Buline\B\Bbold\Bxx\Ebold\E xx xx\Euline\E
+\Buline\B\Bbold\Bxx xx\Ebold\E xx\Euline\E
+\Buline\B\Bbold\Bxx xx xx\Ebold\E\Euline\E
+
+\Buline\B\Bbold\B\Bscript\Bxx xx xx\Escript\E\Ebold\E\Euline\E
+\Buline\B\Bscript\B\Bbold\Bxx xx xx\Ebold\E\Escript\E\Euline\E
+\Bbold\B\Buline\B\Bscript\Bxx xx xx\Escript\E\Euline\E\Ebold\E
+\Bbold\B\Bscript\B\Buline\Bxx xx xx\Euline\E\Escript\E\Ebold\E
+\Bscript\B\Buline\B\Bbold\Bxx xx xx\Ebold\E\Euline\E\Escript\E
+\Bscript\B\Bbold\B\Buline\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+
+\Buline\B\Bbold\B\Bscript\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Buline\B\Bscript\B\Bbold\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bbold\B\Buline\B\Bscript\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bbold\B\Bscript\B\Buline\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bscript\B\Buline\B\Bbold\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bscript\B\Bbold\B\Buline\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+
+\Buline\B\Bbold\B\Bscript\Bx\Escript\Ex xx\Ebold\E xx\Euline\E
+\Buline\B\Bscript\B\Bbold\Bx\Ebold\Ex xx\Escript\E xx\Euline\E
+\Bbold\B\Buline\B\Bscript\Bx\Escript\Ex xx\Euline\E xx\Ebold\E
+\Bbold\B\Bscript\B\Buline\Bx\Euline\Ex xx\Escript\E xx\Ebold\E
+\Bscript\B\Buline\B\Bbold\Bx\Ebold\Ex xx\Euline\E xx\Escript\E
+\Bscript\B\Bbold\B\Buline\Bx\Euline\Ex xx\Ebold\E xx\Escript\E
+
+\Buline\Bxx \Bbold\Bxx \Bscript\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Buline\Bxx \Bscript\Bxx \Bbold\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bbold\Bxx \Buline\Bxx \Bscript\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bbold\Bxx \Bscript\Bxx \Buline\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bscript\Bxx \Buline\Bxx \Bbold\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+\Bscript\Bxx \Bbold\Bxx \Buline\Bxx xx xx\Euline\E\Ebold\E\Escript\E
+
+\Buline\B\Bbold\Bxx\Ebold\E\Euline\Exx
+\Bbold\B\Buline\Bxx\Euline\E\Ebold\Exx
+\Buline\B\Bbold\Bxx\Ebold\Exx\Euline\Exx
+\Bbold\B\Buline\Bxx\Euline\Exx\Ebold\Exx
+\Buline\Bxx\Bbold\Bxx\Ebold\E\Euline\Exx
+\Bbold\Bxx\Buline\Bxx\Euline\E\Ebold\Exx
+
+
+#   misc
+
+A
+B
+
+æon
+Æon
+ÆOn
+ÆON
+
+QUID-PRO-QUO
+“QUID-PRO-QUO.”
+O'CLOCK
+TIC'O'TAC
+MERRY-GO-ROUND MASSACRE
+THE MERRY-GO-ROUND MASSACRE
+SALE 1972 VETTE
+FOR SALE 1972 VETTE
+
+hits like the “X-Men” franchise and “Avatar.”
+
+1e aence
+
+A O-X
+a 3-X
+A 3-X
+O-\H⠰\H
+O-\H⠰\HO
+O-\H⠰\HX
+X-\H⠰\H
+X-\H⠰\HO
+X-\H⠰\HX
+A O-
+A X-
+A 1O-
+A 1X-
+A O-\H⠰\H
+A X-\H⠰\H
+A 1-\H⠰\H
+A OX-\H⠰\H
+A 1O-\H⠰\H
+A 1X-\H⠰\H
+A 1OX-\H⠰\H
+A \H⠰\HO-
+A \H⠰\HX-
+A 1\H⠰\HO-
+A 1\H⠰\HX-
+A O-\H⠰\H A
+A X-\H⠰\H A
+A 1-\H⠰\H A
+A OX-\H⠰\H A
+A 1O-\H⠰\H A
+A 1X-\H⠰\H A
+A 1OX-\H⠰\H A
+A \H⠰\HO- A
+A \H⠰\HX- A
+A 1\H⠰\HO- A
+A 1\H⠰\HX- A
+

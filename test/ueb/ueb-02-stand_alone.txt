@@ -1,0 +1,103 @@
+#   2.6.1 page 15
+
+x ;X
+it X
+was 0
+al ;AL
+also AL
+
+##e-x-u-d-e ;;e-x-u-d-e
+\H⠰⠰\He-x-u-d-e ;;E-X-U-D-E
+
+do-it-yourself D-X-YRF
+out-and-out \\-&-\\
+5-yrf-678 #E-;YRF-#FGH
+"I like x–it works." ",I L ;X,-X \"WS4"
+"his child–this one" "8 *,-? \"O"
+"my friend–Fr John" "MY FR,-;,FR ,JOHN"
+"th--r" "TH--;R"
+"Mme. M—" ",MME4 ;,M\",-"
+–s ,-;S
+—st \",-ST
+
+#   2.6.2 page 16
+
+(c \"<;C
+[can .<C
+{af _<;AF
+–(after ,-\"<AF
+“do 8D
+‘your ,8YR
+####\"yr-123
+##⠠⠶yr-123 ,7;yr-#abc
+####"⠄e ⠄as" "';e 'z"
+##"'e 'as" "';e 'z"
+\Bitalic\Bp\Eitalic\E .2;P
+\Bbold\Bpeople\Ebold\E ^1P
+\Buline\Benough\Euline\E _15
+CHILD-SAFE ,,*-,,SAFE
+\Bitalic\Bchild-safe\Eitalic\E .1*-SAFE
+N ;,N
+"Not Like That" ",N ,L ,T"
+"LITTLE CHILD" ",,LL ,,*"
+–GREAT ,-,,GRT
+"OUT OF TOWN" ",,,\\ ( T[N,'"
+
+##[open TN]every `.<e
+##[open TN]In `.<,9
+
+"–“[Be true.]”" ",-8.<,2 TRUE4.>0"
+"<x, y>" "@<X1 Y@>"
+this/that ?IS_/?AT
+*from \"9FROM
+&c @&C
+"Apt. #B" ",APT4 _?,B"
+¶d ^PD
+é ^/E
+ū @-U
+~s @9S
+~st @9/
+
+#   2.6.3 page 16
+
+"very, very still; rather good." "V1 V /2 R GD4"
+d: ;D3
+##this... ?444
+this… ?444
+rejoice! RJC6
+"(q, r)" "\"<;Q1 ;R\">"
+"[quite, rather]" ".<Q1 R.>"
+"{k-p}" "_<;K-;P_>"
+"\"Which go-between?\"" "8,: G-2T80"
+children.” *N40
+"t' have–" ";T' H,-"
+####"friends' numbers" "frs' numb}s"
+##"friends⠄ numbers" "frs' numb}s"
+"\Bitalic\BHimself or herself?–Neither!\Eitalic\E" ".7,HMF OR H]F8,-,NEI6.'"
+"ALWAYS BE YOURSELF" ",,,ALW 2 YRF,'"
+"\Btnote\BHis choice was D.\Etnote\E" "@.<,8 *OICE 0 ;,D4@.>"
+t'night T'NI<T
+word(s) ^W"<S">
+ab/cd AB_/CD
+could/should C\\LD_/%\\LD
+##"section B²" "sec;n ,b;9#b"
+##knowledge.³ "kl$ge4;9#c
+this.)* ?IS4\">\"9
+<J.Child@children.net> @<,J4,*ILD@A*ILDR54NET@>
+"just_for_good.org" "JU/.-=.-GOOD4ORG"
+"l_ _f" "L.- .-F"
+## fails because .f is nocontracted  ch...f *444f
+ch…f *444F
+"a:b :: x:y" "A;3B 33 X;3Y"
+X% ,X.0
+Braillex® ,BRAILLEX^R
+Braille4All ,BRAILLE#D,ALL
+
+#   2.6.4 page 18
+
+‘It'll ,8,X'LL
+[X'll .<;,X'LL
+\Bitalic\BYOU'RE\Eitalic\E .1,,Y',,RE
+child's?) *'S8">
+"“p's and q's”" "8;P'S & ;Q'S0"
+"“That's Mr. \Bitalic\BLittle's!”\Eitalic\E" "8,T'S ,MR4 .1,LL'S60"

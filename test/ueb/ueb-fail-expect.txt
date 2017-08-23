@@ -1,0 +1,20 @@
+
+#   3.4.1 page 23
+
+spo͞on SP@-<OO>N
+masssun mass;;5<sun>
+
+"\"Was that \Bitalic\Bhis\Eitalic\E?\"" "8,WAS T .1HIS80"
+"‘His mother owns “his” car.’" "8,HIS \"M [NS ^8HIS^0 C>40"
+"‘Is that “in”?’" "8,IS T ^8IN^080"
+"\"That's enough!\"–in a firm voice" "8,T'S 560,-IN A FIRM VOICE"
+"‘Is that “in”?–in style, I mean.’" "8,IS T ^89^08,-IN /YLE1 ,I M1N40"
+"mod cons" "MOD 3S"
+BEd ,B,$
+Aix-en-Provence ,AIX-EN-,PROV;E
+"Chou En-lai" ",*\\ ,EN-LAI"
+bein' 2IN'
+Dayan ,DAYAN
+Dworkin ,DWORK9
+McKeever ,MC,KEEV]
+"Enough!" ^8,5\\<6^0  wrong quote

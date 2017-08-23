@@ -1,0 +1,834 @@
+
+#   10.1.1 page 103
+
+"When will Will meet us?" ",:5 W ,W MEET U8"
+"Every child from here knows Mr More." ",E * F \"H \"KS ,MR ,M4"
+"\"do re mi fa so\"" "8D RE MI FA S0"
+"That is quite fair and very just." ",T IS Q FAIR & V J4"
+"\"People, people who need people\"" "8,P1 P :O NE$ P0"
+"I do not like that watering-can!" ",I D N L T WAT]+-C6"
+"But, would the people rather do the can-can for us?" ",B1 WD ! P R D ! C-C = U8"
+"\"You so-and-so–go away!\"" "8,Y S-&-S,-G AWAY60"
+"\"I do have some–but I would like more!\"" "8,I D H \"S,-B ,I WD L M60"
+"You can go–but not yet–\Bbold\Bjust wait!\Ebold\E" ",Y C G,-B N YET,-^1J ^1WAIT6"
+"last will and testament" "LA/ W & TE/A;T"
+"a child-like manner" "A *-L MANN]"
+will-o'-the-wisp W-O'-!-WISP
+\"Do-It-Yourself\" 8,D-,X-,YRF0
+"come from–not go to" "COME F,-N G TO"
+"(just say so)" "\"<J SAY S\">"
+"As You Like It" ",Z ,Y ,L ,X"
+"\Bitalic\BKnowledge is power.\Eitalic\E" ".7,K IS P[]4.'"
+"likes and dislikes" "LIKES & 4LIKES"
+"childlike and likeness" "*ILDLIKE & LIKE;S"
+"moreover and evermore" "MOREOV] & \"EMORE"
+"\Bitalic\Bhaves\Eitalic\E or have-\Bitalic\Bnots?\Eitalic\E" ".1HAVES OR H-.1NOTS8"
+##"\"must have\"s" "8M/ HAVE0S"
+##www.doityourself.com WWW4DOITY\\RSELF4COM
+"\"but, no buts\"" "8B1 NO BUTS0"
+peoples PEOPLES
+\Bitalic\Bevery\Eitalic\Eday .1\"EY.'\"D
+quite/very QUITE_/V]Y
+d'you D'Y\\
+t'do T'DO
+t'have T'HAVE
+
+#   10.1.2 page 105
+it'd X'D
+you'd Y'D
+it'll X'LL
+that'll T'LL
+you'll Y'LL
+you're Y'RE
+people's P'S
+so's S'S
+you's Y'S
+can't C'T
+you've Y'VE
+"\Bitalic\BIt's not \"its\"\Eitalic\E" ".7,X'S N 8XS0.'"
+"Thomas More's life" ",?OMAS ,M'S LIFE"
+"Mr Just's house" ",MR ,J'S H\\SE"
+"I can–you can't!" ",I C,-Y C'T6"
+"\"You've done it!\"" "8,Y'VE D\"O X60"
+more'n MORE'N
+you'm Y\\'M
+
+#   10.1.3 page 106
+#   [United States]
+\S⠰⠰\SUS ,,US
+#   [Information Technology]
+\S⠰⠰\SIT ,,IT
+"CAN Network" ",,C ,NET\"W"
+#   [Government of Ontario, pronounced "go"]
+"GO Train" ",,G ,TRA9"
+
+#   10.1.4 page 106
+\S⠰\Sbut-ton BUT-TON
+be–\S⠰\Shave BE,-HAVE
+"\S⠰⠰⠰\Sdis as\S⠰⠄\S ter" "DIS AS T]"
+
+#   10.2.1 page 106
+"I shall still find out which \Bbold\Bchild\Ebold\E did this!" ",I % / F9D \\ : ^1* DID ?6"
+"Which CHILD-PROOF lock?" ",: ,,*-,,PRO( LOCK8"
+"still-life and whiskey-still" "/-LIFE & :ISKEY-/"
+\Bitalic\BOut-of-the-way\Eitalic\E .1,\\-(-!-WAY
+"(This way out!)" "\"<,? WAY \\6\">"
+"\"Which way out?\"" "8,: WAY \\80"
+childish *ILDI%
+grandchild GR&*ILD
+outcome \\TCOME
+without )\\T
+shallot %ALLOT
+shallow %ALL[
+shilly-shally %ILLY-%ALLY
+standstill /&/ILL
+thistle ?I/LE
+whichever :I*\"E
+this/that ?IS_/?AT
+"Stillson wrench" ",/ILLSON WR5*"
+www.universalchildcare.ca WWW4UNIV]SAL*ILDC>E4CA
+
+#   10.2.2 page 107
+this'd ?'D
+which'll :'LL
+still's /'S
+which've :'VE
+"Julia Child's recipe" ",JULIA ,*'S RECIPE"
+this'n ?IS'N
+
+#   10.3.1 page 108
+andante &ANTE
+England ,5GL&
+grandad GR&AD
+grandmother GR&\"M
+meander ME&]
+merchandise M]*&ISE
+pandemic P&EMIC
+pandowdy P&[DY
+afford AF=D
+comfort COM=T
+forgo =GO
+Fortran ,=TRAN
+Pforzheimer ,P=ZHEIM]
+pianoforte PIANO=TE
+coffee C(FEE
+Geoffrey ,GE(FREY
+lofty L(TY
+often (T5
+profane PR(ANE
+roof RO(
+sofa S(A
+tofu T(U
+whereof \":(
+Athens ,A!NS
+bathed BA!D
+bother BO!R
+Esther ,ES!R
+furthest FUR!/
+nevertheless N\"E!.S
+scythe SCY!
+thee !E
+Matthew ,MAT!W
+Parthenon ,P>!NON
+theatre !ATRE
+Theresa ,!RESA
+forthwith =?)
+withe )E
+Swithin ,S)9
+without )\\T
+"with a knowledge of and respect for the rules" ") A K ( & RESPECT = ! RULES"
+"Thelma's roof will withstand the force of the wind and/or the rain." ",!LMA'S RO( W )/& ! =CE ( ! W9D &_/OR ! RA94"
+"Andy Vandyke proofread the profile." ",&Y ,V&YKE PRO(R1D ! PR(ILE4"
+out-of-the-way \\-(-!-WAY
+chifforobe *I6OROBE
+twofold TWOFOLD
+insofar 9SOF>
+biofeedback BIOFE$BACK
+microfilm MICROFILM
+apartheid A\"PHEID
+northeast NOR?1/
+thence ?;E
+sweetheart SWEETHE>T
+Son\S⠰\Stheimer ,SONTHEIM]
+
+#   10.4.1 page 110
+aerial A]IAL
+aghast A<A/
+anteroom ANT]OOM
+argh! ><6
+bear BE>
+boredom BOR$OM
+brougham BR\\<AM
+cheddar *$D>
+cherished *]I%$
+cough C\\<
+coupon C\\PON
+cringed CR+$
+derailed D]AIL$
+dingy D+Y
+dough D\\<
+ed. $4
+Edith ,$I?
+e'er E']
+er– ],-
+erase ]ASE
+Erie ,]IE
+error ]ROR
+freedom FRE$OM
+ginger G+]
+gingham G+HAM
+Goering ,GO]+
+hierarchy HI]>*Y
+laugh LAU<
+lingerie L+]IE
+lowdown L[D[N
+malediction MAL$IC;N
+meningitis M5+ITIS
+merchandising M]*&IS+
+meringue M]+UE
+mistake MI/AKE
+monowheel MONO:EEL
+nightingale NI<T+ALE
+nth N?
+oedema O$EMA
+'ounds '\\NDS
+\"Ow!\" 8,[60
+(par) \"<P>\">
+predated PR$AT$
+psst PS/
+redistribute R$I/RIBUTE
+reroute R]\\TE
+riflery RIFL]Y
+sheer %E]
+Singh ,S+H
+sou'east S\\'EA/
+'struth '/RU?
+Thomas ,?OMAS
+thorough ?OR\\<
+thou ?\\
+toward T[>D
+trebled TREBL$
+wharf :>F
+whistle :I/LE
+Xth ,X?
+xxist XXI/
+ædile A^6EDILE
+anthill ANTHILL
+blessèd B.S^*ED
+\S⠰⠰\Sdeshabille DESHABILLE
+foghorn FOGHORN
+kilowatt KILOWATT
+noway NOWAY
+painstaking PA9STAK+
+parenthood P>5THOOD
+rawhide RAWHIDE
+shanghai %ANGHAI
+Stalingrad ,/AL9GRAD
+viceregal VICEREGAL
+
+#   10.4.2 page 111
+Sh! ,SH6
+th' TH'
+St. ,ST4
+Wh–? ,WH,-;8
+"St Stephen" ",ST ,/EPH5"
+ch-ch-chilly CH-CH-*ILLY
+Shhh! ,%HH6
+th'n ?'N
+"Ste Anne" ",/E ,ANNE"
+
+#   10.4.3 page 112
+finger F+]
+ginger G+]
+singe S+E
+singeing S+E+
+sting /+
+stinging /++
+brown(ing) BR[N\"<+\">
+brown\Bitalic\Bi\Eitalic\Eng BR[N.2+
+SmithInge ,SMI?,+E
+"Ch'ing Dynasty" ",*'+ ,DYNA/Y"
+ingot 9GOT
+Ingoldsby ,9GOLDSBY
+ingredients 9GR$I5TS
+ingrown 9GR[N
+"to-ing and fro-ing" "TO-9G & FRO-9G"
+brown-\Bitalic\Bing\Eitalic\E BR[N-.19G
+Smith–Inge ,SMI?,-,9GE
+
+#   10.5.1 page 113
+"to be" "TO 2"
+"his car" "8 C>"
+"Be good." ",2 GD4"
+"HIS DOG" ",,8 ,,DOG"
+"That \Bitalic\Bwas\Eitalic\E right!" ",T .10 \"R6"
+"BE ALL THAT YOU CAN BE" ",,,2 ALL T Y C 2,'"
+"\Bitalic\BBe happy.\Eitalic\E" ".1,2 .1HAPPY4"
+"\Bitalic\Bto be or not to be\Eitalic\E" ".7TO 2 OR N TO 2.'"
+"\Bbold\Bhis hers its\Ebold\E" "^78 H]S XS^'"
+"\"\Buline\BWas\Euline\E that \Buline\Bhis\Euline\E car?\"" "8_1,0 T _18 C>80"
+"at my (not his) house" "AT MY \"<N 8\"> H\\SE"
+"He is [was]; they are [were]." ",HE IS .<0.>2 !Y >E .<7.>4"
+"(Were there many?)" "\"<,7 \"! _M8\">"
+his/her HIS_/H]
+"What will you be?" ",:AT W Y BE8"
+"would-be actor" "WD-BE ACTOR"
+"his-and-hers towels" "HIS-&-H]S T[ELS"
+"That were–I mean was–mine." ",T W]E,-,I M1N WAS,-M9E4"
+"\"Be safe.\"" "8,BE SAFE40"
+##FAIL "\"Was that \Bitalic\Bhis\Eitalic\E?\"" "8,WAS T .1HIS80"
+"\"Was that \Bitalic\Bhis?\"\Eitalic\E" "8,WAS T .1HIS80"
+##FAIL  "‘His mother owns “his” car.’" "8,HIS \"M [NS ^8HIS^0 C>40"
+
+#   10.5.2 page 114
+"it was enough" "X 0 5"
+"GIVE MORE THAN ENOUGH" ",,,GIVE M ?AN 5,'"
+"Buy meat (enough for 2)." ",BUY M1T \"<5 = #B\">4"
+"(Did you have \Bitalic\Benough\Eitalic\E help? Just enough.)" "\"<,DID Y H .15 HELP8 ,J 54\">"
+"Enough's happened." ",5'S HAPP5$4"
+##FAIL "Mum's had-enough mood" ",MUM'S _H-5 MOOD"
+www.enoughforall.org WWW45\\<=ALL4ORG
+enough/sufficient 5\\<_/SU6ICI5T
+
+#  10.5.3 page 114
+"not in here" "N 9 \"H"
+"In or out?" ",9 OR \\8"
+"GO ALL IN" ",,,G ALL 9,'"
+in't 9'T
+mother-in-law \"M-9-LAW
+listen-in LI/5-9
+"Listen!–In this case …" ",LI/56,-,9 ? CASE 444"
+\"teach-in\" 8T1*-90
+IN-DEPTH ,,9-,,DEP?
+"(\"In no way.\")" "\"<8,9 NO WAY40\">"
+"\Bitalic\Bfade in\Eitalic\E" ".1FADE .19"
+-\Bitalic\Bin\Eitalic\E -.19
+"\Bitalic\BIn the box\Eitalic\E" ".7,9 ! BOX.'"
+"\Bbold\Bafter before between in\Ebold\E" "^7AF 2F 2T 9^'"
+"\Btnote\BIn the table …\Etnote\E" "@.<,9 ! TABLE 444@.>"
+"<in file>" "@<9 FILE@>"
+in/out 9_/\\T
+##FAIL "Come in, stay in." ",COME IN1 /AY IN4"
+##FAIL "\"In any case\"" "8,IN ANY CASE0"
+##FAIL "‘Is that “in”?’" "8,IS T ^8IN^080"
+
+#   10.5.4 page 116
+##FAIL "It was enough–more than enough." ",X 0 5,-M ?AN 5\\<4"
+##FAIL "We had enough–5." ",WE _H 5,-#E4"
+##FAIL "\"That's enough!\"–in a firm voice" "8,T'S 560,-IN A FIRM VOICE"
+"Take enough." ",TAKE 5\\<4"
+##FAIL "‘Is that “in”?–in style, I mean.’" "8,IS T ^89^08,-IN /YLE1 ,I M1N40"
+
+#   10.6.1 page 116
+beatitude 2ATITUDE
+Beatrice ,2ATRICE
+become 2COME
+begonia 2GONIA
+behemoth 2HEMO?
+being 2+
+beneficent 2NEFIC5T
+beta 2TA
+first-begotten F/-2GOTT5
+air-conditioned AIR-3DI;N$
+concept 3CEPT
+congress 3GRESS
+control 3TROL
+re-connect RE-3NECT
+disaster 4A/]
+disco 4CO
+dishonest 4H\"O/
+dislike 4LIKE
+dissect 4SECT
+distance 4T.E
+self-discipline SELF-4CIPL9E
+beckon BECKON
+been BE5
+belligerent BELLIG]5T
+benefit B5EFIT
+best BE/
+bethel BE!L
+better BETT]
+unbecoming UNBECOM+
+con CON
+conch CON*
+cone C\"O
+coneys C\"OYS
+inconvenient 9CONV5I5T
+disc DISC
+dish DI%
+dishevel DI%EVEL
+dispirited DI_S$
+\S⠰\Sdisulphide DISULPHIDE
+indistinct 9DI/9CT
+
+#   10.6.2 page 117
+\"Belinda!\" 8,2L9DA60
+"(Contact the \Bitalic\Bdistricts)\Eitalic\E" "\"<,3TACT ! .14TRICTS\">"
+## [extract from computer manual] "'display will minimise'" "'4PLAY W M9IMISE'"
+concave/convex 3CAVE_/CONVEX
+McConnell ,MC,CONNELL
+O'Connor ,O',CONNOR
+MetroDisco ,METRO,DISCO
+be'ave BE'AVE
+be-stow BE-/[
+[be]hold .<BE.>HOLD
+con(vey) CON\"<VEY\">
+dis'armony DIS'>MONY
+dis\Bitalic\Bturb\Eitalic\E DIS.1TURB
+
+#   10.6.3  page 118
+BeLinda ,BE,L9DA
+conCUR CON,,CUR
+DisCORD ,DIS,,CORD
+DISlike ,,DIS,'LIKE
+
+#   10.6.4 page 118
+Conn. ,3N4
+cont 3T
+dist. 4T4
+##FAIL "mod cons" "MOD 3S"
+##FAIL BEd ,B,$
+Belg ,BELG
+bet BET
+Bev ,BEV
+Con. ,CON4
+
+#   10.6.5 page 119
+##FAIL abbé A2^/E
+accept A3EPT
+account A3.T
+acreage ACR1GE
+affirm A6IRM
+aggressive A7RESSIVE
+agreeable AGRE1BLE
+areas >1S
+arpeggio >PE7IO
+baccalaureate BA3ALAUR1TE
+beat B1T
+begging BE7+
+borealis BOR1LIS
+bubble BU2LE
+bureau BUR1U
+Caribbean ,C>I21N
+caveat CAV1T
+create CR1TE
+creation CR1;N
+disease 41SE
+doggone DO7\"O
+eggnog E7NOG
+epicurean EPICUR1N
+flaccid FLA3ID
+genealogy G51LOGY
+Hanseatic ,HANS1TIC
+head H1D
+Judaean ,JUDA1N
+likeable LIK1BLE
+Liliaceae ,LILIAC1E
+lineage L91GE
+mecca ME3A
+Minneapolis ,M9N1POLIS
+Montreal ,MONTR1L
+motheaten MO?1T5
+muffin MU69
+Neapolitan ,N1POLITAN
+northeast NOR?1/
+occupy O3UPY
+oceanic OC1NIC
+oleaginous OL1G9\\S
+orgeat ORG1T
+paean PA1N
+pancreas PANCR1S
+peaceable P1C1BLE
+peanut P1NUT
+rabbi RA2I
+really R1LLY
+##FAIL réchauffé R^/E*AU6^/E
+Seamus ,S1MUS
+Sean ,S1N
+seashore S1%ORE
+Seattle ,S1TTLE
+Sheffield ,%E6IELD
+sheriffs %]I6S
+speakeasy SP1K1SY
+tableau TABL1U
+tobacco TOBA3O
+toreador TOR1DOR
+Yeats ,Y1TS
+afford AF=D
+appear APPE>
+arccosine >CCOS9E
+bacchanal BAC*ANAL
+bear BE>
+beatitude 2ATITUDE
+Beatrice ,2ATRICE
+cinéaste C9^/EA/E
+coffee C(FEE
+dumbbell DUMBBELL
+'ead 'EAD
+east EA/
+ebb EBB
+ebb-tide EBB-TIDE
+hideaway HIDEAWAY
+idea(s) IDEA\"<S\">
+Leander ,LE&]
+limeade LIMEADE
+mah-jongg MAH-J;GG
+man-eater MAN-EAT]
+pineapple P9EAPPLE
+robb'd ROBB'D
+saccharine SAC*>9E
+sea-green SEA-GRE5
+sheriff's %]IFF'S
+snuff SNUFF
+sou'east S\\'EA/
+stiff\Bitalic\Bly\Eitalic\E /IFF.1LY
+subbasement SUBBASE;T
+tea TEA
+theatre !ATRE
+
+#   10.6.6 page 121
+CliffSide ,CLIFF,SIDE
+EggHead ,EGG,H1D
+MacEACHEN ,MAC,,EA*5
+SeaWorld ,SEA,_W
+TEAspoon ,,TEA,'SPOON
+
+#   10.6.7 page 121
+deactivate DEACTIVATE
+geanticline GEANTICL9E
+preamble PREAMBLE
+reaction REAC;N
+
+#   10.6.8 page 122
+antinode ANT9ODE
+arena >5A
+been BE5
+begin 2G9
+be'ind BE'9D
+benefit B5EFIT
+binary B9>Y
+binomial B9OMIAL
+Blakeney ,BLAK5EY
+Caen ,CA5
+casino CAS9O
+china *9A
+Chopin ,*OP9
+citizeness CITIZ5ESS
+deafen D1F5
+denote D5OTE
+deny D5Y
+disingenuous 49G5U\\S
+double-entendre D\\BLE-5T5DRE
+e'en E'5
+Einstein ,E9/E9
+enceinte 5CE9TE
+engine 5G9E
+Enid ,5ID
+enormous 5ORM\\S
+equinox EQU9OX
+faint FA9T
+feminine FEM99E
+goin' GO9'
+haven't HAV5'T
+henna H5NA
+Inc. ,9C4
+incline 9CL9E
+ingot 9GOT
+in's 9'S
+into 9TO
+maenad MA5AD
+Montenegro ,MONT5EGRO
+phoenix PHO5IX
+p(en) P\"<5\">
+p(in) P\"<9\">
+prenatal PR5ATAL
+queen QUE5
+renew R5EW
+self-induced SELF-9DUC$
+shut-ins %UT-9S
+within )9
+to-ing TO-9G
+Athens ,A!NS
+benign 2NIGN
+business BUSI;S
+cringed CR+$
+fenced F;ED
+filename FILE\"N
+forenoon =ENOON
+Francene ,FR.ENE
+lament LA;T
+##FAIL ménage M^/ENAGE
+señor SE^]NOR
+toenail TOENAIL
+
+#   10.6.9 page 123
+##FAIL Aix-en-Provence ,AIX-EN-,PROV;E
+##FAIL "Chou En-lai" ",*\\ ,EN-LAI"
+"en route" "EN R\\TE"
+
+#   10.6.10 page 123
+\"Sudden!\" 8,SUDD560
+\"Comin'?\" 8,COM9'80
+linen… L95444
+\Bitalic\Bbein'\Eitalic\E .129'
+(bein') \"<29'\">
+##FAIL bein' 2IN'
+##FAIL “bein'” ^82IN'^0
+
+#   10.7.1 page 125
+foreword =E^W
+misworded MIS^W$
+sword S^W
+word-for-word ^W-=-^W
+Wordsworth ,^WSWOR?
+cannot _C
+Germany ,G]_M
+many-sided _M-SID$
+dispirited DI_S$
+spirits _SS
+spiritual _SUAL
+theirs _!S
+SeaWorld ,SEA,_W
+underworld \"U_W
+world-wide _W-WIDE
+worldly _WLY
+day-by-day \"D-BY-\"D
+Dayton ,\"DTON
+Friday ,FRI\"D
+G'day ,G'\"D
+father-in-law \"F-9-LAW
+fatherless \"F.S
+grandfather GR&\"F
+acknowledge AC\"KL$GE
+knowing \"K+
+Knowles ,\"KLES
+well-known WELL-\"KN
+Gaylord ,GAY\"L
+lordosis \"LOSIS
+lordship \"L%IP
+m'lord M'\"L
+godmother GOD\"M
+mother-of-pearl \"M-(-PE>L
+motherly \"MLY
+smother S\"M
+apartheid A\"PHEID
+Bonaparte ,BONA\"PE
+impartial IM\"PIAL
+part-time \"P-\"T
+partake \"PAKE
+parterre \"P]RE
+party \"PY
+passe-partout PASSE-\"P\\T
+Spartan ,S\"PAN
+questionnaire \"QNAIRE
+unquestionable UN\"QABLE
+affrighted A6\"R$
+aright A\"R
+brighten B\"R5
+millwright MILLW\"R
+right-handed \"R-H&$
+righteous \"RE\\S
+youngest \"YE/
+Youngstown ,\"YST[N
+characteristic \"*I/IC
+characterise \"*ISE
+throughout \"?\\T
+elsewhere ELSE\":
+somewhere \"S\":
+whereby \":BY
+wherein \":9
+drought DR\"\\
+fought F\"\\
+Houghton ,H\"\\ON
+oughtn't \"\\N'T
+thoughtful ?\"\\;L
+coworker CO\"W]
+fireworks FIRE\"WS
+stonework /\"O\"W
+unworkable UN\"WABLE
+workday \"W\"D
+working \"W+
+##FAIL Dayan ,DAYAN
+Sanday ,S&AY
+today TD
+Lucknow ,LUCKN[
+chlordane *LORDANE
+chemotherapy *EMO!RAPY
+Parthenon ,P>!NON
+where'er :]E']
+wherever :]\"E
+##FAIL Dworkin ,DWORK9
+
+#   10.7.2 page 127
+"upon these shores" "^U ^! %ORES"
+"Whose are those?" ",^: >E ^?8"
+hereupon \"H^U
+whereupon \":^U
+whosesoever ^:SO\"E
+thereby \"!BY
+therefore \"!=E
+therein \"!9
+thereupon \"!^U
+coupon C\\PON
+Dupont ,DUPONT
+hypotheses HYPO!SES
+Theseus ,!SEUS
+spathose SPA?OSE
+Thoseby ,?OSEBY
+bothered BO!R$
+ethereal E!R1L
+isothere ISO!RE
+smithereens SMI!RE5S
+Theresa ,!RESA
+withered )]$
+
+#   10.7.3 page 128
+Galahad ,GALA_H
+haddock _HDOCK
+Haddon ,_HDON
+hadji _HJI
+Hadley ,_HLEY
+hadn't _HN'T
+Chad ,*AD
+Hades ,HADES
+Hadrian ,HADRIAN
+menhaden M5HAD5
+shadow %AD[
+Thaddeus ,?ADDEUS
+
+#   10.7.4 page 128
+asseverate ASS\"EATE
+beverage B\"EAGE
+Everest ,\"EE/
+everything \"EY?+
+fever F\"E
+irreverence IRR\"E;E
+nevertheless N\"E!.S
+reverend R\"E5D
+several S\"EAL
+Severn ,S\"EN
+Unilever ,UNIL\"E
+believer 2LIEV]
+eversion EV].N
+Guinevere ,GU9EV]E
+##FAIL McKeever ,MC,KEEV]
+Monteverdi ,MONTEV]DI
+persevere P]SEV]E
+reverberate REV]B]ATE
+revere REV]E
+reverify REV]IFY
+severity SEV];Y
+thievery ?IEV]Y
+
+#   10.7.5 page 129
+adhere AD\"H
+atmosphere ATMOSP\"H
+cohere CO\"H
+hereabout \"HAB
+herewith \"H)
+filename FILE\"N
+nameable \"NABLE
+renamed RE\"ND
+surname SUR\"N
+adhered ADH]$
+bothered BO!R$
+coherence COH];E
+elsewhere ELSE\":
+ethereal E!R1L
+heredity H]$;Y
+"Hereford (City)" ",H]E=D \"<,C;Y\">"
+enamel 5AMEL
+ornament ORNA;T
+unamended UNAM5D$
+Vietnamese ,VIETNAMESE
+
+#   10.7.6 page 130
+acetone ACET\"O
+atonement AT\"O;T
+baloney BAL\"OY
+bygone BYG\"O
+cone C\"O
+demonetise DEM\"OTISE
+dishonesty 4H\"O/Y
+done D\"O
+everyone \"EY\"O
+honey H\"OY
+Jones ,J\"OS
+lonesome L\"O\"S
+Mulroney ,MULR\"OY
+oneness \"O;S
+phone PH\"O
+scone SC\"O
+stonework /\"O\"W
+stoney /\"OY
+anemone ANEMONE
+baroness B>O;S
+baronet B>ONET
+Boone ,BOONE
+Cantonese ,CANTONESE
+colonel COLONEL
+Conestoga ,3E/OGA
+crooner CROON]
+cushioned CU%ION$
+Donegal ,DONEGAL
+erroneous ]RONE\\S
+Hermione ,H]MIONE
+Indonesia ,9DONESIA
+krone KRONE
+Monet ,MONET
+onerous ON]\\S
+phonetic PHONETIC
+pioneer PIONE]
+poisoned POISON$
+Rhône ,RH^%ONE
+Rooney ,ROONEY
+sooner SOON]
+stoned /ON$
+
+#  10.7.7 page 131
+blithesome BLI!\"S
+chromosome *ROMO\"S
+fearsome FE>\"S
+handsome H&\"S
+handsomer H&\"SR
+lonesomest L\"O\"S/
+somebody \"SBODY
+somesuch \"SS*
+somewhere \"S\":
+twosome TWO\"S
+"blossomed (blossom)" "BLOSSOM$ \"<BLOSSOM\">"
+gasometer GASOMET]
+isometric ISOMETRIC
+"ransomed (ransom)" "RANSOM$ \"<RANSOM\">"
+somersault SOM]SAULT
+Somerset ,SOM]SET
+
+#   10.7.8 page 131
+daytime \"D\"T
+maritime M>I\"T
+mistimed MIS\"TD
+pastime PAS\"T
+sometimes \"S\"TS
+springtime SPR+\"T
+timeously \"T\\SLY
+Timex ,\"TX
+untimely UN\"TLY
+altimeter ALTIMET]
+centime C5TIME
+centimeter C5TIMET]
+Mortimer ,MORTIM]
+multimedia MULTIM$IA
+sentiment S5TI;T
+
+#   10.7.9 page 132
+blunder BL\"U
+misunderstand MIS\"U/&
+thundered ?\"U$
+undergo \"UGO
+underpaid \"UPD
+Wunderhorn ,W\"UHORN
+flounder FL.D]
+laundering LAUND]+
+Saunders ,SAUND]S
+underived UND]IV$
+underogatory UND]OGATORY

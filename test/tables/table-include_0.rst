@@ -1,0 +1,3 @@
+
+rule trans < ⠪
+rule trans > ⠕
