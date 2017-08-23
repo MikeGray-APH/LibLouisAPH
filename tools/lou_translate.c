@@ -163,19 +163,13 @@ int main(int argn, char **args)
 
 	tables = lookup_tables(&table_cnt, args[0]);
 	if(!tables)
-	{
-		fprintf(stderr, "ERROR:  unable to load table %s\n", args[0]);
 		return 1;
-	}
 
 	if(args[1])
 	{
 		conversion = lookup_conversion(args[1]);
 		 if(!conversion)
-		{
-			fprintf(stderr, "ERROR:  unable to load conversion %s\n", args[1]);
 			return 1;
-		}
 	}
 	else
 		conversion = NULL;

@@ -99,7 +99,6 @@ static int lookup_and_translate(
 		conversion = lookup_conversion(conversion_name);
 		if(!conversion)
 		{
-			log_message(LOG_ERROR, "unable to open conversion %s\n", conversion_name);
 			status = 0;
 			goto return_status;
 		}
@@ -129,9 +128,10 @@ int louis_translate_forward(
 	int *dots_to_chars_map,
 	int *cursor)
 {
-	return lookup_and_translate(dots, dots_len, chars, chars_len,
-                                    table_names, conversion_name, FORWARD,
-                                    chars_to_dots_map, dots_to_chars_map, cursor);
+	return lookup_and_translate(
+		dots, dots_len, chars, chars_len,
+		table_names, conversion_name, FORWARD,
+		chars_to_dots_map, dots_to_chars_map, cursor);
 }
 
 ATTRIBUTE_DLL_EXPORT
@@ -146,9 +146,10 @@ int louis_translate_backward(
 	int *chars_to_dots_map,
 	int *cursor)
 {
-	return lookup_and_translate(chars, chars_len, dots, dots_len,
-                                    table_names, conversion_name, BACKWARD,
-                                    dots_to_chars_map, chars_to_dots_map, cursor);
+	return lookup_and_translate(
+		chars, chars_len, dots, dots_len,
+		table_names, conversion_name, BACKWARD,
+		dots_to_chars_map, chars_to_dots_map, cursor);
 }
 
 ATTRIBUTE_DLL_EXPORT
@@ -158,10 +159,7 @@ int louis_convert_to(Unicode *chars, const int chars_len, const char *conversion
 
 	conversion = lookup_conversion(conversion_name);
 	if(!conversion)
-	{
-		log_message(LOG_ERROR, "unable to open conversion %s\n", conversion_name);
 		return 0;
-	}
 
 	conversion_convert_to(chars, chars_len, conversion);
 	return 1;
@@ -174,10 +172,7 @@ int louis_convert_from(Unicode *dots, const int dots_len, const char *conversion
 
 	conversion = lookup_conversion(conversion_name);
 	if(!conversion)
-	{
-		log_message(LOG_ERROR, "unable to open conversion %s\n", conversion_name);
 		return 0;
-	}
 
 	conversion_convert_from(dots, dots_len, conversion);
 	return 1;

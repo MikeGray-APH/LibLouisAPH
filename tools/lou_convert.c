@@ -352,10 +352,7 @@ int main(int argn, char **args)
 
 	 conversion = lookup_conversion(*args);
 	 if(!conversion)
-	{
-		fprintf(stderr, "ERROR:  unable to load conversion %s\n", *args);
 		return 1;
-	}
 
 	if(opt_output)
 	{

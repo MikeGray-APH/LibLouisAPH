@@ -263,7 +263,7 @@ struct table* lookup_table(const char *file_name)
 		}
 	}
 
-	log_message(LOG_ERROR, "unable to load table %s", file_name);
+	log_message(LOG_ERROR, "unable to open table %s", file_name);
 	return NULL;
 
 	return_table:
@@ -339,19 +339,13 @@ struct table** lookup_tables(int *table_cnt, const char *table_names)
 		names[crs] = 0;
 		tables[i] = lookup_table(&names[off]);
 		if(!tables[i])
-		{
-			log_message(LOG_ERROR, "unable to open table %s\n", &names[off]);
 			goto return_fail;
-		}
 		off = crs + 1;
 		i++;
 	}
 	tables[i] = lookup_table(&names[off]);
 	if(!tables[i])
-	{
-		log_message(LOG_ERROR, "unable to open table %s\n", &names[off]);
 		goto return_fail;
-	}
 
 	FREE(names);
 	return tables;
@@ -407,7 +401,7 @@ struct conversion* lookup_conversion(const char *file_name)
 		}
 	}
 
-	log_message(LOG_ERROR, "unable to load conversion %s", file_name);
+	log_message(LOG_ERROR, "unable to open conversion %s", file_name);
 	return NULL;
 
 	return_conversion:

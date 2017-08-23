@@ -309,10 +309,7 @@ int main(int argn, char **args)
 
 	table = lookup_table(args[0]);
 	if(!table)
-	{
-		fprintf(stderr, "ERROR:  unable to lookup table %s\n", args[0]);
 		return 1;
-	}
 
 	printf("%s\n", args[0]);
 
