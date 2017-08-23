@@ -140,7 +140,7 @@ int lookup_set_paths(const char *paths)
 		return 1;
 	}
 
-	table_paths_len += strlen(paths) + 1;
+	table_paths_len = strlen(paths) + 1;
 	table_paths = MALLOC(table_paths_len);
 	if(!table_paths)
 	{
