@@ -147,13 +147,13 @@ CWARNS_OPT := \
 
 OBJS_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJ_LIB_IFACE), build/objects/$(OBJ))
 
-build/db.exe: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-build/db.exe: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-build/db.exe: $(OBJS_DB_BUILD) build/objects/$(OBJ_DEBUG_MAIN) | build
+build/exe-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
+build/exe-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+build/exe-db: $(OBJS_DB_BUILD) build/objects/$(OBJ_DEBUG_MAIN) | build
 	$(CC) -o $@ $(LDFLAGS) $(OBJS_DB_BUILD) build/objects/$(OBJ_DEBUG_MAIN)
 
-db: build/db.exe
-	gdb --command=debug/gdb/main.gdb build/db.exe
+db: build/exe-db
+	gdb --command=debug/gdb/main.gdb build/exe-db
 
 
 dll: CFLAGS += -fpic -ggdb $(CWARNS_DEBUG) -fstack-protector
@@ -212,44 +212,46 @@ build/tools:
 
 ################################################################################
 
-test: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-test: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test: test-link build/test-db.exe | build/test
-	build/test-db.exe
+test: test-lib test-link
+
+test-lib: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
+test-lib: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+test-lib: build/exe-test-db | build/test
+	@build/exe-test-db
+
+test-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
+test-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+test-db: build/exe-test-db | build/test
+	gdb --command=debug/gdb/test.gdb build/exe-test-db
+
+OBJS_TEST_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST) $(OBJ_TEST_MAIN), build/objects/$(OBJ))
+
+build/exe-test-db: $(OBJS_TEST_DB_BUILD)
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_DB_BUILD)
 
 test-link: CPPFLAGS += -I . -I source/output -D DEBUG #-D DEBUG_MEMORY
 test-link: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
 test-link: LDFLAGS += -L build -llouisAPH
-test-link: dll build/test-link.exe| build/test
-	env LD_LIBRARY_PATH=build build/test-link.exe
+test-link: dll build/exe-test-link | build/test
+	@env LD_LIBRARY_PATH=build build/exe-test-link
 
-build/test-link.exe: build/objects/$(OBJ_TEST_LINK)
+build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
 	$(CC) -o $@ build/objects/$(OBJ_TEST_LINK) $(LDFLAGS)
-
-test-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-test-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test-db: build/test-db.exe | build/test
-	gdb --command=debug/gdb/test.gdb build/test-db.exe
-
-OBJS_TEST_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST) $(OBJ_TEST_MAIN), build/objects/$(OBJ))
-
-build/test-db.exe: $(OBJS_TEST_DB_BUILD)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_DB_BUILD)
 
 test-opt: CPPFLAGS += -I source/output -D OUTPUT
 test-opt: CFLAGS += -O3 $(CWARNS_OPT)
-test-opt: build/test-opt.exe | build/test
-	build/test-opt.exe
+test-opt: build/exe-test-opt | build/test
+	@build/exe-test-opt
 
 OBJS_TEST_OPT_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST) $(OBJ_TEST_MAIN), build/objects/opt/$(OBJ))
 
-build/test-opt.exe: $(OBJS_TEST_OPT_BUILD)
+build/exe-test-opt: $(OBJS_TEST_OPT_BUILD)
 	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_OPT_BUILD)
 
 build/test:
 	mkdir -p build/test
 
-.PHONY: test test-link test-db test-opt
+.PHONY: test test-lib test-db test-link test-opt
 
 ################################################################################
 
