@@ -43,14 +43,14 @@ void louis_set_log_callback(void (*callback)(const int level, const char *messag
  *
  * Returns the number of characters copied.
 */
-int louis_get_path(char *paths, const int paths_max);
+int louis_get_paths(char *paths, const int paths_max);
 
 
 /* Sets the current paths to paths.
  *
  * Returns the number of characters copied or 0 if an error occurred.
 */
-int louis_set_path(const char *paths);
+int louis_set_paths(const char *paths);
 
 
 /* Appends paths to the current paths using the appropriate path separator
@@ -58,7 +58,7 @@ int louis_set_path(const char *paths);
  *
  * Returns the length of the current paths.
 */
-int louis_add_path(const char *paths);
+int louis_add_paths(const char *paths);
 
 
 /* Performs forward translation, using table_names and conversion_name, of at
