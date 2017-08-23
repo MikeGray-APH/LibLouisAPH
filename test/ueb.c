@@ -50,7 +50,7 @@ int test_ueb(FILE *output)
 	pass_cnt =
 	try_cnt = 0;
 
-	table = table_compile_from_file("tables/ueb-grade2.rst");
+	table = table_compile_from_file("tables/english-ueb-grade2.rst");
 	conversion = conversion_compile_from_file("tables/ascii.cvt");
 
 	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/ueb/ueb-back.txt", table, NULL, 0);

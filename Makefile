@@ -19,7 +19,7 @@
 
 ################################################################################
 
-VERSION := 0.0.0
+VERSION := 0.1.0
 
 CC = gcc
 CPPFLAGS = -D VERSION=\"$(VERSION)\" -I source -I source/language
