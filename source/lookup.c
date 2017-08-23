@@ -450,7 +450,7 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 		if(paths)
 		{
 			paths++;
-			strncpy(paths, file_name, PATH_NAME_MAX - file_name_len);
+			strncpy(paths, file_name, PATH_NAME_MAX - (paths - path) - file_name_len);
 			file = fopen(path, "r");
 			if(file)
 			{

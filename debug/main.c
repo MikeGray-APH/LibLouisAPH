@@ -21,6 +21,9 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+/*   needed for setenv and unsetenv   */
+#define _XOPEN_SOURCE 600
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -576,8 +579,6 @@ int main(void)
 	//louis_get_version(version, 0x40);
 	//printf("%s\n", version);
 
-	//setenv("LOUIS_TABLEPATH", "debug", 0);
-
 	table = NULL;
 	conversion = NULL;
 
@@ -585,6 +586,8 @@ int main(void)
 
 	log_set_callback(log_callback);
 
+	//unsetenv("LOUIS_TABLEPATH");
+	//setenv("LOUIS_TABLEPATH", "tables", 0);
 	//lookup_path_add("tables");
 	//table = lookup_table("ueb-grade2.rst");  if(!table) return 1; don't free table
 

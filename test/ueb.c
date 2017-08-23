@@ -53,23 +53,23 @@ int test_ueb(FILE *output)
 	table = table_compile_from_file("tables/ueb-grade2.rst");
 	conversion = conversion_compile_from_file("tables/ascii.cvt");
 
-	try_cnt++; pass_cnt += test_back_from_file(output,   "test/ueb/ueb-back.txt", table, NULL, 0);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-expect.txt", table, NULL, 0, 1);
+	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/ueb/ueb-back.txt", table, NULL, 0);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-expect.txt", table, NULL, 0, 1);
 
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-02-stand_alone.txt", table, conversion, 0, 1);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-03-symbols.txt", table, conversion, 0, 1);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-05-grade_1_mode.txt", table, conversion, 0, 1);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-06-numeric_mode.txt", table, conversion, 0, 1);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-08-capitalization.txt", table, conversion, 0, 1);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-09-typeforms.txt", table, conversion, 0, 1);
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-10-07-contractions.txt", table, conversion, 0, 1);
-//	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-10-13-contractions.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-02-stand_alone.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-03-symbols.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-05-grade_1_mode.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-06-numeric_mode.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-08-capitalization.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-09-typeforms.txt", table, conversion, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-10-07-contractions.txt", table, conversion, 0, 1);
+//	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-10-13-contractions.txt", table, conversion, 0, 1);
 
-	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-dictionary.txt", table, NULL, 0, 1);
-	try_cnt++; pass_cnt += test_back_from_file(output,   "test/data/english-words.txt", table, NULL, 0);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-dictionary.txt", table, NULL, 0, 1);
+	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/data/english-words.txt", table, NULL, 0);
 
-//	try_cnt++; pass_cnt += test_expect_from_file(output, "test/ueb/ueb-fail-expect.txt", table, conversion, 1, 1);
-//	try_cnt++; pass_cnt += test_back_from_file(output,   "test/ueb/ueb-fail-back.txt", table, NULL, 1);
+//	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-fail-expect.txt", table, conversion, 1, 1);
+//	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/ueb/ueb-fail-back.txt", table, NULL, 1);
 
 	if(table)
 		table_free(table);

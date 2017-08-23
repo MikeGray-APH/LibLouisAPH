@@ -21,6 +21,9 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+/*   needed for setenv and unsetenv   */
+#define _XOPEN_SOURCE 600
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -144,6 +147,74 @@ int test_table_include(FILE *output)
 	free_and_return:
 	if(table)
 		table_free(table);
+
+	fputs("\n", output);
+	fflush(output);
+
+	if(output != stdout)
+	if(status)
+		puts("PASS");
+	else
+		puts("FAIL");
+
+	return status;
+}
+
+int test_table_include_with_environment(FILE *output)
+{
+	struct table **tables;
+	int table_cnt, status;
+
+	status = 0;
+
+	if(output != stdout)
+		printf("test_table_include_with_environment:  ");
+
+	fputs("test_table_include_with_environment\n\n", output);
+
+	lookup_fini();
+	unsetenv("LOUIS_TABLEPATH");
+	setenv("LOUIS_TABLEPATH", "test/tables", 0);
+
+	tables = lookup_tables(&table_cnt, "table-include_0.rst");
+	if(!tables)
+	{
+		fputs("unable to open table-include_0.rst\n", output);
+		goto free_and_return;
+	}
+
+	if(!test_expect(output, (const struct table * const*)tables, table_cnt, NULL, BOTH, u"<=#=>", 5, u"⠪=#=⠕", 5))
+		goto free_and_return;
+
+	FREE(tables);
+	tables = lookup_tables(&table_cnt, "test/tables/table-include_1.rst");
+	if(!tables)
+	{
+		fputs("unable to open test/tables/table-include_1.rst\n", output);
+		goto free_and_return;
+	}
+
+	if(!test_expect(output, (const struct table * const*)tables, table_cnt, NULL, BOTH, u"<=#=>", 5, u"⠪⠭#⠭⠕", 5))
+		goto free_and_return;
+
+	FREE(tables);
+	tables = lookup_tables(&table_cnt, "test/tables/table-include_2.rst");
+	if(!tables)
+	{
+		fputs("unable to open test/tables/table-include_2.rst\n", output);
+		goto free_and_return;
+	}
+
+	if(!test_expect(output, (const struct table * const*)tables, table_cnt, NULL, BOTH, u"<=#=>", 5, u"⠪⠭⠿⠭⠕", 5))
+		goto free_and_return;
+
+	status = 1;
+
+	free_and_return:
+	if(tables)
+		FREE(tables);
+	lookup_fini();
+	//unsetenv("LOUIS_TABLEPATH");
 
 	fputs("\n", output);
 	fflush(output);
@@ -381,7 +452,7 @@ int test_mapping_with_capital(FILE *output)
 
 int test_library(FILE *output)
 {
-	int pass_cnt;
+	int pass_cnt, try_cnt;
 
 	if(!output)
 	{
@@ -395,14 +466,16 @@ int test_library(FILE *output)
 
 	fputs("testing library\n\n", output);
 
-	pass_cnt = 0;
+	pass_cnt =
+	try_cnt = 0;
 
-	pass_cnt += test_rule_sort(output);
-	pass_cnt += test_table_include(output);
-	pass_cnt += test_table_override(output);
-	pass_cnt += test_table_override_with_lookup(output);
-	pass_cnt += test_cursor(output);
-	pass_cnt += test_mapping_with_capital(output);
+	try_cnt++;  pass_cnt += test_rule_sort(output);
+	try_cnt++;  pass_cnt += test_table_include(output);
+	try_cnt++;  pass_cnt += test_table_include_with_environment(output);
+	try_cnt++;  pass_cnt += test_table_override(output);
+	try_cnt++;  pass_cnt += test_table_override_with_lookup(output);
+	try_cnt++;  pass_cnt += test_cursor(output);
+	try_cnt++;  pass_cnt += test_mapping_with_capital(output);
 
 	if(output != stdout)
 	{
@@ -410,7 +483,7 @@ int test_library(FILE *output)
 		fclose(output);
 	}
 
-	return 6 - pass_cnt;
+	return try_cnt - pass_cnt;
 }
 
 /******************************************************************************/

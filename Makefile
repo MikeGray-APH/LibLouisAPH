@@ -152,7 +152,7 @@ CWARNS_OPT := \
 ################################################################################
 
 $(EXE).db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-$(EXE).db: CFLAGS += -ggdb $(CWARNS_DEBUG)
+$(EXE).db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
 $(EXE).db: $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJ_LIB_IFACE) $(OBJ_DEBUG_MAIN)
 	$(CC) -o $(EXE).db $(LDFLAGS) $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJ_LIB_IFACE) $(OBJ_DEBUG_MAIN)
 
@@ -197,12 +197,12 @@ build/test: | build
 	@mkdir -p build/test
 
 test: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-test: CFLAGS += -ggdb $(CWARNS_DEBUG)
+test: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
 test: $(EXE).test
 	./$(EXE).test
 
 test-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-test-db: CFLAGS += -ggdb $(CWARNS_DEBUG)
+test-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
 test-db: $(EXE).test
 	gdb --command=debug/gdb/test.gdb $(EXE).test
 
