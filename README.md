@@ -49,11 +49,14 @@ Source and data files for testing are in the `test` directory, and may be starte
 ```
 make test
 ```
-or to compile test optimized and start:
+Additional tests may be run with:
+```
+make test-all
+```
+To compile and start certian tests optimized for benchmarking:
 ```
 make test-opt
 ```
-
 Addition code and data files used for development and debugging are in the `debug/` directory.  The file `debug/main-debug.c` contains a `main()` and utility functions and can be started with:
 
 ```
@@ -79,7 +82,7 @@ make clean
 ```
 or to clean the build and more:
 ```
-make cleanse
+make distclean
 ```
 
 ****************************************

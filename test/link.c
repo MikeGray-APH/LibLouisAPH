@@ -115,7 +115,7 @@ int main(void)
 	if(!output)
 		output = stdout;
 
-	fputs("testing link\n", output);
+	fputs("testing link\n\n", output);
 	if(output != stdout)
 		puts("testing link");
 

@@ -31,8 +31,6 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 #include "log.h"
 #include "test.h"
 
-void debug_output_convert_private(const Unicode *uchars, const int uchars_len);
-
 /******************************************************************************/
 
 static void log_callback(const int level, const char *message)
@@ -54,7 +52,6 @@ static void log_callback(const int level, const char *message)
 
 /******************************************************************************/
 
-int test_library(FILE *output);
 int test_ueb(FILE *output);
 
 int main(void)
@@ -70,7 +67,6 @@ int main(void)
 
 	clock_begin = clock();
 
-	fail_cnt += test_library(NULL);
 	fail_cnt += test_ueb(NULL);
 
 	clock_end = clock();

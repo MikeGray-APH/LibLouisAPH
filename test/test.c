@@ -62,7 +62,7 @@ static int test_expect_both(
 	forward_len = translate_start(forward, dots_len, chars, chars_len, tables, table_cnt, conversion, FORWARD, NULL, NULL, NULL);
 	if(forward_len == -1)
 	{
-		fputs("   FAIL", output);
+		fputs("\nERROR:  translate forward\n", output);
 		status = 0;
 		goto free_and_return_status;
 	}
@@ -70,7 +70,7 @@ static int test_expect_both(
 	utf16le_output(output, forward, forward_len);
 	if(!utf16_are_equal(forward, forward_len, dots, dots_len))
 	{
-		fputs("   FAIL", output);
+		fputs("\nERROR:  translation forward\n", output);
 		status = 0;
 		goto free_and_return_status;
 	}
@@ -80,7 +80,7 @@ static int test_expect_both(
 	backward_len = translate_start(backward, chars_len, forward, forward_len, tables, table_cnt, conversion, BACKWARD, NULL, NULL, NULL);
 	if(backward_len == -1)
 	{
-		fputs("   FAIL", output);
+		fputs("\nERROR:  translate backward\n", output);
 		status = 0;
 		goto free_and_return_status;
 	}
@@ -88,7 +88,7 @@ static int test_expect_both(
 	utf16le_output(output, backward, backward_len);
 	if(!utf16_are_equal(backward, backward_len, chars, chars_len))
 	{
-		fputs("   FAIL", output);
+		fputs("\nERROR:  translation backward\n", output);
 		status = 0;
 		goto free_and_return_status;
 	}
@@ -142,7 +142,7 @@ int test_expect_cursor(
 	trans_len = translate_start(trans, dots_len, chars, chars_len, tables, table_cnt, conversion, direction, NULL, NULL, &cursor);
 	if(trans_len == -1)
 	{
-		fputs("FAIL", output);
+		fputs("ERROR:  translate\n", output);
 		goto free_and_return_status;
 	}
 
@@ -150,7 +150,7 @@ int test_expect_cursor(
 	utf16le_output(output, trans, trans_len);
 	if(!utf16_are_equal(trans, trans_len, dots, dots_len))
 	{
-		fputs("   FAIL", output);
+		fputs("\nERROR:  translation\n", output);
 		goto free_and_return_status;
 	}
 
@@ -159,7 +159,7 @@ int test_expect_cursor(
 		fprintf(output, "   %d:%d", cursor_chars, cursor);
 		if(cursor != cursor_dots)
 		{
-			fprintf(output, "!=%d   FAIL", cursor_dots);
+			fprintf(output, "\nERROR:  %d != %d", cursor, cursor_dots);
 			goto free_and_return_status;
 		}
 	}
@@ -240,7 +240,7 @@ int test_expect_mapping(
 	trans_len = translate_start(trans, dots_len, chars, chars_len, tables, table_cnt, conversion, direction, trans_chars_to_dots_map, trans_dots_to_chars_map, NULL);
 	if(trans_len == -1)
 	{
-		fputs("FAIL", output);
+		fputs("ERROR:  translate\n", output);
 		goto free_and_return_status;
 	}
 	uchars = MALLOC((chars_len + 1) * sizeof(Unicode));
@@ -291,21 +291,21 @@ int test_expect_mapping(
 
 	if(!utf16_are_equal(trans, trans_len, dots, dots_len))
 	{
-		fputs("FAIL", output);
+		fputs("\nERROR:  translation\n", output);
 		goto free_and_return_status;
 	}
 
 	for(i = 0; i < chars_len; i++)
 	if(trans_chars_to_dots_map[i] != chars_to_dots_map[i])
 	{
-		fputs("FAIL", output);
+		fputs("\nERROR:  chars_to_dots_map\n", output);
 		goto free_and_return_status;
 	}
 
 	for(i = 0; i < dots_len; i++)
 	if(trans_dots_to_chars_map[i] != dots_to_chars_map[i])
 	{
-		fputs("FAIL", output);
+		fputs("\nERROR:  dots_to_chars_map\n", output);
 		goto free_and_return_status;
 	}
 
@@ -504,13 +504,13 @@ static Unicode* test_input_uchars(
 	*trans_len_ref = translate_start(trans, trans_len, uchars, uchars_len, &table, 1, conversion, direction, NULL, NULL, NULL);
 	if(*trans_len_ref == -1)
 	{
-		fputs("FAIL\n", output);
+		fputs("ERROR:  translate\n", output);
 		FREE(trans);
 		return NULL;
 	}
 	if(*trans_len_ref == trans_len)
 	{
-		fputs("FAIL:  buffer too small\n", output);
+		fputs("ERROR:  buffer too small\n", output);
 		FREE(trans);
 		return NULL;
 	}
@@ -536,7 +536,7 @@ int test_back_from_file(
 	int pass, fail;
 
 	if(!table)
-		return 1;
+		return 0;
 
 	if(output != stdout)
 	{
@@ -549,7 +549,7 @@ int test_back_from_file(
 	file = fopen(file_name, "r");
 	if(!file)
 	{
-		fprintf(output, "FAIL:  unable to open %s\n\n", file_name);
+		fprintf(output, "ERROR:  unable to open %s\n\n", file_name);
 		fail = 1;
 		goto return_close;
 	}
@@ -595,7 +595,6 @@ int test_back_from_file(
 		trans = test_input_uchars(output, &trans_len, table, conversion, uchars, uchars_len, FORWARD);
 		if(!trans)
 		{
-			fprintf(output, "TEST ERROR:  %s\n\n", cchars);
 			fail = -1;
 			goto return_close;
 		}
@@ -603,7 +602,6 @@ int test_back_from_file(
 		reverse = test_input_uchars(output, &reverse_len, table, conversion, trans, trans_len, BACKWARD);
 		if(!reverse)
 		{
-			fprintf(output, "TEST ERROR:  %s\n\n", cchars);
 			fail = -1;
 			goto return_close;
 		}
@@ -696,7 +694,7 @@ int test_expect_from_file(
 	int pass, fail;
 
 	if(!table)
-		return 1;
+		return 0;
 
 	if(output != stdout)
 	{
@@ -715,7 +713,7 @@ int test_expect_from_file(
 	file = fopen(file_name, "r");
 	if(!file)
 	{
-		fprintf(output, "FAIL:  unable to open %s\n\n", file_name);
+		fprintf(output, "ERROR:  unable to open %s\n\n", file_name);
 		fail = 1;
 		goto return_close;
 	}
@@ -764,10 +762,9 @@ int test_expect_from_file(
 		memset(original, 0, (original_len + 1) * sizeof(Unicode));
 		original_len = strip_input(original, uchars, uchars_len, table);
 
-		token_parse();
-		if(!token_len)
+		if(!token_parse())
 		{
-			fprintf(stderr, "TEST ERROR:  %d:  %s\n\n", line, cchars);
+			fprintf(output, "ERROR:  at %s:%d:  %s\n\n", file_name, line, cchars);
 			FREE(original);
 			continue;
 		}
@@ -779,7 +776,6 @@ int test_expect_from_file(
 		trans = test_input_uchars(output, &trans_len, table, conversion, uchars, uchars_len, FORWARD);
 		if(!trans)
 		{
-			fprintf(output, "TEST ERROR:  %s\n\n", cchars);
 			FREE(original);
 			fail = -1;
 			goto return_close;
@@ -792,7 +788,6 @@ int test_expect_from_file(
 			reverse = test_input_uchars(output, &reverse_len, table, conversion, trans, trans_len, BACKWARD);
 			if(!reverse)
 			{
-				fprintf(output, "TEST ERROR:  %s\n\n", cchars);
 				FREE(original);
 				FREE(trans);
 				fail = -1;

@@ -35,9 +35,30 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 #include "log.h"
 #include "test.h"
 
+static FILE *output;
+
 /******************************************************************************/
 
-int test_lookup_path(FILE *output)
+static void log_callback(const int level, const char *message)
+{
+	switch(level)
+	{
+	case LOG_ALL:      fprintf(output, "ALL:  ");      break;
+	case LOG_TRACE:    fprintf(output, "TRACE:  ");    break;
+	case LOG_DEBUG:    fprintf(output, "DEBUG:  ");    break;
+	case LOG_INFO:     fprintf(output, "INFO:  ");     break;
+	case LOG_WARNING:  fprintf(output, "WARNING:  ");  break;
+	case LOG_ERROR:    fprintf(output, "ERROR:  ");    break;
+	case LOG_FATAL:    fprintf(output, "FATAL:  ");    break;
+	}
+
+	fprintf(output, "%s\n", message);
+	fflush(output);
+}
+
+/******************************************************************************/
+
+static int test_lookup_path(void)
 {
 	char paths[0x100];
 	int paths_len, status;
@@ -57,7 +78,7 @@ int test_lookup_path(FILE *output)
 	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
 	if(paths_len != 0)
 	{
-		fprintf(output, "paths_len = %d != 0\n", paths_len);
+		fprintf(output, "ERROR:  %d != 0\n", paths_len);
 		goto return_fail;
 	}
 
@@ -68,12 +89,12 @@ int test_lookup_path(FILE *output)
 	fprintf(output, "get:  [%d]\t%s   max = 12\n", paths_len, paths);
 	if(paths_len != 11)
 	{
-		fprintf(output, "paths_len = %d != 0\n", paths_len);
+		fprintf(output, "ERROR:  %d != 0\n", paths_len);
 		goto return_fail;
 	}
 	if(strncmp(paths, "test/tables", 12))
 	{
-		fprintf(output, "paths = %s != test/tables\n", paths);
+		fprintf(output, "ERROR:  %s != test/tables\n", paths);
 		goto return_fail;
 	}
 	paths[0] = 0;
@@ -81,12 +102,12 @@ int test_lookup_path(FILE *output)
 	fprintf(output, "get:  [%d]\t%s   max = 11\n", paths_len, paths);
 	if(paths_len != 10)
 	{
-		fprintf(output, "paths_len = %d != 0\n", paths_len);
+		fprintf(output, "ERROR:  %d != 0\n", paths_len);
 		goto return_fail;
 	}
 	if(strncmp(paths, "test/table", 11))
 	{
-		fprintf(output, "paths = %s != test/tables\n", paths);
+		fprintf(output, "ERROR:  %s != test/tables\n", paths);
 		goto return_fail;
 	}
 
@@ -97,12 +118,12 @@ int test_lookup_path(FILE *output)
 	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
 	if(paths_len != 6)
 	{
-		fprintf(output, "paths_len = %d != 6\n", paths_len);
+		fprintf(output, "ERROR:  %d != 6\n", paths_len);
 		goto return_fail;
 	}
 	if(strncmp(paths, "tables", 7))
 	{
-		fprintf(output, "paths = %s != tables\n", paths);
+		fprintf(output, "ERROR:  %s != tables\n", paths);
 		goto return_fail;
 	}
 
@@ -113,12 +134,12 @@ int test_lookup_path(FILE *output)
 	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
 	if(paths_len != 18)
 	{
-		fprintf(output, "paths_len = %d != 18\n", paths_len);
+		fprintf(output, "ERROR:  %d != 18\n", paths_len);
 		goto return_fail;
 	}
 	if(strncmp(paths, "tables:test/tables", 19))
 	{
-		fprintf(output, "paths = %s != tables:test/tables\n", paths);
+		fprintf(output, "ERROR:  %s != tables:test/tables\n", paths);
 		goto return_fail;
 	}
 
@@ -142,7 +163,7 @@ int test_lookup_path(FILE *output)
 
 /******************************************************************************/
 
-int test_rule_sort(FILE *output)
+static int test_rule_sort(void)
 {
 	struct table *table;
 	int status;
@@ -157,7 +178,7 @@ int test_rule_sort(FILE *output)
 	table = table_compile_from_file("test/tables/rule-sort_0.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/rule-sort_0.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/rule-sort_0.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -168,7 +189,7 @@ int test_rule_sort(FILE *output)
 	table = table_compile_from_file("test/tables/rule-sort_1.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/rule-sort_1.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/rule-sort_1.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -179,7 +200,7 @@ int test_rule_sort(FILE *output)
 	table = table_compile_from_file("test/tables/rule-sort_2.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/rule-sort_2.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/rule-sort_2.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -206,7 +227,7 @@ int test_rule_sort(FILE *output)
 
 /******************************************************************************/
 
-int test_table_include(FILE *output)
+static int test_table_include(void)
 {
 	struct table *table;
 	int status;
@@ -221,7 +242,7 @@ int test_table_include(FILE *output)
 	table = table_compile_from_file("test/tables/table-include_0.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/table-include_0.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/table-include_0.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -232,7 +253,7 @@ int test_table_include(FILE *output)
 	table = table_compile_from_file("test/tables/table-include_1.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/table-include_1.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/table-include_1.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -243,7 +264,7 @@ int test_table_include(FILE *output)
 	table = table_compile_from_file("test/tables/table-include_2.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/table-include_2.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/table-include_2.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -270,7 +291,7 @@ int test_table_include(FILE *output)
 
 /******************************************************************************/
 
-int test_table_include_with_environment(FILE *output)
+static int test_table_include_with_environment(void)
 {
 	struct table **tables;
 	int table_cnt, status;
@@ -288,10 +309,7 @@ int test_table_include_with_environment(FILE *output)
 
 	tables = lookup_tables(&table_cnt, "table-include_0.rst");
 	if(!tables)
-	{
-		fputs("unable to open table-include_0.rst\n", output);
 		goto free_and_return;
-	}
 
 	if(!test_expect(output, (const struct table * const*)tables, table_cnt, NULL, BOTH, u"<=#=>", 5, u"⠪=#=⠕", 5))
 		goto free_and_return;
@@ -299,10 +317,7 @@ int test_table_include_with_environment(FILE *output)
 	FREE(tables);
 	tables = lookup_tables(&table_cnt, "test/tables/table-include_1.rst");
 	if(!tables)
-	{
-		fputs("unable to open test/tables/table-include_1.rst\n", output);
 		goto free_and_return;
-	}
 
 	if(!test_expect(output, (const struct table * const*)tables, table_cnt, NULL, BOTH, u"<=#=>", 5, u"⠪⠭#⠭⠕", 5))
 		goto free_and_return;
@@ -310,10 +325,7 @@ int test_table_include_with_environment(FILE *output)
 	FREE(tables);
 	tables = lookup_tables(&table_cnt, "test/tables/table-include_2.rst");
 	if(!tables)
-	{
-		fputs("unable to open test/tables/table-include_2.rst\n", output);
 		goto free_and_return;
-	}
 
 	if(!test_expect(output, (const struct table * const*)tables, table_cnt, NULL, BOTH, u"<=#=>", 5, u"⠪⠭⠿⠭⠕", 5))
 		goto free_and_return;
@@ -340,7 +352,7 @@ int test_table_include_with_environment(FILE *output)
 
 /******************************************************************************/
 
-int test_table_override(FILE *output)
+static int test_table_override(void)
 {
 	struct table *tables[2];
 	int status;
@@ -357,7 +369,7 @@ int test_table_override(FILE *output)
 	tables[0] = table_compile_from_file("test/tables/table-override_1.rst");
 	if(!tables[0])
 	{
-		fputs("unable to open test/tables/table-override_1.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/table-override_1.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -370,7 +382,7 @@ int test_table_override(FILE *output)
 	tables[0] = table_compile_from_file("test/tables/table-override_0.rst");
 	if(!tables[0])
 	{
-		fputs("unable to open test/tables/table-override_0.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/table-override_0.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -401,7 +413,7 @@ int test_table_override(FILE *output)
 
 /******************************************************************************/
 
-int test_table_override_with_lookup(FILE *output)
+static int test_table_override_with_lookup(void)
 {
 	struct table **tables;
 	int table_cnt, status;
@@ -457,7 +469,7 @@ int test_table_override_with_lookup(FILE *output)
 
 /******************************************************************************/
 
-int test_cursor(FILE *output)
+static int test_cursor(void)
 {
 	struct table *table;
 	int cursors_forward[]  = {0,0,0,1,2,6,7,7,8,8,8,9,9,10,11,11,12,12,13,13,14,15,16,17};
@@ -474,7 +486,7 @@ int test_cursor(FILE *output)
 	table = table_compile_from_file("test/tables/translate-cursor.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/translate-cursor.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/translate-cursor.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -514,7 +526,7 @@ int test_cursor(FILE *output)
 
 /******************************************************************************/
 
-int test_mapping_with_capital(FILE *output)
+static int test_mapping_with_capital(void)
 {
 	struct table *table;
 	int status;
@@ -529,7 +541,7 @@ int test_mapping_with_capital(FILE *output)
 	table = table_compile_from_file("test/tables/translate-mapping.rst");
 	if(!table)
 	{
-		fputs("unable to open test/tables/translate-mapping.rst\n", output);
+		fputs("ERROR:  unable to open test/tables/translate-mapping.rst\n", output);
 		goto free_and_return;
 	}
 
@@ -575,7 +587,7 @@ int test_mapping_with_capital(FILE *output)
 static char  messages[MESSAGES_MAX][MESSAGE_MAX];
 static int   message_crs;
 
-static void log_callback(const int level, const char *message)
+static void log_callback_store(const int level, const char *message)
 {
 	if(message_crs >= MESSAGES_MAX)
 	{
@@ -595,7 +607,7 @@ static void log_callback(const int level, const char *message)
 	}
 }
 
-int test_table_errors(FILE *output)
+static int test_table_errors(void)
 {
 	const char *errors[MESSAGES_MAX] =
 	{
@@ -675,7 +687,7 @@ int test_table_errors(FILE *output)
 	fputs("test_table_errors\n\n", output);
 
 	log_callback_prv = log_get_callback();
-	log_set_callback(log_callback);
+	log_set_callback(log_callback_store);
 
 	memset(messages, 0, sizeof(messages));
 	message_crs = 0;
@@ -686,21 +698,21 @@ int test_table_errors(FILE *output)
 	{
 		if(i >= message_crs)
 		{
-			fputs("too few errors logged\n", output);
+			fputs("]ERROR:  too few errors logged\n", output);
 			goto free_and_return;
 		}
 		if(strncmp(errors[i], messages[i], MESSAGE_MAX))
 		{
-			fprintf(output, "- %s\n  %s\n", messages[i], errors[i]);
+			fprintf(output, "-%s\n]%s\n", messages[i], errors[i]);
 			goto free_and_return;
 		}
-		fprintf(output, "+ %s\n", messages[i]);
+		fprintf(output, " %s\n", messages[i]);
 	}
 	if(i < message_crs)
 	{
-		fputs("too many errors logged\n", output);
+		fputs("]ERROR:  too many errors logged\n", output);
 		for( ; i < message_crs; i++)
-			fprintf(output, "- %s\n", messages[i]);
+			fprintf(output, "-%s\n", messages[i]);
 		goto free_and_return;
 	}
 
@@ -711,7 +723,6 @@ int test_table_errors(FILE *output)
 	if(table)
 		table_free(table);
 
-	fputs("\n", output);
 	fflush(output);
 
 	if(output != stdout)
@@ -725,40 +736,39 @@ int test_table_errors(FILE *output)
 
 /******************************************************************************/
 
-int test_library(FILE *output)
+int main(void)
 {
 	int pass_cnt, try_cnt;
 
-	if(!output)
-	{
-		output = fopen("build/test/output-library.txt", "w");
-		if(!output)
-			output = stdout;
-	}
+	MEM_INIT
 
-	if(output != stdout)
-		puts("testing library");
+	log_set_callback(log_callback);
+
+	output = fopen("build/test/output-library.txt", "w");
+	if(!output)
+		output = stdout;
 
 	fputs("testing library\n\n", output);
+	if(output != stdout)
+		puts("testing library");
 
 	pass_cnt =
 	try_cnt = 0;
 
-	try_cnt++;  pass_cnt += test_lookup_path(output);
-	try_cnt++;  pass_cnt += test_rule_sort(output);
-	try_cnt++;  pass_cnt += test_table_include(output);
-	try_cnt++;  pass_cnt += test_table_include_with_environment(output);
-	try_cnt++;  pass_cnt += test_table_override(output);
-	try_cnt++;  pass_cnt += test_table_override_with_lookup(output);
-	try_cnt++;  pass_cnt += test_cursor(output);
-	try_cnt++;  pass_cnt += test_mapping_with_capital(output);
-	try_cnt++;  pass_cnt += test_table_errors(output);
+	try_cnt++;  pass_cnt += test_lookup_path();
+	try_cnt++;  pass_cnt += test_rule_sort();
+	try_cnt++;  pass_cnt += test_table_include();
+	try_cnt++;  pass_cnt += test_table_include_with_environment();
+	try_cnt++;  pass_cnt += test_table_override();
+	try_cnt++;  pass_cnt += test_table_override_with_lookup();
+	try_cnt++;  pass_cnt += test_cursor();
+	try_cnt++;  pass_cnt += test_mapping_with_capital();
+	try_cnt++;  pass_cnt += test_table_errors();
 
-	if(output != stdout)
-	{
-		puts("");
-		fclose(output);
-	}
+	puts("");
+	fclose(output);
+
+	MEM_FINI
 
 	return try_cnt - pass_cnt;
 }

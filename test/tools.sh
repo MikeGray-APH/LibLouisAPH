@@ -23,6 +23,7 @@ OUTPUT=build/test/output-tools.txt
 
 echo testing tools
 echo testing tools > $OUTPUT
+echo >> $OUTPUT
 if (( $? != 0 )) ; then exit ; fi
 
 FAIL_CNT=0
@@ -107,5 +108,6 @@ if [ "$RESULT" != '-=- -=-=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $
 
 if (( FAIL_PRV == FAIL_CNT )); then echo PASS; else echo FAIL; fi
 
+echo
 
 exit $FAIL_CNT

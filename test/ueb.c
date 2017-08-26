@@ -42,16 +42,25 @@ int test_ueb(FILE *output)
 			output = stdout;
 	}
 
+	fputs("testing UEB\n\n", output);
 	if(output != stdout)
 		puts("testing UEB");
-
-	fputs("testing UEB\n\n", output);
 
 	pass_cnt =
 	try_cnt = 0;
 
 	table = table_compile_from_file("tables/english-ueb-grade2.rst");
+	if(!table)
+	{
+		fprintf(output, "ERROR:  unable to open tables/english-ueb-grade2.rst\n\n");
+		return 1;
+	}
 	conversion = conversion_compile_from_file("tables/ascii.cvt");
+	if(!conversion)
+	{
+		fprintf(output, "ERROR:  unable to open tables/ascii.cvt\n\n");
+		return 1;
+	}
 
 	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/ueb/ueb-back.txt", table, NULL, 0);
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/ueb/ueb-expect.txt", table, NULL, 0, 1);

@@ -61,12 +61,14 @@ OBJS_DEBUG := \
 
 OBJ_DEBUG_MAIN := debug/main.o
 
-OBJS_TEST := \
+OBJS_TEST_LIBRARY := \
 	test/test.o \
 	test/library.o \
-	test/ueb.o \
 
-OBJ_TEST_MAIN := test/main.o
+OBJS_TEST_LANGUAGES := \
+	test/test.o \
+	test/ueb.o \
+	test/languages.o \
 
 OBJ_TEST_LINK := test/link.o
 
@@ -214,20 +216,22 @@ build/tools:
 
 test: test-lib test-link test-tools
 
+test-all: test test-langs
+
 test-lib: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
 test-lib: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test-lib: build/exe-test-db | build/test
-	@build/exe-test-db
+test-lib: build/exe-test-lib | build/test
+	@build/exe-test-lib
 
 test-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
 test-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test-db: build/exe-test-db | build/test
-	gdb --command=debug/gdb/test.gdb build/exe-test-db
+test-db: build/exe-test-lib | build/test
+	gdb --command=debug/gdb/test.gdb build/exe-test-lib
 
-OBJS_TEST_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST) $(OBJ_TEST_MAIN), build/objects/$(OBJ))
+OBJS_TEST_LIB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST_LIBRARY), build/objects/$(OBJ))
 
-build/exe-test-db: $(OBJS_TEST_DB_BUILD)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_DB_BUILD)
+build/exe-test-lib: $(OBJS_TEST_LIB_BUILD)
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_LIB_BUILD)
 
 test-link: CPPFLAGS += -I . -I source/output -D DEBUG #-D DEBUG_MEMORY
 test-link: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
@@ -241,12 +245,22 @@ build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
 test-tools: tools | build/test
 	@./test/tools.sh
 
+test-langs: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
+test-langs: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+test-langs: build/exe-test-langs | build/test
+	@build/exe-test-langs
+
+OBJS_TEST_LANG_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST_LANGUAGES), build/objects/$(OBJ))
+
+build/exe-test-langs: $(OBJS_TEST_LANG_BUILD)
+	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_LANG_BUILD)
+
 test-opt: CPPFLAGS += -I source/output -D OUTPUT
 test-opt: CFLAGS += -O3 $(CWARNS_OPT)
 test-opt: build/exe-test-opt | build/test
 	@build/exe-test-opt
 
-OBJS_TEST_OPT_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST) $(OBJ_TEST_MAIN), build/objects/opt/$(OBJ))
+OBJS_TEST_OPT_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST_LANGUAGES), build/objects/opt/$(OBJ))
 
 build/exe-test-opt: $(OBJS_TEST_OPT_BUILD)
 	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_OPT_BUILD)
@@ -254,7 +268,7 @@ build/exe-test-opt: $(OBJS_TEST_OPT_BUILD)
 build/test:
 	mkdir -p build/test
 
-.PHONY: test test-lib test-db test-link test-tools test-opt
+.PHONY: test test-all test-lib test-db test-langs test-link test-tools test-opt
 
 ################################################################################
 
@@ -265,18 +279,18 @@ dist-linux64: dll-linux64 lib-linux64 translate-linux64 table-linux64 convert-li
 dll-linux64: CFLAGS += -O3 -fPIC $(CWARNS_OPT) -fvisibility=hidden
 dll-linux64: dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so
 
-OBJ_DLL_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/dll/$(OBJ))
+OBJS_DLL_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/dll/$(OBJ))
 
-dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so: $(OBJ_DLL_LINUX64) | dists/x86_64-linux
-	$(CC) -o $@ -shared -s -fvisibility=hidden $(OBJ_DLL_LINUX64)
+dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so: $(OBJS_DLL_LINUX64) | dists/x86_64-linux
+	$(CC) -o $@ -shared -s -fvisibility=hidden $(OBJS_DLL_LINUX64)
 
 lib-linux64: CFLAGS += -O3 $(CWARNS_OPT)
 lib-linux64: dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a
 
-OBJ_LIB_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/$(OBJ))
+OBJS_LIB_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/$(OBJ))
 
-dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a: $(OBJ_LIB_LINUX64) | dists/x86_64-linux
-	ar -rcv $@ $(OBJ_LIB_LINUX64)
+dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a: $(OBJS_LIB_LINUX64) | dists/x86_64-linux
+	ar -rcv $@ $(OBJS_LIB_LINUX64)
 
 convert-linux64: CPPFLAGS += -I source/output -D OUTPUT
 convert-linux64: CFLAGS += -O3 $(CWARNS_OPT)
