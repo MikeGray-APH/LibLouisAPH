@@ -67,8 +67,8 @@ OBJS_TEST_LIBRARY := \
 
 OBJS_TEST_LANGUAGES := \
 	test/test.o \
-	test/ueb.o \
 	test/languages.o \
+	test/languages/ueb.o \
 
 OBJ_TEST_LINK := test/link.o
 
@@ -245,7 +245,7 @@ build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
 test-tools: tools | build/test
 	@./test/tools.sh
 
-test-langs: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
+test-langs: CPPFLAGS += -I source/output -I test -D DEBUG #-D DEBUG_MEMORY
 test-langs: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
 test-langs: build/exe-test-langs | build/test
 	@build/exe-test-langs
@@ -255,7 +255,7 @@ OBJS_TEST_LANG_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $
 build/exe-test-langs: $(OBJS_TEST_LANG_BUILD)
 	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_LANG_BUILD)
 
-test-opt: CPPFLAGS += -I source/output -D OUTPUT
+test-opt: CPPFLAGS += -I source/output -I test -D OUTPUT
 test-opt: CFLAGS += -O3 $(CWARNS_OPT)
 test-opt: build/exe-test-opt | build/test
 	@build/exe-test-opt
@@ -657,7 +657,7 @@ releases: dists $(RELEASES)
 deps: build/Makedeps
 	@cat build/Makedeps
 
-build/Makedeps: CPPFLAGS += -I . -I source/output -D OUTPUT
+build/Makedeps: CPPFLAGS += -I . -I source/output -I test -D OUTPUT
 build/Makedeps: | build
 	@for BUILD_DIR in dists/objects/x86_64-linux dists/objects/i686-linux dists/objects/x86_64-win dists/objects/i686-win dists/objects/x86_64-mac dists/objects/i386-mac ; \
 	do \
@@ -730,7 +730,7 @@ build/Makedeps: | build
 	echo >> build/Makedeps ; \
 	for BUILD_DIR in build/objects ; \
 	do \
-		for SOURCE_DIR in source source/language source/output debug test ; \
+		for SOURCE_DIR in source source/language source/output debug test test/languages ; \
 		do \
 			echo "$$BUILD_DIR/opt/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/opt/$$SOURCE_DIR" >> build/Makedeps ; \
 			printf '\t@echo $$(CC) $$<\n' >> build/Makedeps ; \
