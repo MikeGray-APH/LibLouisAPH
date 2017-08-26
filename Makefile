@@ -659,7 +659,33 @@ deps: build/Makedeps
 
 build/Makedeps: CPPFLAGS += -I . -I source/output -D OUTPUT
 build/Makedeps: | build
-	@for BUILD_DIR in build/objects dists/objects/x86_64-linux dists/objects/i686-linux dists/objects/x86_64-win dists/objects/i686-win dists/objects/x86_64-mac dists/objects/i386-mac ; \
+	@for BUILD_DIR in dists/objects/x86_64-linux dists/objects/i686-linux dists/objects/x86_64-win dists/objects/i686-win dists/objects/x86_64-mac dists/objects/i386-mac ; \
+	do \
+		echo "#####  $$BUILD_DIR" >> build/Makedeps ; \
+		echo >> build/Makedeps ; \
+		for DIR in source tools ; \
+		do \
+			for SRC in `find $$DIR -name '*.c'` ; \
+			do \
+				$(CC) $(CPPFLAGS) -MM $$SRC -MT $$BUILD_DIR/$${SRC%.c}.o >> build/Makedeps ; \
+			done ; \
+			for SOURCE_DIR in `find $$DIR -type d` ; \
+			do \
+				if ( ls $$SOURCE_DIR/*.c &> /dev/null ) ; \
+				then \
+					printf '\n' >> build/Makedeps ; \
+					echo "$$BUILD_DIR/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/$$SOURCE_DIR" >> build/Makedeps ; \
+					printf '\t@echo $$(CC) $$<\n' >> build/Makedeps ; \
+					printf '\t@$$(CC) -c -o $$@ $$(CPPFLAGS) $$(CFLAGS) $$<\n' >> build/Makedeps ; \
+					printf '\n' >> build/Makedeps ; \
+					echo "$$BUILD_DIR/$$SOURCE_DIR:" >> build/Makedeps ; \
+					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR\n" >> build/Makedeps ; \
+					printf '\n' >> build/Makedeps ; \
+				fi ; \
+			done ; \
+		done ; \
+	done ; \
+	for BUILD_DIR in build/objects ; \
 	do \
 		echo "#####  $$BUILD_DIR" >> build/Makedeps ; \
 		echo >> build/Makedeps ; \
