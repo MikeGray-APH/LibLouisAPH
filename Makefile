@@ -28,7 +28,7 @@ CC_WIN32 := i686-w64-mingw32-gcc
 CC_MAC64 := x86_64-apple-darwin15-cc
 CC_MAC32 := i386-apple-darwin15-cc
 
-CPPFLAGS = -D VERSION=\"$(VERSION)\" -I source -I source/language
+CPPFLAGS = -D VERSION=\"$(VERSION)\" -I source -I source/languages # -D DEBUG_MEMORY
 CFLAGS = -std="c11"
 LDFLAGS =
 
@@ -45,15 +45,15 @@ OBJS_LIB := \
 OBJ_LIB_IFACE := source/interface.o
 
 OBJS_LANG := \
-	source/language/generic-common.o \
-	source/language/generic-forward.o \
-	source/language/generic-backward.o \
+	source/languages/generic-common.o \
+	source/languages/generic-forward.o \
+	source/languages/generic-backward.o \
 
 OBJS_OUTPUT := \
-	source/output/utf-output.o \
-	source/output/pattern-output.o \
-	source/output/conversion-output.o \
-	source/output/table-output.o \
+	source/outputs/utf-output.o \
+	source/outputs/pattern-output.o \
+	source/outputs/conversion-output.o \
+	source/outputs/table-output.o \
 
 OBJS_DEBUG := \
 	debug/debug.o \
@@ -80,8 +80,8 @@ OBJS_CONVERT := \
 	source/conversion.o \
 	source/lookup.o \
 	source/log.o \
-	source/output/utf-output.o \
-	source/output/conversion-output.o \
+	source/outputs/utf-output.o \
+	source/outputs/conversion-output.o \
 	tools/lou_convert.o \
 
 OBJS_TABLE := \
@@ -92,16 +92,16 @@ OBJS_TABLE := \
 	source/conversion.o \
 	source/lookup.o \
 	source/log.o \
-	source/output/utf-output.o \
-	source/output/pattern-output.o \
-	source/output/table-output.o \
-	source/output/conversion-output.o \
+	source/outputs/utf-output.o \
+	source/outputs/pattern-output.o \
+	source/outputs/table-output.o \
+	source/outputs/conversion-output.o \
 	tools/lou_table.o \
 
 OBJS_TRANSLATE := \
 	$(OBJS_LIB) \
 	$(OBJS_LANG) \
-	source/output/utf-output.o \
+	source/outputs/utf-output.o \
 	tools/lou_translate.o \
 
 ################################################################################
@@ -147,27 +147,27 @@ CWARNS_OPT := \
 
 ################################################################################
 
-OBJS_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJ_LIB_IFACE), build/objects/$(OBJ))
+OBJS_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJ_DEBUG_MAIN), build/objects/$(OBJ))
 
-build/exe-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-build/exe-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-build/exe-db: $(OBJS_DB_BUILD) build/objects/$(OBJ_DEBUG_MAIN) | build
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_DB_BUILD) build/objects/$(OBJ_DEBUG_MAIN)
+build/exe-db: CPPFLAGS += -I source/outputs -D DEBUG
+build/exe-db: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
+build/exe-db: $(OBJS_DB_BUILD) | build
+	$(CC) -o $@ $(CFLAGS) $(OBJS_DB_BUILD) $(LDFLAGS)
 
 db: build/exe-db
 	gdb --command=debug/gdb/main.gdb build/exe-db
 
 
-dll: CFLAGS += -fpic -ggdb $(CWARNS_DEBUG) -fstack-protector
+dll: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 dll: build/liblouisAPH.so
 
 OBJS_DLL_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), build/objects/dll/$(OBJ))
 
 build/liblouisAPH.so: $(OBJS_DLL_BUILD) | build
-	$(CC) -o $@ -shared $(OBJS_DLL_BUILD)
+	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_BUILD)
 
 
-lib: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+lib: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
 lib: build/liblouisAPH.a
 
 OBJS_LIB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), build/objects/$(OBJ))
@@ -179,33 +179,34 @@ build/liblouisAPH.a: $(OBJS_LIB_BUILD) | build
 
 ################################################################################
 
-tools: CPPFLAGS += -D DEBUG # -D DEBUG_MEMORY
-tools: CFLAGS += -ggdb $(CWARNS_DEBUG)
 tools: translate table convert
 
-convert: CPPFLAGS += -I source/output -D OUTPUT
+convert: CPPFLAGS += -I source/outputs -D OUTPUT -D DEBUG
+convert: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
 convert: build/tools/lou_convert
 
 OBJS_CONVERT_BUILD := $(foreach OBJ, $(OBJS_CONVERT), build/objects/$(OBJ))
 
 build/tools/lou_convert: $(OBJS_CONVERT_BUILD) | build/tools
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT_BUILD)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_BUILD) $(LDFLAGS)
 
-table: CPPFLAGS += -I source/output -D OUTPUT
+table: CPPFLAGS += -I source/outputs -D OUTPUT -D DEBUG
+table: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
 table: build/tools/lou_table
 
 OBJS_TABLE_BUILD := $(foreach OBJ, $(OBJS_TABLE), build/objects/$(OBJ))
 
 build/tools/lou_table: $(OBJS_TABLE_BUILD) | build/tools
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE_BUILD)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_BUILD) $(LDFLAGS)
 
-translate: CPPFLAGS += -I source/output -D OUTPUT
+translate: CPPFLAGS += -I source/outputs -D OUTPUT -D DEBUG
+translate: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
 translate: build/tools/lou_translate
 
 OBJS_TRANSLATE_BUILD := $(foreach OBJ, $(OBJS_TRANSLATE), build/objects/$(OBJ))
 
 build/tools/lou_translate: $(OBJS_TRANSLATE_BUILD) | build/tools
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_BUILD)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_BUILD) $(LDFLAGS)
 
 build/tools:
 	mkdir -p build/tools
@@ -218,52 +219,52 @@ test: test-lib test-link test-tools
 
 test-all: test test-langs
 
-test-lib: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-test-lib: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test-lib: build/exe-test-lib | build/test
+test-lib: CPPFLAGS += -I source/outputs -D DEBUG
+test-lib: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
+test-lib: build/exe-test-lib
 	@build/exe-test-lib
 
-test-db: CPPFLAGS += -I source/output -D DEBUG #-D DEBUG_MEMORY
-test-db: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test-db: build/exe-test-lib | build/test
+test-db: CPPFLAGS += -I source/outputs -D DEBUG
+test-db: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
+test-db: build/exe-test-lib
 	gdb --command=debug/gdb/test.gdb build/exe-test-lib
 
 OBJS_TEST_LIB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST_LIBRARY), build/objects/$(OBJ))
 
-build/exe-test-lib: $(OBJS_TEST_LIB_BUILD)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_LIB_BUILD)
+build/exe-test-lib: $(OBJS_TEST_LIB_BUILD) | build/test
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TEST_LIB_BUILD) $(LDFLAGS)
 
-test-link: CPPFLAGS += -I . -I source/output -D DEBUG #-D DEBUG_MEMORY
-test-link: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
+test-link: CPPFLAGS += -I . -I source/outputs -D DEBUG
+test-link: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 test-link: LDFLAGS += -L build -llouisAPH
-test-link: dll build/exe-test-link | build/test
+test-link: build/liblouisAPH.so build/exe-test-link
 	@env LD_LIBRARY_PATH=build build/exe-test-link
 
 build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
-	$(CC) -o $@ build/objects/$(OBJ_TEST_LINK) $(LDFLAGS)
+	$(CC) -o $@ $(CFLAGS) build/objects/$(OBJ_TEST_LINK) $(LDFLAGS)
 
 test-tools: tools | build/test
 	@./test/tools.sh
 
-test-langs: CPPFLAGS += -I source/output -I test -D DEBUG #-D DEBUG_MEMORY
-test-langs: CFLAGS += -ggdb $(CWARNS_DEBUG) -fstack-protector
-test-langs: build/exe-test-langs | build/test
+test-langs: CPPFLAGS += -I source/outputs -I test -D DEBUG
+test-langs: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
+test-langs: build/exe-test-langs
 	@build/exe-test-langs
 
 OBJS_TEST_LANG_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST_LANGUAGES), build/objects/$(OBJ))
 
-build/exe-test-langs: $(OBJS_TEST_LANG_BUILD)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_LANG_BUILD)
+build/exe-test-langs: $(OBJS_TEST_LANG_BUILD) | build/test
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TEST_LANG_BUILD) $(LDFLAGS)
 
-test-opt: CPPFLAGS += -I source/output -I test -D OUTPUT
+test-opt: CPPFLAGS += -I source/outputs -I test -D OUTPUT
 test-opt: CFLAGS += -O3 $(CWARNS_OPT)
-test-opt: build/exe-test-opt | build/test
+test-opt: build/exe-test-opt
 	@build/exe-test-opt
 
 OBJS_TEST_OPT_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJS_TEST_LANGUAGES), build/objects/opt/$(OBJ))
 
-build/exe-test-opt: $(OBJS_TEST_OPT_BUILD)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TEST_OPT_BUILD)
+build/exe-test-opt: $(OBJS_TEST_OPT_BUILD) | build/test
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TEST_OPT_BUILD) $(LDFLAGS)
 
 build/test:
 	mkdir -p build/test
@@ -276,13 +277,13 @@ dist:  dist-linux64
 
 dist-linux64: dll-linux64 lib-linux64 translate-linux64 table-linux64 convert-linux64
 
-dll-linux64: CFLAGS += -O3 -fPIC $(CWARNS_OPT) -fvisibility=hidden
+dll-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPT)
 dll-linux64: dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so
 
 OBJS_DLL_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/dll/$(OBJ))
 
 dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so: $(OBJS_DLL_LINUX64) | dists/x86_64-linux
-	$(CC) -o $@ -shared -s -fvisibility=hidden $(OBJS_DLL_LINUX64)
+	$(CC) -o $@ -shared -s $(CFLAGS) $(OBJS_DLL_LINUX64)
 
 lib-linux64: CFLAGS += -O3 $(CWARNS_OPT)
 lib-linux64: dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a
@@ -292,32 +293,32 @@ OBJS_LIB_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), di
 dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a: $(OBJS_LIB_LINUX64) | dists/x86_64-linux
 	ar -rcv $@ $(OBJS_LIB_LINUX64)
 
-convert-linux64: CPPFLAGS += -I source/output -D OUTPUT
+convert-linux64: CPPFLAGS += -I source/outputs -D OUTPUT
 convert-linux64: CFLAGS += -O3 $(CWARNS_OPT)
 convert-linux64: dists/x86_64-linux/lou_convert
 
 OBJS_CONVERT_LINUX64 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/x86_64-linux/$(OBJ))
 
 dists/x86_64-linux/lou_convert: $(OBJS_CONVERT_LINUX64) | dists/x86_64-linux
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT_LINUX64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_LINUX64) $(LDFLAGS)
 
-table-linux64: CPPFLAGS += -I source/output -D OUTPUT
+table-linux64: CPPFLAGS += -I source/outputs -D OUTPUT
 table-linux64: CFLAGS += -O3 $(CWARNS_OPT)
 table-linux64: dists/x86_64-linux/lou_table
 
 OBJS_TABLE_LINUX64 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/x86_64-linux/$(OBJ))
 
 dists/x86_64-linux/lou_table: $(OBJS_TABLE_LINUX64) | dists/x86_64-linux
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE_LINUX64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_LINUX64) $(LDFLAGS)
 
-translate-linux64: CPPFLAGS += -I source/output -D OUTPUT
+translate-linux64: CPPFLAGS += -I source/outputs -D OUTPUT
 translate-linux64: CFLAGS += -O3 $(CWARNS_OPT)
 translate-linux64: dists/x86_64-linux/lou_translate
 
 OBJS_TRANSLATE_LINUX64 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/x86_64-linux/$(OBJ))
 
 dists/x86_64-linux/lou_translate: $(OBJS_TRANSLATE_LINUX64) | dists/x86_64-linux
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_LINUX64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_LINUX64) $(LDFLAGS)
 
 dists/x86_64-linux:
 	mkdir -p dists/x86_64-linux
@@ -328,15 +329,15 @@ dists/x86_64-linux:
 
 dist-linux32: dll-linux32 lib-linux32 translate-linux32 table-linux32 convert-linux32
 
-dll-linux32: CFLAGS += -m32 -O3 $(CWARNS_OPT)
+dll-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
 dll-linux32: dists/i686-linux/liblouisAPH-linux32-$(VERSION).so
 
 OBJS_DLL_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i686-linux/$(OBJ))
 
 dists/i686-linux/liblouisAPH-linux32-$(VERSION).so: $(OBJS_DLL_LINUX32) | dists/i686-linux
-	$(CC) -m32 -o $@ -shared $(OBJS_DLL_LINUX32)
+	$(CC) -o $@ -m32 -shared $(CFLAGS) $(OBJS_DLL_LINUX32)
 
-lib-linux32: CFLAGS += -m32 -O3 $(CWARNS_OPT)
+lib-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
 lib-linux32: dists/i686-linux/liblouisAPH-linux32-$(VERSION).a
 
 OBJS_LIB_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i686-linux/$(OBJ))
@@ -344,32 +345,32 @@ OBJS_LIB_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), di
 dists/i686-linux/liblouisAPH-linux32-$(VERSION).a: $(OBJS_LIB_LINUX32) | dists/i686-linux
 	ar -rcv $@ $(OBJS_LIB_LINUX32)
 
-convert-linux32: CPPFLAGS += -I source/output -D OUTPUT
-convert-linux32: CFLAGS += -m32 -O3 $(CWARNS_OPT)
+convert-linux32: CPPFLAGS += -I source/outputs -D OUTPUT
+convert-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
 convert-linux32: dists/i686-linux/lou_convert
 
 OBJS_CONVERT_LINUX32 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/i686-linux/$(OBJ))
 
 dists/i686-linux/lou_convert: $(OBJS_CONVERT_LINUX32) | dists/i686-linux
-	$(CC) -m32 -o $@ $(LDFLAGS) $(OBJS_CONVERT_LINUX32)
+	$(CC) -o $@ -m32 $(CFLAGS) $(OBJS_CONVERT_LINUX32) $(LDFLAGS)
 
-table-linux32: CPPFLAGS += -I source/output -D OUTPUT
-table-linux32: CFLAGS += -m32 -O3 $(CWARNS_OPT)
+table-linux32: CPPFLAGS += -I source/outputs -D OUTPUT
+table-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
 table-linux32: dists/i686-linux/lou_table
 
 OBJS_TABLE_LINUX32 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/i686-linux/$(OBJ))
 
 dists/i686-linux/lou_table: $(OBJS_TABLE_LINUX32) | dists/i686-linux
-	$(CC) -m32 -o $@ $(LDFLAGS) $(OBJS_TABLE_LINUX32)
+	$(CC) -o $@ -m32 $(CFLAGS) $(OBJS_TABLE_LINUX32) $(LDFLAGS)
 
-translate-linux32: CPPFLAGS += -I source/output -D OUTPUT
-translate-linux32: CFLAGS += -m32 -O3 $(CWARNS_OPT)
+translate-linux32: CPPFLAGS += -I source/outputs -D OUTPUT
+translate-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
 translate-linux32: dists/i686-linux/lou_translate
 
 OBJS_TRANSLATE_LINUX32 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/i686-linux/$(OBJ))
 
 dists/i686-linux/lou_translate: $(OBJS_TRANSLATE_LINUX32) | dists/i686-linux
-	$(CC) -m32 -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_LINUX32)
+	$(CC) -o $@ -m32 $(CFLAGS) $(OBJS_TRANSLATE_LINUX32) $(LDFLAGS)
 
 dists/i686-linux:
 	mkdir -p dists/i686-linux
@@ -387,37 +388,37 @@ dll-win64: dists/x86_64-win/liblouisAPH-win64-$(VERSION).dll
 OBJS_DLL_WIN64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-win/$(OBJ))
 
 dists/x86_64-win/liblouisAPH-win64-$(VERSION).dll: $(OBJS_DLL_WIN64) | dists/x86_64-win
-	$(CC) -o $@ -shared $(OBJS_DLL_WIN64)
+	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_WIN64)
 
 convert-win64: CC = $(CC_WIN64)
-convert-win64: CPPFLAGS += -I source/output -D OUTPUT
+convert-win64: CPPFLAGS += -I source/outputs -D OUTPUT
 convert-win64: CFLAGS += -O3 $(CWARNS_OPT)
 convert-win64: dists/x86_64-win/lou_convert.exe
 
 OBJS_CONVERT_WIN64 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/x86_64-win/$(OBJ))
 
 dists/x86_64-win/lou_convert.exe: $(OBJS_CONVERT_WIN64) | dists/x86_64-win
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT_WIN64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_WIN64) $(LDFLAGS)
 
 table-win64: CC = $(CC_WIN64)
-table-win64: CPPFLAGS += -I source/output -D OUTPUT
+table-win64: CPPFLAGS += -I source/outputs -D OUTPUT
 table-win64: CFLAGS += -O3 $(CWARNS_OPT)
 table-win64: dists/x86_64-win/lou_table.exe
 
 OBJS_TABLE_WIN64 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/x86_64-win/$(OBJ))
 
 dists/x86_64-win/lou_table.exe: $(OBJS_TABLE_WIN64) | dists/x86_64-win
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE_WIN64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_WIN64) $(LDFLAGS)
 
 translate-win64: CC = $(CC_WIN64)
-translate-win64: CPPFLAGS += -I source/output -D OUTPUT
+translate-win64: CPPFLAGS += -I source/outputs -D OUTPUT
 translate-win64: CFLAGS += -O3 $(CWARNS_OPT)
 translate-win64: dists/x86_64-win/lou_translate.exe
 
 OBJS_TRANSLATE_WIN64 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/x86_64-win/$(OBJ))
 
 dists/x86_64-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN64) | dists/x86_64-win
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_WIN64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_WIN64) $(LDFLAGS)
 
 dists/x86_64-win:
 	mkdir -p dists/x86_64-win
@@ -435,37 +436,37 @@ dll-win32: dists/i686-win/liblouisAPH-win32-$(VERSION).dll
 OBJS_DLL_WIN32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i686-win/$(OBJ))
 
 dists/i686-win/liblouisAPH-win32-$(VERSION).dll: $(OBJS_DLL_WIN32) | dists/i686-win
-	$(CC) -o $@ -shared $(OBJS_DLL_WIN32)
+	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_WIN32)
 
 convert-win32: CC = $(CC_WIN32)
-convert-win32: CPPFLAGS += -I source/output -D OUTPUT
+convert-win32: CPPFLAGS += -I source/outputs -D OUTPUT
 convert-win32: CFLAGS = -O3 $(CWARNS_OPT)
 convert-win32: dists/i686-win/lou_convert.exe
 
 OBJS_CONVERT_WIN32 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/i686-win/$(OBJ))
 
 dists/i686-win/lou_convert.exe: $(OBJS_CONVERT_WIN32) | dists/i686-win
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT_WIN32)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_WIN32) $(LDFLAGS)
 
 table-win32: CC = $(CC_WIN32)
-table-win32: CPPFLAGS += -I source/output -D OUTPUT
+table-win32: CPPFLAGS += -I source/outputs -D OUTPUT
 table-win32: CFLAGS += -O3 $(CWARNS_OPT)
 table-win32: dists/i686-win/lou_table.exe
 
 OBJS_TABLE_WIN32 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/i686-win/$(OBJ))
 
 dists/i686-win/lou_table.exe: $(OBJS_TABLE_WIN32) | dists/i686-win
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE_WIN32)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_WIN32) $(LDFLAGS)
 
 translate-win32: CC = $(CC_WIN32)
-translate-win32: CPPFLAGS += -I source/output -D OUTPUT
+translate-win32: CPPFLAGS += -I source/outputs -D OUTPUT
 translate-win32: CFLAGS += -O3 $(CWARNS_OPT)
 translate-win32: dists/i686-win/lou_translate.exe
 
 OBJS_TRANSLATE_WIN32 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/i686-win/$(OBJ))
 
 dists/i686-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN32) | dists/i686-win
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_WIN32)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_WIN32) $(LDFLAGS)
 
 dists/i686-win:
 	mkdir -p dists/i686-win
@@ -483,37 +484,37 @@ dll-mac64: dists/x86_64-mac/liblouisAPH-mac64-$(VERSION).dylib
 OBJS_DLL_MAC64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-mac/$(OBJ))
 
 dists/x86_64-mac/liblouisAPH-mac64-$(VERSION).dylib: $(OBJS_DLL_MAC64) | dists/x86_64-mac
-	$(CC) -o $@ -shared $(OBJS_DLL_MAC64)
+	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_MAC64)
 
 convert-mac64: CC = $(CC_MAC64)
-convert-mac64: CPPFLAGS += -I source/output -D OUTPUT
+convert-mac64: CPPFLAGS += -I source/outputs -D OUTPUT
 convert-mac64: CFLAGS += -O3 $(CWARNS_OPT)
 convert-mac64: dists/x86_64-mac/lou_convert
 
 OBJS_CONVERT_MAC64 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/x86_64-mac/$(OBJ))
 
 dists/x86_64-mac/lou_convert: $(OBJS_CONVERT_MAC64) | dists/x86_64-mac
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT_MAC64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_MAC64) $(LDFLAGS)
 
 table-mac64: CC = $(CC_MAC64)
-table-mac64: CPPFLAGS += -I source/output -D OUTPUT
+table-mac64: CPPFLAGS += -I source/outputs -D OUTPUT
 table-mac64: CFLAGS += -O3 $(CWARNS_OPT)
 table-mac64: dists/x86_64-mac/lou_table
 
 OBJS_TABLE_MAC64 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/x86_64-mac/$(OBJ))
 
 dists/x86_64-mac/lou_table: $(OBJS_TABLE_MAC64) | dists/x86_64-mac
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE_MAC64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_MAC64) $(LDFLAGS)
 
 translate-mac64: CC = $(CC_MAC64)
-translate-mac64: CPPFLAGS += -I source/output -D OUTPUT
+translate-mac64: CPPFLAGS += -I source/outputs -D OUTPUT
 translate-mac64: CFLAGS += -O3 $(CWARNS_OPT)
 translate-mac64: dists/x86_64-mac/lou_translate
 
 OBJS_TRANSLATE_MAC64 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/x86_64-mac/$(OBJ))
 
 dists/x86_64-mac/lou_translate: $(OBJS_TRANSLATE_MAC64) | dists/x86_64-mac
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_MAC64)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_MAC64) $(LDFLAGS)
 
 dists/x86_64-mac:
 	mkdir -p dists/x86_64-mac
@@ -531,37 +532,37 @@ dll-mac32: dists/i386-mac/liblouisAPH-mac32-$(VERSION).dylib
 OBJS_DLL_MAC32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i386-mac/$(OBJ))
 
 dists/i386-mac/liblouisAPH-mac32-$(VERSION).dylib: $(OBJS_DLL_MAC32) | dists/i386-mac
-	$(CC) -o $@ -shared $(OBJS_DLL_MAC32)
+	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_MAC32)
 
 convert-mac32: CC = $(CC_MAC32)
-convert-mac32: CPPFLAGS += -I source/output -D OUTPUT
+convert-mac32: CPPFLAGS += -I source/outputs -D OUTPUT
 convert-mac32: CFLAGS += -O3 $(CWARNS_OPT)
 convert-mac32: dists/i386-mac/lou_convert
 
 OBJS_CONVERT_MAC32 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/i386-mac/$(OBJ))
 
 dists/i386-mac/lou_convert: $(OBJS_CONVERT_MAC32) | dists/i386-mac
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_CONVERT_MAC32)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_MAC32) $(LDFLAGS)
 
 table-mac32: CC = $(CC_MAC32)
-table-mac32: CPPFLAGS += -I source/output -D OUTPUT
+table-mac32: CPPFLAGS += -I source/outputs -D OUTPUT
 table-mac32: CFLAGS += -O3 $(CWARNS_OPT)
 table-mac32: dists/i386-mac/lou_table
 
 OBJS_TABLE_MAC32 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/i386-mac/$(OBJ))
 
 dists/i386-mac/lou_table: $(OBJS_TABLE_MAC32) | dists/i386-mac
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TABLE_MAC32)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_MAC32) $(LDFLAGS)
 
 translate-mac32: CC = $(CC_MAC32)
-translate-mac32: CPPFLAGS += -I source/output -D OUTPUT
+translate-mac32: CPPFLAGS += -I source/outputs -D OUTPUT
 translate-mac32: CFLAGS += -O3 $(CWARNS_OPT)
 translate-mac32: dists/i386-mac/lou_translate
 
 OBJS_TRANSLATE_MAC32 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/i386-mac/$(OBJ))
 
 dists/i386-mac/lou_translate: $(OBJS_TRANSLATE_MAC32) | dists/i386-mac
-	$(CC) -o $@ $(LDFLAGS) $(OBJS_TRANSLATE_MAC32)
+	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_MAC32) $(LDFLAGS)
 
 dists/i386-mac:
 	mkdir -p dists/i386-mac
@@ -570,27 +571,27 @@ dists/i386-mac:
 
 ################################################################################
 
-MINGW64     := $(shell if (which $(CC_WIN64) &> /dev/null ); then echo 1; else echo 0; fi )
-MINGW32     := $(shell if (which $(CC_WIN32) &> /dev/null ); then echo 1; else echo 0; fi )
-OSXCROSS64  := $(shell if (which $(CC_MAC64) &> /dev/null ); then echo 1; else echo 0; fi )
-OSXCROSS32  := $(shell if (which $(CC_MAC32) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_MINGW64     := $(shell if (which $(CC_WIN64) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_MINGW32     := $(shell if (which $(CC_WIN32) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_OSXCROSS64  := $(shell if (which $(CC_MAC64) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_OSXCROSS32  := $(shell if (which $(CC_MAC32) &> /dev/null ); then echo 1; else echo 0; fi )
 
-ifeq ($(MINGW64),1)
+ifeq ($(HAS_MINGW64),1)
 DISTS_MINGW64     := dist-win64
 RELEASES_MINGW64  := dists/LibLouisAPH-win64-$(VERSION).zip
 endif
 
-ifeq ($(MINGW32),1)
+ifeq ($(HAS_MINGW32),1)
 DISTS_MINGW32     := dist-win32
 RELEASES_MINGW32  := dists/LibLouisAPH-win32-$(VERSION).zip
 endif
 
-ifeq ($(OSXCROSS64),1)
+ifeq ($(HAS_OSXCROSS64),1)
 DISTS_OSXCROSS64     := dist-mac64
 RELEASES_OSXCROSS64  := dists/LibLouisAPH-mac64-$(VERSION).zip
 endif
 
-ifeq ($(OSXCROSS32),1)
+ifeq ($(HAS_OSXCROSS32),1)
 DISTS_OSXCROSS32     := dist-mac32
 RELEASES_OSXCROSS32  := dists/LibLouisAPH-mac32-$(VERSION).zip
 endif
@@ -657,7 +658,7 @@ releases: dists $(RELEASES)
 deps: build/Makedeps
 	@cat build/Makedeps
 
-build/Makedeps: CPPFLAGS += -I . -I source/output -I test -D OUTPUT
+build/Makedeps: CPPFLAGS += -I . -I source/outputs -I test -D OUTPUT
 build/Makedeps: | build
 	@for BUILD_DIR in dists/objects/x86_64-linux dists/objects/i686-linux dists/objects/x86_64-win dists/objects/i686-win dists/objects/x86_64-mac dists/objects/i386-mac ; \
 	do \
@@ -667,7 +668,7 @@ build/Makedeps: | build
 		do \
 			for SRC in `find $$DIR -name '*.c'` ; \
 			do \
-				$(CC) $(CPPFLAGS) -MM $$SRC -MT $$BUILD_DIR/$${SRC%.c}.o >> build/Makedeps ; \
+				$(CC) -MT $$BUILD_DIR/$${SRC%.c}.o -MM $$SRC $(CPPFLAGS) >> build/Makedeps ; \
 			done ; \
 			for SOURCE_DIR in `find $$DIR -type d` ; \
 			do \
@@ -675,8 +676,7 @@ build/Makedeps: | build
 				then \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/$$SOURCE_DIR" >> build/Makedeps ; \
-					printf '\t@echo $$(CC) $$<\n' >> build/Makedeps ; \
-					printf '\t@$$(CC) -c -o $$@ $$(CPPFLAGS) $$(CFLAGS) $$<\n' >> build/Makedeps ; \
+					printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR:" >> build/Makedeps ; \
 					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR\n" >> build/Makedeps ; \
@@ -693,7 +693,7 @@ build/Makedeps: | build
 		do \
 			for SRC in `find $$DIR -name '*.c'` ; \
 			do \
-				$(CC) $(CPPFLAGS) -MM $$SRC -MT $$BUILD_DIR/$${SRC%.c}.o >> build/Makedeps ; \
+				$(CC) -MT $$BUILD_DIR/$${SRC%.c}.o -MM $$SRC $(CPPFLAGS) >> build/Makedeps ; \
 			done ; \
 			for SOURCE_DIR in `find $$DIR -type d` ; \
 			do \
@@ -701,8 +701,7 @@ build/Makedeps: | build
 				then \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/$$SOURCE_DIR" >> build/Makedeps ; \
-					printf '\t@echo $$(CC) $$<\n' >> build/Makedeps ; \
-					printf '\t@$$(CC) -c -o $$@ $$(CPPFLAGS) $$(CFLAGS) $$<\n' >> build/Makedeps ; \
+					printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR:" >> build/Makedeps ; \
 					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR\n" >> build/Makedeps ; \
@@ -715,11 +714,15 @@ build/Makedeps: | build
 	echo >> build/Makedeps ; \
 	for BUILD_DIR in build/objects dists/objects/x86_64-linux ; \
 	do \
-		for SOURCE_DIR in source source/language ; \
+		for SOURCE_DIR in source source/languages ; \
 		do \
+			for SRC in `find $$SOURCE_DIR -name '*.c'` ; \
+			do \
+				$(CC) -MT $$BUILD_DIR/dll/$${SRC%.c}.o -MM $$SRC $(CPPFLAGS) >> build/Makedeps ; \
+			done ; \
+			printf '\n' >> build/Makedeps ; \
 			echo "$$BUILD_DIR/dll/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/dll/$$SOURCE_DIR" >> build/Makedeps ; \
-			printf '\t@echo $$(CC) $$<\n' >> build/Makedeps ; \
-			printf '\t@$$(CC) -c -o $$@ $$(CPPFLAGS) $$(CFLAGS) $$<\n' >> build/Makedeps ; \
+			printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 			printf '\n' >> build/Makedeps ; \
 			echo "$$BUILD_DIR/dll/$$SOURCE_DIR:" >> build/Makedeps ; \
 			printf "\tmkdir -p $$BUILD_DIR/dll/$$SOURCE_DIR\n" >> build/Makedeps ; \
@@ -730,11 +733,15 @@ build/Makedeps: | build
 	echo >> build/Makedeps ; \
 	for BUILD_DIR in build/objects ; \
 	do \
-		for SOURCE_DIR in source source/language source/output debug test test/languages ; \
+		for SOURCE_DIR in source source/languages source/outputs debug test test/languages ; \
 		do \
+			for SRC in `find $$SOURCE_DIR -name '*.c'` ; \
+			do \
+				$(CC) -MT $$BUILD_DIR/opt/$${SRC%.c}.o -MM $$SRC $(CPPFLAGS) >> build/Makedeps ; \
+			done ; \
+			printf '\n' >> build/Makedeps ; \
 			echo "$$BUILD_DIR/opt/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/opt/$$SOURCE_DIR" >> build/Makedeps ; \
-			printf '\t@echo $$(CC) $$<\n' >> build/Makedeps ; \
-			printf '\t@$$(CC) -c -o $$@ $$(CPPFLAGS) $$(CFLAGS) $$<\n' >> build/Makedeps ; \
+			printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 			printf '\n' >> build/Makedeps ; \
 			echo "$$BUILD_DIR/opt/$$SOURCE_DIR:" >> build/Makedeps ; \
 			printf "\tmkdir -p $$BUILD_DIR/opt/$$SOURCE_DIR\n" >> build/Makedeps ; \
