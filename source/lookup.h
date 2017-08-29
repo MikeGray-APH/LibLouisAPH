@@ -37,6 +37,16 @@ License along with LibLouisAPH. If not, see <http://www.gnu.org/licenses/>.
 void lookup_fini(void);
 
 
+/* Returns the hook function for file lookups, or NULL is not set.
+*/
+int (*lookup_get_hook(void))(char *path, const int path_max, const char *file_name, const int file_name_len);
+
+
+/* Sets the hook function for file lookups.  Unsets if hook is NULL.
+*/
+void lookup_set_hook(int (*hook)(char *path, const int path_max, const char *file_name, const int file_name_len));
+
+
 /* Returns the number of characters in current paths.
 */
 int lookup_get_paths_length(void);

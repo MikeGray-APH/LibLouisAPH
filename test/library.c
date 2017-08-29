@@ -163,6 +163,122 @@ static int test_lookup_path(void)
 
 /******************************************************************************/
 
+static int lookup_hook_called, lookup_hook_set;
+
+static int lookup_hook(char *path, const int path_max ATTRIBUTE_UNUSED, const char *file_name, const int file_name_len)
+{
+	lookup_hook_called = 1;
+
+	if(lookup_hook_set)
+	if(!strncmp(file_name, "hook me", file_name_len + 1))
+	{
+		strncpy(path, "test/tables/hook.rst", 21);
+		return 1;
+	}
+
+	return 0;
+}
+
+static int test_lookup_hook(void)
+{
+	int (*hook)(char *path, const int path_max, const char *file_name, const int file_name_len);
+	struct table **tables;
+	char paths[0x100];
+	int table_cnt, status;
+
+	memset(paths, 0, 0x100);
+	status = 0;
+
+	if(output != stdout)
+		printf("test_lookup_hook:  ");
+
+	fputs("test_lookup_hook\n\n", output);
+
+	lookup_fini();
+	unsetenv("LOUIS_TABLEPATH");
+	lookup_hook_called = 0;
+	lookup_hook_set = 0;
+
+	fprintf(output, "get:            = ");
+	hook = lookup_get_hook();
+	if(hook)
+	{
+		fputs("ERROR:  hook != NULL\n", output);
+		goto free_and_return;
+	}
+	fprintf(output, "0x%lx\n", (unsigned long)hook);
+
+	tables = lookup_tables(&table_cnt, "test/tables/hook.rst");
+	if(lookup_hook_called)
+	{
+		fputs("ERROR:  lookup_hook called\n", output);
+		goto free_and_return;
+	}
+	if(!tables)
+		goto free_and_return;
+
+	FREE(tables);
+	lookup_fini();
+	lookup_hook_called = 0;
+	lookup_hook_set = 1;
+
+	fprintf(output, "set:           := 0x%lx\n", (unsigned long)lookup_hook);
+	lookup_set_hook(lookup_hook);
+	fprintf(output, "get:            = ");
+	hook = lookup_get_hook();
+	if(!hook)
+	{
+		fputs("ERROR:  hook == NULL\n", output);
+		goto free_and_return;
+	}
+	fprintf(output, "0x%lx\n", (unsigned long)hook);
+	tables = lookup_tables(&table_cnt, "test/tables/hook.rst");
+	if(!lookup_hook_called)
+	{
+		fputs("ERROR:  lookup_hook not called\n", output);
+		goto free_and_return;
+	}
+	if(!tables)
+		goto free_and_return;
+
+	FREE(tables);
+	lookup_fini();
+	lookup_hook_called = 0;
+	lookup_hook_set = 1;
+
+	fputs("lookup_table:  := hook me\n", output);
+	lookup_set_hook(lookup_hook);
+	tables = lookup_tables(&table_cnt, "hook me");
+	if(!lookup_hook_called)
+	{
+		fputs("ERROR:  lookup_hook not called\n", output);
+		goto free_and_return;
+	}
+	if(!tables)
+		goto free_and_return;
+
+	status = 1;
+
+	free_and_return:
+	if(tables)
+		FREE(tables);
+	lookup_fini();
+	lookup_set_hook(NULL);
+
+	fputs("\n", output);
+	fflush(output);
+
+	if(output != stdout)
+	if(status)
+		puts("PASS");
+	else
+		puts("FAIL");
+
+	return status;
+}
+
+/******************************************************************************/
+
 static int test_rule_sort(void)
 {
 	struct table *table;
@@ -756,6 +872,7 @@ int main(void)
 	try_cnt = 0;
 
 	try_cnt++;  pass_cnt += test_lookup_path();
+	try_cnt++;  pass_cnt += test_lookup_hook();
 	try_cnt++;  pass_cnt += test_rule_sort();
 	try_cnt++;  pass_cnt += test_table_include();
 	try_cnt++;  pass_cnt += test_table_include_with_environment();

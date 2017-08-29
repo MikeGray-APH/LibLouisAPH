@@ -50,6 +50,7 @@ static struct conversion *conversion_list = NULL;
 static char *table_paths = NULL;
 static int table_paths_len = 0;
 static int env_checked = 0;
+static int (*lookup_hook)(char *path, const int path_max, const char *file_name, const int file_name_len) = NULL;
 
 /******************************************************************************/
 
@@ -102,6 +103,19 @@ void lookup_fini(void)
 		table_paths_len = 0;
 	}
 	env_checked = 0;
+	lookup_hook = NULL;
+}
+
+/******************************************************************************/
+
+int (*lookup_get_hook(void))(char *path, const int path_max, const char *file_name, const int file_name_len)
+{
+	return lookup_hook;
+}
+
+void lookup_set_hook(int (*hook)(char *path, const int path_max, const char *file_name, const int file_name_len))
+{
+	lookup_hook = hook;
 }
 
 /******************************************************************************/
@@ -238,6 +252,15 @@ struct table* lookup_table(const char *file_name)
 		if(!strcmp(file_name, table->file_name))
 			return table;
 		table = table->nxt;
+	}
+
+	/*   try lookup hook   */
+	if(lookup_hook)
+	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
+	{
+		table = table_compile_from_file(path);
+		if(table)
+			goto return_table;
 	}
 
 	/*   try file_name directly   */
@@ -378,6 +401,15 @@ struct conversion* lookup_conversion(const char *file_name)
 		conversion = conversion->nxt;
 	}
 
+	/*   try lookup hook   */
+	if(lookup_hook)
+	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
+	{
+		conversion = conversion_compile_from_file(path);
+		if(conversion)
+			goto return_conversion;
+	}
+
 	/*   try file_name directly   */
 	conversion = conversion_compile_from_file(file_name);
 	if(conversion)
@@ -421,6 +453,19 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 	ASSERT(file_name)
 
 	file_name_len = strlen(file_name);
+
+	/*   try lookup hook   */
+	if(lookup_hook)
+	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
+	{
+		file = fopen(path, "r");
+		if(file)
+		{
+			strncpy(path_name, path, path_name_max);
+			path_name[path_name_max - 1] = 0;
+			return file;
+		}
+	}
 
 	/*   try file_name directly   */
 	file = fopen(file_name, "r");
