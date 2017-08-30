@@ -182,19 +182,33 @@ int lookup_add_paths(const char *paths)
 
 	check_env();
 
-	if(!table_paths)
-		return lookup_set_paths(paths);
+	if(!paths)
+		return table_paths_len;
 
-	len = strlen(paths);
-	table_paths_len += len + 1;
-	table_paths = REALLOC(table_paths, table_paths_len + 1);
 	if(!table_paths)
 	{
-		LOG_ALLOCATE_FAIL
-		return 0;
+		table_paths_len = strlen(paths);
+		table_paths = MALLOC(table_paths_len + 1);
+		if(!table_paths)
+		{
+			LOG_ALLOCATE_FAIL
+			return 0;
+		}
+		strncpy(table_paths, paths, table_paths_len + 1);
 	}
-	strncat(table_paths, PATH_SEPARATOR_STRING, 2);
-	strncat(table_paths, paths, len + 1);
+	else
+	{
+		len = strlen(paths);
+		table_paths_len += len + 1;
+		table_paths = REALLOC(table_paths, table_paths_len + 1);
+		if(!table_paths)
+		{
+			LOG_ALLOCATE_FAIL
+			return 0;
+		}
+		strncat(table_paths, PATH_SEPARATOR_STRING, 2);
+		strncat(table_paths, paths, len + 1);
+	}
 
 	return table_paths_len;
 }

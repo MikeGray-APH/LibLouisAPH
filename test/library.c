@@ -83,7 +83,44 @@ static int test_lookup_path(void)
 	}
 
 	lookup_fini();
+
+	paths_len = lookup_set_paths("tables");
+	fprintf(output, "set:  [%d]\ttables\n", paths_len);
+	paths[0] = 0;
+	paths_len = lookup_get_paths(paths, 0x100);
+	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
+	if(paths_len != 6)
+	{
+		fprintf(output, "ERROR:  %d != 6\n", paths_len);
+		goto return_fail;
+	}
+	if(strncmp(paths, "tables", 7))
+	{
+		fprintf(output, "ERROR:  %s != tables\n", paths);
+		goto return_fail;
+	}
+
+	lookup_fini();
+
+	paths_len = lookup_add_paths("test/tables");
+	fprintf(output, "add:  [%d]\ttest/tables\n", paths_len);
+	paths[0] = 0;
+	paths_len = lookup_get_paths(paths, 0x100);
+	fprintf(output, "get:  [%d]\t%s\n", paths_len, paths);
+	if(paths_len != 11)
+	{
+		fprintf(output, "ERROR:  %d != 11\n", paths_len);
+		goto return_fail;
+	}
+	if(strncmp(paths, "test/tables", 12))
+	{
+		fprintf(output, "ERROR:  %s != test/tables\n", paths);
+		goto return_fail;
+	}
+
+	lookup_fini();
 	setenv("LOUIS_TABLEPATH", "test/tables", 0);
+
 	fprintf(output, "env:  [%d]\ttest/tables\n", (int)strlen("test/tables"));
 	paths_len = lookup_get_paths(paths, 12);
 	fprintf(output, "get:  [%d]\t%s   max = 12\n", paths_len, paths);
