@@ -147,6 +147,8 @@ CWARNS_OPT := \
 
 ################################################################################
 
+.PHONY: db dll lib
+
 OBJS_DB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJS_OUTPUT) $(OBJS_DEBUG) $(OBJ_DEBUG_MAIN), build/objects/$(OBJ))
 
 build/exe-db: CPPFLAGS += -I source/outputs -D DEBUG
@@ -157,7 +159,6 @@ build/exe-db: $(OBJS_DB_BUILD) | build
 db: build/exe-db
 	gdb --command=debug/gdb/main.gdb build/exe-db
 
-
 dll: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 dll: build/liblouisAPH.so
 
@@ -165,7 +166,6 @@ OBJS_DLL_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), buil
 
 build/liblouisAPH.so: $(OBJS_DLL_BUILD) | build
 	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_BUILD)
-
 
 lib: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
 lib: build/liblouisAPH.a
@@ -175,9 +175,9 @@ OBJS_LIB_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), buil
 build/liblouisAPH.a: $(OBJS_LIB_BUILD) | build
 	ar -rcv $@ $(OBJS_LIB_BUILD)
 
-.PHONY: db dll lib
+########################################
 
-################################################################################
+.PHONY: tools convert table translate
 
 tools: translate table convert
 
@@ -209,11 +209,11 @@ build/tools/lou_translate: $(OBJS_TRANSLATE_BUILD) | build/tools
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_BUILD) $(LDFLAGS)
 
 build/tools:
-	mkdir -p build/tools
-
-.PHONY: tools convert table translate
+	mkdir -p build/tools/
 
 ################################################################################
+
+.PHONY: test test-all test-lib test-db test-langs test-link test-tools test-opt
 
 test: test-lib test-link test-tools
 
@@ -267,13 +267,26 @@ build/exe-test-opt: $(OBJS_TEST_OPT_BUILD) | build/test
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TEST_OPT_BUILD) $(LDFLAGS)
 
 build/test:
-	mkdir -p build/test
-
-.PHONY: test test-all test-lib test-db test-langs test-link test-tools test-opt
+	mkdir -p build/test/
 
 ################################################################################
 
+.PHONY: dists releases
+
+########################################
+
+.PHONY: dist dist-linux64 dll-linux64 lib-linux64 convert-linux64 table-linux64 translate-linux64 release-linux64
+
 dist:  dist-linux64
+
+dists: dist-linux64
+
+FILES_LINUX64 := \
+	dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so \
+	dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a \
+	dists/x86_64-linux/lou_convert \
+	dists/x86_64-linux/lou_table \
+	dists/x86_64-linux/lou_translate \
 
 dist-linux64: dll-linux64 lib-linux64 translate-linux64 table-linux64 convert-linux64
 
@@ -321,11 +334,31 @@ dists/x86_64-linux/lou_translate: $(OBJS_TRANSLATE_LINUX64) | dists/x86_64-linux
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_LINUX64) $(LDFLAGS)
 
 dists/x86_64-linux:
-	mkdir -p dists/x86_64-linux
+	mkdir -p dists/x86_64-linux/
 
-.PHONY: dist dist-linux64 dll-linux64 lib-linux64 convert-linux64 table-linux64 translate-linux64
+releases: release-linux64
 
-################################################################################
+release-linux64: dist-linux64 releases/LibLouisAPH-linux64-$(VERSION).tar.bz2
+
+releases/LibLouisAPH-linux64-$(VERSION).tar.bz2: $(FILES_LINUX64)
+	mkdir -p releases/LibLouisAPH-linux64-$(VERSION)/
+	cp -R dists/x86_64-linux/* releases/LibLouisAPH-linux64-$(VERSION)/
+	cp -R tables/ releases/LibLouisAPH-linux64-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-linux64-$(VERSION)/
+	cd releases && tar jvfc LibLouisAPH-linux64-$(VERSION).tar.bz2 LibLouisAPH-linux64-$(VERSION)/
+
+########################################
+
+.PHONY: dist-linux32 dll-linux32 lib-linux32 convert-linux32 table-linux32 translate-linux32
+
+dists: dist-linux32
+
+FILES_LINUX32 := \
+	dists/i686-linux/liblouisAPH-linux32-$(VERSION).so \
+	dists/i686-linux/liblouisAPH-linux32-$(VERSION).a \
+	dists/i686-linux/lou_convert \
+	dists/i686-linux/lou_table \
+	dists/i686-linux/lou_translate \
 
 dist-linux32: dll-linux32 lib-linux32 translate-linux32 table-linux32 convert-linux32
 
@@ -373,11 +406,39 @@ dists/i686-linux/lou_translate: $(OBJS_TRANSLATE_LINUX32) | dists/i686-linux
 	$(CC) -o $@ -m32 $(CFLAGS) $(OBJS_TRANSLATE_LINUX32) $(LDFLAGS)
 
 dists/i686-linux:
-	mkdir -p dists/i686-linux
+	mkdir -p dists/i686-linux/
 
-.PHONY: dist-linux32 dll-linux32 lib-linux32 convert-linux32 table-linux32 translate-linux32
+releases: release-linux32
 
-################################################################################
+release-linux32: dist-linux32 releases/LibLouisAPH-linux32-$(VERSION).tar.bz2
+
+releases/LibLouisAPH-linux32-$(VERSION).tar.bz2: $(FILES_LINUX32)
+	mkdir -p releases/LibLouisAPH-linux32-$(VERSION)/
+	cp -R dists/i686-linux/* releases/LibLouisAPH-linux32-$(VERSION)/
+	cp -R tables/ releases/LibLouisAPH-linux32-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-linux32-$(VERSION)/
+	cd releases && tar jvfc LibLouisAPH-linux32-$(VERSION).tar.bz2 LibLouisAPH-linux32-$(VERSION)/
+
+########################################
+
+.PHONY: dist-win64 dll-win64 convert-win64 table-win64 translate-win64
+
+HAS_MINGW64 := $(shell if (which $(CC_WIN64) &> /dev/null ); then echo 1; else echo 0; fi )
+
+ifneq ($(HAS_MINGW64),1)
+
+dist-win64 dll-win64 convert-win64 table-win64 translate-win64: FORCE
+	@echo missing $(CC_WIN64)
+
+else
+
+dists: dist-win64
+
+FILES_WIN64 := \
+	dists/x86_64-win/liblouisAPH-win64-$(VERSION).dll \
+	dists/x86_64-win/lou_convert.exe \
+	dists/x86_64-win/lou_table.exe \
+	dists/x86_64-win/lou_translate.exe \
 
 dist-win64: dll-win64 translate-win64 table-win64 convert-win64
 
@@ -421,11 +482,41 @@ dists/x86_64-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN64) | dists/x86_64-win
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_WIN64) $(LDFLAGS)
 
 dists/x86_64-win:
-	mkdir -p dists/x86_64-win
+	mkdir -p dists/x86_64-win/
 
-.PHONY: dist-win64 dll-win64 convert-win64 table-win64 translate-win64
+releases: release-win64
 
-################################################################################
+release-win64: dist-win64 releases/LibLouisAPH-win64-$(VERSION).zip
+
+releases/LibLouisAPH-win64-$(VERSION).zip: $(FILES_WIN64)
+	mkdir -p releases/LibLouisAPH-win64-$(VERSION)/
+	cp -R dists/x86_64-win/* releases/LibLouisAPH-win64-$(VERSION)/
+	cp -R tables/ releases/LibLouisAPH-win64-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-win64-$(VERSION)/
+	cd releases && zip -r -9 LibLouisAPH-win64-$(VERSION).zip LibLouisAPH-win64-$(VERSION)/
+
+endif
+
+########################################
+
+.PHONY: dist-win32 dll-win32 convert-win32 table-win32 translate-win32 release-win32
+
+HAS_MINGW32 := $(shell if (which $(CC_WIN32) &> /dev/null ); then echo 1; else echo 0; fi )
+
+ifneq ($(HAS_MINGW32),1)
+
+dist-win32 dll-win32 convert-win32 table-win32 translate-win32 release-win32: FORCE
+	@echo missing $(CC_WIN32)
+
+else
+
+dists: dist-win32
+
+FILES_WIN32 := \
+	dists/i686-win/liblouisAPH-win32-$(VERSION).dll \
+	dists/i686-win/lou_convert.exe \
+	dists/i686-win/lou_table.exe \
+	dists/i686-win/lou_translate.exe \
 
 dist-win32: dll-win32 convert-win32 table-win32 translate-win32
 
@@ -469,11 +560,41 @@ dists/i686-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN32) | dists/i686-win
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_WIN32) $(LDFLAGS)
 
 dists/i686-win:
-	mkdir -p dists/i686-win
+	mkdir -p dists/i686-win/
 
-.PHONY: dist-win32 dll-win32 convert-win32 table-win32 translate-win32
+releases: release-win32
 
-################################################################################
+release-win32: dist-win32 releases/LibLouisAPH-win32-$(VERSION).zip
+
+releases/LibLouisAPH-win32-$(VERSION).zip: $(FILES_WIN32)
+	mkdir -p releases/LibLouisAPH-win32-$(VERSION)/
+	cp -R dists/i686-win/* releases/LibLouisAPH-win32-$(VERSION)/
+	cp -R tables/ releases/LibLouisAPH-win32-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-win32-$(VERSION)/
+	cd releases && zip -r -9 LibLouisAPH-win32-$(VERSION).zip LibLouisAPH-win32-$(VERSION)/
+
+endif
+
+########################################
+
+.PHONY: dist-mac64 dll-mac64 convert-mac64 table-mac64 translate-mac64 release-mac64
+
+HAS_OSXCROSS64 := $(shell if (which $(CC_MAC64) &> /dev/null ); then echo 1; else echo 0; fi )
+
+ifneq ($(HAS_OSXCROSS64),1)
+
+dist-mac64 dll-mac64 convert-mac64 table-mac64 translate-mac64 release-mac64: FORCE
+	@echo missing $(CC_MAC64)
+
+else
+
+dists: dist-mac64
+
+FILES_MAC64 := \
+	dists/x86_64-mac/liblouisAPH-mac64-$(VERSION).dylib \
+	dists/x86_64-mac/lou_convert \
+	dists/x86_64-mac/lou_table \
+	dists/x86_64-mac/lou_translate \
 
 dist-mac64: dll-mac64 translate-mac64 table-mac64 convert-mac64
 
@@ -517,11 +638,41 @@ dists/x86_64-mac/lou_translate: $(OBJS_TRANSLATE_MAC64) | dists/x86_64-mac
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_MAC64) $(LDFLAGS)
 
 dists/x86_64-mac:
-	mkdir -p dists/x86_64-mac
+	mkdir -p dists/x86_64-mac/
 
-.PHONY: dist-mac64 dll-mac64 convert-mac64 table-mac64 translate-mac64
+releases: release-mac64
 
-################################################################################
+release-mac64: dist-mac64 releases/LibLouisAPH-mac64-$(VERSION).zip
+
+releases/LibLouisAPH-mac64-$(VERSION).zip: $(FILES_MAC64)
+	mkdir -p releases/LibLouisAPH-mac64-$(VERSION)/
+	cp -R dists/x86_64-mac/* releases/LibLouisAPH-mac64-$(VERSION)/
+	cp -R tables/ releases/LibLouisAPH-mac64-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-mac64-$(VERSION)/
+	cd releases && zip -r -9 LibLouisAPH-mac64-$(VERSION).zip LibLouisAPH-mac64-$(VERSION)/
+
+endif
+
+########################################
+
+.PHONY: dist-mac32 dll-mac32 convert-mac32 table-mac32 translate-mac32
+
+HAS_OSXCROSS32 := $(shell if (which $(CC_MAC32) &> /dev/null ); then echo 1; else echo 0; fi )
+
+ifneq ($(HAS_OSXCROSS32),1)
+
+dist-mac32 dll-mac32 convert-mac32 table-mac32 translate-mac32: FORCE
+	@echo missing $(CC_MAC32)
+
+else
+
+dists: dist-mac32
+
+FILES_MAC32 := \
+	dists/i386-mac/liblouisAPH-mac32-$(VERSION).dylib \
+	dists/i386-mac/lou_convert \
+	dists/i386-mac/lou_table \
+	dists/i386-mac/lou_translate \
 
 dist-mac32: dll-mac32 translate-mac32 table-mac32 convert-mac32
 
@@ -565,93 +716,20 @@ dists/i386-mac/lou_translate: $(OBJS_TRANSLATE_MAC32) | dists/i386-mac
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TRANSLATE_MAC32) $(LDFLAGS)
 
 dists/i386-mac:
-	mkdir -p dists/i386-mac
+	mkdir -p dists/i386-mac/
 
-.PHONY: dist-mac32 dll-mac32 convert-mac32 table-mac32 translate-mac32
+releases: release-mac32
 
-################################################################################
+release-mac32: dist-mac32 releases/LibLouisAPH-mac32-$(VERSION).zip
 
-HAS_MINGW64     := $(shell if (which $(CC_WIN64) &> /dev/null ); then echo 1; else echo 0; fi )
-HAS_MINGW32     := $(shell if (which $(CC_WIN32) &> /dev/null ); then echo 1; else echo 0; fi )
-HAS_OSXCROSS64  := $(shell if (which $(CC_MAC64) &> /dev/null ); then echo 1; else echo 0; fi )
-HAS_OSXCROSS32  := $(shell if (which $(CC_MAC32) &> /dev/null ); then echo 1; else echo 0; fi )
+releases/LibLouisAPH-mac32-$(VERSION).zip: $(FILES_MAC32)
+	mkdir -p releases/LibLouisAPH-mac32-$(VERSION)/
+	cp -R dists/i386-mac/* releases/LibLouisAPH-mac32-$(VERSION)/
+	cp -R tables/ releases/LibLouisAPH-mac32-$(VERSION)/
+	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-mac32-$(VERSION)/
+	cd releases && zip -r -9 LibLouisAPH-mac32-$(VERSION).zip LibLouisAPH-mac32-$(VERSION)/
 
-ifeq ($(HAS_MINGW64),1)
-DISTS_MINGW64     := dist-win64
-RELEASES_MINGW64  := dists/LibLouisAPH-win64-$(VERSION).zip
 endif
-
-ifeq ($(HAS_MINGW32),1)
-DISTS_MINGW32     := dist-win32
-RELEASES_MINGW32  := dists/LibLouisAPH-win32-$(VERSION).zip
-endif
-
-ifeq ($(HAS_OSXCROSS64),1)
-DISTS_OSXCROSS64     := dist-mac64
-RELEASES_OSXCROSS64  := dists/LibLouisAPH-mac64-$(VERSION).zip
-endif
-
-ifeq ($(HAS_OSXCROSS32),1)
-DISTS_OSXCROSS32     := dist-mac32
-RELEASES_OSXCROSS32  := dists/LibLouisAPH-mac32-$(VERSION).zip
-endif
-
-DISTS     := dist-linux64 dist-linux32 $(DISTS_MINGW64) $(DISTS_MINGW32) $(DISTS_OSXCROSS64) $(DISTS_OSXCROSS32)
-RELEASES  := dists/LibLouisAPH-source-$(VERSION).zip dists/LibLouisAPH-linux64-$(VERSION).tar.bz2 dists/LibLouisAPH-linux32-$(VERSION).tar.bz2 $(RELEASES_MINGW64) $(RELEASES_MINGW32) $(RELEASES_OSXCROSS64) $(RELEASES_OSXCROSS32)
-
-dists: $(DISTS)
-
-dists/LibLouisAPH-source-$(VERSION).zip:
-	mkdir -p dists/LibLouisAPH-source-$(VERSION)/
-	cp -R debug/ docs/ source/ tables/ test/ tools/ Makefile COPYING COPYING.LESSER README.md LibLouisAPH.h dists/LibLouisAPH-source-$(VERSION)/
-	cd dists && zip -r -9 LibLouisAPH-source-$(VERSION).zip LibLouisAPH-source-$(VERSION)/
-
-dists/LibLouisAPH-linux64-$(VERSION).tar.bz2:
-	mkdir -p dists/LibLouisAPH-linux64-$(VERSION)/
-	cp -R dists/x86_64-linux/* dists/LibLouisAPH-linux64-$(VERSION)/
-	cp -R tables/ dists/LibLouisAPH-linux64-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER dists/LibLouisAPH-linux64-$(VERSION)/
-	cd dists && tar jvfc LibLouisAPH-linux64-$(VERSION).tar.bz2 LibLouisAPH-linux64-$(VERSION)/
-
-dists/LibLouisAPH-linux32-$(VERSION).tar.bz2:
-	mkdir -p dists/LibLouisAPH-linux32-$(VERSION)/
-	cp -R dists/i686-linux/* dists/LibLouisAPH-linux32-$(VERSION)/
-	cp -R tables/ dists/LibLouisAPH-linux32-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER dists/LibLouisAPH-linux32-$(VERSION)/
-	cd dists && tar jvfc LibLouisAPH-linux32-$(VERSION).tar.bz2 LibLouisAPH-linux32-$(VERSION)/
-
-dists/LibLouisAPH-win64-$(VERSION).zip:
-	mkdir -p dists/LibLouisAPH-win64-$(VERSION)/
-	cp -R dists/x86_64-win/* dists/LibLouisAPH-win64-$(VERSION)/
-	cp -R tables/ dists/LibLouisAPH-win64-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER dists/LibLouisAPH-win64-$(VERSION)/
-	cd dists && zip -r -9 LibLouisAPH-win64-$(VERSION).zip LibLouisAPH-win64-$(VERSION)/
-
-dists/LibLouisAPH-win32-$(VERSION).zip:
-	mkdir -p dists/LibLouisAPH-win32-$(VERSION)/
-	cp -R dists/i686-win/* dists/LibLouisAPH-win32-$(VERSION)/
-	cp -R tables/ dists/LibLouisAPH-win32-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER dists/LibLouisAPH-win32-$(VERSION)/
-	cd dists && zip -r -9 LibLouisAPH-win32-$(VERSION).zip LibLouisAPH-win32-$(VERSION)/
-
-dists/LibLouisAPH-mac64-$(VERSION).zip:
-	mkdir -p dists/LibLouisAPH-mac64-$(VERSION)/
-	cp -R dists/x86_64-mac/* dists/LibLouisAPH-mac64-$(VERSION)/
-	cp -R tables/ dists/LibLouisAPH-mac64-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER dists/LibLouisAPH-mac64-$(VERSION)/
-	cd dists && zip -r -9 LibLouisAPH-mac64-$(VERSION).zip LibLouisAPH-mac64-$(VERSION)/
-
-dists/LibLouisAPH-mac32-$(VERSION).zip:
-	mkdir -p dists/LibLouisAPH-mac32-$(VERSION)/
-	cp -R dists/i386-mac/* dists/LibLouisAPH-mac32-$(VERSION)/
-	cp -R tables/ dists/LibLouisAPH-mac32-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER dists/LibLouisAPH-mac32-$(VERSION)/
-	cd dists && zip -r -9 LibLouisAPH-mac32-$(VERSION).zip LibLouisAPH-mac32-$(VERSION)/
-
-
-releases: dists $(RELEASES)
-
-.PHONY: dists releases
 
 ################################################################################
 
@@ -679,7 +757,7 @@ build/Makedeps: | build
 					printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR:" >> build/Makedeps ; \
-					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR\n" >> build/Makedeps ; \
+					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR/\n" >> build/Makedeps ; \
 					printf '\n' >> build/Makedeps ; \
 				fi ; \
 			done ; \
@@ -704,7 +782,7 @@ build/Makedeps: | build
 					printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR:" >> build/Makedeps ; \
-					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR\n" >> build/Makedeps ; \
+					printf "\tmkdir -p $$BUILD_DIR/$$SOURCE_DIR/\n" >> build/Makedeps ; \
 					printf '\n' >> build/Makedeps ; \
 				fi ; \
 			done ; \
@@ -725,7 +803,7 @@ build/Makedeps: | build
 			printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 			printf '\n' >> build/Makedeps ; \
 			echo "$$BUILD_DIR/dll/$$SOURCE_DIR:" >> build/Makedeps ; \
-			printf "\tmkdir -p $$BUILD_DIR/dll/$$SOURCE_DIR\n" >> build/Makedeps ; \
+			printf "\tmkdir -p $$BUILD_DIR/dll/$$SOURCE_DIR/\n" >> build/Makedeps ; \
 			printf '\n' >> build/Makedeps ; \
 		done ; \
 	done ; \
@@ -744,11 +822,17 @@ build/Makedeps: | build
 			printf '\t$$(CC) -o $$@ -c $$(CPPFLAGS) $$(CFLAGS) $$< $(LDFLAGS)\n' >> build/Makedeps ; \
 			printf '\n' >> build/Makedeps ; \
 			echo "$$BUILD_DIR/opt/$$SOURCE_DIR:" >> build/Makedeps ; \
-			printf "\tmkdir -p $$BUILD_DIR/opt/$$SOURCE_DIR\n" >> build/Makedeps ; \
+			printf "\tmkdir -p $$BUILD_DIR/opt/$$SOURCE_DIR/\n" >> build/Makedeps ; \
 			printf '\n' >> build/Makedeps ; \
 		done ; \
 	done \
 
+build:
+	mkdir -p build/
+
+.PHONY: deps
+
+################################################################################
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),cleanse)
@@ -758,20 +842,17 @@ endif
 endif
 endif
 
-build:
-	mkdir -p build
-
-
 clean: FORCE
 	rm -rf build/
 
 cleanse: clean
 	rm -rf dists/
+	rm -rf releases/
 
 distclean: cleanse
 
 .PHONY: deps clean cleanse distclean
 
-FORCE:
-
 ################################################################################
+
+FORCE:
