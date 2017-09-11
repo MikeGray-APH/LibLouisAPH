@@ -249,6 +249,20 @@ static int create_path_file_name(
 
 /******************************************************************************/
 
+static struct table* find_table(const char *file_name)
+{
+	struct table *table;
+
+	table = table_list;
+	while(table)
+	{
+		if(!strcmp(file_name, table->file_name))
+			return table;
+		table = table->nxt;
+	}
+	return NULL;
+}
+
 struct table* lookup_table(const char *file_name)
 {
 	struct table *table;
@@ -260,18 +274,17 @@ struct table* lookup_table(const char *file_name)
 	file_name_len = strlen(file_name);
 
 	/*   has table already been loaded   */
-	table = table_list;
-	while(table)
-	{
-		if(!strcmp(file_name, table->file_name))
-			return table;
-		table = table->nxt;
-	}
+	table = find_table(file_name);
+	if(table)
+		return table;
 
 	/*   try lookup hook   */
 	if(lookup_hook)
 	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
 	{
+		table = find_table(path);
+		if(table)
+			return table;
 		table = table_compile_from_file(path);
 		if(table)
 			goto return_table;
@@ -290,6 +303,9 @@ struct table* lookup_table(const char *file_name)
 		paths_len = table_paths_len;
 		while(len = create_path_file_name(path, PATH_NAME_MAX, paths, paths_len, file_name, file_name_len))
 		{
+			table = find_table(path);
+			if(table)
+				return table;
 			table = table_compile_from_file(path);
 			if(table)
 				goto return_table;
@@ -396,6 +412,20 @@ struct table** lookup_tables(int *table_cnt, const char *table_names)
 
 /******************************************************************************/
 
+static struct conversion* find_conversion(const char *file_name)
+{
+	struct conversion *conversion;
+
+	conversion = conversion_list;
+	while(conversion)
+	{
+		if(!strcmp(file_name, conversion->file_name))
+			return conversion;
+		conversion = conversion->nxt;
+	}
+	return NULL;
+}
+
 struct conversion* lookup_conversion(const char *file_name)
 {
 	struct conversion *conversion;
@@ -407,18 +437,17 @@ struct conversion* lookup_conversion(const char *file_name)
 	file_name_len = strlen(file_name);
 
 	/*   has conversion already been loaded   */
-	conversion = conversion_list;
-	while(conversion)
-	{
-		if(!strcmp(file_name, conversion->file_name))
-			return conversion;
-		conversion = conversion->nxt;
-	}
+	conversion = find_conversion(file_name);
+	if(conversion)
+		return conversion;
 
 	/*   try lookup hook   */
 	if(lookup_hook)
 	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
 	{
+		conversion = find_conversion(path);
+		if(conversion)
+			return conversion;
 		conversion = conversion_compile_from_file(path);
 		if(conversion)
 			goto return_conversion;
@@ -437,6 +466,9 @@ struct conversion* lookup_conversion(const char *file_name)
 		paths_len = table_paths_len;
 		while(len = create_path_file_name(path, PATH_NAME_MAX - 1, paths, paths_len, file_name, file_name_len))
 		{
+			conversion = find_conversion(path);
+			if(conversion)
+				return conversion;
 			conversion = conversion_compile_from_file(path);
 			if(conversion)
 				goto return_conversion;
