@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "lookup.h"
 #include "log.h"
 
-#define INPUT_BUFFER_MAX  0x2520
+#define INPUT_BUFFER_MAX  0x1000
 
 static enum rule_direction direction;
 
@@ -144,9 +144,9 @@ int main(int argn, char **args)
 	struct table **tables;
 	int table_cnt;
 	struct conversion *conversion;
-	char cchars[INPUT_BUFFER_MAX];
-	Unicode uchars[INPUT_BUFFER_MAX], trans[INPUT_BUFFER_MAX];
-	int cchars_len, uchars_len, trans_len;
+	char *cchars;
+	Unicode *uchars, *trans;
+	int cchars_len, uchars_len, trans_len, max_len;
 
 	direction = FORWARD;
 
@@ -174,11 +174,58 @@ int main(int argn, char **args)
 	else
 		conversion = NULL;
 
-	memset(cchars, 0, INPUT_BUFFER_MAX);
-	memset(uchars, 0, INPUT_BUFFER_MAX * sizeof(Unicode));
-	memset(trans, 0, INPUT_BUFFER_MAX * sizeof(Unicode));
+	max_len = INPUT_BUFFER_MAX;
+	cchars = malloc(max_len);
+	uchars = malloc(max_len * sizeof(Unicode));
+	trans  = malloc(max_len * sizeof(Unicode));
+	memset(cchars, 0, max_len);
+	memset(uchars, 0, max_len * sizeof(Unicode));
+	memset(trans, 0, max_len * sizeof(Unicode));
+
 	while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
 	{
+		/*   check if entire line was read   */
+		cchars_len = strlen(cchars);
+		if(cchars[cchars_len - 1] != '\n' && cchars[cchars_len - 1] != '\r')
+		{
+			max_len += INPUT_BUFFER_MAX;
+			cchars = realloc(cchars, max_len);
+			if(!cchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+
+			while(fgets(&cchars[cchars_len], INPUT_BUFFER_MAX, stdin))
+			{
+				cchars_len = strlen(cchars);
+				if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
+					break;
+
+				max_len += INPUT_BUFFER_MAX;
+				cchars = realloc(cchars, max_len);
+				if(!cchars)
+				{
+					fprintf(stderr, "FATAL:  out of memory\n");
+					return 1;
+				}
+			}
+
+			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			if(!uchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+
+			trans = realloc(trans,  max_len * sizeof(Unicode));
+			if(!trans)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+		}
+
 		/*   trim return whitespace at end   */
 		for(cchars_len = strlen(cchars); cchars_len > 0; cchars_len--)
 		if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
@@ -191,9 +238,9 @@ int main(int argn, char **args)
 			continue;
 		}
 
-		uchars_len = utf8_convert_to_utf16le(uchars, INPUT_BUFFER_MAX, cchars, cchars_len);
+		uchars_len = utf8_convert_to_utf16le(uchars, max_len, cchars, cchars_len);
 		trans_len = translate_start(
-			trans, INPUT_BUFFER_MAX, uchars, uchars_len,
+			trans, max_len, uchars, uchars_len,
 			(const struct table * const*)tables, table_cnt, conversion, direction,
 			NULL, NULL, NULL);
 		if(trans_len <= 0)
@@ -201,9 +248,44 @@ int main(int argn, char **args)
 			puts("");
 			continue;
 		}
-		utf16le_convert_to_utf8(cchars, INPUT_BUFFER_MAX, trans, trans_len);
+
+		/*   check that there should be enough room
+		     for UTF conversion   */
+		if(trans_len * 3 >= max_len)
+		{
+			max_len = trans_len * 3 + 1;
+
+			cchars = realloc(cchars, max_len);
+			if(!cchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+
+			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			if(!uchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+
+			trans = realloc(trans,  max_len * sizeof(Unicode));
+			if(!trans)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+		}
+
+		utf16le_convert_to_utf8(cchars, max_len, trans, trans_len);
 		printf("%s\n", cchars);
 	}
+
+	free(tables);
+	free(cchars);
+	free(uchars);
+	free(trans);
+	lookup_fini();
 
 	return 0;
 }

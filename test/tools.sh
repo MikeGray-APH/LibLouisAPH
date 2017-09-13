@@ -33,31 +33,31 @@ echo "lou_convert ⠒⠭⠒⠀⠒⠭⠿⠭⠒" >> $OUTPUT
 
 FAIL_PRV=$FAIL_CNT
 
-RESULT=`echo '⠒⠭⠒⠀⠒⠭⠿⠭⠒' | ./build/tools/lou_convert test/tables/tools.cvt`
+RESULT=`echo '⠒⠭⠒⠀⠒⠭⠿⠭⠒' | ./build/tools/lou_convert test/tables/tools.cvt 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -=#=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '⠒⠭⠒⠀⠒⠭⠿⠭⠒' | ./build/tools/lou_convert -p test/tables tools.cvt`
+RESULT=`echo '⠒⠭⠒⠀⠒⠭⠿⠭⠒' | ./build/tools/lou_convert -p test/tables tools.cvt 2>&1`
 if (( $? != 0 )); then FAIL_CNT=$((FAIL_CNT++)); fi
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -=#=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -=#=-' | ./build/tools/lou_convert -b test/tables/tools.cvt`
+RESULT=`echo '-=- -=#=-' | ./build/tools/lou_convert -b test/tables/tools.cvt 2>&1`
 if (( $? != 0 )); then FAIL_CNT=$((FAIL_CNT++)); fi
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '⠒⠭⠒⠀⠒⠭⠿⠭⠒' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -=#=-' | ./build/tools/lou_convert -b -p test/tables tools.cvt`
+RESULT=`echo '-=- -=#=-' | ./build/tools/lou_convert -b -p test/tables tools.cvt 2>&1`
 if (( $? != 0 )); then FAIL_CNT=$((FAIL_CNT++)); fi
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '⠒⠭⠒⠀⠒⠭⠿⠭⠒' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`./build/tools/lou_convert -d ⠁⠂⠄⠈⠐⠠⠉⠛⠒⠶⠇⠸⠿`
+RESULT=`./build/tools/lou_convert -d ⠁⠂⠄⠈⠐⠠⠉⠛⠒⠶⠇⠸⠿ 2>&1`
 if (( $? != 0 )); then FAIL_CNT=$((FAIL_CNT++)); fi
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '1-2-3-4-5-6-14-1245-25-2356-123-456-123456' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`./build/tools/lou_convert -u 1-2-3-4-5-6-14-1245-25-2356-123-456-123456`
+RESULT=`./build/tools/lou_convert -u 1-2-3-4-5-6-14-1245-25-2356-123-456-123456 2>&1`
 if (( $? != 0 )); then FAIL_CNT=$((FAIL_CNT++)); fi
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '⠁⠂⠄⠈⠐⠠⠉⠛⠒⠶⠇⠸⠿' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
@@ -73,35 +73,35 @@ echo "lou_translate -=- -=-=-" >> $OUTPUT
 
 FAIL_PRV=$FAIL_CNT
 
-RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate test/tables/tools.rst`
+RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate test/tables/tools.rst 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '⠒⠭⠒⠀⠒⠿⠒' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate -p test/tables tools.rst`
+RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate -p test/tables tools.rst 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '⠒⠭⠒⠀⠒⠿⠒' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate test/tables/tools.rst test/tables/tools.cvt`
+RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate test/tables/tools.rst test/tables/tools.cvt 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -#-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate -p test/tables tools.rst tools.cvt`
+RESULT=`echo '-=- -=-=-' | ./build/tools/lou_translate -p test/tables tools.rst tools.cvt 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -#-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '⠒⠭⠒⠀⠒⠿⠒' | ./build/tools/lou_translate -b test/tables/tools.rst`
+RESULT=`echo '⠒⠭⠒⠀⠒⠿⠒' | ./build/tools/lou_translate -b test/tables/tools.rst 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -=-=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '⠒⠭⠒⠀⠒⠿⠒' | ./build/tools/lou_translate -b -p test/tables tools.rst`
+RESULT=`echo '⠒⠭⠒⠀⠒⠿⠒' | ./build/tools/lou_translate -b -p test/tables tools.rst 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -=-=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -#-' | ./build/tools/lou_translate -b test/tables/tools.rst test/tables/tools.cvt`
+RESULT=`echo '-=- -#-' | ./build/tools/lou_translate -b test/tables/tools.rst test/tables/tools.cvt 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -=-=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 
-RESULT=`echo '-=- -#-' | ./build/tools/lou_translate -b -p test/tables tools.rst tools.cvt`
+RESULT=`echo '-=- -#-' | ./build/tools/lou_translate -b -p test/tables tools.rst tools.cvt 2>&1`
 echo -n "$RESULT  " >> $OUTPUT
 if [ "$RESULT" != '-=- -=-=-' ]; then FAIL_CNT=$((FAIL_CNT + 1)); echo FAIL >> $OUTPUT; else echo PASS >> $OUTPUT; fi
 

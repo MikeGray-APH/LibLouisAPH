@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define FORWARD   (+1)
 #define BACKWARD  (-1)
-#define INPUT_BUFFER_MAX   0x2520
+#define INPUT_BUFFER_MAX   0x1000
 
 static int opt_direction, opt_unicode_to_digits, opt_digits_to_unicode, opt_output;
 
@@ -297,9 +297,9 @@ static char** scan_arguments(char **args, const int argn)
 int main(int argn, char **args)
 {
 	struct conversion *conversion;
-	char cchars[INPUT_BUFFER_MAX];
-	Unicode uchars[INPUT_BUFFER_MAX];
-	int cchars_len, uchars_len;
+	char *cchars;
+	Unicode *uchars;
+	int cchars_len, uchars_len, max_len;
 
 	args = scan_arguments(args, argn);
 	if(!args)
@@ -307,6 +307,11 @@ int main(int argn, char **args)
 
 	log_set_callback(log_callback);
 
+	max_len = INPUT_BUFFER_MAX;
+	cchars = malloc(max_len);
+	uchars = malloc(max_len * sizeof(Unicode));
+	memset(cchars, 0, max_len);
+	memset(uchars, 0, max_len * sizeof(Unicode));
 
 	if(opt_unicode_to_digits)
 	{
@@ -360,10 +365,43 @@ int main(int argn, char **args)
 		return 0;
 	}
 
-	memset(cchars, 0, INPUT_BUFFER_MAX);
-	memset(uchars, 0, INPUT_BUFFER_MAX * sizeof(Unicode));
 	while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
 	{
+		/*   check if entire line was read   */
+		cchars_len = strlen(cchars);
+		if(cchars[cchars_len - 1] != '\n' && cchars[cchars_len - 1] != '\r')
+		{
+			max_len += INPUT_BUFFER_MAX;
+			cchars = realloc(cchars, max_len);
+			if(!cchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+
+			while(fgets(&cchars[cchars_len], INPUT_BUFFER_MAX, stdin))
+			{
+				cchars_len = strlen(cchars);
+				if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
+					break;
+
+				max_len += INPUT_BUFFER_MAX;
+				cchars = realloc(cchars, max_len);
+				if(!cchars)
+				{
+					fprintf(stderr, "FATAL:  out of memory\n");
+					return 1;
+				}
+			}
+
+			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			if(!uchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+		}
+
 		/*   trim return whitespace at end   */
 		for(cchars_len = strlen(cchars); cchars_len > 0; cchars_len--)
 		if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
@@ -376,12 +414,34 @@ int main(int argn, char **args)
 			continue;
 		}
 
-		uchars_len = utf8_convert_to_utf16le(uchars, INPUT_BUFFER_MAX, cchars, cchars_len);
+		uchars_len = utf8_convert_to_utf16le(uchars, max_len, cchars, cchars_len);
 		if(opt_direction == FORWARD)
 			conversion_convert_to(uchars, uchars_len, conversion);
 		else if(opt_direction == BACKWARD)
 			conversion_convert_from(uchars, uchars_len, conversion);
-		utf16le_convert_to_utf8(cchars, INPUT_BUFFER_MAX, uchars, uchars_len);
+
+		/*   check that there should be enough room
+		     for UTF conversion   */
+		if(uchars_len * 3 >= max_len)
+		{
+			max_len = uchars_len * 3 + 1;
+
+			cchars = realloc(cchars, max_len);
+			if(!cchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+
+			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			if(!uchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+		}
+
+		utf16le_convert_to_utf8(cchars, max_len, uchars, uchars_len);
 		printf("%s\n", cchars);
 	}
 
