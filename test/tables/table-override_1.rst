@@ -1,4 +1,6 @@
 
+rule pretrans - +
+
 rule trans abc 123
 rule trans ab  12
 rule trans bc  23

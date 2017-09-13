@@ -526,9 +526,9 @@ static int test_table_override(void)
 		goto free_and_return;
 	}
 
-	if(!test_expect(output, (const struct table * const*)tables, 1, NULL, BOTH, u"a", 1, u"⠁", 1))
+	if(!test_expect(output, (const struct table * const*)tables, 1, NULL, BOTH, u"-a", 2, u"+⠁", 2))
 		goto free_and_return;
-	if(!test_expect(output, (const struct table * const*)tables, 1, NULL, BOTH, u"abc", 3, u"⠇", 1))
+	if(!test_expect(output, (const struct table * const*)tables, 1, NULL, BOTH, u"-abc", 4, u"+⠇", 2))
 		goto free_and_return;
 
 	tables[1] = tables[0];
@@ -539,9 +539,9 @@ static int test_table_override(void)
 		goto free_and_return;
 	}
 
-	if(!test_expect(output, (const struct table * const*)tables, 2, NULL, BOTH, u"a", 1, u"⠾", 1))
+	if(!test_expect(output, (const struct table * const*)tables, 2, NULL, BOTH, u"-a", 2, u"+⠾", 2))
 		goto free_and_return;
-	if(!test_expect(output, (const struct table * const*)tables, 2, NULL, BOTH, u"abc", 3, u"⠸", 1))
+	if(!test_expect(output, (const struct table * const*)tables, 2, NULL, BOTH, u"-abc", 4, u"+⠸", 2))
 		goto free_and_return;
 
 	status = 1;

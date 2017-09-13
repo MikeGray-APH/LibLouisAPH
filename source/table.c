@@ -1033,6 +1033,9 @@ static const struct rule* rule_match_forward(
 	const struct rule *rule;
 	int hash;
 
+	if(!rule_hash)
+		return NULL;
+
 	if(at)
 		rule = at->chars_nxt;
 	else
@@ -1061,6 +1064,9 @@ static const struct rule* rule_match_backward(
 {
 	const struct rule *rule;
 	int hash;
+
+	if(!rule_hash)
+		return NULL;
 
 	if(at)
 		rule = at->dots_nxt;
