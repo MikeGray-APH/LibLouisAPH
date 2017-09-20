@@ -96,6 +96,7 @@ end
 #ena $mark_capitals_bpnum
 #ena $mark_nonalphabetic_words_bpnum
 #ena $reset_words_in_passages_bpnum
+#ena $capital_words_to_passages_bpnum
 #ena $add_indicators_capital_bpnum
 #ena $add_indicators_numeric_bpnum
 

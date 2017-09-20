@@ -214,6 +214,7 @@ define out_indicators_to_words
 
 	printf "\n"
 
+	printf "ind_in      = %d\n", ind_in
 	printf "emp_in      = %d\n", emp_in
 	printf "word_in     = %d\n", word_in
 	printf "word_began  = %d\n", word_began
@@ -239,6 +240,7 @@ end
 break indicators_to_words
 commands $bpnum
 
+	set ind_in = 0
 	set emp_in = 0
 	set word_in = 0
 	set word_began = 0
@@ -533,6 +535,58 @@ commands $bpnum
 end
 set $reset_words_in_passages_bpnum = $bpnum
 dis $reset_words_in_passages_bpnum
+
+########################################
+
+define out_capital_words_to_passages
+
+	printf "translate:\n"
+	if translate > 0
+		out_translate_input_at translate i
+	end
+
+	printf "\n"
+
+	printf "pass_begin  = %d\n", pass_begin
+	printf "pass_end    = %d\n", pass_end
+	printf "pass_in     = %d\n", pass_in
+	printf "word_in     = %d\n", word_in
+	printf "word_cnt    = %d\n", word_cnt
+
+	printf "\n"
+
+	out_indicators_words translate indicators words
+
+	printf "\n"
+end
+
+define n_capital_words_to_passages
+	next
+	spacer
+	out_capital_words_to_passages
+end
+
+break capital_words_to_passages
+commands $bpnum
+
+	set pass_begin = 0
+	set pass_end = 0
+	set pass_in = 0
+	set word_in = 0
+	set word_cnt = 0
+
+	spacer
+	out_capital_words_to_passages
+
+	printf "next = cwtp\n\n"
+
+end
+set $capital_words_to_passages_bpnum = $bpnum
+dis $capital_words_to_passages_bpnum
+
+define cwtp
+n_capital_words_to_passages
+end
 
 ########################################
 

@@ -392,8 +392,9 @@ static void mark_mode(unsigned int *indicators, unsigned char *words, const stru
 
 static void indicators_to_words(unsigned int *indicators, unsigned char *words, const struct translate *translate)
 {
-	int emp_in, emp_len, word_in, word_begin, word_began, word_whole, word_stop, word_len, i;
+	int ind_in, emp_in, emp_len, word_in, word_begin, word_began, word_whole, word_stop, word_len, i;
 
+	ind_in =
 	emp_in =
 	word_in =
 	word_whole = 0;
@@ -404,6 +405,12 @@ static void indicators_to_words(unsigned int *indicators, unsigned char *words, 
 
 	for(i = 0; i < translate->input_len; i++)
 	{
+		/*   keep track of indicators   */
+		if(words[i] & WORD_INDICATOR)
+			ind_in = 1;
+		else
+			ind_in = 0;
+
 		/*   clear out previous whole word markings   */
 		words[i] &= ~WORD_WHOLE;
 
@@ -455,7 +462,7 @@ static void indicators_to_words(unsigned int *indicators, unsigned char *words, 
 				words[word_begin] |= word_whole;
 			}
 		}
-		else if(!(words[i] & WORD_INDICATOR))
+		else if(!ind_in)
 			emp_len++;
 
 		/*   beginning of word   */
@@ -475,7 +482,7 @@ static void indicators_to_words(unsigned int *indicators, unsigned char *words, 
 
 		/*   end of word   */
 		if(word_in)
-		if(!(words[i] & WORD_CHAR))
+		if(!(words[i] & WORD_CHAR) && !ind_in)
 		{
 			/*   made it through whole word   */
 			if(emp_in && word_begin >= 0)
@@ -1366,7 +1373,7 @@ static void capital_words_to_passages(unsigned int *indicators, unsigned char *w
 			word_in = 1;
 			if(words[i] & WORD_WHOLE)
 			{
-				if(!pass_in)
+				if(!pass_in && !(words[i] & WORD_NONLETTER))
 				{
 					pass_in = 1;
 					pass_begin = i;
