@@ -254,6 +254,9 @@ void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_c
 	if(expr_crs == PTN_END)
 		return;
 
+	ASSERT(expr_crs > 1)
+	ASSERT(expr_crs < expr_data[0])
+
 	while(EXPR_TYPE(expr_crs) != PTN_END)
 	{
 		switch(EXPR_TYPE(expr_crs))

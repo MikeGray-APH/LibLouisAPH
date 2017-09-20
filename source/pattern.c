@@ -38,6 +38,7 @@ static int subpattern_level;
 
 #include "utf-output.h"
 void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_chars_);
+void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_crs);
 
 #ifndef OUTPUT
 #error OUTPUT needs to be defined
@@ -49,7 +50,12 @@ void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_cha
 #define SHOW   3
 
 #define CHECK_OUTPUT(type, ret, msg) \
-	{ do_output(type, ret, input[*input_crs], input_minmax, *input_crs, input_dir, expr_data, expr_crs, not, loop_crs, loop_cnts, msg); }
+{ \
+	int in = 0; \
+	if(*input_crs > -1) \
+		in = input[*input_crs]; \
+	do_output(type, ret, in, input_minmax, *input_crs, input_dir, expr_data, expr_crs, not, loop_crs, loop_cnts, msg); \
+}
 
 #else
 
@@ -82,9 +88,10 @@ static void do_output(
 	case START:
 
 		space--;
-		if(space < 0) space = 0;
-		printf("|%s()  ", &spaces[space]);
-		break;
+		return;
+//		if(space < 0) space = 0;
+//		printf("|%s()  ", &spaces[space]);
+//		break;
 
 	case CALL:
 
@@ -161,15 +168,45 @@ static void do_output(
 	if(msg)
 		printf("%s", msg);
 
-
-	if(expr_data[expr_crs] == PTN_CHARS)
+	switch(expr_data[expr_crs])
 	{
+	case PTN_CHARS:
+
 		data = EXPR_CONST_DATA(expr_crs);
 		cnt = data[0] + 1;
 
-		printf(" ");
+		printf("   ");
 		for(i = 1; i < cnt; i++)
 			utf16le_output_char(stdout, data[i]);
+		break;
+
+	case PTN_ALTERNATE:
+
+		if(type == SHOW && ret == 1)
+		{
+			printf("   ");
+			pattern_print_expression(stdout, expr_data, EXPR_DATA_1(expr_crs));
+			break;
+		}
+
+	case PTN_START:
+	case PTN_END_OF_INPUT:
+	case PTN_OPTIONAL:
+	case PTN_ONE_MORE:
+	case PTN_ZERO_MORE:
+	case PTN_NOT:
+	case PTN_GROUP:
+	case PTN_ANY:
+
+		printf("   ");
+		pattern_print_expression(stdout, expr_data, EXPR_DATA_0(expr_crs));
+		break;
+
+	case PTN_ERROR:
+	case PTN_ATTRIBUTES:
+	case PTN_SUBPATTERN:
+	case PTN_END:
+	default:  break;
 	}
 
 	puts("");
@@ -1024,8 +1061,6 @@ static int pattern_check_expression(
 				CHECK_OUTPUT(RETURN, 0, "chars failed:  no input")
 				return 0;
 			}
-
-			CHECK_OUTPUT(SHOW, 0, "no input")
 		}
 
 		switch(EXPR_TYPE(expr_crs))
@@ -1050,9 +1085,6 @@ static int pattern_check_expression(
 			break;
 
 		case PTN_ONE_MORE:
-
-			CHECK_OUTPUT(SHOW, 0, "loop+ start")
-
 		case PTN_ZERO_MORE:
 
 			/*   check if loop already started   */
@@ -1068,12 +1100,10 @@ static int pattern_check_expression(
 				loop_crs = expr_crs;
 				loop_cnt_prv = loop_cnts[EXPR_DATA_1(loop_crs)];
 				loop_cnts[EXPR_DATA_1(loop_crs)] = 1;
-				CHECK_OUTPUT(SHOW, 0, "loop restart ")
 
 #ifdef PATTERN_OUTPUT_TRACE
-				/*   check if loop nested, needed to be restarted   */
-				if(loop_cnts[EXPR_DATA_1(expr_crs)])
-					CHECK_OUTPUT(SHOW, 0, "loop restart ")
+				if(EXPR_TYPE(expr_crs) == PTN_ONE_MORE)
+					CHECK_OUTPUT(SHOW, 0, "loop+ start")
 				else
 					CHECK_OUTPUT(SHOW, 0, "loop start")
 #endif
@@ -1087,7 +1117,8 @@ static int pattern_check_expression(
 				CHECK_OUTPUT(RETURN, 1, "loop passed")
 				return 1;
 			}
-			CHECK_OUTPUT(SHOW, 0, "loop failed")
+			if(EXPR_TYPE(expr_crs) != PTN_ONE_MORE)
+				CHECK_OUTPUT(SHOW, 0, "loop failed")
 			*input_crs = input_crs_prv;
 
 			/*   check loop count   */
@@ -1146,7 +1177,7 @@ static int pattern_check_expression(
 
 			/*   start second expression (no need to push)   */
 			*input_crs = input_crs_prv;
-			CHECK_OUTPUT(SHOW, 0, "or 2 start")
+			CHECK_OUTPUT(SHOW, 1, "or 2 start")
 			expr_crs = EXPR_DATA_1(expr_crs);
 			break;
 
@@ -1305,7 +1336,7 @@ static int subpattern_check(
 		puts(">");
 	else
 		puts("<");
-	pattern_output(expr_data);
+	//pattern_output(expr_data);
 	fflush(stdout);
 #endif
 
