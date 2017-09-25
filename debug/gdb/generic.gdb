@@ -414,7 +414,7 @@ define out_mark_capitals
 	printf "caps_begin    = %d\n", caps_begin
 	printf "caps_end      = %d\n", caps_end
 	printf "caps_cnt      = %d\n", caps_cnt
-	printf "in_indicator  = %d\n", in_indicator
+	printf "indicator_in  = %d\n", indicator_in
 	printf "attrs         = 0x%08x\n", attrs
 
 	printf "\n"
@@ -436,7 +436,7 @@ commands $bpnum
 	set caps_begin = 0
 	set caps_end = 0
 	set caps_cnt = 0
-	set in_indicator = 0
+	set indicator_in = 0
 	set attrs = 0
 
 	spacer
@@ -547,11 +547,12 @@ define out_capital_words_to_passages
 
 	printf "\n"
 
-	printf "pass_begin  = %d\n", pass_begin
-	printf "pass_end    = %d\n", pass_end
-	printf "pass_in     = %d\n", pass_in
-	printf "word_in     = %d\n", word_in
-	printf "word_cnt    = %d\n", word_cnt
+	printf "pass_begin    = %d\n", pass_begin
+	printf "pass_end      = %d\n", pass_end
+	printf "pass_in       = %d\n", pass_in
+	printf "word_in       = %d\n", word_in
+	printf "word_cnt      = %d\n", word_cnt
+	printf "indicator_in  = %d\n", indicator_in
 
 	printf "\n"
 
@@ -574,6 +575,7 @@ commands $bpnum
 	set pass_in = 0
 	set word_in = 0
 	set word_cnt = 0
+	set indicator_in = 0
 
 	spacer
 	out_capital_words_to_passages

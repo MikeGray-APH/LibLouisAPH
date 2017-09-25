@@ -550,6 +550,8 @@ static inline unsigned int translate_get_attributes(const struct translate *tran
 
 static inline int translate_has_attributes_at(const struct translate *translate, const int at, const unsigned int attrs)
 {
+	if(at < 0 || at >= translate->input_len)
+		return 0;
 	return translate_get_attributes_at(translate, at) & attrs;
 }
 

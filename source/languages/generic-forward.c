@@ -1354,18 +1354,61 @@ static void mark_nonalphabetic_words(unsigned int *indicators, unsigned char *wo
 	}
 }
 
-static void capital_words_to_passages(unsigned int *indicators, unsigned char *words, const struct translate *translate, const int passage_len)
+static int is_indicator_in_word(const struct translate *translate, const int at)
 {
-	int word_in, word_cnt, pass_in, pass_begin, pass_end, i;
+	int crs;
+
+	for(crs = at + 1; crs < translate->input_len; crs++)
+	if(translate->input[crs] == translate->input[at])
+		break;
+
+	crs++;
+	if(translate_has_attributes_at(translate, crs, CHAR_UPPER))
+		return 1;
+	return 0;
+}
+
+static int is_indicator_delimiter_capital(const struct translate *translate, const struct table *table, const int at)
+{
+	if(translate->input[at] == table->marker_user)
+		return is_indicator_in_word(translate, at);
+	if(translate->input[at] == table->marker_begin)
+		return is_indicator_in_word(translate, at);
+	if(translate->input[at] == table->marker_end)
+		return is_indicator_in_word(translate, at);
+	if(translate->input[at] == table->marker_hard)
+		return is_indicator_in_word(translate, at);
+	if(translate->input[at] == table->marker_soft)
+		return is_indicator_in_word(translate, at);
+	return 0;
+}
+
+static void capital_words_to_passages(unsigned int *indicators, unsigned char *words, const struct translate *translate, const struct table *table, const int passage_len)
+{
+	int word_in, word_cnt, pass_in, pass_begin, pass_end, indicator_in, i;
 
 	pass_begin =
 	pass_end = -1;
 	pass_in =
 	word_in = 0;
 	word_cnt = 0;
+	indicator_in = 0;
 
 	for(i = 0; i < translate->input_len; i++)
 	{
+		/*   indicators   */
+		if(indicator_in)
+		{
+			if(is_indicator_delimiter(table, translate->input[i]))
+				indicator_in = 0;
+			continue;
+		}
+		else if(is_indicator_delimiter_capital(translate, table, i))
+		{
+			indicator_in = 1;
+			continue;
+		}
+
 		/*   beginning of word   */
 		if(!word_in)
 		if(words[i] & WORD_CHAR)
@@ -1684,7 +1727,7 @@ static int add_indicators_capital(struct translate *translate)
 		mark_nonalphabetic_words(indicators, words, translate);
 		if(table->capital.begin_len && table->capital.passage_len)
 		{
-			capital_words_to_passages(indicators, words, translate, table->capital.passage_len);
+			capital_words_to_passages(indicators, words, translate, table, table->capital.passage_len);
 			reset_words_in_passages(indicators, words, translate, table);
 		}
 	}
