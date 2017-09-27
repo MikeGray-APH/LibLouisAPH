@@ -101,8 +101,8 @@ end
 #ena $add_indicators_numeric_bpnum
 
 #ena $add_soft_terminators_bpnum
-#ena $remove_indicators_capital_bpnum
-#ena $remove_indicators_numeric_bpnum
+#ena $convert_indicators_capital_bpnum
+#ena $convert_indicators_numeric_bpnum
 
 #ena $translate_generic_backward_bpnum
 

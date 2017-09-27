@@ -502,7 +502,7 @@ define out_reset_words_in_passages
 	printf "pass_in       = %d\n", pass_in
 	printf "word_reset    = %d\n", word_reset
 	printf "letter_cnt    = %d\n", letter_cnt
-	printf "in_indicator  = %d\n", in_indicator
+	printf "indicator_in  = %d\n", indicator_in
 	printf "at            = %d\n", at
 
 	printf "\n"
@@ -526,7 +526,7 @@ commands $bpnum
 	set pass_in = 0
 	set word_reset = 0
 	set letter_cnt = 0
-	set in_indicator = 0
+	set indicator_in = 0
 	set at = 0
 
 	spacer
@@ -679,15 +679,13 @@ define out_convert_indicators_capital
 
 	printf "\n"
 
-	printf "in_capital  = "
-	output in_capital
-	printf "\n"
+	printf "capital_in  = %d\n", capital_in
 	printf "upper       = "
 	if(upper > 0)
 		call debug_output_uchar_escape(upper)
 	end
 	printf "\n"
-	printf "in_numeric  = %d\n", in_numeric
+	printf "numeric_in  = %d\n", numeric_in
 
 	printf "\n"
 
@@ -702,8 +700,8 @@ end
 break convert_indicators_capital
 commands $bpnum
 
-	set in_capital = 0
-	set in_numeric = 0
+	set capital_in = 0
+	set numeric_in = 0
 	set upper = 0
 
 	spacer

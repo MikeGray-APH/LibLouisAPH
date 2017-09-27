@@ -203,7 +203,12 @@ static int convert_indicators_capital(struct translate *translate)
 		case WORD:  numeric_in = 1;  break;
 
 		case END:
-		case TERM:  numeric_in = 0; break;
+		case TERM:
+
+			if(capital_in < 3) 
+				capital_in = 0;
+			numeric_in = 0;
+			break;
 
 		/*   numeric space   */
 		case SYMBOL:
