@@ -33,11 +33,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define INPUT_BUFFER_MAX  0x1000
 
 static enum rule_direction direction;
+static int opt_echo_no_processed;
 
 /******************************************************************************/
 
 static void log_callback(const int level, const char *message)
 {
+	if(opt_echo_no_processed)
+	if(level == LOG_WARNING)
+	if(!strncmp(message, "no processing done", 19))
+		return;
+
 	switch(level)
 	{
 	case LOG_ALL:      fprintf(stderr, "ALL:  ");      break;
@@ -126,6 +132,8 @@ static char** scan_arguments(char **args, const int argn)
 			direction = BACKWARD;
 		else if(!strncmp(&((*args)[2]), "paths", 6))
 			goto add_paths;
+		else if(!strncmp(&((*args)[2]), "echo-no-processed", 18))
+			opt_echo_no_processed = 1;
 		else
 			goto on_error;
 		break;
@@ -149,6 +157,7 @@ int main(int argn, char **args)
 	int cchars_len, uchars_len, trans_len, max_len;
 
 	direction = FORWARD;
+	opt_echo_no_processed = 0;
 
 	args = scan_arguments(args, argn);
 	if(!args)
@@ -245,7 +254,10 @@ int main(int argn, char **args)
 			NULL, NULL, NULL);
 		if(trans_len <= 0)
 		{
-			puts("");
+			if(opt_echo_no_processed)
+				printf("%s\n", cchars);
+			else
+				puts("");
 			continue;
 		}
 
