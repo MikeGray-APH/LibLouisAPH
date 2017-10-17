@@ -6,7 +6,7 @@
 
 LibLouisAPH is a re-factorization of [LibLouis](http://liblouis.org) that implements streaming control characters for better translation control for use in applications like [BrailleBlaster](http://www.aph.org/brailleblaster/).
 
-LibLouisAPH is licensed under the [GNU LGPLv2.1+](https://www.gnu.org/licenses/lgpl-2.1.txt) (see the file COPYING.LESSER).  The command line tools are licensed under the [GNU GPLv3+](https://www.gnu.org/licenses/gpl.txt) (see the file COPYING).
+LibLouisAPH is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0) (see the file LICENSE-2.0.txt).
 
 ## Building
 

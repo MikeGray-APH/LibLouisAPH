@@ -2,7 +2,10 @@
 /build/
 /dists/
 /releases/
+
 /*.txt
+!LICENSE-2.0.txt
+
 /*.log
 
 /local/

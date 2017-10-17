@@ -1,21 +1,18 @@
-# LibLouisAPH Braille Translation and Back-Translation Library
 #
-# Copyright (C) 2017 American Printing House for the Blind, Inc. <www.aph.org>
+#   Copyright 2017 American Printing House for the Blind Inc.
 #
-# This file is part of LibLouisAPH.
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
 #
-# You should have received a copy of the GNU Lesser General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ################################################################################
 
@@ -344,7 +341,7 @@ releases/LibLouisAPH-linux64-$(VERSION).tar.bz2: $(FILES_LINUX64)
 	mkdir -p releases/LibLouisAPH-linux64-$(VERSION)/
 	cp -R dists/x86_64-linux/* releases/LibLouisAPH-linux64-$(VERSION)/
 	cp -R tables/ releases/LibLouisAPH-linux64-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-linux64-$(VERSION)/
+	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-linux64-$(VERSION)/
 	cd releases && tar jvfc LibLouisAPH-linux64-$(VERSION).tar.bz2 LibLouisAPH-linux64-$(VERSION)/
 
 ########################################
@@ -416,7 +413,7 @@ releases/LibLouisAPH-linux32-$(VERSION).tar.bz2: $(FILES_LINUX32)
 	mkdir -p releases/LibLouisAPH-linux32-$(VERSION)/
 	cp -R dists/i686-linux/* releases/LibLouisAPH-linux32-$(VERSION)/
 	cp -R tables/ releases/LibLouisAPH-linux32-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-linux32-$(VERSION)/
+	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-linux32-$(VERSION)/
 	cd releases && tar jvfc LibLouisAPH-linux32-$(VERSION).tar.bz2 LibLouisAPH-linux32-$(VERSION)/
 
 ########################################
@@ -492,7 +489,7 @@ releases/LibLouisAPH-win64-$(VERSION).zip: $(FILES_WIN64)
 	mkdir -p releases/LibLouisAPH-win64-$(VERSION)/
 	cp -R dists/x86_64-win/* releases/LibLouisAPH-win64-$(VERSION)/
 	cp -R tables/ releases/LibLouisAPH-win64-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-win64-$(VERSION)/
+	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-win64-$(VERSION)/
 	cd releases && zip -r -9 LibLouisAPH-win64-$(VERSION).zip LibLouisAPH-win64-$(VERSION)/
 
 endif
@@ -570,7 +567,7 @@ releases/LibLouisAPH-win32-$(VERSION).zip: $(FILES_WIN32)
 	mkdir -p releases/LibLouisAPH-win32-$(VERSION)/
 	cp -R dists/i686-win/* releases/LibLouisAPH-win32-$(VERSION)/
 	cp -R tables/ releases/LibLouisAPH-win32-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-win32-$(VERSION)/
+	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-win32-$(VERSION)/
 	cd releases && zip -r -9 LibLouisAPH-win32-$(VERSION).zip LibLouisAPH-win32-$(VERSION)/
 
 endif
@@ -648,7 +645,7 @@ releases/LibLouisAPH-mac64-$(VERSION).zip: $(FILES_MAC64)
 	mkdir -p releases/LibLouisAPH-mac64-$(VERSION)/
 	cp -R dists/x86_64-mac/* releases/LibLouisAPH-mac64-$(VERSION)/
 	cp -R tables/ releases/LibLouisAPH-mac64-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-mac64-$(VERSION)/
+	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-mac64-$(VERSION)/
 	cd releases && zip -r -9 LibLouisAPH-mac64-$(VERSION).zip LibLouisAPH-mac64-$(VERSION)/
 
 endif
@@ -726,7 +723,7 @@ releases/LibLouisAPH-mac32-$(VERSION).zip: $(FILES_MAC32)
 	mkdir -p releases/LibLouisAPH-mac32-$(VERSION)/
 	cp -R dists/i386-mac/* releases/LibLouisAPH-mac32-$(VERSION)/
 	cp -R tables/ releases/LibLouisAPH-mac32-$(VERSION)/
-	cp LibLouisAPH.h COPYING COPYING.LESSER releases/LibLouisAPH-mac32-$(VERSION)/
+	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-mac32-$(VERSION)/
 	cd releases && zip -r -9 LibLouisAPH-mac32-$(VERSION).zip LibLouisAPH-mac32-$(VERSION)/
 
 endif
