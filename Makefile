@@ -101,6 +101,16 @@ OBJS_TRANSLATE := \
 	source/outputs/utf-output.o \
 	tools/lou_translate.o \
 
+CLASSES_JAR := \
+	org/aph/liblouisaph/LogCallback.class \
+	org/aph/liblouisaph/LibLouisAPH.class \
+	org/aph/liblouisaph/MainLogCallback.class \
+	org/aph/liblouisaph/Main.class \
+
+TABLES := \
+	$(wildcard tables/converted/*.*) \
+	$(wildcard tables/*.*) \
+
 ################################################################################
 
 CWARNS_DEBUG := \
@@ -210,6 +220,73 @@ build/tools:
 
 ################################################################################
 
+.PHONY: java jar
+
+HAS_JAVAC := $(shell if (which javac &> /dev/null ); then echo 1; else echo 0; fi )
+
+ifneq ($(HAS_JAVAC),1)
+
+java: FORCE
+	@echo missing javac
+
+else
+
+java: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+java: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
+java: build/liblouisAPH-jni.so
+
+build/java/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java | build/java
+	javac -d build/java -classpath build/java -sourcepath java $<
+
+build/java/LibLouisAPH-jni.h: build/java/org/aph/liblouisaph/LibLouisAPH.class
+	javah -o $@ -classpath build/java -force org.aph.liblouisaph.LibLouisAPH
+
+build/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | build/objects/java
+	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), build/objects/dll/$(OBJ))
+
+build/liblouisAPH-jni.so: $(OBJS_JNI_BUILD) build/objects/java/interface-jni.o | build
+	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_JNI_BUILD) build/objects/java/interface-jni.o
+
+manifest: build/java/manifest.txt
+
+build/java/manifest.txt: | build/java
+	@echo Implementation-Version: $(VERSION) > $@
+	@echo >> $@
+
+jar: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
+jar: build/LibLouisAPH.jar
+
+build/java/org/aph/liblouisaph/Main.class: java/org/aph/liblouisaph/Main.java build/liblouisAPH-jni.so
+	javac -d build/java -classpath build/java -sourcepath java $<
+
+CLASSES_JAR_BUILD  := $(foreach OBJ, $(CLASSES_JAR), -C build/java $(OBJ))
+FILES_JAR_BUILD    := -C build liblouisAPH-jni.so -C build/objects/java properties -C java tables/jar.rst -C java tables/jar.cvt
+
+build/objects/java/properties: | build/objects/java
+	echo Library-Name=liblouisAPH-jni.so > build/objects/java/properties
+
+build/LibLouisAPH.jar: build/java/manifest.txt build/objects/java/properties build/liblouisAPH-jni.so build/java/org/aph/liblouisaph/Main.class
+	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(FILES_JAR_BUILD) $(TABLES)
+
+build/objects/java:
+	mkdir -p build/objects/java/
+
+build/java:
+	mkdir -p build/java/
+
+javadoc: | build/javadoc
+	javadoc java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java -d build/javadoc -Xdoclint:all -noqualifier java.lang
+
+build/javadoc:
+	mkdir -p build/javadoc/
+
+endif
+
+################################################################################
+
 .PHONY: test test-all test-lib test-db test-langs test-link test-tools test-opt
 
 test: test-lib test-link test-tools
@@ -242,6 +319,39 @@ build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
 
 test-tools: tools | build/test
 	@./test/tools.sh
+
+.PHONY: test-java test-jar
+
+ifneq ($(HAS_JAVAC),1)
+
+test-java: FORCE
+	@echo missing javac
+
+else
+
+test: test-java test-jar
+
+test-java: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java -D DEBUG
+test-java: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
+test-java: build/java/org/aph/liblouisaph/Test.class
+	@java -cp build/java/ -Djava.library.path=build org/aph/liblouisaph/Test
+
+build/java/org/aph/liblouisaph/Test.class: java/org/aph/liblouisaph/Test.java build/liblouisAPH-jni.so | build/java build/test
+	javac -d build/java -classpath build/java -sourcepath java $<
+
+test-jar: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java -D DEBUG
+test-jar: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
+test-jar: build/java/test/TestJar.class
+	@java -cp build/java/test/:build/LibLouisAPH.jar TestJar internal
+	@java -cp build/java/test/:build/LibLouisAPH.jar -Djava.library.path=build TestJar external
+
+build/java/test/TestJar.class: java/TestJar.java build/LibLouisAPH.jar | build/java/test build/test
+	javac -d build/java/test/ -classpath build/java/ -sourcepath java $<
+
+build/java/test:
+	mkdir -p build/java/test/
+
+endif
 
 test-langs: CPPFLAGS += -I source/outputs -I test -D DEBUG
 test-langs: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
@@ -332,6 +442,42 @@ dists/x86_64-linux/lou_translate: $(OBJS_TRANSLATE_LINUX64) | dists/x86_64-linux
 
 dists/x86_64-linux:
 	mkdir -p dists/x86_64-linux/
+
+.PHONY: jar-linux64
+
+ifneq ($(HAS_JAVAC),1)
+
+jar-linux64: FORCE
+	@echo missing javac
+
+else
+
+dist-linux64: jar-linux64
+
+dists/objects/x86_64-linux/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/objects/x86_64-linux/java
+	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/x86_64-linux/dll/$(OBJ))
+
+dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so: $(OBJS_JNI_LINUX64) dists/objects/x86_64-linux/java/interface-jni.o | dists/x86_64-linux
+	$(CC) -o $@ -shared -s $(OBJS_JNI_LINUX64) dists/objects/x86_64-linux/java/interface-jni.o
+
+dists/objects/x86_64-linux/java/properties: | dists/objects/x86_64-linux/java
+	echo Library-Name=liblouisAPH-jni-linux64-$(VERSION).so > dists/objects/x86_64-linux/java/properties
+
+jar-linux64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPT)
+jar-linux64: dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar
+
+FILES_JAR_LINUX64 := -C dists/x86_64-linux liblouisAPH-jni-linux64-$(VERSION).so -C dists/objects/x86_64-linux/java properties
+
+dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar: build/java/manifest.txt dists/objects/x86_64-linux/java/properties dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/x86_64-linux
+	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_LINUX64)
+
+dists/objects/x86_64-linux/java:
+	mkdir -p dists/objects/x86_64-linux/java/
+
+endif
 
 releases: release-linux64
 
@@ -480,6 +626,43 @@ dists/x86_64-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN64) | dists/x86_64-win
 
 dists/x86_64-win:
 	mkdir -p dists/x86_64-win/
+
+.PHONY: jar-win64
+
+ifneq ($(HAS_JAVAC),1)
+
+jar-win64: FORCE
+	@echo missing javac
+
+else
+
+dist-win64: jar-win64
+
+dists/objects/x86_64-win/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/objects/x86_64-win/java
+	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_WIN64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/x86_64-win/$(OBJ))
+
+dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll: $(OBJS_JNI_WIN64) dists/objects/x86_64-win/java/interface-jni.o | dists/x86_64-win
+	$(CC) -o $@ -shared $(OBJS_JNI_WIN64) dists/objects/x86_64-win/java/interface-jni.o
+
+dists/objects/x86_64-win/java/properties: | dists/objects/x86_64-win/java
+	echo Library-Name=liblouisAPH-jni-win64-$(VERSION).dll > dists/objects/x86_64-win/java/properties
+
+jar-win64: CC = $(CC_WIN64)
+jar-win64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-win64: CFLAGS += -O3 $(CWARNS_OPT)
+jar-win64: dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar
+
+FILES_JAR_WIN64 := -C dists/x86_64-win liblouisAPH-jni-win64-$(VERSION).dll -C dists/objects/x86_64-win/java properties
+
+dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar: build/java/manifest.txt dists/objects/x86_64-win/java/properties dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll build/java/org/aph/liblouisaph/Main.class | dists/x86_64-win
+	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN64)
+
+dists/objects/x86_64-win/java:
+	mkdir -p dists/objects/x86_64-win/java/
+
+endif
 
 releases: release-win64
 
@@ -636,6 +819,43 @@ dists/x86_64-mac/lou_translate: $(OBJS_TRANSLATE_MAC64) | dists/x86_64-mac
 
 dists/x86_64-mac:
 	mkdir -p dists/x86_64-mac/
+
+.PHONY: jar-mac64
+
+ifneq ($(HAS_JAVAC),1)
+
+jar-mac64: FORCE
+	@echo missing javac
+
+else
+
+dist-mac64: jar-mac64
+
+dists/objects/x86_64-mac/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/objects/x86_64-mac/java
+	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_MAC64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/x86_64-mac/$(OBJ))
+
+dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib: $(OBJS_JNI_MAC64) dists/objects/x86_64-mac/java/interface-jni.o | dists/x86_64-mac
+	$(CC) -o $@ -shared $(OBJS_JNI_MAC64) dists/objects/x86_64-mac/java/interface-jni.o
+
+dists/objects/x86_64-mac/java/properties: | dists/objects/x86_64-mac/java
+	echo Library-Name=liblouisAPH-jni-mac64-$(VERSION).dylib > dists/objects/x86_64-mac/java/properties
+
+jar-mac64: CC = $(CC_MAC64)
+jar-mac64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+jar-mac64: dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar
+
+FILES_JAR_MAC64 := -C dists/x86_64-mac liblouisAPH-jni-mac64-$(VERSION).dylib -C dists/objects/x86_64-mac/java properties
+
+dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar: build/java/manifest.txt dists/objects/x86_64-mac/java/properties dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib build/java/org/aph/liblouisaph/Main.class | dists/x86_64-mac
+	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_MAC64)
+
+dists/objects/x86_64-mac/java:
+	mkdir -p dists/objects/x86_64-mac/java/
+
+endif
 
 releases: release-mac64
 
@@ -834,7 +1054,9 @@ build:
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),cleanse)
 ifneq ($(MAKECMDGOALS),distclean)
+ifneq ($(MAKECMDGOALS),javadoc)
 -include build/Makedeps
+endif
 endif
 endif
 endif
