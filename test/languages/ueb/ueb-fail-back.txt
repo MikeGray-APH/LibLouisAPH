@@ -1,4 +1,15 @@
 
+'twd
+'twd’ve
+'twda
+'twdn't
+'twdn't’ve
+
+id,;
+stu!?
+app,sing
+rep,table
+
 childrenx
 childreny
 
@@ -52,3 +63,34 @@ go out—
 —go—out
 —go out—
 —go—out—
+
+#   quotations
+
+his
+His
+was
+Was
+
+\"
+“
+”
+'
+‘
+’
+?
+
+\"x
+“x
+”x
+'x
+‘x
+’x
+?x
+
+x\"
+x“
+x”
+x'
+x‘
+x’
+x?

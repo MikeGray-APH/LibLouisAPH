@@ -19,17 +19,28 @@
 #   letters   ⠁⠃⠉⠙⠑⠋⠛⠓⠊⠚⠅⠇⠍⠝⠕⠏⠟⠗⠎⠞⠥⠧⠺⠭⠽⠵
 #   ⠁a ⠃b ⠉c ⠙d ⠑e ⠋f ⠛g ⠓h ⠊i ⠚j ⠅k ⠇l ⠍m ⠝n ⠕o ⠏p ⠟q ⠗r ⠎s ⠞t ⠥u ⠧v ⠺w ⠭x ⠽y ⠵z
 #
-#   modifiers   ⠈[⠡⠒⠬⠤] ⠘[⠯⠡⠩⠫⠻⠒⠌⠬] ⠘⠸[⠂⠆⠤]
-#   ⠈⠡slash ⠈⠒horizontal ⠈⠬breve ⠈⠤macron
-#   ⠘⠯cedilla  ⠘⠡grave ⠘⠩circumflex ⠘⠫ring ⠘⠻tilde ⠘⠒diaeresis ⠘⠌acute ⠘⠬caron
-#   ⠘⠸⠂first   ⠘⠸⠆second ⠘⠸⠤third
+#   modifiers   ⠈[⠬⠤⠡⠒] ⠘[⠌⠬⠯⠩⠒⠡⠫⠻⠖] ⠘⠸[⠂⠆⠤]
+#   ⠈⠬breve ⠈⠤macron ⠈⠡solidus ⠈⠒stroke
+#   ⠘⠌acute ⠘⠬caron ⠘⠯cedilla ⠘⠩circumflex ⠘⠒diaeresis ⠘⠡grave ⠘⠫ring ⠘⠻tilde
+#   ⠘⠸⠂first ⠘⠸⠆second ⠘⠸⠤third
+#   ⠘⠖ligature
+#
+#   symbols
+#   ⠂, ⠄' ⠆; ⠒: ⠤- ⠖! ⠦? ⠦“‘"' ⠲. ⠴”’"'
+#   ⠸⠌/ ⠐⠔* ⠐⠣( ⠐⠖+ ⠐⠜) ⠐⠶=
+#   ⠈⠁@ ⠈⠢^ ⠈⠣< ⠈⠎$ ⠈⠜> ⠈⠯&
+#   ⠘⠦“ ⠘⠴”
+#   ⠨⠤_ ⠨⠣[ ⠨⠜] ⠨⠴%
+#   ⠸⠡\ ⠸⠣{ ⠸⠜} ⠸⠳| ⠸⠹#
+#   ⠠⠦‘ ⠠⠴’ ⠠⠶"
+#   ⠈⠠⠹†
 #
 #   alphabetic wordsigns   ⠵⠃⠉⠙⠑⠋⠛⠓⠭⠚⠅⠇⠍⠝⠏⠟⠗⠎⠞⠥⠧⠺⠽
 #   ⠵as ⠃but ⠉can ⠙do ⠑every ⠋from ⠛go ⠓have ⠭it ⠚just ⠅knowledge ⠇like ⠍more
 #   ⠝not ⠏people ⠟quite ⠗rather ⠎so ⠞that ⠥us ⠧very ⠺will ⠽you
 #
-#   strong wordsigns   ⠡⠳⠌⠩⠹⠱
-#   ⠡child ⠳out ⠌still ⠩shall ⠹this ⠱which
+#   strong wordsigns   ⠡⠳⠩⠌⠹⠱
+#   ⠡child ⠳out ⠩shall ⠌still ⠹this ⠱which
 #
 #   strong contractions   ⠯⠿⠷⠮⠾
 #   ⠯and ⠿for ⠷of ⠮the ⠾with
@@ -43,15 +54,17 @@
 #   lower groupsigns   ⠆⠒⠲⠂⠢⠖⠶⠔
 #   ⠆bb ⠆be ⠒cc ⠒con ⠲dis ⠂ea ⠢en ⠖ff ⠶gg ⠔in
 #
-#   initial-letter   ⠘[⠮⠹⠥⠱⠺] ⠸[⠉⠓⠍⠎⠮⠺] ⠐[⠡⠙⠑⠋⠓⠅⠇⠍⠝⠕⠳⠏⠟⠗⠎⠮⠹⠞⠥⠱⠺⠽]
-#   ⠸⠉cannot ⠐⠡character ⠐⠙day ⠐⠑ever ⠐⠋father ⠸⠓had ⠐⠓here
-#   ⠐⠅know ⠐⠇lord ⠸⠍many ⠐⠍mother ⠐⠝name ⠐⠕one ⠐⠳ought
-#   ⠐⠏part ⠐⠟question ⠐⠗right ⠐⠎some ⠸⠎spirit
-#   ⠸⠮their ⠐⠮there ⠘⠮these ⠘⠹those ⠐⠹through ⠐⠞time
-#   ⠐⠥under ⠘⠥upon ⠐⠱where ⠘⠱whose ⠘⠺word ⠐⠺work ⠸⠺world ⠐⠽young
+#   initial-letter   ⠘[⠮⠹⠥⠱⠺]|⠸[⠉⠓⠍⠎⠮⠺]|⠐[⠡⠙⠑⠋⠓⠅⠇⠍⠝⠕⠳⠏⠟⠗⠎⠮⠹⠞⠥⠱⠺⠽]
+#   ⠘⠮these ⠘⠹those ⠘⠥upon ⠘⠱whose ⠘⠺word
+#   ⠸⠉cannot ⠸⠓had ⠸⠍many ⠸⠎spirit ⠸⠮their ⠸⠺world
+#   ⠐⠡character ⠐⠙day ⠐⠑ever ⠐⠋father ⠐⠓here ⠐⠅know ⠐⠇lord ⠸⠍many ⠐⠍mother
+#   ⠐⠝name ⠐⠕one ⠐⠳ought ⠐⠏part ⠐⠟question ⠐⠗right ⠐⠎some ⠐⠮there ⠘⠮these
+#   ⠐⠹through ⠐⠞time ⠐⠥under ⠘⠥upon ⠐⠱where ⠘⠱whose ⠘⠺word ⠐⠺work ⠸⠺world
+#   ⠐⠽young
 #
-#   final-letter   ⠨[⠙⠑⠝⠎⠞] ⠰[⠑⠛⠇⠝⠎⠞⠽]
-#   ⠨⠙ound ⠨⠑ance ⠨⠝sion ⠨⠎less ⠨⠞ount ⠰⠑ence ⠰⠛ong ⠰⠇ful ⠰⠝tion ⠰⠎ness ⠰⠞ment ⠰⠽ity
+#   final-letter   ⠨[⠑⠎⠙⠞⠝]|⠰[⠑⠇⠽⠞⠎⠛⠝]
+#   ⠨⠑ance ⠨⠎less ⠨⠙ound ⠨⠞ount ⠨⠝sion
+#   ⠰⠑ence ⠰⠇ful ⠰⠽ity ⠰⠞ment ⠰⠎ness ⠰⠛ong ⠰⠝tion
 #
 #   capital indicators
 #   ⠠symbol ⠠⠠word ⠠⠠⠠passage ⠠⠄terminator
@@ -66,12 +79,6 @@
 #   ⠨italic ⠘bold ⠸underline ⠈script ⠈⠼first ⠘⠼second ⠸⠼third ⠐⠼fourth ⠨⠼fifth
 #   ⠆symbol ⠂word ⠶passage ⠄terminator
 #
-#   ⠆ 23        ; bb be    7.1.3
-#   ⠖ 235       ! ff
-#   ⠦ 236       ? “ his    7.5
-#   ⠒ 25        : cc con   7.1.3
-#   ⠲ 256       . dis      7.1.3
-#   ⠴ 356       ” was      7.1.3
 
 ################################################################################
 
@@ -106,15 +113,9 @@ filter word_end_-           @[LETTER_<-]              @[APOST_-]@[WORD_>-]
 
 ########################################
 #   10.1   Alphabetic Wordsigns
-#   - 10.1.1   standing alone
-#   - 10.1.2   followed by 'd, 'll, 're, 's, 't, 've and standing alone
-#   - 2.6.4
-#   ALPHABETIC CONTRACTION
-#   preword - aftword '(d|ll|re|s|t|ve)
 ########################################
 
 use word_whole_+ word_whole_-
-
 rule trans as          1356
 rule trans but         12
 rule trans can         14
@@ -138,75 +139,65 @@ rule trans us          136
 rule trans very        1236
 rule trans will        2456
 rule trans you         13456
+use
 
-use word_whole_+ -
 
-macro letter_sign
+macro uplo_grade_1
 rule premode $1 \H\;56;\H$1
 rule premode $2 \H\;56;\H$2
 eom
 
-@letter_sign B b
-@letter_sign C c
-@letter_sign D d
-@letter_sign E e
-@letter_sign F f
-@letter_sign G g
-@letter_sign H h
-
-@letter_sign J j
-@letter_sign K k
-@letter_sign L l
-@letter_sign M m
-@letter_sign N n
-
-@letter_sign P p
-@letter_sign Q q
-@letter_sign R r
-@letter_sign S s
-@letter_sign T t
-@letter_sign U u
-@letter_sign V v
-@letter_sign W w
-@letter_sign X x
-@letter_sign Y y
-@letter_sign Z z
-
+use word_whole_+ -
+#uplo_grade_1 A a
+@uplo_grade_1 B b
+@uplo_grade_1 C c
+@uplo_grade_1 D d
+@uplo_grade_1 E e
+@uplo_grade_1 F f
+@uplo_grade_1 G g
+@uplo_grade_1 H h
+#uplo_grade_1 I i
+@uplo_grade_1 J j
+@uplo_grade_1 K k
+@uplo_grade_1 L l
+@uplo_grade_1 M m
+@uplo_grade_1 N n
+#uplo_grade_1 O o
+@uplo_grade_1 P p
+@uplo_grade_1 Q q
+@uplo_grade_1 R r
+@uplo_grade_1 S s
+@uplo_grade_1 T t
+@uplo_grade_1 U u
+@uplo_grade_1 V v
+@uplo_grade_1 W w
+@uplo_grade_1 X x
+@uplo_grade_1 Y y
+@uplo_grade_1 Z z
 use
 
 
 ########################################
 #   10.2   Strong Wordsigns
-#   - 10.2.1   standing alone
-#   - 10.2.2   followed by 'd, 'll, 're, 's, 't, 've and standing alone
-#   - 2.6.4
-#   NOT ALPHABETIC
-#   preword - aftword '(d|ll|re|s|t|ve)
 ########################################
 
 use word_whole_+ word_whole_-
-
 rule trans child   16
 rule trans out     1256
 rule trans shall   146
 rule trans still   34
 rule trans this    1456
 rule trans which   156
-
 use
 
 
 ########################################
 #   10.3   Strong Contractions
-#   - 10.11.2
-#   NOT ALPHABETIC
-#   any - any
 ########################################
 
 use word_whole_begin_+ word_whole_begin_-
 
-## and
-#   can back translate with cedilla
+## and   ⠘⠯cedilla
 uses - not_modifier_45_- rule trans and 12346
 
 ## for
@@ -283,13 +274,6 @@ use
 
 ########################################
 #   10.4   Strong Groupsigns
-#   - 10.4.2    ch sh th wh ou st
-#   - 10.4.3    ing
-#   - 10.11.2   ch gh sh th wh
-#   - 2.6.4     referred from 10.4.2 - 10.2
-#   NOT ALPHABETIC
-#   ch ou sh st th wh:  not word
-#   ing:  not preword
 ########################################
 
 use word_whole_begin_+ word_whole_begin_-
@@ -301,8 +285,7 @@ rule trans aright 1-5-1235
 rule trans infrared 35-124-1235-1-1235-1246
 rule trans tearoom 2345-2-1235-135-135-134
 
-## ch   10.4.2   10.11.2
-#   can back translate with forward slash or grave accent
+## ch   10.4.2   ⠘⠡grave   ⠈⠡solidus
 uses word_whole_+ word_whole_- rule trans ch 14-125
 uses - not_modifier_4_45_- rule trans ch 16
 
@@ -311,9 +294,8 @@ rule trans overreaction 135-1236-12456-1235-15-1-14-56-1345
 rule trans react 1235-15-1-14-2345
 rule trans reaction 1235-15-1-14-56-1345
 
-## ed
-#   can back translate with ring
-uses not_modifier_< not_modifier_45_- rule trans ed 1246
+## ed   ⠘⠫ring
+uses not_modifier_<+ not_modifier_45_- rule trans ed 1246
 
 rule trans airedale 1-24-1235-15-145-1-123-15
 rule trans comedown 14-135-134-15-145-246-1345
@@ -333,9 +315,8 @@ rule trans tweedledee 2345-2456-15-1246-123-15-145-15-15
 rule trans tweedledum 2345-2456-15-1246-123-15-145-136-134
 rule trans viced 1236-24-14-15-145
 
-## er
-#   can back translate with tilde
-uses not_modifier_< not_modifier_45_- rule trans er 12456
+## er   ⠘⠻tilde
+uses not_modifier_<+ not_modifier_45_- rule trans er 12456
 
 rule trans castlereagh 14-1-34-123-15-1235-2-126
 rule trans hedgerow 125-1246-1245-15-1235-246
@@ -361,9 +342,8 @@ rule trans shanghai 146-1-1345-1245-125-1-24
 rule trans songhai 234-135-1345-126-1-24
 rule trans yoghourt 13456-135-1245-125-1256-1235-2345
 
-## ing
-#   can back translate with breve or caron
-uses - not_modifier_4_45_- match trans %a@[SEQ_<+]* ing -  = 346 =
+## ing   ⠈⠬breve   ⠘⠬caron
+uses - not_modifier_4_45_- match trans %a@[SEQ_<+]* ing -   = 346 =
 
 rule trans disingenuous 256-35-1245-26-136-1256-234
 rule trans leningrad 123-26-35-1245-1235-1-145
@@ -371,9 +351,8 @@ rule trans stalingrad 34-1-123-35-1245-1235-1-145
 rule trans vainglorious 1236-1-35-1245-123-135-1235-24-1256-234
 rule trans vainglory 1236-1-35-1245-123-135-1235-13456
 
-## ou
-#   can back translate with breve or caron
-uses word_whole_+ word_whole_- rule trans st 135-136
+## ou   10.4.2
+uses word_whole_+ word_whole_- rule trans ou 135-136
 uses - - rule trans ou 1256
 
 ## ow
@@ -388,8 +367,7 @@ rule trans noway 1345-135-2456-1-13456
 rule trans nowhere 1345-135-5-156
 rule trans nowise 1345-135-2456-24-234-15
 
-## sh
-#   can back translate with circumflex
+## sh   10.4.2   ⠘⠩circumflex
 uses word_whole_+ word_whole_- rule trans sh 234-125
 uses - not_modifier_45_- rule trans sh 146
 
@@ -404,8 +382,7 @@ rule trans mishandled 134-24-234-125-12346-123-1246
 rule trans mishandling 134-24-234-125-12346-123-346
 rule trans mishap 134-24-234-125-1-1234
 
-## st
-#   can back translate with acute accent
+## st   10.4.2   ⠘⠌acute
 uses word_whole_+ word_whole_- rule trans st 234-2345
 uses - not_modifier_45_- rule trans st 34
 
@@ -434,7 +411,7 @@ rule trans reichstag 1235-15-24-16-234-2345-1-1245
 rule trans suggestion 234-136-2356-15-234-56-1345
 rule trans youngstown 5-13456-234-2345-246-1345
 
-## th
+## th   10.4.2
 uses word_whole_+ word_whole_- rule trans th 2345-125
 uses - - rule trans th 1456
 
@@ -467,7 +444,7 @@ rule trans shorthand 146-135-1235-2345-125-12346
 rule trans shorthorn 146-135-1235-2345-125-135-1235-1345
 rule trans warthog 2456-345-2345-125-135-1245
 
-## wh
+## wh   10.4.2
 uses word_whole_+ word_whole_- rule trans wh 2456-125
 uses - - rule trans wh 156
 
@@ -479,79 +456,23 @@ use
 
 ########################################
 #   10.5   Lower Wordsigns
-#   - 10.5.1   be were his was
-#   - 10.5.2   enough
-#   - 10.5.3   in
-#   - 10.5.4   enough in
-#   NOT ALPHABETIC
-#   be his was were:  word contact upper
-#   enough:  word  word upper also 's
-#   in:  word upper
 ########################################
-#filter lower_wordsign_+    @[NO_CAPS_<]@[CAPS_<]*|(^|%_)@[SEQ_INDCS_<]*|@[WORD_<+]@[SEQ_<+]*%u@[SEQ_INDCS_<]*   @[SEQ_>+]*%u@[SEQ_>+]*@[WORD_>+]|@[SEQ_INDCS_>]*(%_|^)|@[CAPS_>]*@[NO_CAPS_>]
-#filter lower_wordsign_-    (^|%_)|@[WORD_<-]@[SEQ_<-]*(⠐⠣|⠨⠣|⠸⠣)|@[WORD_<-]@[SEQ_<-]*@[SEQ_INDCS_<]   @[SEQ_INDCS_>]@[SEQ_>-]*@[WORD_>-]|@[SEQ_>-]*(⠐⠜|⠨⠜|⠸⠜)@[SEQ_>-]*@[WORD_>-]|@[SEQ_>-]*(%_|^)
-
-pattern NO_CAPS_<    [\H\S]([⠨⠘⠸⠈][⠆⠂⠶]|[⠈⠘⠸⠐⠨]⠼[⠆⠂⠶]|⠈⠨⠣|[⠰⠠]⠄)[\H\S]
-pattern NO_CAPS_>    [\H\S](⠈⠨⠜|[⠈⠘⠸⠐⠨]⠼⠄|[⠨⠘⠸⠈]⠄)[\H\S]
-
 
 chars +=*,.;:?!"'“”‘’ $lower_dots
 chars ()[]{} $upper_dots
 
-#   +=*,.;:?!"'“”‘’
-#   ⠂⠄⠐⠠⠆⠢⠒⠤⠔⠰⠖⠦⠲⠴⠶
-#
-#   "'“”‘’ \;236;\;356; \;45;\;6;\;456;  ⠦|⠴|⠘⠦|⠘⠴|⠸⠦|⠸⠴|⠠⠦|⠠⠴
-#   ?   \;236;                 ⠦
-#   !   \;235;                 ⠖
-#   :   \;25;                  ⠒
-#   ;   \;23;                  ⠆
-#   .   \;256;                 ⠲
-#   ,   \;2;                   ⠂
-#   *   \;5-35;                ⠐⠔
-#   =   \;5-2356;              ⠐⠶
-#   +   \;5-235;               ⠐⠖
-#   -   \;5-6-36;\;6-36;\;36;  ⠐⠠⠤|⠠⠤|⠤
-#
-#   ⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠘⠙⠚⠛⠜⠝⠞⠟⠡⠣⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠸⠹⠺⠻⠼⠽⠾⠿
-#
-#   ⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠙⠚⠛⠜⠝⠞⠟⠡⠣⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠹⠺⠻⠼⠽⠾⠿|[⠘⠸][⠦⠴]
+#                      upper dots except ⠘quote                              “”
+pattern UPPER_DOTS     [⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠙⠚⠛⠜⠝⠞⠟⠡⠣⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠸⠹⠺⠻⠼⠽⠾⠿]|⠘(![⠦⠴]|^)
 
-pattern LOWER_DOTS_+    [-‐‑‒–—―+=*,.;:?!"'“”‘’]
-pattern LOWER_DOTS_<-   [\;2;\;236;\;356;\;235;\;25;\;23;\;256;\;35;\;2356;\;235;\;36;]
-pattern LOWER_DOTS_>-   [\;2;\;236;\;356;\;235;\;25;\;23;\;256;\;45;\;6;\;456;\;5;]
-pattern UPPER_DOTS_+    [\(\)\[\]{}]
-pattern UPPER_DOTS_-    [⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠙⠚⠛⠜⠝⠞⠟⠡⠣⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠹⠺⠻⠼⠽⠾⠿\S]|[⠘⠸]![⠦⠴]
+#                      upper dots                                           %_   ^
+pattern UPPER_DOTS_<   [⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠘⠙⠚⠛⠜⠝⠞⠟⠡⠣⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠸⠹⠺⠻⠼⠽⠾⠿]|⠨[⠴⠤]|⠈⠢
 
-filter lower_wordsign_<+  @[LOWER_DOTS_+]    -
-filter lower_wordsign_>+  -                  @[LOWER_DOTS_+]
-filter lower_wordsign_<-  @[LOWER_DOTS_<-]   -
-filter lower_wordsign_>-  -                  @[LOWER_DOTS_>-]
+#                      upper dots except ⠘quote                            ()      “”
+pattern UPPER_DOTS_>   [⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠙⠚⠛⠜⠝⠞⠟⠡⠣⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠸⠹⠺⠻⠼⠽⠾⠿]|⠐[⠣⠜]|⠘(![⠦⠴]|^)
 
-filter enough_in_<+    (^|%_)!%_*(@[UPPER_DOTS_+]|[\H\S]![\H\S⠠]+[\H\S])!%_* -
-.stop
-use lower_wordsign_<+ lower_wordsign_<-
-rule trans be 12-15
-rule trans his 125-24-234
-rule trans was 2456-1-234
-rule trans were 2356-15-1235-15
-use lower_wordsign_>+ lower_wordsign_>-
-rule trans be 12-15
-rule trans his 125-24-234
-rule trans was 2456-1-234
-rule trans were 2356-15-1235-15
-use word_whole_+ word_whole_-
-rule trans be 23
-rule trans his 236
-rule trans was 356
-rule trans were 2356
-.cont
-
-pattern CAPS_<  [\H\S](⠠?⠠?⠠|⠠⠄)[\H\S]
-pattern CAPS_>  [\H\S](⠠⠠?⠠?|⠠⠄)[\H\S]
-
-pattern UPPER_DOTS_<      [⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠙⠚⠛⠝⠞⠟⠡⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠹⠺⠻⠼⠽⠾⠿]|[⠘⠸]![⠦⠴]|[⠐⠨⠸][⠣⠜]
-pattern UPPER_DOTS_>      [⠁⠃⠅⠇⠈⠉⠊⠋⠌⠍⠎⠏⠑⠓⠕⠗⠙⠚⠛⠝⠞⠟⠡⠥⠧⠨⠩⠪⠫⠬⠭⠮⠯⠱⠳⠵⠷⠹⠺⠻⠼⠽⠾⠿]|[⠘⠸]![⠦⠴]|[⠐⠨⠸][⠣⠜]
+pattern CAPS_~      [\H\S](⠠?⠠?⠠|⠠⠄)[\H\S]
+pattern NO_CAPS_<   [\H\S]([⠨⠘⠸⠈][⠆⠂⠶]|[⠈⠘⠸⠐⠨]⠼[⠆⠂⠶]|⠈⠨⠣|[⠰⠠]⠄)[\H\S]
+pattern NO_CAPS_>   [\H\S](⠈⠨⠜|[⠈⠘⠸⠐⠨]⠼⠄|[⠨⠘⠸⠈]⠄)[\H\S]
 
 pattern SPACE_<+   (^|%_)@[SEQ_<+]*|(^|%[_~])@[SEQ_<+]*@[SEQ_<+]
 pattern SPACE_>+   @[SEQ_>+]*@[SEQ_>+](%[_~]|^)|@[SEQ_>+]*(%_|^)
@@ -562,123 +483,97 @@ filter space_+   @[SPACE_<+]   @[SPACE_>+]
 filter space_-   @[SPACE_<-]   @[SPACE_>-]
 
 ## be (word)
-uses space_+ -             rule -forward  pretrans  be \M\;12-15;\M
-uses -       word_whole_-  rule -backward trans     be 23
-match -forward  posttrans (^|%_)@[SEQ_INDCS_<]*                    \M\;12-15;\M @[SEQ_INDCS_>]*(%_|^)                      - \;23; -
-match -forward  posttrans (^|%_)!%_*@[UPPER_DOTS_<]@[SEQ_INDCS_<]* \M\;12-15;\M @[WORD_>-]                                 - \;23; -
-match -forward  posttrans @[WORD_<-]                               \M\;12-15;\M @[SEQ_INDCS_>]*@[UPPER_DOTS_>]!%_*(%_|^)   - \;23; -
+uses space_+ - rule -forward pretrans be \M\;12-15;\M
+match -forward posttrans (^|%_|@[NO_CAPS_<]|@[UPPER_DOTS_<])@[CAPS_~]* \M\;12-15;\M @[CAPS_~]*(@[UPPER_DOTS_>]|@[NO_CAPS_>]|%_|^)   - \;23; -
+uses - word_whole_- rule -backward trans be 23
 
 ## his
-uses space_+ -            rule -forward  pretrans his \M\;125-24-234;\M
-uses -       word_whole_- rule -backward trans    his 236
-match -forward  posttrans (^|%_)@[SEQ_INDCS_<]*                    \M\;125-24-234;\M @[SEQ_INDCS_>]*(%_|^)                      - \;236; -
-match -forward  posttrans (^|%_)!%_*@[UPPER_DOTS_<]@[SEQ_INDCS_<]* \M\;125-24-234;\M @[WORD_>-]                                 - \;236; -
-match -forward  posttrans @[WORD_<-]                               \M\;125-24-234;\M @[SEQ_INDCS_>]*@[UPPER_DOTS_>]!%_*(%_|^)   - \;236; -
+uses space_+ - rule -forward pretrans his \M\;125-24-234;\M
+match -forward posttrans (^|%_|@[NO_CAPS_<]|@[UPPER_DOTS_<])@[CAPS_~]* \M\;125-24-234;\M @[CAPS_~]*(@[UPPER_DOTS_>]|@[NO_CAPS_>]|%_|^)   - \;236; -
+uses - word_whole_- rule -backward trans his 236
 
 ## was
-uses space_+ -            rule -forward  pretrans was \M\;2456-1-234;\M
-uses -       word_whole_- rule -backward trans was 356
-match -forward  posttrans (^|%_)@[SEQ_INDCS_<]*                    \M\;2456-1-234;\M @[SEQ_INDCS_>]*(%_|^)                      - \;356; -
-match -forward  posttrans (^|%_)!%_*@[UPPER_DOTS_<]@[SEQ_INDCS_<]* \M\;2456-1-234;\M @[WORD_>-]                                 - \;356; -
-match -forward  posttrans @[WORD_<-]                               \M\;2456-1-234;\M @[SEQ_INDCS_<]*@[UPPER_DOTS_>]!%_*(%_|^)   - \;356; -
+uses space_+ - rule -forward pretrans was \M\;2456-1-234;\M
+match -forward posttrans (^|%_|@[NO_CAPS_<]|@[UPPER_DOTS_<])@[CAPS_~]* \M\;2456-1-234;\M @[CAPS_~]*(@[UPPER_DOTS_>]|@[NO_CAPS_>]|%_|^)   - \;356; -
+uses - word_whole_- rule -backward trans was 356
 
 ## were
-uses space_+ -            rule -forward  pretrans were \M\;2456-124565-15;\M
-uses -       word_whole_- rule -backward trans were 2356
-match -forward  posttrans (^|%_)@[SEQ_INDCS_<]*                    \M\;2456-124565-15;\M @[SEQ_INDCS_>]*(%_|^)                      - \;2356; -
-match -forward  posttrans (^|%_)!%_*@[UPPER_DOTS_<]@[SEQ_INDCS_<]* \M\;2456-124565-15;\M @[WORD_>-]                                 - \;2356; -
-match -forward  posttrans @[WORD_<-]                               \M\;2456-124565-15;\M @[SEQ_INDCS_<]*@[UPPER_DOTS_>]!%_*(%_|^)   - \;2356; -
+uses space_+ - rule -forward pretrans were \M\;2456-124565-15;\M
+match -forward posttrans (^|%_|@[NO_CAPS_<]|@[UPPER_DOTS_<])@[CAPS_~]* \M\;2456-124565-15;\M @[CAPS_~]*(@[UPPER_DOTS_>]|@[NO_CAPS_>]|%_|^)   - \;2356; -
+uses - word_whole_- rule -backward trans were 2356
 
 ## enough
-uses word_whole_+ -            rule -forward  pretrans enough \M\;26-1256-126;\M
-uses -            word_whole_- rule -backward trans enough 26
-match -forward  posttrans (^|%_)@[SEQ_INDCS_<]*         \M\;26-1256-126;\M @[SEQ_INDCS_>]*(%_|^)           - \;26; -
-match -forward  posttrans (^|%_)!%_*@[UPPER_DOTS_<]!%_* \M\;26-1256-126;\M @[WORD_>-]                      - \;26; -
-match -forward  posttrans @[WORD_<-]                    \M\;26-1256-126;\M !%_*@[UPPER_DOTS_>]!%_*(%_|^)   - \;26; -
+uses word_whole_+ - rule -forward pretrans enough \M\;26-1256-126;\M
+match -forward posttrans (^|%_)@[CAPS_~]*            \M\;26-1256-126;\M @[CAPS_~]*(%_|^)              - \;26; -
+match -forward posttrans @[UPPER_DOTS]!%_*@[CAPS_~]* \M\;26-1256-126;\M -                             - \;26; -
+match -forward posttrans -                           \M\;26-1256-126;\M @[CAPS_~]*!%_*@[UPPER_DOTS]   - \;26; -
+uses - word_whole_- rule -backward trans enough 26
 
-uses word_whole_+ word_whole_- rule trans enough’s 26-3-234
-uses word_whole_+ word_whole_- rule trans enough's 26-3-234
+uses word_whole_+ - rule -forward  pretrans enough’s \M\;26-3-234;\M
+uses - word_whole_- rule -backward trans enough’s 26-3-234
+uses word_whole_+ - rule -forward  pretrans enough's \M\;26-3-234;\M
+uses - word_whole_- rule -backward trans enough's 26-3-234
 
 ## in (word)
-uses word_whole_+ -            rule -forward  pretrans in \M\;24-1345;\M
-uses -            word_whole_- rule -backward trans in 35
-match -forward  posttrans (^|%_)@[SEQ_INDCS_<]*         \M\;24-1345;\M @[SEQ_INDCS_>]*(%_|^)           - \;35; -
-match -forward  posttrans (^|%_)!%_*@[UPPER_DOTS_<]!%_* \M\;24-1345;\M @[WORD_>-]                      - \;35; -
-match -forward  posttrans @[WORD_<-]                    \M\;24-1345;\M !%_*@[UPPER_DOTS_>]!%_*(%_|^)   - \;35; -
-
-use
+uses word_whole_+ - rule -forward pretrans in \M\;24-1345;\M
+match -forward posttrans (^|%_)@[CAPS_~]*            \M\;24-1345;\M @[CAPS_~]*(%_|^)              - \;35; -
+match -forward posttrans @[UPPER_DOTS]!%_*@[CAPS_~]* \M\;24-1345;\M -                             - \;35; -
+match -forward posttrans -                           \M\;24-1345;\M @[CAPS_~]*!%_*@[UPPER_DOTS]   - \;35; -
+uses - word_whole_- rule -backward trans in 35
 
 
 ########################################
 #   10.6   Lower Groupsigns
-#   - 10.6.1    be con dis
-#   - 10.6.2    be con dis
-#   - 10.6.3    be con dis
-#   - 10.6.4    be con dis
-#   - 10.6.5    ea bb cc ff gg
-#   - 10.6.6    ea bb cc ff gg
-#   - 10.6.7    ea
-#   - 10.6.8    en in
-#   - 10.6.9    en
-#   - 10.6.10
-#   NOT ALPHABETIC
-#   be con dis:  preword - letter*  no capital
-#   bb cc ea ff gg:  letter* - letter*  no capital
-#   en:  not word
-#   in:  letter* - letter*  vs lower wordsign
-#   multiple  upper somewhere
 ########################################
-
-## bb   10.6.5   10.6.6
 
 #   needed with not %[_l] for en and in
 chars ⠯⠩⠫⠻⠌⠡⠒⠬⠂⠆⠤ $modifier
 
+## bb   10.6.5   10.6.6
 uses word_mid_+ word_mid_- rule trans bb 23
 
-use word_whole_begin_+  word_whole_begin_-
+use word_whole_begin_+ word_whole_begin_-
 rule trans dumbbell 145-136-134-12-12-15-123-123
 rule trans subbasement 234-136-12-12-1-234-15-56-2345
 rule trans subbing 234-136-12-12-346
 use
 
 ## be (prefix)   10.6.1   10.6.2   10.6.3   10.6.4
-match trans @[WORD_<+] be ati!n           @[WORD_<-] 23 ⠁(⠐⠞|⠰⠝|⠞(⠰⠽|⠊!@[N_>-]))
-match trans @[WORD_<+] be atr             @[WORD_<-] 23 ⠁⠞@[R_>-]
-match trans @[WORD_<+] be c![hkq]         @[WORD_<-] 23 (⠉|⠡|⠒|⠐⠡)!(⠓|⠸⠓|⠐⠓|⠅|⠐⠅|⠟|⠐⠟)
-match trans @[WORD_<+] be dra             @[WORD_<-] 23   ⠙⠗@[A_>-]
-match trans @[WORD_<+] be de              @[WORD_<-] 23 ⠙@[E_>-]
-match trans @[WORD_<+] be da              @[WORD_<-] 23 ⠐⠙|⠙@[A_>-]
-match trans @[WORD_<+] be elz             @[WORD_<-] 23 ⠑⠇@[Z_>-]
-match trans @[WORD_<+] be g![gs]          @[WORD_<-] 23 (⠛!(⠛|⠣|⠶|⠎|⠩|⠌|⠐⠎|⠸⠎|⠨⠝))|⠣
-match trans @[WORD_<+] be in              @[WORD_<-] 23   ⠬|⠔|⠊@[N_>-]
-match trans @[WORD_<+] be l[aeiouwy]      @[WORD_<-] 23 ⠐⠇|⠨⠎|⠇(@[A_>-]|@[E_>-]|@[I_>-]|@[O_>-]|@[U_>-]|@[W_>-]|@[Y_>-])
-match trans @[WORD_<+] be neficen         @[WORD_<-] 23 \;1345;\;15;\;124;\;24;\;14;(\;26;|\;56;|\;15;\;1345;)
-match trans @[WORD_<+] be ne![dft]        @[WORD_<-] 23 ⠝(⠻|⠂|⠢|⠐⠑|⠰⠑|⠑!(⠙|⠲|⠐⠙|⠋|⠿|⠖|⠰⠇|⠐⠋|⠞|⠮|⠹|⠰⠝))
-match trans @[WORD_<+] be n[aiu]          @[WORD_<-] 23 ⠐⠝|⠝(⠁|⠯|⠜|⠨⠑|⠊|⠬|⠔|⠰⠽|⠥|⠐⠥|⠘⠥)
-match trans @[WORD_<+] be ra              @[WORD_<-] 23 ⠗@[A_>-]?   \;1235;;1;
-match trans @[WORD_<+] be re!n            @[WORD_<-] 23 ⠗(⠫|⠻|⠂|⠐⠑|⠑!(@[N_>-]))
-match trans @[WORD_<+] be stir            @[WORD_<-] 23 ⠌⠊@[R_>-]|⠎⠞⠊@[R_>-]
-match trans @[WORD_<+] be st[or]          @[WORD_<-] 23 (⠌|⠎⠞)(@[O_>-]|@[R_>-])
-match trans @[WORD_<+] be s![st]          @[WORD_<-] 23 ⠩|⠐⠎|⠸⠎|⠨⠝|⠎!(@[S_>-]|@[T_>-])
-match trans @[WORD_<+] be tho             @[WORD_<-] 23 ⠘⠹|⠹@[O_>-]|⠞⠓@[O_>-]
-match trans @[WORD_<+] be t![chst]        @[WORD_<-] 23 ⠐⠞|⠰⠝|⠞!(@[C_>-]|@[H_>-]|@[S_>-]|@[T_>-])
+match trans @[WORD_<+] be @[MODIFER_>]   @[WORD_<-] 23 @[MODIFER_>]
+match trans @[WORD_<+] be ati!n          @[WORD_<-] 23 ⠁(⠐⠞|⠰⠝|⠞(⠰⠽|⠊!@[N_>-]))                                           # a(time|tion|t(ity|i!n))
+match trans @[WORD_<+] be atr            @[WORD_<-] 23 ⠁⠞@[R_>-]
+match trans @[WORD_<+] be c![hkq]        @[WORD_<-] 23 ⠸⠉|⠒@[LETTER_>-]|⠉!(@[H_>-]|@[K_>-]|@[Q_>-])                       # cannot|cc%|c![hkq]
+match trans @[WORD_<+] be da             @[WORD_<-] 23 ⠐⠙|⠙@[A_>-]                                                        # day|da
+match trans @[WORD_<+] be de             @[WORD_<-] 23 ⠙@[E_>-]
+match trans @[WORD_<+] be dra            @[WORD_<-] 23 ⠙⠗@[A_>-]
+match trans @[WORD_<+] be elz            @[WORD_<-] 23 ⠑⠇@[Z_>-]
+match trans @[WORD_<+] be g![gs]         @[WORD_<-] 23 ⠣|⠛!(⠛|⠣|⠎|⠩|⠌|⠶@[LETTER_>-]|[⠐⠸]⠎|⠨⠝)                             # gh|g!(g|gh|s|sh|st|gg%|[some spirit]|sion)
+match trans @[WORD_<+] be in             @[WORD_<-] 23 ⠔|⠬|⠊@[N_>-]                                                       # in|ing|in
+match trans @[WORD_<+] be l[aeiouwy]     @[WORD_<-] 23 ⠐⠇|⠨⠎|⠇(@[A_>-]|@[E_>-]|@[I_>-]|@[O_>-]|@[U_>-]|@[W_>-]|@[Y_>-])   # like|less|l[aeiouwy]
+match trans @[WORD_<+] be n[aiu]         @[WORD_<-] 23 ⠐⠝|⠝(@[A_>-]|@[I_>-]|@[U_>-])                                      # name|n[aiu]
+match trans @[WORD_<+] be ne![dft]       @[WORD_<-] 23 ⠝(⠢|⠻|[⠐⠰]⠑|⠂@[LETTER_>-]|⠑!(@[D_>-]|@[F_>-]|@[T_>-]))             # n(en|er|[ever ence]|ea%|e![dft])
+match trans @[WORD_<+] be neficen        @[WORD_<-] 23 ⠝⠑⠋⠊⠉(⠢|⠰⠑|⠑(⠝|⠐⠝|⠰⠎))                                             # nefic(en|ence|e(n|name|ness))
+match trans @[WORD_<+] be ra             @[WORD_<-] 23 ⠗@[A_>-]
+match trans @[WORD_<+] be re!n           @[WORD_<-] 23 ⠗(⠫|⠻|⠐⠑|⠂@[LETTER_>-]|⠑!(@[N_>-]))                                # r(ea|ed|er|ever|ea%|e!n)
+match trans @[WORD_<+] be stir           @[WORD_<-] 23 ⠌⠊@[R_>-]|⠎⠞⠊@[R_>-]                                               # stir|stir
+match trans @[WORD_<+] be st[or]         @[WORD_<-] 23 (⠌|⠎⠞)(@[O_>-]|@[R_>-])                                            # (st|st)[or]
+match trans @[WORD_<+] be s![st]         @[WORD_<-] 23 ⠩|⠐⠎|⠨⠝|⠸⠎|⠎!(@[S_>-]|@[T_>-])                                     # sh|some|sion|spirit|s![st]
+match trans @[WORD_<+] be tho            @[WORD_<-] 23 ⠘⠹|⠹@[O_>-]|⠞⠓@[O_>-]                                              # those|tho|tho
+match trans @[WORD_<+] be t![chst]       @[WORD_<-] 23 ⠐⠞|⠰⠝|⠞!(@[C_>-]|@[H_>-]|@[S_>-]|@[T_>-])                          # time|tion|t![chst]
+
 match trans @[WORD_<+] be [bfhjmopqwxz]   @[WORD_<-] 23 @[B_>-]|@[F_>-]|@[H_>-]|@[J_>-]|@[M_>-]|@[O_>-]|@[P_>-]|@[Q_>-]|@[W_>-]|@[X_>-]|@[Z_>-]
-match trans @[WORD_<+] be @[MODIFER_>]    @[WORD_<-] 23 @[MODIFER_>]
 
 #   be[cfhlnsty] are handled in 10.9.5
 
 use word_whole_+ word_whole_-
 rule trans bede 12-1246-15
-rule trans bet 12-15-2345
-rule trans beg 12-15-1245
 rule trans bela 12-15-123-1
 use
+
 uses word_whole_begin_+ word_whole_begin_- rule trans beretta 12-12456-15-2345-2345-1
 match trans @[WORD_<+] benet @[APOSS_+]@[WORD_>+]   @[WORD_<-] 23-1345-15-2345 @[APOSS_-]@[WORD_>-]
 
-## cc   10.6.5   10.6.6
-#   can back translate with horizontal slash or diaeresis
+## cc   10.6.5   10.6.6   ⠈⠒stroke      ⠘⠒diaeresis
 uses word_mid_+ word_mid_- rule trans cc 25
 
 use word_whole_begin_+ word_whole_begin_-
@@ -692,28 +587,38 @@ rule trans zucchini 1356-136-14-16-35-24
 use
 
 ## con   10.6.1   10.6.2   10.6.3   10.6.4
-match trans @[WORD_<+] con c!h  @[WORD_<-] 25 ⠒@[LETTER_>-]|⠉!@[H_>-]   \;14;!\;125;   # concc concon con:
-match trans @[WORD_<+] con est  @[WORD_<-] 25 ⠑|(⠌|⠎@[T_>-])   \;15;(\;34;|\;234;\;2345;)
-match trans @[WORD_<+] con [abdfghijlmnopqrstuvwxyz]  @[WORD_<-] 25 @[A_>-]|@[B_>-]|@[D_>-]|@[F_>-]|@[G_>-]|@[H_>-]|@[I_>-]|@[J_>-]|@[L_>-]|@[M_>-]|@[N_>-]|@[O_>-]|@[P_>-]|@[Q_>-]|@[R_>-]|@[S_>-]|@[T_>-]|@[U_>-]|@[V_>-]|@[W_>-]|@[X_>-]|@[Y_>-]|@[Z_>-]
 match trans @[WORD_<+] con @[MODIFER_>]   @[WORD_<-] 25 @[MODIFER_>]
+match trans @[WORD_<+] con c!h            @[WORD_<-] 25 ⠡|⠸⠉|⠒@[LETTER_>-]|⠉!@[H_>-]   # ch|cannot|cc%|c!h
+match trans @[WORD_<+] con est            @[WORD_<-] 25 ⠑(⠌|⠎@[T_>-])                  # e(st|st)
+
+#   letters:             ;:,!    AAABDFFGGGHIIIJKLMNOOOOPQRSSSTTTUVWWWXYZ    DFHKLMNOOPQRSTTTUWWY    TTUWW¸`^°~¨´ᵛ+    FIMNOT    ALOOS    HMSTW    /-˘¯     123
+pattern LETTER_NO_CE_>- [⠆⠒⠂⠖]*([⠁⠯⠜⠃⠙⠋⠿⠛⠣⠶⠓⠊⠬⠔⠚⠅⠇⠍⠝⠕⠳⠷⠪⠏⠟⠗⠎⠌⠩⠞⠹⠮⠥⠧⠺⠱⠾⠭⠽⠵]|⠐[⠙⠋⠓⠅⠇⠍⠝⠕⠳⠏⠟⠗⠎⠮⠹⠞⠥⠱⠺⠽]|⠘[⠮⠹⠥⠱⠺⠯⠡⠩⠫⠻⠒⠌⠬⠖]|⠰[⠇⠽⠞⠎⠛⠝]|⠨[⠑⠎⠙⠞⠝]|⠸[⠓⠍⠎⠮⠺]|⠈[⠡⠒⠬⠤]|⠘⠸[⠂⠆⠤])
+#atch trans @[WORD_<+] con [abdfghijlmnopqrstuvwxyz]   @[WORD_<-] 25 @[A_>-]|@[B_>-]|@[D_>-]|@[F_>-]|@[G_>-]|@[H_>-]|@[I_>-]|@[J_>-]|@[L_>-]|@[M_>-]|@[N_>-]|@[O_>-]|@[P_>-]|@[Q_>-]|@[R_>-]|@[S_>-]|@[T_>-]|@[U_>-]|@[V_>-]|@[W_>-]|@[X_>-]|@[Y_>-]|@[Z_>-]
+match trans @[WORD_<+] con [abdfghijlmnopqrstuvwxyz]   @[WORD_<-] 25 @[LETTER_NO_CE_>-]
+
+use word_whole_+ word_whole_-
+rule trans cong 14-56-1245
+rule trans cons 14-135-1345-234
 
 use word_whole_begin_+ word_whole_begin_-
 rule trans conakry 14-135-1345-1-13-1235-13456
-rule trans conan  14-135-1345-1-1345
+rule trans conan 14-135-1345-1-1345
 rule trans conned 14-135-1345-1345-1246
 rule trans conurbation 14-135-1345-136-1235-12-1-56-1345
-use word_whole_+ word_whole_-
-rule trans cong 14-56-1245
-rule trans cons 14-135-1345-234   "mod cons" 10.6.4
+
 use
 
 ## dis   10.6.1   10.6.2   10.6.3   10.6.4
-match trans @[WORD_<+] dis c!s  @[WORD_<-] 256 @[C_>-]!@[S_>-]   # discharacter discharge
-match trans @[WORD_<+] dis he![dsv]  @[WORD_<-] 256 ⠐⠓|⠓([⠑⠻⠢⠂]|[⠐⠰]⠑)!(@[D_>-]|@[S_>-]|@[V_>-])   ⠓⠑![⠙⠎⠧]
-match trans @[WORD_<+] dis h![ceiprtw]  @[WORD_<-] 256 (⠓|⠸⠓)!(@[C_>-]|@[E_>-]|@[I_>-]|@[P_>-]|@[R_>-]|@[T_>-]|@[W_>-])   ⠓![⠉⠑⠊⠏⠗⠞⠺⠄]
-match trans @[WORD_<+] dis p!i  @[WORD_<-] 256 @[P_>-](!@[I_>-]|^)   #  dispart
-match trans @[WORD_<+] dis [abdefgijlmnoqrstuvwxyz]  @[WORD_<-] 256 @[A_>-]|@[B_>-]|@[D_>-]|@[E_>-]|@[F_>-]|@[G_>-]|@[I_>-]|@[J_>-]|@[L_>-]|@[M_>-]|@[N_>-]|@[O_>-]|@[Q_>-]|@[R_>-]|@[S_>-]|@[T_>-]|@[U_>-]|@[V_>-]|@[W_>-]|@[X_>-]|@[Y_>-]|@[Z_>-]   # @[LETTER_>-]
 match trans @[WORD_<+] dis @[MODIFER_>]   @[WORD_<-] 256 @[MODIFER_>]
+match trans @[WORD_<+] dis c!s            @[WORD_<-] 256 ⠡|⠐⠡|⠸⠉|⠒@[LETTER_>-]|⠉!@[S_>-]                                  # ch|character|cannot|cc%|c!s
+match trans @[WORD_<+] dis he![dsv]       @[WORD_<-] 256 ⠐⠓|⠓(⠂|⠢|⠻|[⠐⠰]⠑|⠑!(@[D_>-]|@[S_>-]|@[V_>-]))                    # here|h(ea|en|er|[ever ence]|e![dsv])
+match trans @[WORD_<+] dis h![ceiprtw]    @[WORD_<-] 256 ⠸⠓|⠓!(@[C_>-]|@[E_>-]|@[I_>-]|@[P_>-]|@[R_>-]|@[T_>-]|@[W_>-])   # have|h![ceiprtw]
+match trans @[WORD_<+] dis p!i            @[WORD_<-] 256 ⠐⠏|⠏!@[I_>-]                                                     # part|p!i
+
+#   letters:               ;:,!    AAABDEEEEFFGGGIIIJLMNOOOOQRSSSTTTUVWWWXYZ    DEFLMNOOQRSTTTUWWY    TTUWW¸`^°~¨´ᵛ+    EFIMNOT    ALOOS    MSTW    /-˘¯     123
+pattern LETTER_NO_CHKP_>- [⠆⠒⠂⠖]*([⠁⠯⠜⠃⠙⠑⠫⠻⠢⠋⠿⠛⠣⠶⠊⠬⠔⠚⠇⠍⠝⠕⠳⠷⠪⠟⠗⠎⠌⠩⠞⠹⠮⠥⠧⠺⠱⠾⠭⠽⠵]|⠐[⠙⠑⠋⠇⠍⠝⠕⠳⠟⠗⠎⠮⠹⠞⠥⠱⠺⠽]|⠘[⠮⠹⠥⠱⠺⠯⠡⠩⠫⠻⠒⠌⠬⠖]|⠰[⠑⠇⠽⠞⠎⠛⠝]|⠨[⠑⠎⠙⠞⠝]|⠸[⠍⠎⠮⠺]|⠈[⠡⠒⠬⠤]|⠘⠸[⠂⠆⠤])
+#atch trans @[WORD_<+] dis [abdefgijlmnoqrstuvwxyz]   @[WORD_<-] 256 @[A_>-]|@[B_>-]|@[D_>-]|@[E_>-]|@[F_>-]|@[G_>-]|@[I_>-]|@[J_>-]|@[L_>-]|@[M_>-]|@[N_>-]|@[O_>-]|@[Q_>-]|@[R_>-]|@[S_>-]|@[T_>-]|@[U_>-]|@[V_>-]|@[W_>-]|@[X_>-]|@[Y_>-]|@[Z_>-]   # @[LETTER_>-]
+match trans @[WORD_<+] dis [abdefgijlmnoqrstuvwxyz]   @[WORD_<-] 256 @[LETTER_NO_CHKP_>-]
 
 use word_whole_+ word_whole_-
 rule trans disc 145-24-234-14
@@ -723,64 +628,55 @@ rule trans diss 145-24-234-234
 use
 
 ## ea   10.6.5   10.6.6   10.6.7
-
 uses word_mid_+ word_mid_- rule trans ea 2
+
 use
 rule trans ear 15-345
 rule trans pineapple 1234-35-15-1-1234-1234-123-15
 rule trans wiseacr 2456-24-234-15-1-14-1235
 
-use word_begin_+ word_begin_-
-rule trans deact 145-15-1-14-2345   deactivate
-rule trans deallo 145-15-1-123-123-135 deallocate
-use word_whole_begin_+ word_whole_begin_-
-rule trans deandre 145-15-1-1345-145-1235-15
-rule trans deanna 145-15-1-1345-1345-1
-
-use word_mid_end_+ word_mid_end_-
-rule trans eance 15-46-15 vengeance
-rule trans eand 15-12346 meander
-
-use word_begin_+ word_begin_-
-rule trans givea 1245-24-1236-15-1 giveaway
-use word_whole_begin_+ word_whole_begin_-
-rule trans geanticline 1245-15-1-1345-2345-24-14-123-35-15
-rule trans gilead 1245-24-123-15-1-145
-
-use word_whole_begin_+ word_whole_begin_-
-rule trans leah 123-15-1-125
-rule trans leanna 123-15-1-1345-1345-1
 use word_whole_+ word_whole_-
-rule trans leann 123-15-1-1345-1345   leanness
-rule trans leanne 123-15-1-1345-1345-15   leanness
-
-use word_begin_+ word_begin_-
-rule trans readj 1235-15-1-145-245 eadjust
-rule trans readm 1235-15-1-145-134 readmit
-rule trans reaff 1235-15-1-235
-use word_whole_begin_+ word_whole_begin_-
-rule trans reagent 1235-15-1-1245-26-2345
-use word_begin_+ word_begin_-
-rule trans realig 1235-15-1-123-24-1245 align
-rule trans reallo 1235-15-1-123-123-135 deallocate - really
-rule trans rean 1235-15-1-1345 reanalyze, reanimate
-rule trans reapp 1235-15-1-1234-1234 reappear
-rule trans reass 1235-15-1-234-234
-rule trans reaw 1235-15-1-2456 reawaken
+rule trans leann 123-15-1-1345-1345       # leanness
+rule trans leanne 123-15-1-1345-1345-15   # leanness
 
 use word_whole_begin_+ word_whole_begin_-
 rule trans boreas 12-135-1235-15-1-234
+rule trans deandre 145-15-1-1345-145-1235-15
+rule trans deanna 145-15-1-1345-1345-1
+rule trans geanticline 1245-15-1-1345-2345-24-14-123-35-15
+rule trans gilead 1245-24-123-15-1-145
 rule trans hideaway 125-24-145-15-1-2456-1-13456
+rule trans leah 123-15-1-125
+rule trans leanna 123-15-1-1345-1345-1
 rule trans limeade 123-24-134-15-1-145-15
 rule trans orangeade 135-1235-1-1345-1245-15-1-145-15
-rule trans pream 1234-1235-15-1-134   preamble
+rule trans pream 1234-1235-15-1-134                              # preamble
+rule trans reagent 1235-15-1-1245-26-2345
 rule trans roseann 1235-135-234-15-1-1345-1345
 rule trans shakespearean 146-1-13-15-234-1234-15-345-15-1-1345
 rule trans takeaway 2345-1-13-15-1-2456-1-13456
 
+use word_begin_+ word_begin_-
+rule trans deact 145-15-1-14-2345         # deactivate
+rule trans deallo 145-15-1-123-123-135    # deallocate
+rule trans givea 1245-24-1236-15-1        # giveaway
+rule trans readj 1235-15-1-145-245        # eadjust
+rule trans readm 1235-15-1-145-134        # readmit
+rule trans reaff 1235-15-1-235
+rule trans realig 1235-15-1-123-24-1245   # realign
+rule trans reallo 1235-15-1-123-123-135   # reallocate - really
+rule trans rean 1235-15-1-1345            # reanalyze, reanimate
+rule trans reapp 1235-15-1-1234-1234      # reappear
+rule trans reass 1235-15-1-234-234
+rule trans reaw 1235-15-1-2456            # reawaken
+
+use word_mid_end_+ word_mid_end_-
+rule trans eance 15-46-15   # vengeance
+rule trans eand 15-12346    # meander
+
 use
 
-## ff   10.6.5   10.6.6
+## ff   10.6.5   10.6.6   ⠘⠖ligature
 uses word_mid_+ word_mid_- rule trans ff 235
 
 use word_whole_begin_+ word_whole_begin_-
@@ -794,11 +690,10 @@ use
 ## gg
 uses word_mid_+ word_mid_- rule trans gg 2356
 
-#3 en   10.6.8   10.6.9
-match trans ^|!%m en %l*!%[_l] - 26 -
-match trans !%[_lm]%l* en - - 26 -
-
-uses word_mid_end_+ word_mid_end_- rule trans eness 15-56-234   closeness
+## en   10.6.8   10.6.9
+uses word_whole_+ word_whole_- rule trans en 15-1345
+match trans ^|!%m      en %l*!%[_l]   - 26 -
+match trans !%[_lm]%l* en -           - 26 -
 
 use word_whole_begin_+ word_whole_begin_-
 rule trans bluenose 12-123-136-15-1345-135-234-15
@@ -809,36 +704,35 @@ rule trans toenail 2345-135-15-1345-1-24-123
 rule trans turtleneck 2345-136-1235-2345-123-15-1345-15-14-13
 use
 
+uses word_mid_end_+ word_mid_end_- rule trans eness 15-56-234   # closeness
+
 ## in (prefix)   10.6.8    94190   94746
-match trans ^|!%m in %l*!%[_l]  - 35 -
-match trans !%[_lm]%l* in -  - 35 -
+match trans ^|!%m      in %l*!%[_l]   - 35 -
+match trans !%[_lm]%l* in -           - 35 -
 
 #   iness overridden by ness
 
 uses word_whole_begin_+ word_whole_begin_- rule trans multinational 134-136-123-2345-35-1-56-1345-1-123
-use
 
 
 ########################################
 #   10.7   Initial-Letter Contractions
-#   BOTH ALPHABETIC AND NOT
-#   any - any
-#   list
 ########################################
 
 ## canont
-uses not_modifier_< - rule trans cannot 456-14
+uses not_modifier_<+ - rule trans cannot 456-14
 
 ## character
-uses not_modifier_< - rule trans character 5-16
+uses not_modifier_<+ - rule trans character 5-16
 
 ## day
-uses not_modifier_< - rule trans day 5-145
+uses not_modifier_<+ - rule trans day 5-145
+
+## ever   10.7.4
+uses not_modifier_<+ - rule trans ever 5-15
 
 use word_whole_begin_+ word_whole_begin_-
 
-## ever   10.7.4
-uses not_modifier_< - rule trans ever 5-15
 rule trans achiever 1-16-24-15-1236-12456
 rule trans believer 23-123-24-15-1236-12456
 rule trans cheever 16-15-15-1236-12456
@@ -859,7 +753,7 @@ rule trans underachiever 5-136-1-16-24-15-1236-12456
 
 rule trans irreversibl 24-1235-1235-15-1236-12456-234-24-12-123
 
-rule trans reverbera        1235-15-1236-12456-12-12456-1
+rule trans reverbera 1235-15-1236-12456-12-12456-1
 
 rule trans revere 1235-15-1236-12456-15
 rule trans revered 1235-15-1236-12456-1246
@@ -878,28 +772,32 @@ rule trans reverent 1235-5-15-26-2345
 
 #   sever <> severe
 
-rule trans persever        1234-12456-234-15-1236-12456
+rule trans persever 1234-12456-234-15-1236-12456
 rule trans severe 234-15-1236-12456-15
 rule trans severer 234-15-1236-12456-12456
 rule trans severity 234-15-1236-12456-56-13456
 rule trans severus 234-15-1236-12456-136-234
 
-rule trans severed  234-5-15-1246
+rule trans severed 234-5-15-1246
 
+use
 
 ## father
-uses not_modifier_< - rule trans father 5-124
+uses not_modifier_<+ - rule trans father 5-124
 
 ## had   10.7.3
-uses not_modifier_< - rule trans had 456-125
+uses not_modifier_<+ - rule trans had 456-125
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans hades 125-1-145-15-234
 rule trans hadrian 125-1-145-1235-24-1-1345
 rule trans menhaden 134-26-125-1-145-26
+use
 
 ## here   10.7.5
-uses not_modifier_< - rule trans here 5-125
+uses not_modifier_<+ - rule trans here 5-125
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans adhered 1-145-125-12456-1246
 rule trans adherence 1-145-125-12456-56-15
 rule trans adherent 1-145-125-12456-26-2345
@@ -921,26 +819,30 @@ rule trans incoherence 35-14-135-125-12456-56-15
 rule trans incoherent 35-14-135-125-12456-26-2345
 rule trans inhered 35-125-12456-1246
 rule trans inherent 35-125-12456-26-2345
+use
 
 ## know
-uses not_modifier_< - rule trans know 5-13
+uses not_modifier_<+ - rule trans know 5-13
 
-rule trans lucknow 123-136-14-13-1345-246
+uses word_whole_begin_+ word_whole_begin_- rule trans lucknow 123-136-14-13-1345-246
 
 ## lord
-uses not_modifier_< - rule trans lord 5-123
-rule trans chlordane 16-123-135-1235-145-1-1345-15
+uses not_modifier_<+ - rule trans lord 5-123
+
+uses word_whole_begin_+ word_whole_begin_- rule trans chlordane 16-123-135-1235-145-1-1345-15
 
 ## many
-uses not_modifier_< - rule trans many 456-134
+uses not_modifier_<+ - rule trans many 456-134
 
 ## mother
-uses not_modifier_< - rule trans mother 5-134
-rule trans chemotherapy 16-15-134-135-2346-1235-1-1234-13456
+uses not_modifier_<+ - rule trans mother 5-134
+
+uses word_whole_begin_+ word_whole_begin_- rule trans chemotherapy 16-15-134-135-2346-1235-1-1234-13456
 
 ## name   10.7.5
-uses not_modifier_< - rule trans name 5-1345
+uses not_modifier_<+ - rule trans name 5-1345
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans filename 124-24-123-15-5-1345
 rule trans forename 123456-15-5-1345
 rule trans ornament 135-1235-1345-1-56-2345
@@ -948,17 +850,20 @@ rule trans rename 1235-15-5-1345
 rule trans tournament 2345-1256-1235-1345-1-56-2345
 rule trans unamended 136-1345-1-134-26-145-1246
 rule trans vietnamese 1236-24-15-2345-1345-1-134-15-234-15
+use
 
 ## one   10.7.6
-uses not_modifier_< - rule trans one 5-135
-
-use word_mid_end_+ word_mid_end_-
-rule trans oned 135-1345-1246
-rule trans onent 135-1345-26-2345
-rule trans oner 135-1345-12456
-rule trans onest 135-1345-15-34
+uses not_modifier_<+ - rule trans one 5-135
 
 use word_whole_begin_+ word_whole_begin_-
+
+rule trans honest 125-5-135-34
+rule trans monetar 134-5-135-2345-345   # monetarily, monetarism, monetary
+
+rule trans looney 123-135-135-1345-15-13456
+rule trans mooney 134-135-135-1345-15-13456
+rule trans rooney 1235-135-135-1345-15-13456
+
 rule trans abalone 1-12-1-123-135-1345-15
 rule trans alcyone 1-123-14-13456-135-1345-15
 rule trans anemone 1-1345-15-134-135-1345-15
@@ -980,21 +885,19 @@ rule trans erroneous 12456-1235-135-1345-15-1256-234
 rule trans giorgione 1245-24-135-1235-1245-24-135-1345-15
 rule trans hermione 125-12456-134-24-135-1345-15
 rule trans honecker 125-135-1345-15-14-13-12456
-rule trans honest 125-5-135-34
 rule trans indonesia 35-145-135-1345-15-234-24-1
 rule trans ionesco 24-135-1345-15-234-14-135
 rule trans krone 13-1235-135-1345-15
+rule trans kroner 13-1235-135-1345-12456
 rule trans leonel 123-15-135-1345-15-123
 rule trans lionel 123-24-135-1345-15-123
 rule trans lioness 123-24-135-56-234
-rule trans looney 123-135-135-1345-15-13456
 rule trans luncheonette 123-136-1345-16-15-135-1345-15-2345-2345-15
 rule trans marchioness 134-345-16-24-135-56-234
 rule trans marionette 134-345-24-135-1345-15-2345-2345-15
 rule trans micronesia 134-24-14-1235-135-1345-15-234-24-1
 rule trans minestrone 134-35-15-34-1235-135-1345-15
 rule trans monet 134-135-1345-15-2345
-rule trans mooney 134-135-135-1345-15-13456
 rule trans nonempty 1345-135-1345-15-134-1234-2345-13456
 rule trans nonessential 1345-135-1345-15-234-234-26-2345-24-1-123
 rule trans nonevent 1345-135-1345-15-1236-26-2345
@@ -1013,36 +916,41 @@ rule trans phoneme 1234-125-135-1345-15-134-15
 rule trans phonemic 1234-125-135-1345-15-134-24-14
 rule trans phonetic 1234-125-135-1345-15-2345-24-14
 rule trans pioneer 1234-24-135-1345-15-12456
-rule trans rooney 1235-135-135-1345-15-13456
 rule trans salmonella 234-1-123-134-135-1345-15-123-123-1
 rule trans shoshone 146-135-146-135-1345-15
 rule trans spumone 234-1234-136-134-135-1345-15
 rule trans veronese 1236-12456-135-1345-15-234-15
 
-rule trans kroner 13-1235-135-1345-12456
-rule trans monetarily 134-5-135-2345-345-24-123-13456
-rule trans monetarism 134-5-135-2345-345-24-234-134
-rule trans monetary 134-5-135-2345-345-13456
+use word_mid_end_+ word_mid_end_-
+rule trans oned 135-1345-1246
+rule trans onent 135-1345-26-2345
+rule trans oner 135-1345-12456
+rule trans onest 135-1345-15-34
+
+use
 
 ## ought
-uses not_modifier_< - rule trans ought 5-1256
+uses not_modifier_<+ - rule trans ought 5-1256
 
 ## part
-uses not_modifier_< - rule trans part 5-1234
+uses not_modifier_<+ - rule trans part 5-1234
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans parthenogenesis 1234-345-2346-1345-135-1245-26-15-234-24-234
 rule trans parthenon 1234-345-2346-1345-135-1345
 rule trans parthia 1234-345-1456-24-1
+use
 
 ## question
-uses not_modifier_< - rule trans question 5-12345
+uses not_modifier_<+ - rule trans question 5-12345
 
 ## right
-uses not_modifier_< - rule trans right 5-1235
+uses not_modifier_<+ - rule trans right 5-1235
 
 ## some   10.7.7
-uses not_modifier_< - rule trans some 5-234
+uses not_modifier_<+ - rule trans some 5-234
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans blossomed 12-123-135-234-234-135-134-1246
 rule trans gasometer 1245-1-234-135-134-15-2345-12456
 rule trans isometric 24-234-135-134-15-2345-1235-24-14
@@ -1050,9 +958,10 @@ rule trans ransomed 1235-1-1345-234-135-134-1246
 rule trans somersault 234-135-134-12456-234-1-136-123-2345
 rule trans somerset 234-135-134-12456-234-15-2345
 rule trans unbosomed 136-1345-12-135-234-135-134-1246
+use
 
 ## spirit
-uses not_modifier_< - rule trans spirit 456-234
+uses not_modifier_<+ - rule trans spirit 456-234
 
 ## there   10.7.2
 
@@ -1067,12 +976,13 @@ rule trans thereon 5-2346-135-1345
 rule trans thereto 5-2346-2345-135
 rule trans thereupon 5-2346-45-136
 rule trans therewith 5-2346-23456
+use
 
 ## their
-uses not_modifier_< - rule trans their 456-2346
+uses not_modifier_<+ - rule trans their 456-2346
 
 ## these   10.7.2
-uses not_modifier_< - rule trans these 45-2346
+uses not_modifier_<+ - rule trans these 45-2346
 
 use word_whole_begin_+ word_whole_begin_-
 rule trans antitheses 1-1345-2345-24-2346-234-15-234
@@ -1081,19 +991,23 @@ rule trans parentheses 1234-345-26-2346-234-15-234
 rule trans syntheses 234-13456-1345-2346-234-15-234
 rule trans theses 2346-234-15-234
 rule trans theseus 2346-234-15-136-234
+use
 
 ## those   10.7.2
-uses not_modifier_< - rule trans those 45-1456
+uses not_modifier_<+ - rule trans those 45-1456
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans spathose 234-1234-1-1456-135-234-15
 rule trans thoseby 1456-135-234-15-12-13456
+use
 
 ## through
-uses not_modifier_< - rule trans through 5-1456
+uses not_modifier_<+ - rule trans through 5-1456
 
 ## time   10.7.8
-uses not_modifier_< - rule trans time 5-2345
+uses not_modifier_<+ - rule trans time 5-2345
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans altimeter 1-123-2345-24-134-15-2345-12456
 rule trans centime 14-26-2345-24-134-15
 rule trans mortimer 134-135-1235-2345-24-134-12456
@@ -1101,214 +1015,147 @@ rule trans multimedia 134-136-123-2345-24-134-1246-24-1
 rule trans presentiment 1234-1235-15-234-26-2345-24-56-2345
 rule trans sentiment 234-26-2345-24-56-2345
 rule trans unsentimental 136-1345-234-26-2345-24-56-2345-1-123
+use
 
 ## under   10.7.9
-match trans (^|%[_~]%<*)|![ao] under -  - 5-136 -   10.7.9
+match trans (^|%[_~]%<*)|![ao] under -   - 5-136 -   10.7.9
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans underived 136-1345-145-12456-24-1236-1246
 rule trans underogatory 136-1345-145-12456-135-1245-1-2345-135-1235-13456
+use
 
 ## upon   10.7.2
-uses not_modifier_< - rule trans upon 45-136
+uses not_modifier_<+ - rule trans upon 45-136
 
-rule trans dupont 145-136-1234-135-1345-2345
+uses word_whole_begin_+ word_whole_begin_- rule trans dupont 145-136-1234-135-1345-2345
 
 ## where
-uses not_modifier_< - rule trans where 5-156
+uses not_modifier_<+ - rule trans where 5-156
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans where'er 156-12456-15-3-12456
 rule trans whereupon 5-156-45-136
 rule trans wherever 156-12456-5-15
+use
 
 ## whose
-uses not_modifier_< - rule trans whose 45-156
+uses not_modifier_<+ - rule trans whose 45-156
 
 ## word
-uses not_modifier_< - rule trans word 45-2456
+uses not_modifier_<+ - rule trans word 45-2456
 
-#3 work
-uses not_modifier_< - rule trans work 5-2456
+## work
+uses not_modifier_<+ - rule trans work 5-2456
 
-#3 world
-uses not_modifier_< - rule trans world 456-2456
+## world
+uses not_modifier_<+ - rule trans world 456-2456
 
 ## young
-uses not_modifier_< - rule trans young 5-13456
-
-use
+uses not_modifier_<+ - rule trans young 5-13456
 
 
 ########################################
 #   10.8   Final-Letter Groupsigns
-#   BOTH ALPHABETIC AND NOT
-#   letter* no capital -
-#   list
 ########################################
 
 filter final_letter_groupsign_+   %a             -
 filter final_letter_groupsign_-   @[LETTER_<-]   -
 
-#   watch for numeric mode
-macro final_letter_init
+#   The final-letter groupsigns that start with dots 56 are marked like
+#   modifiers because thay could be mistaken with the grade 1 indicator, unless
+#   they are marking the end of numeric mode.
+
+macro mark_mod_final_letter
 uses final_letter_groupsign_+ final_letter_groupsign_- rule trans $1 $2
-match -backward init - \M\;$2;\M -   (^|!\;3456;)@[LETTER_<-]+ \;$2; -
+uses final_letter_groupsign_+ final_letter_groupsign_- rule init \M\;$2;\M \;$2;
 eom
 
-use word_whole_begin_+ word_whole_begin_-
+macro mark_mod_final_letter_numeric
+uses final_letter_groupsign_+ final_letter_groupsign_- rule trans $1 $2
+match -backward init - \M\;$2;\M -   (^|!\;3456;)(@[DIGITS_-]|@[DIGITS_-][⠐⠲⠌])+|@[LETTER_DIGITLESS_<-] \;$2; -
+eom
 
 ## ance
-@final_letter_init ance 46-15
+uses final_letter_groupsign_+ final_letter_groupsign_- rule trans ance 46-15
 
-rule trans fiance 124-24-1-1345-14-15   should be fiancé
+uses word_whole_begin_+ word_whole_begin_- rule trans fiance 124-24-1-1345-14-15   # should be fiancé
 
 ## ence
-@final_letter_init ence 56-15
+@mark_mod_final_letter_numeric ence 56-15
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans electroencephalogram 15-123-15-14-2345-1235-135-26-14-15-1234-125-1-123-135-1245-1235-1-134
 rule trans electroencephalograph 15-123-15-14-2345-1235-135-26-14-15-1234-125-1-123-135-1245-1235-1-1234-125
+use
 
 ## ful
-@final_letter_init ful 56-123
+@mark_mod_final_letter ful 56-123
 
-rule trans overfull 135-1236-12456-124-136-123-123
-
-use word_whole_+ word_whole_-
+uses word_whole_begin_+ word_whole_begin_- rule trans overfull 135-1236-12456-124-136-123-123
 
 ## ity   10.8.3
-@final_letter_init ity 56-13456
+@mark_mod_final_letter ity 56-13456
 
+use word_whole_+ word_whole_-
 rule trans biscuity 12-24-234-14-136-24-2345-13456
 rule trans dacoity 145-1-14-135-24-2345-13456
 rule trans fruity 124-1235-136-24-2345-13456
 rule trans hoity-toity 124-135-24-2345-13456-36-2345-135-24-2345-13456
 rule trans rabbity 1235-1-23-24-2345-13456
 rule trans pityard 1234-24-2345-13456-345-145
+use
 
 ## less
-@final_letter_init less 46-234
-
-use word_whole_begin_+ word_whole_begin_-
+uses final_letter_groupsign_+ final_letter_groupsign_- rule trans less 46-234
 
 ## ment
-@final_letter_init ment 56-2345
+@mark_mod_final_letter ment 56-2345
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans aforementioned 1-123456-15-134-26-56-1345-1246
 rule trans unmentionable 136-1345-134-26-56-1345-1-12-123-15
+use
 
 ## ness   10.8.4
-@final_letter_init ness 56-234
+@mark_mod_final_letter ness 56-234
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans chieftainess 16-24-15-124-2345-1-35-15-234-234
 rule trans citizeness 14-24-2345-24-1356-26-15-234-234
 rule trans heatheness 125-2-2346-1345-15-234-234
+use
 
 #   overrides in
 uses final_letter_groupsign_+ final_letter_groupsign_- rule trans iness 24-56-234
 
 ## ong
-@final_letter_init ong 56-1245
+@mark_mod_final_letter_numeric ong 56-1245
 
+use word_whole_begin_+ word_whole_begin_-
 rule trans moongod 134-135-135-1345-1245-135-145
 rule trans nongaseous 1345-135-1345-1245-1-234-15-1256-234
 rule trans nongovernmental 1345-135-1345-1245-135-1236-12456-1345-56-2345-1-123
+use
 
 ## ound
-@final_letter_init ound 46-145
+uses final_letter_groupsign_+ final_letter_groupsign_- rule trans ound 46-145
 
 ## ount
-@final_letter_init ount 46-2345
+uses final_letter_groupsign_+ final_letter_groupsign_- rule trans ount 46-2345
 
-#3 sion
-@final_letter_init sion 46-1345
+## sion
+uses final_letter_groupsign_+ final_letter_groupsign_- rule trans sion 46-1345
 
 ## tion
-@final_letter_init tion 56-1345
+@mark_mod_final_letter tion 56-1345
 
-rule trans cation 14-1-2345-24-135-1345
-
-use
+uses word_whole_begin_+ word_whole_begin_- rule trans cation 14-1-2345-24-135-1345
 
 
 ########################################
-#   10.9   Shortforms   not including 10.9.3
-#   ALPHABETIC CONTRACTION
-#   any - any
-#   list
+#   10.9   Shortforms
 ########################################
-
-filter shortform_+   @[WORD_<+]   @[APOSS_+]@[WORD_>+]
-filter shortform_-   @[WORD_<-]   @[APOSS_-]@[WORD_>-]
-
-use shortform_+ shortform_-
-rule trans about 1-12
-rule trans above 1-12-1236
-rule trans according 1-14
-rule trans across 1-14-1235
-rule trans after 1-124
-rule trans afternoon 1-124-1345
-rule trans afterward 1-124-2456
-rule trans again 1-1245
-rule trans against 1-1245-34
-uses word_whole_+ word_whole_- rule trans almost 1-123-134
-rule trans already 1-123-1235
-rule trans also 1-123
-rule trans although 1-123-1456
-rule trans altogether 1-123-2345
-rule trans always 1-123-2456
-rule trans because 23-14
-rule trans before 23-124
-rule trans behind 23-125
-rule trans below 23-123
-rule trans beneath 23-1345
-rule trans beside 23-234
-rule trans between 23-2345
-rule trans beyond 23-13456
-rule trans conceive 25-14-1236
-rule trans conceiving 25-14-1236-1245
-rule trans could 14-145
-rule trans deceive 145-14-1236
-rule trans deceiving 145-14-1236-1245
-rule trans declare 145-14-123
-rule trans declaring 145-14-123-1245
-rule trans either 15-24
-rule trans herself 125-12456-124
-rule trans him 125-134
-rule trans himself 125-134-124
-rule trans immediate 24-134-134
-rule trans its 1346-234
-rule trans itself 1346-124
-rule trans much 134-16
-rule trans must 134-34
-rule trans myself 134-13456-124
-rule trans necessary 1345-15-14
-rule trans neither 1345-15-24
-rule trans oneself 5-135-124
-rule trans ourselves 1256-1235-1236-234
-rule trans paid 1234-145
-rule trans perceive 1234-12456-14-1236
-rule trans perceiving 1234-12456-14-1236-1245
-rule trans perhaps 1234-12456-125
-rule trans receive 1235-14-1236
-rule trans receiving 1235-14-1236-1245
-rule trans rejoice 1235-245-14
-rule trans rejoicing 1235-245-14-1245
-rule trans said 234-145
-rule trans should 146-145
-rule trans such 234-16
-rule trans themselves 2346-134-1236-234
-rule trans thyself 1456-13456-124
-rule trans today 2345-145
-rule trans together 2345-1245-1235
-rule trans tomorrow 2345-134
-rule trans tonight 2345-1345
-rule trans would 2456-145
-rule trans your 13456-1235
-rule trans yourself 13456-1235-124
-rule trans yourselves 13456-1235-1236-234
-use
-
-
-#   10.9.5
 
 macro contraction
 rule premode $1 \;56;$1
@@ -1317,830 +1164,715 @@ rule premode $3 \;56;$3
 rule premode $4 \;56;$4
 rule premode $5 \;56;$5
 rule premode $6 \;56;$6
-rule premode $7 \;56;$7
-rule premode $8 \;56;$8
-rule premode $9 \;56;$9
 eom
 
-use word_whole_+ word_whole_-
-#contraction ab Ab AB abs Abs ABS ab's Ab's AB'S                    # about
-@contraction abv Abv ABV abvs Abvs ABVS abv's Abv's ABV'S           # above
-@contraction ac Ac AC acs Acs ACS ac's Ac's AC'S                    # according
-@contraction acr Acr ACR acrs Acrs ACRS acr's Acr's ACR'S           # across
-@contraction af Af AF afs Afs AFS af's Af's AF'S                    # after
-@contraction afn Afn AFN afns Afns AFNS afn's Afn's AFN'S           # afternoon
-@contraction afw Afw AFW afws Afws AFWS afw's Afw's AFW'S           # afterward
-@contraction ag Ag AG ags Ags AGS ag's Ag's AG'S                    # again
-#contraction alm Alm ALM alms Alms ALMS alm's Alm's ALM'S           # almost
-@contraction alr Alr ALR alrs Alrs ALRS alr's Alr's ALR'S           # already
-@contraction al Al AL als Als ALS al's Al's AL'S                    # also
-@contraction alt Alt ALT alts Alts ALTS alt's Alt's ALT'S           # altogether
-@contraction alw Alw ALW alws Alws ALWS alw's Alw's ALW'S           # always
-@contraction bl Bl BL bls Bls BLS bl's Bl's BL'S                    # blind
-@contraction brl Brl BRL brls Brls BRLS brl's Brl's BRL'S           # braille
-@contraction cd Cd CD cds Cds CDS cd's Cd's CD'S                    # could
-@contraction dcv Dcv DCV dcvs Dcvs DCVS dcv's Dcv's DCV'S           # deceive
-@contraction dcvg Dcvg DCVG dcvgs Dcvgs DCVGS dcvg's Dcvg's DCVG'S  # deceiving
-@contraction dcl Dcl DCL dcls Dcls DCLS dcl's Dcl's DCL'S           # declare
-@contraction dclg Dclg DCLG dclgs Dclgs DCLGS dclg's Dclg's DCLG'S  # declaring
-@contraction ei Ei EI eis Eis EIS ei's Ei's EI'S                    # either
-@contraction fr Fr FR frs Frs FRS fr's Fr's FR'S                    # friend
-@contraction gd Gd GD gds Gds GDS gd's Gd's GD'S                    # good
-@contraction grt Grt GRT grts Grts GRTS grt's Grt's GRT'S           # great
-#contraction hm Hm HM hms Hms HMS hm's Hm's HM'S                    # him
-@contraction hmf Hmf HMF hmfs Hmfs HMFS hmf's Hmf's HMF'S           # himself
-@contraction imm Imm IMM imms Imms IMMS imm's Imm's IMM'S           # immediate
-@contraction xs Xs XS xss Xss XSS xs's Xs's XS'S                    # its
-@contraction xf Xf XF xfs Xfs XFS xf's Xf's XF'S                    # itself
-@contraction lr Lr LR lrs Lrs LRS lr's Lr's LR'S                    # letter
-@contraction ll Ll LL lls Lls LLS ll's Ll's LL'S                    # little
-@contraction myf Myf MYF myfs Myfs MYFS myf's Myf's MYF'S           # myself
-@contraction nec Nec NEC necs Necs NECS nec's Nec's NEC'S           # necessary
-@contraction nei Nei NEI neis Neis NEIS nei's Nei's NEI'S           # neither
-@contraction pd Pd PD pds Pds PDS pd's Pd's PD'S                    # paid
-@contraction qk Qk QK qks Qks QKS qk's Qk's QK'S                    # quick
-@contraction rcv Rcv RCV rcvs Rcvs RCVS rcv's Rcv's RCV'S           # receive
-@contraction rcvg Rcvg RCVG rcvgs Rcvgs RCVGS rcvg's Rcvg's RCVG'S  # receiving
-@contraction rjc Rjc RJC rjcs Rjcs RJCS rjc's Rjc's RJC'S           # rejoice
-@contraction rjcg Rjcg RJCG rjcgs Rjcgs RJCGS rjcg's Rjcg's RJCG'S  # rejoicing
-@contraction sd Sd SD sds Sds SDS sd's Sd's SD'S                    # said
-@contraction td Td TD tds Tds TDS td's Td's TD'S                    # today
-@contraction tgr Tgr TGR tgrs Tgrs TGRS tgr's Tgr's TGR'S           # together
-@contraction tm Tm TM tms Tms TMS tm's Tm's TM'S                    # tomorrow
-@contraction tn Tn TN tns Tns TNS tn's Tn's TN'S                    # tonight
-@contraction wd Wd WD wds Wds WDS wd's Wd's WD'S                    # would
-@contraction yr Yr YR yrs Yrs YRS yr's Yr's YR'S                    # your
-@contraction yrf Yrf YRF yrfs Yrfs YRFS yrf's Yrf's YRF'S           # yourself
-@contraction yrvs Yrvs YRVS yrvss Yrvss YRVSS yrvs's Yrvs's YRVS'S  # yourselves
-use
+filter shortform_+   @[WORD_<+]   @[APOSS_+]@[WORD_>+]
+filter shortform_-   @[WORD_<-]   @[APOSS_-]@[WORD_>-]
 
 # 10.9.3
 
-# no words with "grt" or "brl" ... yet
-filter shortform_letter_+   @[WORD_<+]%a*   @[LETTER_>+]*@[APOSS_+]@[WORD_>+]
-
-
+filter shortform_letter_+   @[WORD_<+]%a*             @[LETTER_>+]*@[APOSS_+]@[WORD_>+]
 filter shortform_letter_-   @[WORD_<-]@[LETTER_<-]*   @[LETTER_>-]*@[APOSS_-]@[WORD_>-]
+
 use shortform_letter_+ shortform_letter_-
 
 rule trans braille 12-1235-123
 rule trans great 1245-1235-2345
 
-match trans @[WORD_<+]%a* children (%c@[LETTER_>+]*)?@[APOSS_+]@[WORD_>+]  @[WORD_<-]@[LETTER_<-]* 16-1345 (%c@[LETTER_>-]*)?@[APOSS_-]@[WORD_>-]   10.9.3
+@contraction brl Brl BRL brls Brls BRLS   # braille
+@contraction grt Grt GRT grts Grts GRTS   # great
 
-pattern CONSONANT_>-  @[B_>-]|@[C_>-]|@[D_>-]|@[F_>-]|@[G_>-]|@[H_>-]|@[J_>-]|@[K_>-]|@[L_>-]|@[M_>-]|@[N_>-]|@[P_>-]|@[Q_>-]|@[R_>-]|@[S_>-]|@[T_>-]|@[V_>-]|@[W_>-]|@[X_>-]|@[Z_>-]
+match trans @[WORD_<+]%a* children (%c@[LETTER_>+]*)?@[APOSS_+]@[WORD_>+]   @[WORD_<-]@[LETTER_<-]* 16-1345 (%c@[LETTER_>-]*)?@[APOSS_-]@[WORD_>-]
+uses word_whole_+ word_whole_- rule trans chn 14-125-1345
 
-filter shortform_consonant_+   @[WORD_<+]      (%c@[LETTER_>+]*)?@[APOST_+]@[WORD_>+]
-filter shortform_consonant_-   @[WORD_<-]      (@[CONSONANT_>-]@[LETTER_>-]*)?@[APOST_-]@[WORD_>-]
+use
+
+pattern CONSONANT_>- @[B_>-]|@[C_>-]|@[D_>-]|@[F_>-]|@[G_>-]|@[H_>-]|@[J_>-]|@[K_>-]|@[L_>-]|@[M_>-]|@[N_>-]|@[P_>-]|@[Q_>-]|@[R_>-]|@[S_>-]|@[T_>-]|@[V_>-]|@[W_>-]|@[X_>-]|@[Z_>-]
+
+filter shortform_consonant_+   @[WORD_<+]   (%c@[LETTER_>+]*)?@[APOST_+]@[WORD_>+]
+filter shortform_consonant_-   @[WORD_<-]   (@[CONSONANT_>-]@[LETTER_>-]*)?@[APOST_-]@[WORD_>-]
+
 use shortform_consonant_+ shortform_consonant_-
 
 rule trans blind 12-123
 rule trans first 124-34
-rule trans good 1245-145
 rule trans friend 124-1235
+rule trans good 1245-145
 rule trans letter 123-1235
 rule trans little 123-123
 rule trans quick 12345-13
 
 rule trans blinds 12-123-234
 rule trans firsts 124-34-234
-rule trans goods 1245-145-234
 rule trans friends 124-1235-234
+rule trans goods 1245-145-234
 rule trans letters 123-1235-234
 rule trans littles 123-123-234
 rule trans quicks 12345-13-234
 
+@contraction bl Bl BL bls Bls BLS                            # blind
+uses word_whole_+ word_whole_- rule trans fst 124-234-2345   # first
+@contraction fr Fr FR frs Frs FRS                            # friend
+@contraction gd Gd GD gds Gds GDS                            # good
+@contraction lr Lr LR lrs Lrs LRS                            # letter
+@contraction ll Ll LL lls Lls LLS                            # little
+@contraction qk Qk QK qks Qks QKS                            # quick
+
+use
+
+#   10.9.5
+
+#   Shortform does contain a groupsign, so it does not require grade 1
+#   indicator.  The uncontracted shortform must be defined. (10.9.4)
+macro shortform_word
+uses shortform_+ shortform_- rule trans $1 $2
+uses shortform_+ shortform_- rule trans $3 $4
+uses word_whole_+ word_whole_- rule trans $3 $4
+eom
+
+#   Shortform does not have contain a groupsign, so it requires grade 1
+#   indicator.  (10.9.5)
+macro shortform_indicator
+uses shortform_+ shortform_- rule trans $1 $2
+@contraction $3 $4 $5 $3s $4s $5S
+eom
+
+use word_whole_+ word_whole_-
+#shortform_indicator   about        1-12 ab Ab AB
+@shortform_indicator   above        1-12-1236 abv Abv ABV
+@shortform_indicator   according    1-14 ac Ac AC
+@shortform_indicator   across       1-14-1235 acr Acr ACR
+@shortform_indicator   after        1-124 af Af AF
+@shortform_indicator   afternoon    1-124-1345 afn Afn AFN
+@shortform_indicator   afterward    1-124-2456 afw Afw AFW
+@shortform_indicator   again        1-1245 ag Ag AG
+@shortform_word        against      1-1245-34 agst 1-1245-234-2345
+#shortform_indicator   almost       1-123-134 alm Alm ALM
+@shortform_indicator   already      1-123-1235 alr Alr ALR
+@shortform_indicator   also         1-123 al Al AL
+@shortform_word        although     1-123-1456 alth 1-123-2345-125
+@shortform_indicator   altogether   1-123-2345 alt Alt ALT
+@shortform_indicator   always       1-123-2456 alw Alw ALW
+@shortform_word        because      23-14 bec 12-15-14
+@shortform_word        before       23-124 bef 12-15-124
+@shortform_word        behind       23-125 beh 12-15-125
+@shortform_word        below        23-123 bel 12-15-123
+@shortform_word        beneath      23-1345 ben 12-26   # not 12-15-1345
+@shortform_word        beside       23-234 bes 12-15-234
+@shortform_word        between      23-2345 bet 12-15-2345
+@shortform_word        beyond       23-13456 bey 12-15-13456
+@shortform_word        conceive     25-14-1236 concv 14-135-1345-14-1236
+@shortform_word        conceiving   25-14-1236-1245 concvg 14-135-1345-14-1236-1245
+@shortform_indicator   could        14-145 cd Cd CD
+@shortform_indicator   deceive      145-14-1236 dcv Dcv DCV
+@shortform_indicator   deceiving    145-14-1236-1245 dcvg Dcvg DCVG
+@shortform_indicator   declare      145-14-123 dcl Dcl DCL
+@shortform_indicator   declaring    145-14-123-1245 dclg Dclg DCLG
+@shortform_indicator   either       15-24 ei Ei EI
+@shortform_word        herself      125-12456-124 herf 125-15-1235-124
+#shortform_indicator   him          125-134 hm Hm HM
+@shortform_indicator   himself      125-134-124 hmf Hmf HMF
+@shortform_indicator   immediate    24-134-134 imm Imm IMM
+@shortform_indicator   its          1346-234 xs Xs XS
+@shortform_indicator   itself       1346-124 xf Xf XF
+@shortform_word        much         134-16 mch 134-14-125
+@shortform_word        must         134-34 mst 134-234-2345
+@shortform_indicator   myself       134-13456-124 myf Myf MYF
+@shortform_indicator   necessary    1345-15-14 nec Nec NEC
+@shortform_indicator   neither      1345-15-24 nei Nei NEI
+@shortform_word        oneself      5-135-124 onef 135-1345-15-124
+@shortform_word        ourselves    1256-1235-1236-234 ourvs 135-136-1235-1236-234
+@shortform_indicator   paid         1234-145 pd Pd PD
+@shortform_word        perceive     1234-12456-14-1236 percv 1234-15-1235-14-1236
+@shortform_word        perceiving   1234-12456-14-1236-1245 percvg 1234-15-1235-14-1236-1245
+@shortform_word        perhaps      1234-12456-125 perh 1234-15-1235-125
+@shortform_indicator   receive      1235-14-1236 rcv Rcv RCV
+@shortform_indicator   receiving    1235-14-1236-1245 rcvg Rcvg RCVG
+@shortform_indicator   rejoice      1235-245-14 rjc Rjc RJC
+@shortform_indicator   rejoicing    1235-245-14-1245 rjcg Rjcg RJCG
+@shortform_indicator   said         234-145 sd Sd SD
+@shortform_word        should       146-145 shd 234-125-145
+@shortform_word        such         234-16 sch 234-14-125
+@shortform_word        themselves   2346-134-1236-234 themvs 2345-125-15-134-1236-234
+@shortform_word        thyself      1456-13456-124 thyf 2345-125-13456-124
+@shortform_indicator   today        2345-145 td Td TD
+@shortform_indicator   together     2345-1245-1235 tgr Tgr TGR
+@shortform_indicator   tomorrow     2345-134 tm Tm TM
+@shortform_indicator   tonight      2345-1345 tn Tn TN
+@shortform_indicator   would        2456-145 wd Wd WD
+@shortform_indicator   your         13456-1235 yr Yr YR
+@shortform_indicator   yourself     13456-1235-124 yrf Yrf YRF
+@shortform_indicator   yourselves   13456-1235-1236-234 yrvs Yrvs YRVS
+use
+
 
 ########################################
 #   Appendex 1
-#   ALPHABETIC CONTRACTION
-#   any - any
-#   list
 ########################################
 
-use word_whole_+ word_whole_-
-rule trans abouts 1-12-1256-2345-234
-rule trans almosts 1-123-134-135-34-234
-rule trans hims 125-24-134-234
-
-macro contraction_aah
-rule premode $1 \;56;$1
-rule premode $2 \;56;$2
-rule premode $3 \;56;$3
+macro shortform_aah
+rule trans $1 $2
+rule trans $1s $3
 rule premode $4 \;56;$4
 rule premode $5 \;56;$5
 rule premode $6 \;56;$6
 eom
 
-@contraction_aah ab Ab AB ab's Ab's AB'S        # about
-@contraction_aah alm Alm ALM alm's Alm's ALM'S  # almost
-@contraction_aah hm Hm HM hm's Hm's HM'S        # him
-
-use shortform_+ shortform_-
-rule trans 'twould  3-2345-2456-145
-rule trans 'twould've  3-2345-2456-145-3-1236-15
-rule trans 'twoulda  3-2345-2456-145-1
-rule trans 'twouldn't  3-2345-2456-145-1345-3-2345
-rule trans 'twouldn't've  3-2345-2456-145-1345-3-2345-3-1236-15
-rule trans aboutface  1-12-124-1-14-15
-rule trans aboutfaced  1-12-124-1-14-1246
-rule trans aboutfacer  1-12-124-1-14-12456
-rule trans aboutfacing  1-12-124-1-14-346
-rule trans aboutturn  1-12-2345-136-1235-1345
-rule trans aboutturned  1-12-2345-136-1235-1345-1246
-rule trans aboveboard  1-12-1236-12-135-345-145
-rule trans aboveground  1-12-1236-1245-1235-46-145
-rule trans abovementioned  1-12-1236-134-26-56-1345-1246
-rule trans accordingly  1-14-123-13456
-rule trans aforesaid  1-123456-15-234-145
-rule trans afterbattle  1-124-12-1-2345-2345-123-15
-rule trans afterbirth  1-124-12-24-1235-1456
-rule trans afterbreakfast  1-124-12-1235-2-13-124-1-34
-rule trans afterburn  1-124-12-136-1235-1345
-rule trans afterburned  1-124-12-136-1235-1345-1246
-rule trans afterburner  1-124-12-136-1235-1345-12456
-rule trans afterburning  1-124-12-136-1235-1345-346
-rule trans aftercare  1-124-14-345-15
-rule trans afterclap  1-124-14-123-1-1234
-rule trans aftercoffee  1-124-14-12356-124-15-15
-rule trans afterdamp  1-124-145-1-134-1234
-rule trans afterdark  1-124-145-345-13
-rule trans afterdeck  1-124-145-15-14-13
-rule trans afterdinner  1-124-145-35-1345-12456
-rule trans afterflow  1-124-124-123-246
-rule trans aftergame  1-124-1245-1-134-15
-rule trans afterglow  1-124-1245-123-246
-rule trans afterguard  1-124-1245-136-345-145
-rule trans afterhatch  1-124-125-1-2345-16
-rule trans afterhatches  1-124-125-1-2345-16-15-234
-rule trans afterhour  1-124-125-1256-1235
-rule trans afterlife  1-124-123-24-124-15
-rule trans afterlight  1-124-123-24-126-2345
-rule trans afterlives  1-124-123-24-1236-15-234
-rule trans afterlunch  1-124-123-136-1345-16
-rule trans afterlunches  1-124-123-136-1345-16-15-234
-rule trans aftermarket  1-124-134-345-13-15-2345
-rule trans aftermatch 1-124-134-1-2345-16
-rule trans aftermatches  1-124-134-1-2345-16-15-234
-rule trans aftermath  1-124-134-1-1456
-rule trans aftermeeting  1-124-134-15-15-2345-346
-rule trans aftermidday  1-124-134-24-145-5-145
-rule trans aftermidnight  1-124-134-24-145-1345-24-126-2345
-rule trans aftermost  1-124-134-135-34
-rule trans afternoontea  1-124-1345-2345-15-1
-rule trans afterpain  1-124-1234-1-35
-rule trans afterparties  1-124-5-1234-24-15-234
-rule trans afterparty  1-124-5-1234-13456
-rule trans afterpiece  1-124-1234-24-15-14-15
-rule trans afterplay  1-124-1234-123-1-13456
-rule trans aftersale  1-124-234-1-123-15
-rule trans afterschool  1-124-234-16-135-135-123
-rule trans aftersensation  1-124-234-26-234-1-56-1345
-rule trans aftershave  1-124-146-1-1236-15
-rule trans aftershock  1-124-146-135-14-13
-rule trans aftershow  1-124-146-246
-rule trans aftershower  1-124-146-246-12456
-rule trans aftersupper  1-124-234-136-1234-1234-12456
-rule trans aftertaste  1-124-2345-1-34-15
-rule trans aftertax  1-124-2345-1-1346
-rule trans aftertaxes  1-124-2345-1-1346-15-234
-rule trans aftertea  1-124-2345-15-1
-rule trans aftertheatre  1-124-2346-1-2345-1235-15
-rule trans afterthought  1-124-1456-5-1256
-rule trans aftertime  1-124-5-2345
-rule trans aftertreatment  1-124-2345-1235-2-2345-56-2345
-rule trans afterword  1-124-45-2456
-rule trans afterwork  1-124-5-2456
-rule trans afterworld  1-124-456-2456
-rule trans apperceive  1-1234-1234-12456-14-1236
-rule trans apperceived  1-1234-1234-12456-14-1236-145
-rule trans apperceiver  1-1234-1234-12456-14-1236-1235
-rule trans apperceiving  1-1234-1234-12456-14-1236-1245
-rule trans archdeceiver  345-16-145-14-1236-1235
-rule trans beforehand  23-124-125-12346
-rule trans befriend  23-124-1235
-rule trans behindhand  23-125-125-12346
-rule trans belittle  23-123-123
-rule trans belittled  23-123-123-145
-rule trans belittlement  23-123-123-56-2345
-rule trans belittler  23-123-123-1235
-rule trans belowdeck  23-123-145-15-14-13
-rule trans belowground  23-123-1245-1235-46-145
-rule trans belowmentioned  23-123-134-26-56-1345-1246
-rule trans beneathdeck  23-1345-145-15-14-13
-rule trans beneathground  23-1345-1245-1235-46-145
-rule trans betweendeck  23-2345-145-15-14-13
-rule trans betweentime  23-2345-5-2345
-rule trans betweenwhile  23-2345-156-24-123-15
-rule trans blindfish  12-123-124-24-146
-rule trans blindfishes  12-123-124-24-146-15-234
-rule trans blindfold  12-123-124-135-123-145
-rule trans blindfolded  12-123-124-135-123-145-1246
-rule trans blindfolder  12-123-124-135-123-145-12456
-rule trans blindfolding  12-123-124-135-123-145-346
-rule trans blindly  12-123-123-13456
-rule trans blindman  12-123-134-1-1345
-rule trans blindmen  12-123-134-26
-rule trans blindness  12-123-56-234
-rule trans blindnesses  12-123-56-234-15-234
-rule trans blindside  12-123-234-24-145-15
-rule trans blindsided  12-123-234-24-145-1246
-rule trans blindsider  12-123-234-24-145-12456
-rule trans blindsiding  12-123-234-24-145-346
-rule trans blindsight  12-123-234-24-126-2345
-rule trans blindstories  12-123-34-135-1235-24-15-234
-rule trans blindstory  12-123-34-135-1235-13456
-rule trans blindworm  12-123-2456-135-1235-134
-rule trans bloodletter  12-123-135-135-145-123-1235
-rule trans boyfriend  12-135-13456-124-1235
-rule trans brailled  12-1235-123-145
-rule trans brailler  12-1235-123-1235
-rule trans braillewriter  12-1235-123-2456-1235-24-2345-12456
-rule trans braillewriting  12-1235-123-2456-1235-24-2345-346
-rule trans brailley  12-1235-123-13456
-rule trans brainchildren  12-1235-1-35-16-1345
-rule trans chainletter  16-1-35-123-1235
-rule trans children'swear  16-1345-3-234-2456-15-345
-rule trans colorblind  14-135-123-135-1235-12-123
-rule trans colorblindness  14-135-123-135-1235-12-123-56-234
-rule trans colorblindnesses  14-135-123-135-1235-12-123-56-234-15-234
-rule trans colourblind  14-135-123-1256-1235-12-123
-rule trans colourblindness  14-135-123-1256-1235-12-123-56-234
-rule trans colourblindnesses  14-135-123-1256-1235-12-123-56-234-15-234
-rule trans conceived  25-14-1236-145
-rule trans conceiver  25-14-1236-1235
-rule trans could've  14-145-3-1236-15
-rule trans coulda  14-145-1
-rule trans couldest  14-145-15-34
-rule trans couldn't  14-145-1345-3-2345
-rule trans couldn't've  14-145-1345-3-2345-3-1236-15
-rule trans couldst  14-145-34
-rule trans deafblind  145-2-124-12-123
-rule trans deafblindness  145-2-124-12-123-56-234
-rule trans deafblindnesses  145-2-124-12-123-56-234-15-234
-rule trans deceived  145-14-1236-145
-rule trans deceiver  145-14-1236-1235
-rule trans declared  145-14-123-145
-rule trans declarer  145-14-123-1235
-rule trans defriend  145-15-124-1235
-rule trans do-it-yourselfer  145-36-1346-36-13456-1235-124-12456
-rule trans doublequick  145-1256-12-123-15-12345-13
-rule trans eastabout  15-1-34-1-12
-rule trans feelgood  124-15-15-123-1245-145
-rule trans feetfirst  124-15-15-2345-124-34
-rule trans firstaid  124-34-1-24-145
-rule trans firstaider  124-34-1-24-145-12456
-rule trans firstborn  124-34-12-135-1235-1345
-rule trans firstclass  124-34-14-123-1-234-234
-rule trans firstclasses  124-34-14-123-1-234-234-15-234
-rule trans firstday  124-34-5-145
-rule trans firstdayer  124-34-5-145-12456
-rule trans firstfruit  124-34-124-1235-136-24-2345
-rule trans firstfruiting  124-34-124-1235-136-24-2345-346
-rule trans firstgeneration  124-34-1245-26-12456-1-56-1345
-rule trans firsthand  124-34-125-12346
-rule trans firsthanded  124-34-125-12346-1246
-rule trans firstling  124-34-123-346
-rule trans firstly  124-34-123-13456
-rule trans firstness  124-34-56-234
-rule trans firstnight  124-34-1345-24-126-2345
-rule trans firstnighter  124-34-1345-24-126-2345-12456
-rule trans firstrate  124-34-1235-1-2345-15
-rule trans firstrated  124-34-1235-1-2345-1246
-rule trans firstrating  124-34-1235-1-2345-346
-rule trans firststring  124-34-34-1235-346
-rule trans forasmuch  123456-1-234-134-16
-rule trans foresaid  123456-15-234-145
-rule trans fosterchildren  124-135-34-12456-16-1345
-rule trans friendless  124-1235-46-234
-rule trans friendlessness  124-1235-46-234-56-234
-rule trans friendlessnesses  124-1235-46-234-56-234-15-234
-rule trans friendlier  124-1235-123-24-12456
-rule trans friendlies  124-1235-123-24-15-234
-rule trans friendliest  124-1235-123-24-15-34
-rule trans friendliness  124-1235-123-24-56-234
-rule trans friendlinesses  124-1235-123-24-56-234-15-234
-rule trans friendly  124-1235-123-13456
-rule trans friendship  124-1235-146-24-1234
-rule trans gadabout  1245-1-145-1-12
-rule trans gainsaid  1245-1-35-234-145
-rule trans galfriend  1245-1-123-124-1235
-rule trans gentlemanfriend  1245-26-2345-123-15-134-1-1345-124-1235
-rule trans gentlemenfriends  1245-26-2345-123-15-134-26-124-1235-234
-rule trans girlfriend  1245-24-1235-123-124-1235
-rule trans godchildren  1245-135-145-16-1345
-rule trans goodafternoon  1245-145-1-124-1345
-rule trans goodby  1245-145-12-13456
-rule trans goodbye  1245-145-12-13456-15
-rule trans goodbyeing  1245-145-12-13456-15-346
-rule trans goodbying  1245-145-12-13456-346
-rule trans goodday  1245-145-5-145
-rule trans gooder  1245-145-12456
-rule trans goodest  1245-145-15-34
-rule trans goodevening  1245-145-15-1236-26-346
-rule trans goodfellow  1245-145-124-15-123-123-246
-rule trans goodfellowship  1245-145-124-15-123-123-246-146-24-1234
-rule trans goodhearted  1245-145-125-15-345-2345-1246
-rule trans goodheartedly  1245-145-125-15-345-2345-1246-123-13456
-rule trans goodheartedness  1245-145-125-15-345-2345-1246-56-234
-rule trans goodhumor  1245-145-125-136-134-135-1235
-rule trans goodhumored  1245-145-125-136-134-135-1235-1246
-rule trans goodhumoredly  1245-145-125-136-134-135-1235-1246-123-13456
-rule trans goodhumoredness  1245-145-125-136-134-135-1235-1246-56-234
-rule trans goodhumorednesses  1245-145-125-136-134-135-1235-1246-56-234-15-234
-rule trans goodhumour  1245-145-125-136-134-1256-1235
-rule trans goodhumoured  1245-145-125-136-134-1256-1235-1246
-rule trans goodhumouredly  1245-145-125-136-134-1256-1235-1246-123-13456
-rule trans goodhumouredness  1245-145-125-136-134-1256-1235-1246-56-234
-rule trans goodhumourednesses  1245-145-125-136-134-1256-1235-1246-56-234-15-234
-rule trans goodie  1245-145-24-15
-rule trans goodish  1245-145-24-146
-rule trans goodlier  1245-145-123-24-12456
-rule trans goodliest  1245-145-123-24-15-34
-rule trans goodliness  1245-145-123-24-56-234
-rule trans goodlook  1245-145-123-135-135-13
-rule trans goodlooker  1245-145-123-135-135-13-12456
-rule trans goodlooking  1245-145-123-135-135-13-346
-rule trans goodly  1245-145-123-13456
-rule trans goodman  1245-145-134-1-1345
-rule trans goodmen  1245-145-134-26
-rule trans goodmorning  1245-145-134-135-1235-1345-346
-rule trans goodnature  1245-145-1345-1-2345-136-1235-15
-rule trans goodnatured  1245-145-1345-1-2345-136-1235-1246
-rule trans goodnaturedly  1245-145-1345-1-2345-136-1235-1246-123-13456
-rule trans goodnaturedness  1245-145-1345-1-2345-136-1235-1246-56-234
-rule trans goodness  1245-145-56-234
-rule trans goodnesses  1245-145-56-234-15-234
-rule trans goodnight  1245-145-1345-24-126-2345
-rule trans goodsize  1245-145-234-24-1356-15
-rule trans goodsized  1245-145-234-24-1356-1246
-rule trans goodtempered  1245-145-2345-15-134-1234-12456-1246
-rule trans goodtemperedly  1245-145-2345-15-134-1234-12456-1246-123-13456
-rule trans goodtime  1245-145-5-2345
-rule trans goodun  1245-145-136-1345
-rule trans goodwife  1245-145-2456-24-124-15
-rule trans goodwill  1245-145-2456-24-123-123
-rule trans goodwilled  1245-145-2456-24-123-123-1246
-rule trans goodwives  1245-145-2456-24-1236-15-234
-rule trans goody  1245-145-13456
-rule trans goodyear  1245-145-13456-15-345
-rule trans grandchildren  1245-1235-12346-16-1345
-rule trans greataunt  1245-1235-2345-1-136-1345-2345
-rule trans greatbatch  1245-1235-2345-12-1-2345-16
-rule trans greatcircle  1245-1235-2345-14-24-1235-14-123-15
-rule trans greatcoat  1245-1235-2345-14-135-1-2345
-rule trans greaten  1245-1235-2345-26
-rule trans greatened  1245-1235-2345-26-1246
-rule trans greatener  1245-1235-2345-26-12456
-rule trans greatening  1245-1235-2345-26-346
-rule trans greater  1245-1235-2345-12456
-rule trans greatest  1245-1235-2345-15-34
-rule trans greatgrandaunt  1245-1235-2345-1245-1235-12346-1-136-1345-2345
-rule trans greatgrandchild  1245-1235-2345-1245-1235-12346-16-24-123-145
-rule trans greatgrandchildren  1245-1235-2345-1245-1235-12346-16-1345
-rule trans greatgranddad  1245-1235-2345-1245-1235-12346-145-1-145
-rule trans greatgranddaughter  1245-1235-2345-1245-1235-12346-145-1-136-126-2345-12456
-rule trans greatgrandfather  1245-1235-2345-1245-1235-12346-5-124
-rule trans greatgrandfatherhood  1245-1235-2345-1245-1235-12346-5-124-125-135-135-145
-rule trans greatgrandma  1245-1235-2345-1245-1235-12346-134-1
-rule trans greatgrandmother  1245-1235-2345-1245-1235-12346-5-134
-rule trans greatgrandmotherhood  1245-1235-2345-1245-1235-12346-5-134-125-135-135-145
-rule trans greatgrandnephew  1245-1235-2345-1245-1235-12346-1345-15-1234-125-15-2456
-rule trans greatgrandniece  1245-1235-2345-1245-1235-12346-1345-24-15-14-15
-rule trans greatgrandpa  1245-1235-2345-1245-1235-12346-1234-1
-rule trans greatgrandparent  1245-1235-2345-1245-1235-12346-1234-345-26-2345
-rule trans greatgrandparenthood  1245-1235-2345-1245-1235-12346-1234-345-26-2345-125-135-135-145
-rule trans greatgrandson  1245-1235-2345-1245-1235-12346-234-135-1345
-rule trans greatgranduncle  1245-1235-2345-1245-1235-12346-136-1345-14-123-15
-rule trans greathearted  1245-1235-2345-125-15-345-2345-1246
-rule trans greatheartedly  1245-1235-2345-125-15-345-2345-1246-123-13456
-rule trans greatheartedness  1245-1235-2345-125-15-345-2345-1246-56-234
-rule trans greatheartednesses  1245-1235-2345-125-15-345-2345-1246-56-234-15-234
-rule trans greatly  1245-1235-2345-123-13456
-rule trans greatnephew  1245-1235-2345-1345-15-1234-125-15-2456
-rule trans greatness  1245-1235-2345-56-234
-rule trans greatnesses  1245-1235-2345-56-234-15-234
-rule trans greatniece  1245-1235-2345-1345-24-15-14-15
-rule trans greatsword  1245-1235-2345-234-45-2456
-rule trans greatuncle  1245-1235-2345-136-1345-14-123-15
-rule trans guyfriend  1245-136-13456-124-1235
-rule trans hateletter  125-1-2345-15-123-1235
-rule trans headfirst  125-2-145-124-34
-rule trans hereabout  5-125-1-12
-rule trans hereafter  5-125-1-124
-rule trans hereagain  5-125-1-1245
-rule trans hereagainst  5-125-1-1245-34
-rule trans hereinabove  5-125-35-1-12-1236
-rule trans hereinafter  5-125-35-1-124
-rule trans hereinagain  5-125-35-1-1245
-rule trans highlypaid  125-24-126-123-13456-1234-145
-rule trans himbo  125-134-12-135
-rule trans himboes  125-134-12-135-15-234
-rule trans illpaid  24-123-123-1234-145
-rule trans immediately  24-134-134-123-13456
-rule trans immediateness  24-134-134-56-234
-rule trans inasmuch  35-1-234-134-16
-rule trans insomuch  35-234-135-134-16
-rule trans knockabout  13-1345-135-14-13-1-12
-rule trans ladyfriend  123-1-145-13456-124-1235
-rule trans layabout  123-1-13456-1-12
-rule trans letterbodies  123-1235-12-135-145-24-15-234
-rule trans letterbody  123-1235-12-135-145-13456
-rule trans letterbomb  123-1235-12-135-134-12
-rule trans letterbombed  123-1235-12-135-134-12-1246
-rule trans letterbomber  123-1235-12-135-134-12-12456
-rule trans letterbombing  123-1235-12-135-134-12-346
-rule trans letterbox  123-1235-12-135-1346
-rule trans letterboxed  123-1235-12-135-1346-1246
-rule trans letterboxer  123-1235-12-135-1346-12456
-rule trans letterboxes  123-1235-12-135-1346-15-234
-rule trans letterboxing  123-1235-12-135-1346-346
-rule trans lettered  123-1235-1246
-rule trans letterer  123-1235-12456
-rule trans letterform  123-1235-123456-134
-rule trans letterhead  123-1235-125-2-145
-rule trans letterheading  123-1235-125-2-145-346
-rule trans lettering  123-1235-346
-rule trans letterman  123-1235-134-1-1345
-rule trans lettermen  123-1235-134-26
-rule trans letteropener  123-1235-135-1234-26-12456
-rule trans letterperfect  123-1235-1234-12456-124-15-14-2345
-rule trans letterpress  123-1235-1234-1235-15-234-234
-rule trans letterpressed  123-1235-1234-1235-15-234-234-1246
-rule trans letterpresses  123-1235-1234-1235-15-234-234-15-234
-rule trans letterpressing  123-1235-1234-1235-15-234-234-346
-rule trans letterquality  123-1235-12345-136-1-123-56-13456
-rule trans letterspace  123-1235-234-1234-1-14-15
-rule trans letterspaced  123-1235-234-1234-1-14-1246
-rule trans letterspacing  123-1235-234-1234-1-14-346
-rule trans lettertext  123-1235-2345-15-1346-2345
-rule trans littled  123-123-145
-rule trans littleneck  123-123-1345-15-14-13
-rule trans littleness  123-123-56-234
-rule trans littlenesses  123-123-56-234-15-234
-rule trans littler  123-123-1235
-rule trans littlest  123-123-34
-rule trans lovechildren  123-135-1236-15-16-1345
-rule trans loveletter  123-135-1236-15-123-1235
-rule trans lowlypaid  123-246-123-13456-1234-145
-rule trans manfriend  134-1-1345-124-1235
-rule trans menfriends  134-26-124-1235-234
-rule trans midafternoon  134-24-145-1-124-1345
-rule trans misbraille  134-24-234-12-1235-123
-rule trans misbrailled  134-24-234-12-1235-123-145
-rule trans misperceive  134-24-234-1234-12456-14-1236
-rule trans misperceived  134-24-234-1234-12456-14-1236-145
-rule trans misperceiver  134-24-234-1234-12456-14-1236-1235
-rule trans misperceiving  134-24-234-1234-12456-14-1236-1245
-rule trans missaid  134-24-234-234-145
-rule trans morningafter  134-135-1235-1345-346-1-124
-rule trans muchly  134-16-123-13456
-rule trans muchness  134-16-56-234
-rule trans must've  134-34-3-1236-15
-rule trans musta  134-34-1
-rule trans mustard  134-34-345-145
-rule trans mustier  134-34-24-12456
-rule trans mustiest  134-34-24-15-34
-rule trans mustily  134-34-24-123-13456
-rule trans mustiness  134-34-24-56-234
-rule trans mustn't  134-34-1345-3-2345
-rule trans mustn't've  134-34-1345-3-2345-3-1236-15
-rule trans musty  134-34-13456
-rule trans newsletter  1345-15-2456-234-123-1235
-rule trans nonesuch  1345-5-135-234-16
-rule trans nonsuch  1345-135-1345-234-16
-rule trans northabout  1345-135-1235-1456-1-12
-rule trans overmuch  135-1236-12456-134-16
-rule trans overpaid  135-1236-12456-1234-145
-rule trans penfriend  1234-26-124-1235
-rule trans perceived  1234-12456-14-1236-145
-rule trans perceiver  1234-12456-14-1236-1235
-rule trans perhapses  1234-12456-125-15-234
-rule trans poorlypaid  1234-135-135-1235-123-13456-1234-145
-rule trans postpaid  1234-135-34-1234-145
-rule trans preceive  1234-1235-14-1236
-rule trans preceiver  1234-1235-14-1236-1235
-rule trans preceiving  1234-1235-14-1236-1245
-rule trans prepaid  1234-1235-15-1234-145
-rule trans purblind  1234-136-1235-12-123
-rule trans purblindly  1234-136-1235-12-123-123-13456
-rule trans purblindness  1234-136-1235-12-123-56-234
-rule trans purblindnesses  1234-136-1235-12-123-56-234-15-234
-rule trans quickdraw  12345-13-145-1235-1-2456
-rule trans quicken  12345-13-26
-rule trans quickened  12345-13-26-1246
-rule trans quickener  12345-13-26-12456
-rule trans quickening  12345-13-26-346
-rule trans quicker  12345-13-12456
-rule trans quickest  12345-13-15-34
-rule trans quickfire  12345-13-124-24-1235-15
-rule trans quickfiring  12345-13-124-24-1235-346
-rule trans quickfreeze  12345-13-124-1235-15-15-1356-15
-rule trans quickfreezing  12345-13-124-1235-15-15-1356-346
-rule trans quickfroze  12345-13-124-1235-135-1356-15
-rule trans quickfrozen  12345-13-124-1235-135-1356-26
-rule trans quickie  12345-13-24-15
-rule trans quickish  12345-13-24-146
-rule trans quickishly  12345-13-24-146-123-13456
-rule trans quicklime  12345-13-123-24-134-15
-rule trans quickly  12345-13-123-13456
-rule trans quickness  12345-13-56-234
-rule trans quicknesses  12345-13-56-234-15-234
-rule trans quicksand  12345-13-234-12346
-rule trans quickset  12345-13-234-15-2345
-rule trans quicksilver  12345-13-234-24-123-1236-12456
-rule trans quicksilvered  12345-13-234-24-123-1236-12456-1246
-rule trans quicksilvering  12345-13-234-24-123-1236-12456-346
-rule trans quicksnap  12345-13-234-1345-1-1234
-rule trans quickstep  12345-13-34-15-1234
-rule trans quickstepped  12345-13-34-15-1234-1234-1246
-rule trans quickstepper  12345-13-34-15-1234-1234-12456
-rule trans quickstepping  12345-13-34-15-1234-1234-346
-rule trans quicktempered  12345-13-2345-15-134-1234-12456-1246
-rule trans quicktime  12345-13-5-2345
-rule trans quickwitted  12345-13-2456-24-2345-2345-1246
-rule trans quickwittedly  12345-13-2456-24-2345-2345-1246-123-13456
-rule trans quickwittedness  12345-13-2456-24-2345-2345-1246-56-234
-rule trans quicky  12345-13-13456
-rule trans readacross  1235-2-145-1-14-1235
-rule trans rebraille  1235-15-12-1235-123
-rule trans rebrailled  1235-15-12-1235-123-145
-rule trans rebrailler  1235-15-12-1235-123-1235
-rule trans received  1235-14-1236-145
-rule trans receiver  1235-14-1236-1235
-rule trans receivership  1235-14-1236-1235-146-24-1234
-rule trans rejoiced  1235-245-14-145
-rule trans rejoiceful  1235-245-14-56-123
-rule trans rejoicefully  1235-245-14-56-123-123-13456
-rule trans rejoicefulness  1235-245-14-56-123-56-234
-rule trans rejoicer  1235-245-14-1235
-rule trans rejoicingly  1235-245-14-1245-123-13456
-rule trans reletter  1235-15-123-1235
-rule trans relettered  1235-15-123-1235-1246
-rule trans relettering  1235-15-123-1235-346
-rule trans repaid  1235-15-1234-145
-rule trans rightabout  5-1235-1-12
-rule trans roundabout  1235-46-145-1-12
-rule trans roustabout  1235-1256-34-1-12
-rule trans runabout  1235-136-1345-1-12
-rule trans saidest  234-145-15-34
-rule trans saidst  234-145-34
-rule trans scattergood  234-14-1-2345-2345-12456-1245-145
-rule trans schoolchildren  234-16-135-135-123-16-1345
-rule trans schoolfriend  234-16-135-135-123-124-1235
-rule trans should've  146-145-3-1236-15
-rule trans shoulda  146-145-1
-rule trans shouldest  146-145-15-34
-rule trans shouldn't  146-145-1345-3-2345
-rule trans shouldn't've  146-145-1345-3-2345-3-1236-15
-rule trans shouldst  146-145-34
-rule trans snowblind  234-1345-246-12-123
-rule trans snowblindness  234-1345-246-12-123-56-234
-rule trans snowblindnesses  234-1345-246-12-123-56-234-15-234
-rule trans somesuch  5-234-234-16
-rule trans southabout  234-1256-1456-1-12
-rule trans stepchildren  34-15-1234-16-1345
-rule trans stirabout  34-24-1235-1-12
-rule trans suchlike  234-16-123-24-13-15
-rule trans supergood  234-136-1234-12456-1245-145
-rule trans superquick  234-136-1234-12456-12345-13
-rule trans tailfirst  2345-1-24-123-124-34
-rule trans thereabout  5-2346-1-12
-rule trans thereafter  5-2346-1-124
-rule trans thereagain  5-2346-1-1245
-rule trans thereagainst  5-2346-1-1245-34
-rule trans thereinafter  5-2346-35-1-124
-rule trans thereinagain  5-2346-35-1-1245
-rule trans togetherness  2345-1245-1235-56-234
-rule trans turnabout  2345-136-1235-1345-1-12
-rule trans unaccording  136-1345-1-14
-rule trans unaccordingly  136-1345-1-14-123-13456
-rule trans unblindfold  136-1345-12-123-124-135-123-145
-rule trans unblindfolded  136-1345-12-123-124-135-123-145-1246
-rule trans unblindfolding  136-1345-12-123-124-135-123-145-346
-rule trans unbraille  136-1345-12-1235-123
-rule trans unbrailled  136-1345-12-1235-123-145
-rule trans undeceive  136-1345-145-14-1236
-rule trans undeceived  136-1345-145-14-1236-145
-rule trans undeceiver  136-1345-145-14-1236-1235
-rule trans undeceiving  136-1345-145-14-1236-1245
-rule trans undeclare  136-1345-145-14-123
-rule trans undeclared  136-1345-145-14-123-145
-rule trans underpaid  5-136-1234-145
-rule trans unfriend  136-1345-124-1235
-rule trans unfriendlier  136-1345-124-1235-123-24-12456
-rule trans unfriendliest  136-1345-124-1235-123-24-15-34
-rule trans unfriendliness  136-1345-124-1235-123-24-56-234
-rule trans unfriendlinesses  136-1345-124-1235-123-24-56-234-15-234
-rule trans unfriendly  136-1345-124-1235-123-13456
-rule trans unlettered  136-1345-123-1235-1246
-rule trans unnecessary  136-1345-1345-15-14
-rule trans unpaid  136-1345-1234-145
-rule trans unperceive  136-1345-1234-12456-14-1236
-rule trans unperceived  136-1345-1234-12456-14-1236-145
-rule trans unperceiving  136-1345-1234-12456-14-1236-1245
-rule trans unquick  136-1345-12345-13
-rule trans unreceived  136-1345-1235-14-1236-145
-rule trans unrejoice  136-1345-1235-245-14
-rule trans unrejoiced  136-1345-1235-245-14-145
-rule trans unrejoiceful  136-1345-1235-245-14-56-123
-rule trans unrejoicefully  136-1345-1235-245-14-56-123-123-13456
-rule trans unrejoicefulness  136-1345-1235-245-14-56-123-56-234
-rule trans unrejoicer  136-1345-1235-245-14-1235
-rule trans unrejoicing  136-1345-1235-245-14-1245
-rule trans unrejoicingly  136-1345-1235-245-14-1245-123-13456
-rule trans walkabout  2456-1-123-13-1-12
-rule trans wellpaid  2456-15-123-123-1234-145
-rule trans westabout  2456-15-34-1-12
-rule trans whereabout  5-156-1-12
-rule trans whereafter  5-156-1-124
-rule trans whereagain  5-156-1-1245
-rule trans whereagainst  5-156-1-1245-34
-rule trans whereinafter  5-156-35-1-124
-rule trans whereinagain  5-156-35-1-1245
-rule trans womanfriend  2456-135-134-1-1345-124-1235
-rule trans womenfriends  2456-135-134-26-124-1235-234
-rule trans would've  2456-145-3-1236-15
-rule trans woulda  2456-145-1
-rule trans wouldest  2456-145-15-34
-rule trans wouldn't  2456-145-1345-3-2345
-rule trans wouldn't've  2456-145-1345-3-2345-3-1236-15
-rule trans wouldst  2456-145-34
-
 use word_whole_+ word_whole_-
-@contraction abface Abface ABFACE abfaces Abfaces ABFACES abface's Abface's ABFACE'S                             # aboutface
-@contraction abturn Abturn ABTURN abturns Abturns ABTURNS abturn's Abturn's ABTURN'S                             # aboutturn
-@contraction acly Acly ACLY aclys Aclys ACLYS acly's Acly's ACLY'S                                               # accordingly
-@contraction afbattle Afbattle AFBATTLE afbattles Afbattles AFBATTLES afbattle's Afbattle's AFBATTLE'S           # afterbattle
-@contraction afburn Afburn AFBURN afburns Afburns AFBURNS afburn's Afburn's AFBURN'S                             # afterburn
-@contraction afclap Afclap AFCLAP afclaps Afclaps AFCLAPS afclap's Afclap's AFCLAP'S                             # afterclap
-@contraction afdamp Afdamp AFDAMP afdamps Afdamps AFDAMPS afdamp's Afdamp's AFDAMP'S                             # afterdamp
-@contraction afdeck Afdeck AFDECK afdecks Afdecks AFDECKS afdeck's Afdeck's AFDECK'S                             # afterdeck
-@contraction afgame Afgame AFGAME afgames Afgames AFGAMES afgame's Afgame's AFGAME'S                             # aftergame
-@contraction aflife Aflife AFLIFE aflifes Aflifes AFLIFES aflife's Aflife's AFLIFE'S                             # afterlife
-@contraction aflight Aflight AFLIGHT aflights Aflights AFLIGHTS aflight's Aflight's AFLIGHT'S                    # afterlight
-@contraction aflives Aflives AFLIVES aflivess Aflivess AFLIVESS aflives's Aflives's AFLIVES'S                    # afterlives
-@contraction afntea Afntea AFNTEA afnteas Afnteas AFNTEAS afntea's Afntea's AFNTEA'S                             # afternoontea
-@contraction afpiece Afpiece AFPIECE afpieces Afpieces AFPIECES afpiece's Afpiece's AFPIECE'S                    # afterpiece
-@contraction afplay Afplay AFPLAY afplays Afplays AFPLAYS afplay's Afplay's AFPLAY'S                             # afterplay
-@contraction afsale Afsale AFSALE afsales Afsales AFSALES afsale's Afsale's AFSALE'S                             # aftersale
-@contraction aftax Aftax AFTAX aftaxs Aftaxs AFTAXS aftax's Aftax's AFTAX'S                                      # aftertax
-@contraction aftaxes Aftaxes AFTAXES aftaxess Aftaxess AFTAXESS aftaxes's Aftaxes's AFTAXES'S                    # aftertaxes
-@contraction aftea Aftea AFTEA afteas Afteas AFTEAS aftea's Aftea's AFTEA'S                                      # aftertea
-@contraction blfold Blfold BLFOLD blfolds Blfolds BLFOLDS blfold's Blfold's BLFOLD'S                             # blindfold
-@contraction blly Blly BLLY bllys Bllys BLLYS blly's Blly's BLLY'S                                               # blindly
-@contraction blman Blman BLMAN blmans Blmans BLMANS blman's Blman's BLMAN'S                                      # blindman
-@contraction blside Blside BLSIDE blsides Blsides BLSIDES blside's Blside's BLSIDE'S                             # blindside
-@contraction blworm Blworm BLWORM blworms Blworms BLWORMS blworm's Blworm's BLWORM'S                             # blindworm
-@contraction bloodlr Bloodlr BLOODLR bloodlrs Bloodlrs BLOODLRS bloodlr's Bloodlr's BLOODLR'S                    # bloodletter
-@contraction boyfr Boyfr BOYFR boyfrs Boyfrs BOYFRS boyfr's Boyfr's BOYFR'S                                      # boyfriend
-@contraction brld Brld BRLD brlds Brlds BRLDS brld's Brld's BRLD'S                                               # brailled
-@contraction brlr Brlr BRLR brlrs Brlrs BRLRS brlr's Brlr's BRLR'S                                               # brailler
-@contraction brly Brly BRLY brlys Brlys BRLYS brly's Brly's BRLY'S                                               # brailley
-@contraction colorbl Colorbl COLORBL colorbls Colorbls COLORBLS colorbl's Colorbl's COLORBL'S                    # colorblind
-@contraction cda Cda CDA cdas Cdas CDAS cda's Cda's CDA'S                                                        # coulda
-@contraction dcvd Dcvd DCVD dcvds Dcvds DCVDS dcvd's Dcvd's DCVD'S                                               # deceived
-@contraction dcvr Dcvr DCVR dcvrs Dcvrs DCVRS dcvr's Dcvr's DCVR'S                                               # deceiver
-@contraction dcld Dcld DCLD dclds Dclds DCLDS dcld's Dcld's DCLD'S                                               # declared
-@contraction dclr Dclr DCLR dclrs Dclrs DCLRS dclr's Dclr's DCLR'S                                               # declarer
-@contraction defr Defr DEFR defrs Defrs DEFRS defr's Defr's DEFR'S                                               # defriend
-@contraction defr Defr DEFR defrs Defrs DEFRS defr's Defr's DEFR'S                                               # defriend
-@contraction feelgd Feelgd FEELGD feelgds Feelgds FEELGDS feelgd's Feelgd's FEELGD'S                             # feelgood
-@contraction frlies Frlies FRLIES frliess Frliess FRLIESS frlies's Frlies's FRLIES'S                             # friendlies
-@contraction frly Frly FRLY frlys Frlys FRLYS frly's Frly's FRLY'S                                               # friendly
-@contraction gadab Gadab GADAB gadabs Gadabs GADABS gadab's Gadab's GADAB'S                                      # gadabout
-@contraction galfr Galfr GALFR galfrs Galfrs GALFRS galfr's Galfr's GALFR'S                                      # galfriend
-@contraction girlfr Girlfr GIRLFR girlfrs Girlfrs GIRLFRS girlfr's Girlfr's GIRLFR'S                             # girlfriend
-@contraction gdafn Gdafn GDAFN gdafns Gdafns GDAFNS gdafn's Gdafn's GDAFN'S                                      # goodafternoon
-@contraction gdby Gdby GDBY gdbys Gdbys GDBYS gdby's Gdby's GDBY'S                                               # goodby
-@contraction gdbye Gdbye GDBYE gdbyes Gdbyes GDBYES gdbye's Gdbye's GDBYE'S                                      # goodbye
-@contraction gdhumor Gdhumor GDHUMOR gdhumors Gdhumors GDHUMORS gdhumor's Gdhumor's GDHUMOR'S                    # goodhumor
-@contraction gdie Gdie GDIE gdies Gdies GDIES gdie's Gdie's GDIE'S                                               # goodie
-@contraction gdlook Gdlook GDLOOK gdlooks Gdlooks GDLOOKS gdlook's Gdlook's GDLOOK'S                             # goodlook
-@contraction gdly Gdly GDLY gdlys Gdlys GDLYS gdly's Gdly's GDLY'S                                               # goodly
-@contraction gdman Gdman GDMAN gdmans Gdmans GDMANS gdman's Gdman's GDMAN'S                                      # goodman
-@contraction gdnature Gdnature GDNATURE gdnatures Gdnatures GDNATURES gdnature's Gdnature's GDNATURE'S           # goodnature
-@contraction gdsize Gdsize GDSIZE gdsizes Gdsizes GDSIZES gdsize's Gdsize's GDSIZE'S                             # goodsize
-@contraction gdun Gdun GDUN gduns Gduns GDUNS gdun's Gdun's GDUN'S                                               # goodun
-@contraction gdwife Gdwife GDWIFE gdwifes Gdwifes GDWIFES gdwife's Gdwife's GDWIFE'S                             # goodwife
-@contraction gdwill Gdwill GDWILL gdwills Gdwills GDWILLS gdwill's Gdwill's GDWILL'S                             # goodwill
-@contraction gdwives Gdwives GDWIVES gdwivess Gdwivess GDWIVESS gdwives's Gdwives's GDWIVES'S                    # goodwives
-@contraction gdy Gdy GDY gdys Gdys GDYS gdy's Gdy's GDY'S                                                        # goody
-@contraction grtaunt Grtaunt GRTAUNT grtaunts Grtaunts GRTAUNTS grtaunt's Grtaunt's GRTAUNT'S                    # greataunt
-@contraction grtcircle Grtcircle GRTCIRCLE grtcircles Grtcircles GRTCIRCLES grtcircle's Grtcircle's GRTCIRCLE'S  # greatcircle
-@contraction grtcoat Grtcoat GRTCOAT grtcoats Grtcoats GRTCOATS grtcoat's Grtcoat's GRTCOAT'S                    # greatcoat
-@contraction grtly Grtly GRTLY grtlys Grtlys GRTLYS grtly's Grtly's GRTLY'S                                      # greatly
-@contraction grtnephew Grtnephew GRTNEPHEW grtnephews Grtnephews GRTNEPHEWS grtnephew's Grtnephew's GRTNEPHEW'S  # greatnephew
-@contraction grtniece Grtniece GRTNIECE grtnieces Grtnieces GRTNIECES grtniece's Grtniece's GRTNIECE'S           # greatniece
-@contraction grtuncle Grtuncle GRTUNCLE grtuncles Grtuncles GRTUNCLES grtuncle's Grtuncle's GRTUNCLE'S           # greatuncle
-@contraction guyfr Guyfr GUYFR guyfrs Guyfrs GUYFRS guyfr's Guyfr's GUYFR'S                                      # guyfriend
-@contraction hatelr Hatelr HATELR hatelrs Hatelrs HATELRS hatelr's Hatelr's HATELR'S                             # hateletter
-@contraction hmbo Hmbo HMBO hmbos Hmbos HMBOS hmbo's Hmbo's HMBO'S                                               # himbo
-@contraction hmboes Hmboes HMBOES hmboess Hmboess HMBOESS hmboes's Hmboes's HMBOES'S                             # himboes
-@contraction illpd Illpd ILLPD illpds Illpds ILLPDS illpd's Illpd's ILLPD'S                                      # illpaid
-@contraction immly Immly IMMLY immlys Immlys IMMLYS immly's Immly's IMMLY'S                                      # immediately
-@contraction knockab Knockab KNOCKAB knockabs Knockabs KNOCKABS knockab's Knockab's KNOCKAB'S                    # knockabout
-@contraction ladyfr Ladyfr LADYFR ladyfrs Ladyfrs LADYFRS ladyfr's Ladyfr's LADYFR'S                             # ladyfriend
-@contraction layab Layab LAYAB layabs Layabs LAYABS layab's Layab's LAYAB'S                                      # layabout
-@contraction lrbodies Lrbodies LRBODIES lrbodiess Lrbodiess LRBODIESS lrbodies's Lrbodies's LRBODIES'S           # letterbodies
-@contraction lrbody Lrbody LRBODY lrbodys Lrbodys LRBODYS lrbody's Lrbody's LRBODY'S                             # letterbody
-@contraction lrbomb Lrbomb LRBOMB lrbombs Lrbombs LRBOMBS lrbomb's Lrbomb's LRBOMB'S                             # letterbomb
-@contraction lrbox Lrbox LRBOX lrboxs Lrboxs LRBOXS lrbox's Lrbox's LRBOX'S                                      # letterbox
-@contraction lrboxes Lrboxes LRBOXES lrboxess Lrboxess LRBOXESS lrboxes's Lrboxes's LRBOXES'S                    # letterboxes
-@contraction lrman Lrman LRMAN lrmans Lrmans LRMANS lrman's Lrman's LRMAN'S                                      # letterman
-@contraction lrpress Lrpress LRPRESS lrpresss Lrpresss LRPRESSS lrpress's Lrpress's LRPRESS'S                    # letterpress
-@contraction lrpresses Lrpresses LRPRESSES lrpressess Lrpressess LRPRESSESS lrpresses's Lrpresses's LRPRESSES'S  # letterpresses
-@contraction lrspace Lrspace LRSPACE lrspaces Lrspaces LRSPACES lrspace's Lrspace's LRSPACE'S                    # letterspace
-@contraction lrtext Lrtext LRTEXT lrtexts Lrtexts LRTEXTS lrtext's Lrtext's LRTEXT'S                             # lettertext
-@contraction lld Lld LLD llds Llds LLDS lld's Lld's LLD'S                                                        # littled
-@contraction llneck Llneck LLNECK llnecks Llnecks LLNECKS llneck's Llneck's LLNECK'S                             # littleneck
-@contraction llr Llr LLR llrs Llrs LLRS llr's Llr's LLR'S                                                        # littler
-@contraction lovelr Lovelr LOVELR lovelrs Lovelrs LOVELRS lovelr's Lovelr's LOVELR'S                             # loveletter
-@contraction manfr Manfr MANFR manfrs Manfrs MANFRS manfr's Manfr's MANFR'S                                      # manfriend
-@contraction midafn Midafn MIDAFN midafns Midafns MIDAFNS midafn's Midafn's MIDAFN'S                             # midafternoon
-@contraction misbrl Misbrl MISBRL misbrls Misbrls MISBRLS misbrl's Misbrl's MISBRL'S                             # misbraille
-@contraction misbrld Misbrld MISBRLD misbrlds Misbrlds MISBRLDS misbrld's Misbrld's MISBRLD'S                    # misbrailled
-@contraction missd Missd MISSD missds Missds MISSDS missd's Missd's MISSD'S                                      # missaid
-@contraction newslr Newslr NEWSLR newslrs Newslrs NEWSLRS newslr's Newslr's NEWSLR'S                             # newsletter
-@contraction poorlypd Poorlypd POORLYPD poorlypds Poorlypds POORLYPDS poorlypd's Poorlypd's POORLYPD'S           # poorlypaid
-@contraction prcv Prcv PRCV prcvs Prcvs PRCVS prcv's Prcv's PRCV'S                                               # preceive
-@contraction prcvr Prcvr PRCVR prcvrs Prcvrs PRCVRS prcvr's Prcvr's PRCVR'S                                      # preceiver
-@contraction prcvg Prcvg PRCVG prcvgs Prcvgs PRCVGS prcvg's Prcvg's PRCVG'S                                      # preceiving
-@contraction prepd Prepd PREPD prepds Prepds PREPDS prepd's Prepd's PREPD'S                                      # prepaid
-@contraction purbl Purbl PURBL purbls Purbls PURBLS purbl's Purbl's PURBL'S                                      # purblind
-@contraction purblly Purblly PURBLLY purbllys Purbllys PURBLLYS purblly's Purblly's PURBLLY'S                    # purblindly
-@contraction qkdraw Qkdraw QKDRAW qkdraws Qkdraws QKDRAWS qkdraw's Qkdraw's QKDRAW'S                             # quickdraw
-@contraction qkfire Qkfire QKFIRE qkfires Qkfires QKFIRES qkfire's Qkfire's QKFIRE'S                             # quickfire
-@contraction qkfreeze Qkfreeze QKFREEZE qkfreezes Qkfreezes QKFREEZES qkfreeze's Qkfreeze's QKFREEZE'S           # quickfreeze
-@contraction qkfroze Qkfroze QKFROZE qkfrozes Qkfrozes QKFROZES qkfroze's Qkfroze's QKFROZE'S                    # quickfroze
-@contraction qkie Qkie QKIE qkies Qkies QKIES qkie's Qkie's QKIE'S                                               # quickie
-@contraction qklime Qklime QKLIME qklimes Qklimes QKLIMES qklime's Qklime's QKLIME'S                             # quicklime
-@contraction qkly Qkly QKLY qklys Qklys QKLYS qkly's Qkly's QKLY'S                                               # quickly
-@contraction qkset Qkset QKSET qksets Qksets QKSETS qkset's Qkset's QKSET'S                                      # quickset
-@contraction qksnap Qksnap QKSNAP qksnaps Qksnaps QKSNAPS qksnap's Qksnap's QKSNAP'S                             # quicksnap
-@contraction qky Qky QKY qkys Qkys QKYS qky's Qky's QKY'S                                                        # quicky
-@contraction rebrl Rebrl REBRL rebrls Rebrls REBRLS rebrl's Rebrl's REBRL'S                                      # rebraille
-@contraction rebrld Rebrld REBRLD rebrlds Rebrlds REBRLDS rebrld's Rebrld's REBRLD'S                             # rebrailled
-@contraction rebrlr Rebrlr REBRLR rebrlrs Rebrlrs REBRLRS rebrlr's Rebrlr's REBRLR'S                             # rebrailler
-@contraction rcvd Rcvd RCVD rcvds Rcvds RCVDS rcvd's Rcvd's RCVD'S                                               # received
-@contraction rcvr Rcvr RCVR rcvrs Rcvrs RCVRS rcvr's Rcvr's RCVR'S                                               # receiver
-@contraction rjcd Rjcd RJCD rjcds Rjcds RJCDS rjcd's Rjcd's RJCD'S                                               # rejoiced
-@contraction rjcr Rjcr RJCR rjcrs Rjcrs RJCRS rjcr's Rjcr's RJCR'S                                               # rejoicer
-@contraction rjcgly Rjcgly RJCGLY rjcglys Rjcglys RJCGLYS rjcgly's Rjcgly's RJCGLY'S                             # rejoicingly
-@contraction relr Relr RELR relrs Relrs RELRS relr's Relr's RELR'S                                               # reletter
-@contraction repd Repd REPD repds Repds REPDS repd's Repd's REPD'S                                               # repaid
-@contraction runab Runab RUNAB runabs Runabs RUNABS runab's Runab's RUNAB'S                                      # runabout
-@contraction turnab Turnab TURNAB turnabs Turnabs TURNABS turnab's Turnab's TURNAB'S                             # turnabout
-@contraction unac Unac UNAC unacs Unacs UNACS unac's Unac's UNAC'S                                               # unaccording
-@contraction unacly Unacly UNACLY unaclys Unaclys UNACLYS unacly's Unacly's UNACLY'S                             # unaccordingly
-@contraction unblfold Unblfold UNBLFOLD unblfolds Unblfolds UNBLFOLDS unblfold's Unblfold's UNBLFOLD'S           # unblindfold
-@contraction unbrl Unbrl UNBRL unbrls Unbrls UNBRLS unbrl's Unbrl's UNBRL'S                                      # unbraille
-@contraction unbrld Unbrld UNBRLD unbrlds Unbrlds UNBRLDS unbrld's Unbrld's UNBRLD'S                             # unbrailled
-@contraction undcv Undcv UNDCV undcvs Undcvs UNDCVS undcv's Undcv's UNDCV'S                                      # undeceive
-@contraction undcvd Undcvd UNDCVD undcvds Undcvds UNDCVDS undcvd's Undcvd's UNDCVD'S                             # undeceived
-@contraction undcvr Undcvr UNDCVR undcvrs Undcvrs UNDCVRS undcvr's Undcvr's UNDCVR'S                             # undeceiver
-@contraction undcvg Undcvg UNDCVG undcvgs Undcvgs UNDCVGS undcvg's Undcvg's UNDCVG'S                             # undeceiving
-@contraction undcl Undcl UNDCL undcls Undcls UNDCLS undcl's Undcl's UNDCL'S                                      # undeclare
-@contraction undcld Undcld UNDCLD undclds Undclds UNDCLDS undcld's Undcld's UNDCLD'S                             # undeclared
-@contraction unfr Unfr UNFR unfrs Unfrs UNFRS unfr's Unfr's UNFR'S                                               # unfriend
-@contraction unfrly Unfrly UNFRLY unfrlys Unfrlys UNFRLYS unfrly's Unfrly's UNFRLY'S                             # unfriendly
-@contraction unnec Unnec UNNEC unnecs Unnecs UNNECS unnec's Unnec's UNNEC'S                                      # unnecessary
-@contraction unpd Unpd UNPD unpds Unpds UNPDS unpd's Unpd's UNPD'S                                               # unpaid
-@contraction unqk Unqk UNQK unqks Unqks UNQKS unqk's Unqk's UNQK'S                                               # unquick
-@contraction unrcvd Unrcvd UNRCVD unrcvds Unrcvds UNRCVDS unrcvd's Unrcvd's UNRCVD'S                             # unreceived
-@contraction unrjc Unrjc UNRJC unrjcs Unrjcs UNRJCS unrjc's Unrjc's UNRJC'S                                      # unrejoice
-@contraction unrjcd Unrjcd UNRJCD unrjcds Unrjcds UNRJCDS unrjcd's Unrjcd's UNRJCD'S                             # unrejoiced
-@contraction unrjcr Unrjcr UNRJCR unrjcrs Unrjcrs UNRJCRS unrjcr's Unrjcr's UNRJCR'S                             # unrejoicer
-@contraction unrjcg Unrjcg UNRJCG unrjcgs Unrjcgs UNRJCGS unrjcg's Unrjcg's UNRJCG'S                             # unrejoicing
-@contraction unrjcgly Unrjcgly UNRJCGLY unrjcglys Unrjcglys UNRJCGLYS unrjcgly's Unrjcgly's UNRJCGLY'S           # unrejoicingly
-@contraction walkab Walkab WALKAB walkabs Walkabs WALKABS walkab's Walkab's WALKAB'S                             # walkabout
-@contraction wellpd Wellpd WELLPD wellpds Wellpds WELLPDS wellpd's Wellpd's WELLPD'S                             # wellpaid
-@contraction womanfr Womanfr WOMANFR womanfrs Womanfrs WOMANFRS womanfr's Womanfr's WOMANFR'S                    # womanfriend
-@contraction wda Wda WDA wdas Wdas WDAS wda's Wda's WDA'S                                                        # woulda
+@shortform_aah about 1-12 1-12-1256-2345-234 ab Ab AB
+@shortform_aah almost 1-123-134 1-123-134-135-34-234 alm Alm ALM
+@shortform_aah him 125-134 125-24-134-234 hm Hm HM
 use
 
 
-########################################
-#   Appendix 1.2
-########################################
-
-rule trans dafter 145-1-124-2345-12456
-rule trans drafter 145-1235-1-124-2345-12456
-rule trans grafter 1245-1235-1-124-2345-12456
-rule trans rafter 1235-1-124-2345-12456
+use word_whole_+ word_whole_-
+@shortform_indicator   'twould                3-2345-2456-145 'twd 'twd 'TWD
+@shortform_indicator   'twould've             3-2345-2456-145-3-1236-15 'twd've 'twd've 'TWD'VE
+@shortform_indicator   'twoulda               3-2345-2456-145-1 'twda 'twda 'TWDA
+@shortform_indicator   'twouldn't             3-2345-2456-145-1345-3-2345 'twdn't 'twdn't 'TWDN'T
+@shortform_indicator   'twouldn't've          3-2345-2456-145-1345-3-2345-3-1236-15 'twdn't've 'twdn't've 'TWDN'T'VE
+@shortform_indicator   aboutface              1-12-124-1-14-15 abface Abface ABFACE
+@shortform_word        aboutfaced             1-12-124-1-14-1246 abfaced 1-12-124-1-14-15-145
+@shortform_word        aboutfacer             1-12-124-1-14-12456 abfacer 1-12-124-1-14-15-1235
+@shortform_word        aboutfacing            1-12-124-1-14-346 abfacing 1-12-124-1-14-24-1345-1245
+@shortform_indicator   aboutturn              1-12-2345-136-1235-1345 abturn Abturn ABTURN
+@shortform_word        aboutturned            1-12-2345-136-1235-1345-1246 abturned 1-12-2345-136-1235-1345-15-145
+@shortform_word        aboveboard             1-12-1236-12-135-345-145 abvboard 1-12-1236-12-135-1-1235-145
+@shortform_word        aboveground            1-12-1236-1245-1235-46-145 abvground 1-12-1236-1245-1235-135-136-1345-145
+@shortform_word        abovementioned         1-12-1236-134-26-56-1345-1246 abvmentioned 1-12-1236-134-15-1345-2345-24-135-1345-15-145
+@shortform_indicator   accordingly            1-14-123-13456 acly Acly ACLY
+@shortform_word        aforesaid              1-123456-15-234-145 aforesd 1-124-135-1235-15-234-145
+@shortform_indicator   afterbattle            1-124-12-1-2345-2345-123-15 afbattle Afbattle AFBATTLE
+@shortform_word        afterbirth             1-124-12-24-1235-1456 afbirth 1-124-12-24-1235-2345-125
+@shortform_word        afterbreakfast         1-124-12-1235-2-13-124-1-34 afbreakfast 1-124-12-1235-15-1-13-124-1-234-2345
+@shortform_indicator   afterburn              1-124-12-136-1235-1345 afburn Afburn AFBURN
+@shortform_word        afterburned            1-124-12-136-1235-1345-1246 afburned 1-124-12-136-1235-1345-15-145
+@shortform_word        afterburner            1-124-12-136-1235-1345-12456 afburner 1-124-12-136-1235-1345-15-1235
+@shortform_word        afterburning           1-124-12-136-1235-1345-346 afburning 1-124-12-136-1235-1345-24-1345-1245
+@shortform_word        aftercare              1-124-14-345-15 afcare 1-124-14-1-1235-15
+@shortform_indicator   afterclap              1-124-14-123-1-1234 afclap Afclap AFCLAP
+@shortform_word        aftercoffee            1-124-14-12356-124-15-15 afcoffee 1-124-14-135-124-124-15-15
+@shortform_indicator   afterdamp              1-124-145-1-134-1234 afdamp Afdamp AFDAMP
+@shortform_word        afterdark              1-124-145-345-13 afdark 1-124-145-1-1235-13
+@shortform_indicator   afterdeck              1-124-145-15-14-13 afdeck Afdeck AFDECK
+@shortform_word        afterdinner            1-124-145-35-1345-12456 afdinner 1-124-145-24-1345-1345-15-1235
+@shortform_word        afterflow              1-124-124-123-246 afflow 1-124-124-123-135-2456
+@shortform_indicator   aftergame              1-124-1245-1-134-15 afgame Afgame AFGAME
+@shortform_word        afterglow              1-124-1245-123-246 afglow 1-124-1245-123-135-2456
+@shortform_word        afterguard             1-124-1245-136-345-145 afguard 1-124-1245-136-1-1235-145
+@shortform_word        afterhatch             1-124-125-1-2345-16 afhatch 1-124-125-1-2345-14-125
+@shortform_word        afterhatches           1-124-125-1-2345-16-15-234 afhatches 1-124-125-1-2345-14-125-15-234
+@shortform_word        afterhour              1-124-125-1256-1235 afhour 1-124-125-135-136-1235
+@shortform_indicator   afterlife              1-124-123-24-124-15 aflife Aflife AFLIFE
+@shortform_word        afterlight             1-124-123-24-126-2345 aflight 1-124-123-24-1245-125-2345
+@shortform_indicator   afterlives             1-124-123-24-1236-15-234 aflives Aflives AFLIVES
+@shortform_word        afterlunch             1-124-123-136-1345-16 aflunch 1-124-123-136-1345-14-125
+@shortform_word        afterlunches           1-124-123-136-1345-16-15-234 aflunches 1-124-123-136-1345-14-125-15-234
+@shortform_word        aftermarket            1-124-134-345-13-15-2345 afmarket 1-124-134-1-1235-13-15-2345
+@shortform_word        aftermatch             1-124-134-1-2345-16 afmatch 1-124-134-1-2345-14-125
+@shortform_word        aftermatches           1-124-134-1-2345-16-15-234 afmatches 1-124-134-1-2345-14-125-15-234
+@shortform_word        aftermath              1-124-134-1-1456 afmath 1-124-134-1-2345-125
+@shortform_word        aftermeeting           1-124-134-15-15-2345-346 afmeeting 1-124-134-15-15-2345-24-1345-1245
+@shortform_word        aftermidday            1-124-134-24-145-5-145 afmidday 1-124-134-24-145-145-1-13456
+@shortform_word        aftermidnight          1-124-134-24-145-1345-24-126-2345 afmidnight 1-124-134-24-145-1345-24-1245-125-2345
+@shortform_word        aftermost              1-124-134-135-34 afmost 1-124-134-135-234-2345
+@shortform_indicator   afternoontea           1-124-1345-2345-15-1 afntea Afntea AFNTEA
+@shortform_word        afterpain              1-124-1234-1-35 afpain 1-124-1234-1-24-1345
+@shortform_word        afterparties           1-124-5-1234-24-15-234 afparties 1-124-1234-1-1235-2345-24-15-234
+@shortform_word        afterparty             1-124-5-1234-13456 afparty 1-124-1234-1-1235-2345-13456
+@shortform_indicator   afterpiece             1-124-1234-24-15-14-15 afpiece Afpiece AFPIECE
+@shortform_indicator   afterplay              1-124-1234-123-1-13456 afplay Afplay AFPLAY
+@shortform_indicator   aftersale              1-124-234-1-123-15 afsale Afsale AFSALE
+@shortform_word        afterschool            1-124-234-16-135-135-123 afschool 1-124-234-14-125-135-135-123
+@shortform_word        aftersensation         1-124-234-26-234-1-56-1345 afsensation 1-124-234-15-1345-234-1-2345-24-135-1345
+@shortform_word        aftershave             1-124-146-1-1236-15 afshave 1-124-234-125-1-1236-15
+@shortform_word        aftershock             1-124-146-135-14-13 afshock 1-124-234-125-135-14-13
+@shortform_word        aftershow              1-124-146-246 afshow 1-124-234-125-135-2456
+@shortform_word        aftershower            1-124-146-246-12456 afshower 1-124-234-125-135-2456-15-1235
+@shortform_word        aftersupper            1-124-234-136-1234-1234-12456 afsupper 1-124-234-136-1234-1234-15-1235
+@shortform_word        aftertaste             1-124-2345-1-34-15 aftaste 1-124-2345-1-234-2345-15
+@shortform_indicator   aftertax               1-124-2345-1-1346 aftax Aftax AFTAX
+@shortform_indicator   aftertaxes             1-124-2345-1-1346-15-234 aftaxes Aftaxes AFTAXES
+@shortform_indicator   aftertea               1-124-2345-15-1 aftea Aftea AFTEA
+@shortform_word        aftertheatre           1-124-2346-1-2345-1235-15 aftheatre 1-124-2345-125-15-1-2345-1235-15
+@shortform_word        afterthought           1-124-1456-5-1256 afthoneu 1-124-2345-125-135-1345-15-136
+@shortform_word        aftertime              1-124-5-2345 aftime 1-124-2345-24-134-15
+@shortform_word        aftertreatment         1-124-2345-1235-2-2345-56-2345 aftreatment 1-124-2345-1235-15-1-2345-134-15-1345-2345
+@shortform_word        afterword              1-124-45-2456 afword 1-124-2456-135-1235-145
+@shortform_word        afterwork              1-124-5-2456 afwork 1-124-2456-135-1235-13
+@shortform_word        afterworld             1-124-456-2456 afworld 1-124-2456-135-1235-123-145
+@shortform_word        apperceive             1-1234-1234-12456-14-1236 appercv 1-1234-1234-15-1235-14-1236
+@shortform_word        apperceived            1-1234-1234-12456-14-1236-145 appercvd 1-1234-1234-15-1235-14-1236-145
+@shortform_word        apperceiver            1-1234-1234-12456-14-1236-1235 appercvr 1-1234-1234-15-1235-14-1236-1235
+@shortform_word        apperceiving           1-1234-1234-12456-14-1236-1245 appercvg 1-1234-1234-15-1235-14-1236-1245
+@shortform_word        archdeceiver           345-16-145-14-1236-1235 archdcvr 1-1235-14-125-145-14-1236-1235
+@shortform_word        beforehand             23-124-125-12346 befhand 12-15-124-125-1-1345-145
+@shortform_word        befriend               23-124-1235 befr 12-15-124-1235
+@shortform_word        behindhand             23-125-125-12346 behhand 12-15-125-125-1-1345-145
+@shortform_word        belittle               23-123-123 bell 12-15-123-123
+@shortform_word        belittled              23-123-123-145 belld 12-15-123-123-145
+@shortform_word        belittlement           23-123-123-56-2345 bellment 12-15-123-123-134-15-1345-2345
+@shortform_word        belittler              23-123-123-1235 bellr 12-15-123-123-1235
+@shortform_word        belowdeck              23-123-145-15-14-13 beldeck 12-15-123-145-15-14-13
+@shortform_word        belowground            23-123-1245-1235-46-145 belground 12-15-123-1245-1235-135-136-1345-145
+@shortform_word        belowmentioned         23-123-134-26-56-1345-1246 belmentioned 12-15-123-134-15-1345-2345-24-135-1345-15-145
+@shortform_word        beneathdeck            23-1345-145-15-14-13 bendeck 12-15-1345-145-15-14-13
+@shortform_word        beneathground          23-1345-1245-1235-46-145 benground 12-15-1345-1245-1235-135-136-1345-145
+@shortform_word        betweendeck            23-2345-145-15-14-13 betdeck 12-15-2345-145-15-14-13
+@shortform_word        betweentime            23-2345-5-2345 bettime 12-15-2345-2345-24-134-15
+@shortform_word        betweenwhile           23-2345-156-24-123-15 betwhile 12-15-2345-2456-125-24-123-15
+@shortform_word        blindfish              12-123-124-24-146 blfish 12-123-124-24-234-125
+@shortform_word        blindfishes            12-123-124-24-146-15-234 blfishes 12-123-124-24-234-125-15-234
+@shortform_indicator   blindfold              12-123-124-135-123-145 blfold Blfold BLFOLD
+@shortform_word        blindfolded            12-123-124-135-123-145-1246 blfolded 12-123-124-135-123-145-15-145
+@shortform_word        blindfolder            12-123-124-135-123-145-12456 blfolder 12-123-124-135-123-145-15-1235
+@shortform_word        blindfolding           12-123-124-135-123-145-346 blfolding 12-123-124-135-123-145-24-1345-1245
+@shortform_indicator   blindly                12-123-123-13456 blly Blly BLLY
+@shortform_indicator   blindman               12-123-134-1-1345 blman Blman BLMAN
+@shortform_word        blindmen               12-123-134-26 blmen 12-123-134-15-1345
+@shortform_word        blindness              12-123-56-234 blness 12-123-1345-15-234-234
+@shortform_word        blindnesses            12-123-56-234-15-234 blnesses 12-123-1345-15-234-234-15-234
+@shortform_indicator   blindside              12-123-234-24-145-15 blside Blside BLSIDE
+@shortform_word        blindsided             12-123-234-24-145-1246 blsided 12-123-234-24-145-15-145
+@shortform_word        blindsider             12-123-234-24-145-12456 blsider 12-123-234-24-145-15-1235
+@shortform_word        blindsiding            12-123-234-24-145-346 blsiding 12-123-234-24-145-24-1345-1245
+@shortform_word        blindsight             12-123-234-24-126-2345 blsight 12-123-234-24-1245-125-2345
+@shortform_word        blindstories           12-123-34-135-1235-24-15-234 blstories 12-123-234-2345-135-1235-24-15-234
+@shortform_word        blindstory             12-123-34-135-1235-13456 blstory 12-123-234-2345-135-1235-13456
+@shortform_indicator   blindworm              12-123-2456-135-1235-134 blworm Blworm BLWORM
+@shortform_indicator   bloodletter            12-123-135-135-145-123-1235 bloodlr Bloodlr BLOODLR
+@shortform_indicator   boyfriend              12-135-13456-124-1235 boyfr Boyfr BOYFR
+@shortform_indicator   brailled               12-1235-123-145 brld Brld BRLD
+@shortform_indicator   brailler               12-1235-123-1235 brlr Brlr BRLR
+@shortform_word        braillewriter          12-1235-123-2456-1235-24-2345-12456 brlwriter 12-1235-123-2456-1235-24-2345-15-1235
+@shortform_word        braillewriting         12-1235-123-2456-1235-24-2345-346 brlwriting 12-1235-123-2456-1235-24-2345-24-1345-1245
+@shortform_indicator   brailley               12-1235-123-13456 brly Brly BRLY
+@shortform_word        brainchildren          12-1235-1-35-16-1345 brainchn 12-1235-1-24-1345-14-125-1345
+@shortform_word        chainletter            16-1-35-123-1235 chainlr 14-125-1-24-1345-123-1235
+@shortform_word        children'swear         16-1345-3-234-2456-15-345 chn'swear 14-125-1345-3-234-2456-15-1-1235
+@shortform_indicator   colorblind             14-135-123-135-1235-12-123 colorbl Colorbl COLORBL
+@shortform_word        colorblindness         14-135-123-135-1235-12-123-56-234 colorblness 14-135-123-135-1235-12-123-1345-15-234-234
+@shortform_word        colorblindnesses       14-135-123-135-1235-12-123-56-234-15-234 colorblnesses 14-135-123-135-1235-12-123-1345-15-234-234-15-234
+@shortform_word        colourblind            14-135-123-1256-1235-12-123 colourbl 14-135-123-135-136-1235-12-123
+@shortform_word        colourblindness        14-135-123-1256-1235-12-123-56-234 colourblness 14-135-123-135-136-1235-12-123-1345-15-234-234
+@shortform_word        colourblindnesses      14-135-123-1256-1235-12-123-56-234-15-234 colourblnesses 14-135-123-135-136-1235-12-123-1345-15-234-234-15-234
+@shortform_word        conceived              25-14-1236-145 concvd 14-135-1345-14-1236-145
+@shortform_word        conceiver              25-14-1236-1235 concvr 14-135-1345-14-1236-1235
+@shortform_indicator   could've               14-145-3-1236-15 cd've Cd've CD'VE
+@shortform_indicator   coulda                 14-145-1 cda Cda CDA
+@shortform_word        couldest               14-145-15-34 cdest 14-145-15-234-2345
+@shortform_indicator   couldn't               14-145-1345-3-2345 cdn't Cdn't CDN'T
+@shortform_indicator   couldn't've            14-145-1345-3-2345-3-1236-15 cdn't've Cdn't've CDN'T'VE
+@shortform_word        couldst                14-145-34 cdst 14-145-234-2345
+@shortform_word        deafblind              145-2-124-12-123 deafbl 145-15-1-124-12-123
+@shortform_word        deafblindness          145-2-124-12-123-56-234 deafblness 145-15-1-124-12-123-1345-15-234-234
+@shortform_word        deafblindnesses        145-2-124-12-123-56-234-15-234 deafblnesses 145-15-1-124-12-123-1345-15-234-234-15-234
+@shortform_indicator   deceived               145-14-1236-145 dcvd Dcvd DCVD
+@shortform_indicator   deceiver               145-14-1236-1235 dcvr Dcvr DCVR
+@shortform_indicator   declared               145-14-123-145 dcld Dcld DCLD
+@shortform_indicator   declarer               145-14-123-1235 dclr Dclr DCLR
+@shortform_indicator   defriend               145-15-124-1235 defr Defr DEFR
+@shortform_indicator   doityourselfer         145-135-24-2345-13456-135-136-1235-234-15-123-124-15-1235 doityourselfer Doityourselfer DOITYOURSELFER
+@shortform_word        doublequick            145-1256-12-123-15-12345-13 doubleqk 145-135-136-12-123-15-12345-13
+@shortform_word        eastabout              15-1-34-1-12 eastab 15-1-234-2345-1-12
+@shortform_indicator   feelgood               124-15-15-123-1245-145 feelgd Feelgd FEELGD
+@shortform_word        feetfirst              124-15-15-2345-124-34 feetfst 124-15-15-2345-124-234-2345
+@shortform_word        firstaid               124-34-1-24-145 fstaid 124-234-2345-1-24-145
+@shortform_word        firstaider             124-34-1-24-145-12456 fstaider 124-234-2345-1-24-145-15-1235
+@shortform_word        firstborn              124-34-12-135-1235-1345 fstborn 124-234-2345-12-135-1235-1345
+@shortform_word        firstclass             124-34-14-123-1-234-234 fstclass 124-234-2345-14-123-1-234-234
+@shortform_word        firstclasses           124-34-14-123-1-234-234-15-234 fstclasses 124-234-2345-14-123-1-234-234-15-234
+@shortform_word        firstday               124-34-5-145 fstday 124-234-2345-145-1-13456
+@shortform_word        firstdayer             124-34-5-145-12456 fstdayer 124-234-2345-145-1-13456-15-1235
+@shortform_word        firstfruit             124-34-124-1235-136-24-2345 fstfruit 124-234-2345-124-1235-136-24-2345
+@shortform_word        firstfruiting          124-34-124-1235-136-24-2345-346 fstfruiting 124-234-2345-124-1235-136-24-2345-24-1345-1245
+@shortform_word        firstgeneration        124-34-1245-26-12456-1-56-1345 fstgeneration 124-234-2345-1245-15-1345-15-1235-1-2345-24-135-1345
+@shortform_word        firsthand              124-34-125-12346 fsthand 124-234-2345-125-1-1345-145
+@shortform_word        firsthanded            124-34-125-12346-1246 fsthanded 124-234-2345-125-1-1345-145-15-145
+@shortform_word        firstling              124-34-123-346 fstling 124-234-2345-123-24-1345-1245
+@shortform_word        firstly                124-34-123-13456 fstly 124-234-2345-123-13456
+@shortform_word        firstness              124-34-56-234 fstness 124-234-2345-1345-15-234-234
+@shortform_word        firstnight             124-34-1345-24-126-2345 fstnight 124-234-2345-1345-24-1245-125-2345
+@shortform_word        firstnighter           124-34-1345-24-126-2345-12456 fstnighter 124-234-2345-1345-24-1245-125-2345-15-1235
+@shortform_word        firstrate              124-34-1235-1-2345-15 fstrate 124-234-2345-1235-1-2345-15
+@shortform_word        firstrated             124-34-1235-1-2345-1246 fstrated 124-234-2345-1235-1-2345-15-145
+@shortform_word        firstrating            124-34-1235-1-2345-346 fstrating 124-234-2345-1235-1-2345-24-1345-1245
+@shortform_word        firststring            124-34-34-1235-346 fststring 124-234-2345-234-2345-1235-24-1345-1245
+@shortform_word        forasmuch              123456-1-234-134-16 forasmch 124-135-1235-1-234-134-14-125
+@shortform_word        foresaid               123456-15-234-145 foresd 124-135-1235-15-234-145
+@shortform_word        fosterchildren         124-135-34-12456-16-1345 fosterchn 124-135-234-2345-15-1235-14-125-1345
+@shortform_word        friendless             124-1235-46-234 frless 124-1235-123-15-234-234
+@shortform_word        friendlessness         124-1235-46-234-56-234 frlessness 124-1235-123-15-234-234-1345-15-234-234
+@shortform_word        friendlessnesses       124-1235-46-234-56-234-15-234 frlessnesses 124-1235-123-15-234-234-1345-15-234-234-15-234
+@shortform_word        friendlier             124-1235-123-24-12456 frlier 124-1235-123-24-15-1235
+@shortform_indicator   friendlies             124-1235-123-24-15-234 frlies Frlies FRLIES
+@shortform_word        friendliest            124-1235-123-24-15-34 frliest 124-1235-123-24-15-234-2345
+@shortform_word        friendliness           124-1235-123-24-56-234 frliness 124-1235-123-24-1345-15-234-234
+@shortform_word        friendlinesses         124-1235-123-24-56-234-15-234 frlinesses 124-1235-123-24-1345-15-234-234-15-234
+@shortform_indicator   friendly               124-1235-123-13456 frly Frly FRLY
+@shortform_word        friendship             124-1235-146-24-1234 frship 124-1235-234-125-24-1234
+@shortform_indicator   gadabout               1245-1-145-1-12 gadab Gadab GADAB
+@shortform_word        gainsaid               1245-1-35-234-145 gainsd 1245-1-24-1345-234-145
+@shortform_indicator   galfriend              1245-1-123-124-1235 galfr Galfr GALFR
+@shortform_word        gentlemanfriend        1245-26-2345-123-15-134-1-1345-124-1235 gentlemanfr 1245-15-1345-2345-123-15-134-1-1345-124-1235
+@shortform_word        gentlemenfriends       1245-26-2345-123-15-134-26-124-1235-234 gentlemenfrs 1245-15-1345-2345-123-15-134-15-1345-124-1235-234
+@shortform_indicator   girlfriend             1245-24-1235-123-124-1235 girlfr Girlfr GIRLFR
+@shortform_word        godchildren            1245-135-145-16-1345 godchn 1245-135-145-14-125-1345
+@shortform_indicator   goodafternoon          1245-145-1-124-1345 gdafn Gdafn GDAFN
+@shortform_indicator   goodby                 1245-145-12-13456 gdby Gdby GDBY
+@shortform_indicator   goodbye                1245-145-12-13456-15 gdbye Gdbye GDBYE
+@shortform_word        goodbyeing             1245-145-12-13456-15-346 gdbyeing 1245-145-12-13456-15-24-1345-1245
+@shortform_word        goodbying              1245-145-12-13456-346 gdbying 1245-145-12-13456-24-1345-1245
+@shortform_word        goodday                1245-145-5-145 gdday 1245-145-145-1-13456
+@shortform_word        gooder                 1245-145-12456 gder 1245-145-15-1235
+@shortform_word        goodest                1245-145-15-34 gdest 1245-145-15-234-2345
+@shortform_word        goodevening            1245-145-15-1236-26-346 gdevening 1245-145-15-1236-15-1345-24-1345-1245
+@shortform_word        goodfellow             1245-145-124-15-123-123-246 gdfellow 1245-145-124-15-123-123-135-2456
+@shortform_word        goodfellowship         1245-145-124-15-123-123-246-146-24-1234 gdfellowship 1245-145-124-15-123-123-135-2456-234-125-24-1234
+@shortform_word        goodhearted            1245-145-125-15-345-2345-1246 gdhearted 1245-145-125-15-1-1235-2345-15-145
+@shortform_word        goodheartedly          1245-145-125-15-345-2345-1246-123-13456 gdheartedly 1245-145-125-15-1-1235-2345-15-145-123-13456
+@shortform_word        goodheartedness        1245-145-125-15-345-2345-1246-56-234 gdheartedness 1245-145-125-15-1-1235-2345-15-145-1345-15-234-234
+@shortform_indicator   goodhumor              1245-145-125-136-134-135-1235 gdhumor Gdhumor GDHUMOR
+@shortform_word        goodhumored            1245-145-125-136-134-135-1235-1246 gdhumored 1245-145-125-136-134-135-1235-15-145
+@shortform_word        goodhumoredly          1245-145-125-136-134-135-1235-1246-123-13456 gdhumoredly 1245-145-125-136-134-135-1235-15-145-123-13456
+@shortform_word        goodhumoredness        1245-145-125-136-134-135-1235-1246-56-234 gdhumoredness 1245-145-125-136-134-135-1235-15-145-1345-15-234-234
+@shortform_word        goodhumorednesses      1245-145-125-136-134-135-1235-1246-56-234-15-234 gdhumorednesses 1245-145-125-136-134-135-1235-15-145-1345-15-234-234-15-234
+@shortform_word        goodhumour             1245-145-125-136-134-1256-1235 gdhumour 1245-145-125-136-134-135-136-1235
+@shortform_word        goodhumoured           1245-145-125-136-134-1256-1235-1246 gdhumoured 1245-145-125-136-134-135-136-1235-15-145
+@shortform_word        goodhumouredly         1245-145-125-136-134-1256-1235-1246-123-13456 gdhumouredly 1245-145-125-136-134-135-136-1235-15-145-123-13456
+@shortform_word        goodhumouredness       1245-145-125-136-134-1256-1235-1246-56-234 gdhumouredness 1245-145-125-136-134-135-136-1235-15-145-1345-15-234-234
+@shortform_word        goodhumourednesses     1245-145-125-136-134-1256-1235-1246-56-234-15-234 gdhumourednesses 1245-145-125-136-134-135-136-1235-15-145-1345-15-234-234-15-234
+@shortform_indicator   goodie                 1245-145-24-15 gdie Gdie GDIE
+@shortform_word        goodish                1245-145-24-146 gdish 1245-145-24-234-125
+@shortform_word        goodlier               1245-145-123-24-12456 gdlier 1245-145-123-24-15-1235
+@shortform_word        goodliest              1245-145-123-24-15-34 gdliest 1245-145-123-24-15-234-2345
+@shortform_word        goodliness             1245-145-123-24-56-234 gdliness 1245-145-123-24-1345-15-234-234
+@shortform_indicator   goodlook               1245-145-123-135-135-13 gdlook Gdlook GDLOOK
+@shortform_word        goodlooker             1245-145-123-135-135-13-12456 gdlooker 1245-145-123-135-135-13-15-1235
+@shortform_word        goodlooking            1245-145-123-135-135-13-346 gdlooking 1245-145-123-135-135-13-24-1345-1245
+@shortform_indicator   goodly                 1245-145-123-13456 gdly Gdly GDLY
+@shortform_indicator   goodman                1245-145-134-1-1345 gdman Gdman GDMAN
+@shortform_word        goodmen                1245-145-134-26 gdmen 1245-145-134-15-1345
+@shortform_word        goodmorning            1245-145-134-135-1235-1345-346 gdmorning 1245-145-134-135-1235-1345-24-1345-1245
+@shortform_indicator   goodnature             1245-145-1345-1-2345-136-1235-15 gdnature Gdnature GDNATURE
+@shortform_word        goodnatured            1245-145-1345-1-2345-136-1235-1246 gdnatured 1245-145-1345-1-2345-136-1235-15-145
+@shortform_word        goodnaturedly          1245-145-1345-1-2345-136-1235-1246-123-13456 gdnaturedly 1245-145-1345-1-2345-136-1235-15-145-123-13456
+@shortform_word        goodnaturedness        1245-145-1345-1-2345-136-1235-1246-56-234 gdnaturedness 1245-145-1345-1-2345-136-1235-15-145-1345-15-234-234
+@shortform_word        goodness               1245-145-56-234 gdness 1245-145-1345-15-234-234
+@shortform_word        goodnesses             1245-145-56-234-15-234 gdnesses 1245-145-1345-15-234-234-15-234
+@shortform_word        goodnight              1245-145-1345-24-126-2345 gdnight 1245-145-1345-24-1245-125-2345
+@shortform_indicator   goodsize               1245-145-234-24-1356-15 gdsize Gdsize GDSIZE
+@shortform_word        goodsized              1245-145-234-24-1356-1246 gdsized 1245-145-234-24-1356-15-145
+@shortform_word        goodtempered           1245-145-2345-15-134-1234-12456-1246 gdtempered 1245-145-2345-15-134-1234-15-1235-15-145
+@shortform_word        goodtemperedly         1245-145-2345-15-134-1234-12456-1246-123-13456 gdtemperedly 1245-145-2345-15-134-1234-15-1235-15-145-123-13456
+@shortform_word        goodtime               1245-145-5-2345 gdtime 1245-145-2345-24-134-15
+@shortform_indicator   goodun                 1245-145-136-1345 gdun Gdun GDUN
+@shortform_indicator   goodwife               1245-145-2456-24-124-15 gdwife Gdwife GDWIFE
+@shortform_indicator   goodwill               1245-145-2456-24-123-123 gdwill Gdwill GDWILL
+@shortform_word        goodwilled             1245-145-2456-24-123-123-1246 gdwilled 1245-145-2456-24-123-123-15-145
+@shortform_indicator   goodwives              1245-145-2456-24-1236-15-234 gdwives Gdwives GDWIVES
+@shortform_indicator   goody                  1245-145-13456 gdy Gdy GDY
+@shortform_word        goodyear               1245-145-13456-15-345 gdyear 1245-145-13456-15-1-1235
+@shortform_word        grandchildren          1245-1235-12346-16-1345 grandchn 1245-1235-1-1345-145-14-125-1345
+@shortform_indicator   greataunt              1245-1235-2345-1-136-1345-2345 grtaunt Grtaunt GRTAUNT
+@shortform_word        greatbatch             1245-1235-2345-12-1-2345-16 grtbatch 1245-1235-2345-12-1-2345-14-125
+@shortform_indicator   greatcircle            1245-1235-2345-14-24-1235-14-123-15 grtcircle Grtcircle GRTCIRCLE
+@shortform_indicator   greatcoat              1245-1235-2345-14-135-1-2345 grtcoat Grtcoat GRTCOAT
+@shortform_word        greaten                1245-1235-2345-26 grten 1245-1235-2345-15-1345
+@shortform_word        greatened              1245-1235-2345-26-1246 grtened 1245-1235-2345-15-1345-15-145
+@shortform_word        greatener              1245-1235-2345-26-12456 grtener 1245-1235-2345-15-1345-15-1235
+@shortform_word        greatening             1245-1235-2345-26-346 grtening 1245-1235-2345-15-1345-24-1345-1245
+@shortform_word        greater                1245-1235-2345-12456 grter 1245-1235-2345-15-1235
+@shortform_word        greatest               1245-1235-2345-15-34 grtest 1245-1235-2345-15-234-2345
+@shortform_word        greatgrandaunt         1245-1235-2345-1245-1235-12346-1-136-1345-2345 grtgrandaunt 1245-1235-2345-1245-1235-1-1345-145-1-136-1345-2345
+@shortform_word        greatgrandchild        1245-1235-2345-1245-1235-12346-16-24-123-145 grtgrandchild 1245-1235-2345-1245-1235-1-1345-145-14-125-24-123-145
+@shortform_word        greatgrandchildren     1245-1235-2345-1245-1235-12346-16-1345 grtgrandchn 1245-1235-2345-1245-1235-1-1345-145-14-125-1345
+@shortform_word        greatgranddad          1245-1235-2345-1245-1235-12346-145-1-145 grtgranddad 1245-1235-2345-1245-1235-1-1345-145-145-1-145
+@shortform_word        greatgranddaughter     1245-1235-2345-1245-1235-12346-145-1-136-126-2345-12456 grtgranddaughter 1245-1235-2345-1245-1235-1-1345-145-145-1-136-1245-125-2345-15-1235
+@shortform_word        greatgrandfather       1245-1235-2345-1245-1235-12346-5-124 grtgrandfather 1245-1235-2345-1245-1235-1-1345-145-124-1-2345-125-15-1235
+@shortform_word        greatgrandfatherhood   1245-1235-2345-1245-1235-12346-5-124-125-135-135-145 grtgrandfatherhood 1245-1235-2345-1245-1235-1-1345-145-124-1-2345-125-15-1235-125-135-135-145
+@shortform_word        greatgrandma           1245-1235-2345-1245-1235-12346-134-1 grtgrandma 1245-1235-2345-1245-1235-1-1345-145-134-1
+@shortform_word        greatgrandmother       1245-1235-2345-1245-1235-12346-5-134 grtgrandmother 1245-1235-2345-1245-1235-1-1345-145-134-135-2345-125-15-1235
+@shortform_word        greatgrandmotherhood   1245-1235-2345-1245-1235-12346-5-134-125-135-135-145 grtgrandmotherhood 1245-1235-2345-1245-1235-1-1345-145-134-135-2345-125-15-1235-125-135-135-145
+@shortform_word        greatgrandnephew       1245-1235-2345-1245-1235-12346-1345-15-1234-125-15-2456 grtgrandnephew 1245-1235-2345-1245-1235-1-1345-145-1345-15-1234-125-15-2456
+@shortform_word        greatgrandniece        1245-1235-2345-1245-1235-12346-1345-24-15-14-15 grtgrandniece 1245-1235-2345-1245-1235-1-1345-145-1345-24-15-14-15
+@shortform_word        greatgrandpa           1245-1235-2345-1245-1235-12346-1234-1 grtgrandpa 1245-1235-2345-1245-1235-1-1345-145-1234-1
+@shortform_word        greatgrandparent       1245-1235-2345-1245-1235-12346-1234-345-26-2345 grtgrandparent 1245-1235-2345-1245-1235-1-1345-145-1234-1-1235-15-1345-2345
+@shortform_word        greatgrandparenthood   1245-1235-2345-1245-1235-12346-1234-345-26-2345-125-135-135-145 grtgrandparenthood 1245-1235-2345-1245-1235-1-1345-145-1234-1-1235-15-1345-2345-125-135-135-145
+@shortform_word        greatgrandson          1245-1235-2345-1245-1235-12346-234-135-1345 grtgrandson 1245-1235-2345-1245-1235-1-1345-145-234-135-1345
+@shortform_word        greatgranduncle        1245-1235-2345-1245-1235-12346-136-1345-14-123-15 grtgranduncle 1245-1235-2345-1245-1235-1-1345-145-136-1345-14-123-15
+@shortform_word        greathearted           1245-1235-2345-125-15-345-2345-1246 grthearted 1245-1235-2345-125-15-1-1235-2345-15-145
+@shortform_word        greatheartedly         1245-1235-2345-125-15-345-2345-1246-123-13456 grtheartedly 1245-1235-2345-125-15-1-1235-2345-15-145-123-13456
+@shortform_word        greatheartedness       1245-1235-2345-125-15-345-2345-1246-56-234 grtheartedness 1245-1235-2345-125-15-1-1235-2345-15-145-1345-15-234-234
+@shortform_word        greatheartednesses     1245-1235-2345-125-15-345-2345-1246-56-234-15-234 grtheartednesses 1245-1235-2345-125-15-1-1235-2345-15-145-1345-15-234-234-15-234
+@shortform_indicator   greatly                1245-1235-2345-123-13456 grtly Grtly GRTLY
+@shortform_indicator   greatnephew            1245-1235-2345-1345-15-1234-125-15-2456 grtnephew Grtnephew GRTNEPHEW
+@shortform_word        greatness              1245-1235-2345-56-234 grtness 1245-1235-2345-1345-15-234-234
+@shortform_word        greatnesses            1245-1235-2345-56-234-15-234 grtnesses 1245-1235-2345-1345-15-234-234-15-234
+@shortform_indicator   greatniece             1245-1235-2345-1345-24-15-14-15 grtniece Grtniece GRTNIECE
+@shortform_word        greatsword             1245-1235-2345-234-45-2456 grtsword 1245-1235-2345-234-2456-135-1235-145
+@shortform_indicator   greatuncle             1245-1235-2345-136-1345-14-123-15 grtuncle Grtuncle GRTUNCLE
+@shortform_indicator   guyfriend              1245-136-13456-124-1235 guyfr Guyfr GUYFR
+@shortform_indicator   hateletter             125-1-2345-15-123-1235 hatelr Hatelr HATELR
+@shortform_word        headfirst              125-2-145-124-34 headfst 125-15-1-145-124-234-2345
+@shortform_word        hereabout              5-125-1-12 hereab 125-15-1235-15-1-12
+@shortform_word        hereafter              5-125-1-124 hereaf 125-15-1235-15-1-124
+@shortform_word        hereagain              5-125-1-1245 hereag 125-15-1235-15-1-1245
+@shortform_word        hereagainst            5-125-1-1245-34 hereagst 125-15-1235-15-1-1245-234-2345
+@shortform_word        hereinabove            5-125-35-1-12-1236 hereinabv 125-15-1235-15-24-1345-1-12-1236
+@shortform_word        hereinafter            5-125-35-1-124 hereinaf 125-15-1235-15-24-1345-1-124
+@shortform_word        hereinagain            5-125-35-1-1245 hereinag 125-15-1235-15-24-1345-1-1245
+@shortform_word        highlypaid             125-24-126-123-13456-1234-145 highlypd 125-24-1245-125-123-13456-1234-145
+@shortform_indicator   himbo                  125-134-12-135 hmbo Hmbo HMBO
+@shortform_indicator   himboes                125-134-12-135-15-234 hmboes Hmboes HMBOES
+@shortform_indicator   illpaid                24-123-123-1234-145 illpd Illpd ILLPD
+@shortform_indicator   immediately            24-134-134-123-13456 immly Immly IMMLY
+@shortform_word        immediateness          24-134-134-56-234 immness 24-134-134-1345-15-234-234
+@shortform_word        inasmuch               35-1-234-134-16 inasmch 24-1345-1-234-134-14-125
+@shortform_word        insomuch               35-234-135-134-16 insomch 24-1345-234-135-134-14-125
+@shortform_indicator   knockabout             13-1345-135-14-13-1-12 knockab Knockab KNOCKAB
+@shortform_indicator   ladyfriend             123-1-145-13456-124-1235 ladyfr Ladyfr LADYFR
+@shortform_indicator   layabout               123-1-13456-1-12 layab Layab LAYAB
+@shortform_indicator   letterbodies           123-1235-12-135-145-24-15-234 lrbodies Lrbodies LRBODIES
+@shortform_indicator   letterbody             123-1235-12-135-145-13456 lrbody Lrbody LRBODY
+@shortform_indicator   letterbomb             123-1235-12-135-134-12 lrbomb Lrbomb LRBOMB
+@shortform_word        letterbombed           123-1235-12-135-134-12-1246 lrbombed 123-1235-12-135-134-12-15-145
+@shortform_word        letterbomber           123-1235-12-135-134-12-12456 lrbomber 123-1235-12-135-134-12-15-1235
+@shortform_word        letterbombing          123-1235-12-135-134-12-346 lrbombing 123-1235-12-135-134-12-24-1345-1245
+@shortform_indicator   letterbox              123-1235-12-135-1346 lrbox Lrbox LRBOX
+@shortform_word        letterboxed            123-1235-12-135-1346-1246 lrboxed 123-1235-12-135-1346-15-145
+@shortform_word        letterboxer            123-1235-12-135-1346-12456 lrboxer 123-1235-12-135-1346-15-1235
+@shortform_indicator   letterboxes            123-1235-12-135-1346-15-234 lrboxes Lrboxes LRBOXES
+@shortform_word        letterboxing           123-1235-12-135-1346-346 lrboxing 123-1235-12-135-1346-24-1345-1245
+@shortform_word        lettered               123-1235-1246 lred 123-1235-15-145
+@shortform_word        letterer               123-1235-12456 lrer 123-1235-15-1235
+@shortform_word        letterform             123-1235-123456-134 lrform 123-1235-124-135-1235-134
+@shortform_word        letterhead             123-1235-125-2-145 lrhead 123-1235-125-15-1-145
+@shortform_word        letterheading          123-1235-125-2-145-346 lrheading 123-1235-125-15-1-145-24-1345-1245
+@shortform_word        lettering              123-1235-346 lring 123-1235-24-1345-1245
+@shortform_indicator   letterman              123-1235-134-1-1345 lrman Lrman LRMAN
+@shortform_word        lettermen              123-1235-134-26 lrmen 123-1235-134-15-1345
+@shortform_word        letteropener           123-1235-135-1234-26-12456 lropener 123-1235-135-1234-15-1345-15-1235
+@shortform_word        letterperfect          123-1235-1234-12456-124-15-14-2345 lrperfect 123-1235-1234-15-1235-124-15-14-2345
+@shortform_indicator   letterpress            123-1235-1234-1235-15-234-234 lrpress Lrpress LRPRESS
+@shortform_word        letterpressed          123-1235-1234-1235-15-234-234-1246 lrpressed 123-1235-1234-1235-15-234-234-15-145
+@shortform_indicator   letterpresses          123-1235-1234-1235-15-234-234-15-234 lrpresses Lrpresses LRPRESSES
+@shortform_word        letterpressing         123-1235-1234-1235-15-234-234-346 lrpressing 123-1235-1234-1235-15-234-234-24-1345-1245
+@shortform_word        letterquality          123-1235-12345-136-1-123-56-13456 lrquality 123-1235-12345-136-1-123-24-2345-13456
+@shortform_indicator   letterspace            123-1235-234-1234-1-14-15 lrspace Lrspace LRSPACE
+@shortform_word        letterspaced           123-1235-234-1234-1-14-1246 lrspaced 123-1235-234-1234-1-14-15-145
+@shortform_word        letterspacing          123-1235-234-1234-1-14-346 lrspacing 123-1235-234-1234-1-14-24-1345-1245
+@shortform_indicator   lettertext             123-1235-2345-15-1346-2345 lrtext Lrtext LRTEXT
+@shortform_indicator   littled                123-123-145 lld Lld LLD
+@shortform_indicator   littleneck             123-123-1345-15-14-13 llneck Llneck LLNECK
+@shortform_word        littleness             123-123-56-234 llness 123-123-1345-15-234-234
+@shortform_word        littlenesses           123-123-56-234-15-234 llnesses 123-123-1345-15-234-234-15-234
+@shortform_indicator   littler                123-123-1235 llr Llr LLR
+@shortform_word        littlest               123-123-34 llst 123-123-234-2345
+@shortform_word        lovechildren           123-135-1236-15-16-1345 lovechn 123-135-1236-15-14-125-1345
+@shortform_indicator   loveletter             123-135-1236-15-123-1235 lovelr Lovelr LOVELR
+@shortform_word        lowlypaid              123-246-123-13456-1234-145 lowlypd 123-135-2456-123-13456-1234-145
+@shortform_indicator   manfriend              134-1-1345-124-1235 manfr Manfr MANFR
+@shortform_word        menfriends             134-26-124-1235-234 menfrs 134-15-1345-124-1235-234
+@shortform_indicator   midafternoon           134-24-145-1-124-1345 midafn Midafn MIDAFN
+@shortform_indicator   misbraille             134-24-234-12-1235-123 misbrl Misbrl MISBRL
+@shortform_indicator   misbrailled            134-24-234-12-1235-123-145 misbrld Misbrld MISBRLD
+@shortform_word        misperceive            134-24-234-1234-12456-14-1236 mispercv 134-24-234-1234-15-1235-14-1236
+@shortform_word        misperceived           134-24-234-1234-12456-14-1236-145 mispercvd 134-24-234-1234-15-1235-14-1236-145
+@shortform_word        misperceiver           134-24-234-1234-12456-14-1236-1235 mispercvr 134-24-234-1234-15-1235-14-1236-1235
+@shortform_word        misperceiving          134-24-234-1234-12456-14-1236-1245 mispercvg 134-24-234-1234-15-1235-14-1236-1245
+@shortform_indicator   missaid                134-24-234-234-145 missd Missd MISSD
+@shortform_word        morningafter           134-135-1235-1345-346-1-124 morningaf 134-135-1235-1345-24-1345-1245-1-124
+@shortform_word        muchly                 134-16-123-13456 mchly 134-14-125-123-13456
+@shortform_word        muchness               134-16-56-234 mchness 134-14-125-1345-15-234-234
+@shortform_word        must've                134-34-3-1236-15 mst've 134-234-2345-3-1236-15
+@shortform_word        musta                  134-34-1 msta 134-234-2345-1
+@shortform_word        mustard                134-34-345-145 mstard 134-234-2345-1-1235-145
+@shortform_word        mustier                134-34-24-12456 mstier 134-234-2345-24-15-1235
+@shortform_word        mustiest               134-34-24-15-34 mstiest 134-234-2345-24-15-234-2345
+@shortform_word        mustily                134-34-24-123-13456 mstily 134-234-2345-24-123-13456
+@shortform_word        mustiness              134-34-24-56-234 mstiness 134-234-2345-24-1345-15-234-234
+@shortform_word        mustn't                134-34-1345-3-2345 mstn't 134-234-2345-1345-3-2345
+@shortform_word        mustn't've             134-34-1345-3-2345-3-1236-15 mstn't've 134-234-2345-1345-3-2345-3-1236-15
+@shortform_word        musty                  134-34-13456 msty 134-234-2345-13456
+@shortform_indicator   newsletter             1345-15-2456-234-123-1235 newslr Newslr NEWSLR
+@shortform_word        nonesuch               1345-5-135-234-16 nonesch 1345-135-1345-15-234-14-125
+@shortform_word        nonsuch                1345-135-1345-234-16 nonsch 1345-135-1345-234-14-125
+@shortform_word        northabout             1345-135-1235-1456-1-12 northab 1345-135-1235-2345-125-1-12
+@shortform_word        overmuch               135-1236-12456-134-16 overmch 135-1236-15-1235-134-14-125
+@shortform_word        overpaid               135-1236-12456-1234-145 overpd 135-1236-15-1235-1234-145
+@shortform_word        penfriend              1234-26-124-1235 penfr 1234-15-1345-124-1235
+@shortform_word        perceived              1234-12456-14-1236-145 percvd 1234-15-1235-14-1236-145
+@shortform_word        perceiver              1234-12456-14-1236-1235 percvr 1234-15-1235-14-1236-1235
+@shortform_word        perhapses              1234-12456-125-15-234 perhes 1234-15-1235-125-15-234
+@shortform_indicator   poorlypaid             1234-135-135-1235-123-13456-1234-145 poorlypd Poorlypd POORLYPD
+@shortform_word        postpaid               1234-135-34-1234-145 postpd 1234-135-234-2345-1234-145
+@shortform_indicator   preceive               1234-1235-14-1236 prcv Prcv PRCV
+@shortform_indicator   preceiver              1234-1235-14-1236-1235 prcvr Prcvr PRCVR
+@shortform_indicator   preceiving             1234-1235-14-1236-1245 prcvg Prcvg PRCVG
+@shortform_indicator   prepaid                1234-1235-15-1234-145 prepd Prepd PREPD
+@shortform_indicator   purblind               1234-136-1235-12-123 purbl Purbl PURBL
+@shortform_indicator   purblindly             1234-136-1235-12-123-123-13456 purblly Purblly PURBLLY
+@shortform_word        purblindness           1234-136-1235-12-123-56-234 purblness 1234-136-1235-12-123-1345-15-234-234
+@shortform_word        purblindnesses         1234-136-1235-12-123-56-234-15-234 purblnesses 1234-136-1235-12-123-1345-15-234-234-15-234
+@shortform_indicator   quickdraw              12345-13-145-1235-1-2456 qkdraw Qkdraw QKDRAW
+@shortform_word        quicken                12345-13-26 qken 12345-13-15-1345
+@shortform_word        quickened              12345-13-26-1246 qkened 12345-13-15-1345-15-145
+@shortform_word        quickener              12345-13-26-12456 qkener 12345-13-15-1345-15-1235
+@shortform_word        quickening             12345-13-26-346 qkening 12345-13-15-1345-24-1345-1245
+@shortform_word        quicker                12345-13-12456 qker 12345-13-15-1235
+@shortform_word        quickest               12345-13-15-34 qkest 12345-13-15-234-2345
+@shortform_indicator   quickfire              12345-13-124-24-1235-15 qkfire Qkfire QKFIRE
+@shortform_word        quickfiring            12345-13-124-24-1235-346 qkfiring 12345-13-124-24-1235-24-1345-1245
+@shortform_indicator   quickfreeze            12345-13-124-1235-15-15-1356-15 qkfreeze Qkfreeze QKFREEZE
+@shortform_word        quickfreezing          12345-13-124-1235-15-15-1356-346 qkfreezing 12345-13-124-1235-15-15-1356-24-1345-1245
+@shortform_indicator   quickfroze             12345-13-124-1235-135-1356-15 qkfroze Qkfroze QKFROZE
+@shortform_word        quickfrozen            12345-13-124-1235-135-1356-26 qkfrozen 12345-13-124-1235-135-1356-15-1345
+@shortform_indicator   quickie                12345-13-24-15 qkie Qkie QKIE
+@shortform_word        quickish               12345-13-24-146 qkish 12345-13-24-234-125
+@shortform_word        quickishly             12345-13-24-146-123-13456 qkishly 12345-13-24-234-125-123-13456
+@shortform_indicator   quicklime              12345-13-123-24-134-15 qklime Qklime QKLIME
+@shortform_indicator   quickly                12345-13-123-13456 qkly Qkly QKLY
+@shortform_word        quickness              12345-13-56-234 qkness 12345-13-1345-15-234-234
+@shortform_word        quicknesses            12345-13-56-234-15-234 qknesses 12345-13-1345-15-234-234-15-234
+@shortform_word        quicksand              12345-13-234-12346 qksand 12345-13-234-1-1345-145
+@shortform_indicator   quickset               12345-13-234-15-2345 qkset Qkset QKSET
+@shortform_word        quicksilver            12345-13-234-24-123-1236-12456 qksilver 12345-13-234-24-123-1236-15-1235
+@shortform_word        quicksilvered          12345-13-234-24-123-1236-12456-1246 qksilvered 12345-13-234-24-123-1236-15-1235-15-145
+@shortform_word        quicksilvering         12345-13-234-24-123-1236-12456-346 qksilvering 12345-13-234-24-123-1236-15-1235-24-1345-1245
+@shortform_indicator   quicksnap              12345-13-234-1345-1-1234 qksnap Qksnap QKSNAP
+@shortform_word        quickstep              12345-13-34-15-1234 qkstep 12345-13-234-2345-15-1234
+@shortform_word        quickstepped           12345-13-34-15-1234-1234-1246 qkstepped 12345-13-234-2345-15-1234-1234-15-145
+@shortform_word        quickstepper           12345-13-34-15-1234-1234-12456 qkstepper 12345-13-234-2345-15-1234-1234-15-1235
+@shortform_word        quickstepping          12345-13-34-15-1234-1234-346 qkstepping 12345-13-234-2345-15-1234-1234-24-1345-1245
+@shortform_word        quicktempered          12345-13-2345-15-134-1234-12456-1246 qktempered 12345-13-2345-15-134-1234-15-1235-15-145
+@shortform_word        quicktime              12345-13-5-2345 qktime 12345-13-2345-24-134-15
+@shortform_word        quickwitted            12345-13-2456-24-2345-2345-1246 qkwitted 12345-13-2456-24-2345-2345-15-145
+@shortform_word        quickwittedly          12345-13-2456-24-2345-2345-1246-123-13456 qkwittedly 12345-13-2456-24-2345-2345-15-145-123-13456
+@shortform_word        quickwittedness        12345-13-2456-24-2345-2345-1246-56-234 qkwittedness 12345-13-2456-24-2345-2345-15-145-1345-15-234-234
+@shortform_indicator   quicky                 12345-13-13456 qky Qky QKY
+@shortform_word        readacross             1235-2-145-1-14-1235 readacr 1235-15-1-145-1-14-1235
+@shortform_indicator   rebraille              1235-15-12-1235-123 rebrl Rebrl REBRL
+@shortform_indicator   rebrailled             1235-15-12-1235-123-145 rebrld Rebrld REBRLD
+@shortform_indicator   rebrailler             1235-15-12-1235-123-1235 rebrlr Rebrlr REBRLR
+@shortform_indicator   received               1235-14-1236-145 rcvd Rcvd RCVD
+@shortform_indicator   receiver               1235-14-1236-1235 rcvr Rcvr RCVR
+@shortform_word        receivership           1235-14-1236-1235-146-24-1234 rcvrship 1235-14-1236-1235-234-125-24-1234
+@shortform_indicator   rejoiced               1235-245-14-145 rjcd Rjcd RJCD
+@shortform_word        rejoiceful             1235-245-14-56-123 rjcful 1235-245-14-124-136-123
+@shortform_word        rejoicefully           1235-245-14-56-123-123-13456 rjcfully 1235-245-14-124-136-123-123-13456
+@shortform_word        rejoicefulness         1235-245-14-56-123-56-234 rjcfulness 1235-245-14-124-136-123-1345-15-234-234
+@shortform_indicator   rejoicer               1235-245-14-1235 rjcr Rjcr RJCR
+@shortform_indicator   rejoicingly            1235-245-14-1245-123-13456 rjcgly Rjcgly RJCGLY
+@shortform_indicator   reletter               1235-15-123-1235 relr Relr RELR
+@shortform_word        relettered             1235-15-123-1235-1246 relred 1235-15-123-1235-15-145
+@shortform_word        relettering            1235-15-123-1235-346 relring 1235-15-123-1235-24-1345-1245
+@shortform_indicator   repaid                 1235-15-1234-145 repd Repd REPD
+@shortform_word        rightabout             5-1235-1-12 rightab 1235-24-1245-125-2345-1-12
+@shortform_word        roundabout             1235-46-145-1-12 roundab 1235-135-136-1345-145-1-12
+@shortform_word        roustabout             1235-1256-34-1-12 roustab 1235-135-136-234-2345-1-12
+@shortform_indicator   runabout               1235-136-1345-1-12 runab Runab RUNAB
+@shortform_word        saidest                234-145-15-34 sdest 234-145-15-234-2345
+@shortform_word        saidst                 234-145-34 sdst 234-145-234-2345
+@shortform_word        scattergood            234-14-1-2345-2345-12456-1245-145 scattergd 234-14-1-2345-2345-15-1235-1245-145
+@shortform_word        schoolchildren         234-16-135-135-123-16-1345 schoolchn 234-14-125-135-135-123-14-125-1345
+@shortform_word        schoolfriend           234-16-135-135-123-124-1235 schoolfr 234-14-125-135-135-123-124-1235
+@shortform_word        should've              146-145-3-1236-15 shd've 234-125-145-3-1236-15
+@shortform_word        shoulda                146-145-1 shda 234-125-145-1
+@shortform_word        shouldest              146-145-15-34 shdest 234-125-145-15-234-2345
+@shortform_word        shouldn't              146-145-1345-3-2345 shdn't 234-125-145-1345-3-2345
+@shortform_word        shouldn't've           146-145-1345-3-2345-3-1236-15 shdn't've 234-125-145-1345-3-2345-3-1236-15
+@shortform_word        shouldst               146-145-34 shdst 234-125-145-234-2345
+@shortform_word        snowblind              234-1345-246-12-123 snowbl 234-1345-135-2456-12-123
+@shortform_word        snowblindness          234-1345-246-12-123-56-234 snowblness 234-1345-135-2456-12-123-1345-15-234-234
+@shortform_word        snowblindnesses        234-1345-246-12-123-56-234-15-234 snowblnesses 234-1345-135-2456-12-123-1345-15-234-234-15-234
+@shortform_word        somesuch               5-234-234-16 somesch 234-135-134-15-234-14-125
+@shortform_word        southabout             234-1256-1456-1-12 southab 234-135-136-2345-125-1-12
+@shortform_word        stepchildren           34-15-1234-16-1345 stepchn 234-2345-15-1234-14-125-1345
+@shortform_word        stirabout              34-24-1235-1-12 stirab 234-2345-24-1235-1-12
+@shortform_word        suchlike               234-16-123-24-13-15 schlike 234-14-125-123-24-13-15
+@shortform_word        supergood              234-136-1234-12456-1245-145 supergd 234-136-1234-15-1235-1245-145
+@shortform_word        superquick             234-136-1234-12456-12345-13 superqk 234-136-1234-15-1235-12345-13
+@shortform_word        tailfirst              2345-1-24-123-124-34 tailfst 2345-1-24-123-124-234-2345
+@shortform_word        thereabout             5-2346-1-12 timeheab 2345-24-134-15-125-15-1-12
+@shortform_word        thereafter             5-2346-1-124 timeheaf 2345-24-134-15-125-15-1-124
+@shortform_word        thereagain             5-2346-1-1245 timeheag 2345-24-134-15-125-15-1-1245
+@shortform_word        thereagainst           5-2346-1-1245-34 timeheagst 2345-24-134-15-125-15-1-1245-234-2345
+@shortform_word        thereinafter           5-2346-35-1-124 timeheinaf 2345-24-134-15-125-15-24-1345-1-124
+@shortform_word        thereinagain           5-2346-35-1-1245 timeheinag 2345-24-134-15-125-15-24-1345-1-1245
+@shortform_word        togetherness           2345-1245-1235-56-234 tgrness 2345-1245-1235-1345-15-234-234
+@shortform_indicator   turnabout              2345-136-1235-1345-1-12 turnab Turnab TURNAB
+@shortform_indicator   unaccording            136-1345-1-14 unac Unac UNAC
+@shortform_indicator   unaccordingly          136-1345-1-14-123-13456 unacly Unacly UNACLY
+@shortform_indicator   unblindfold            136-1345-12-123-124-135-123-145 unblfold Unblfold UNBLFOLD
+@shortform_word        unblindfolded          136-1345-12-123-124-135-123-145-1246 unblfolded 136-1345-12-123-124-135-123-145-15-145
+@shortform_word        unblindfolding         136-1345-12-123-124-135-123-145-346 unblfolding 136-1345-12-123-124-135-123-145-24-1345-1245
+@shortform_indicator   unbraille              136-1345-12-1235-123 unbrl Unbrl UNBRL
+@shortform_indicator   unbrailled             136-1345-12-1235-123-145 unbrld Unbrld UNBRLD
+@shortform_indicator   undeceive              136-1345-145-14-1236 undcv Undcv UNDCV
+@shortform_indicator   undeceived             136-1345-145-14-1236-145 undcvd Undcvd UNDCVD
+@shortform_indicator   undeceiver             136-1345-145-14-1236-1235 undcvr Undcvr UNDCVR
+@shortform_indicator   undeceiving            136-1345-145-14-1236-1245 undcvg Undcvg UNDCVG
+@shortform_indicator   undeclare              136-1345-145-14-123 undcl Undcl UNDCL
+@shortform_indicator   undeclared             136-1345-145-14-123-145 undcld Undcld UNDCLD
+@shortform_word        underpaid              5-136-1234-145 underpd 136-1345-145-15-1235-1234-145
+@shortform_indicator   unfriend               136-1345-124-1235 unfr Unfr UNFR
+@shortform_word        unfriendlier           136-1345-124-1235-123-24-12456 unfrlier 136-1345-124-1235-123-24-15-1235
+@shortform_word        unfriendliest          136-1345-124-1235-123-24-15-34 unfrliest 136-1345-124-1235-123-24-15-234-2345
+@shortform_word        unfriendliness         136-1345-124-1235-123-24-56-234 unfrliness 136-1345-124-1235-123-24-1345-15-234-234
+@shortform_word        unfriendlinesses       136-1345-124-1235-123-24-56-234-15-234 unfrlinesses 136-1345-124-1235-123-24-1345-15-234-234-15-234
+@shortform_indicator   unfriendly             136-1345-124-1235-123-13456 unfrly Unfrly UNFRLY
+@shortform_word        unlettered             136-1345-123-1235-1246 unlred 136-1345-123-1235-15-145
+@shortform_indicator   unnecessary            136-1345-1345-15-14 unnec Unnec UNNEC
+@shortform_indicator   unpaid                 136-1345-1234-145 unpd Unpd UNPD
+@shortform_word        unperceive             136-1345-1234-12456-14-1236 unpercv 136-1345-1234-15-1235-14-1236
+@shortform_word        unperceived            136-1345-1234-12456-14-1236-145 unpercvd 136-1345-1234-15-1235-14-1236-145
+@shortform_word        unperceiving           136-1345-1234-12456-14-1236-1245 unpercvg 136-1345-1234-15-1235-14-1236-1245
+@shortform_indicator   unquick                136-1345-12345-13 unqk Unqk UNQK
+@shortform_indicator   unreceived             136-1345-1235-14-1236-145 unrcvd Unrcvd UNRCVD
+@shortform_indicator   unrejoice              136-1345-1235-245-14 unrjc Unrjc UNRJC
+@shortform_indicator   unrejoiced             136-1345-1235-245-14-145 unrjcd Unrjcd UNRJCD
+@shortform_word        unrejoiceful           136-1345-1235-245-14-56-123 unrjcful 136-1345-1235-245-14-124-136-123
+@shortform_word        unrejoicefully         136-1345-1235-245-14-56-123-123-13456 unrjcfully 136-1345-1235-245-14-124-136-123-123-13456
+@shortform_word        unrejoicefulness       136-1345-1235-245-14-56-123-56-234 unrjcfulness 136-1345-1235-245-14-124-136-123-1345-15-234-234
+@shortform_indicator   unrejoicer             136-1345-1235-245-14-1235 unrjcr Unrjcr UNRJCR
+@shortform_indicator   unrejoicing            136-1345-1235-245-14-1245 unrjcg Unrjcg UNRJCG
+@shortform_indicator   unrejoicingly          136-1345-1235-245-14-1245-123-13456 unrjcgly Unrjcgly UNRJCGLY
+@shortform_indicator   walkabout              2456-1-123-13-1-12 walkab Walkab WALKAB
+@shortform_indicator   wellpaid               2456-15-123-123-1234-145 wellpd Wellpd WELLPD
+@shortform_word        westabout              2456-15-34-1-12 westab 2456-15-234-2345-1-12
+@shortform_word        whereabout             5-156-1-12 workhab 2456-135-1235-13-125-1-12
+@shortform_word        whereafter             5-156-1-124 workhaf 2456-135-1235-13-125-1-124
+@shortform_word        whereagain             5-156-1-1245 workhag 2456-135-1235-13-125-1-1245
+@shortform_word        whereagainst           5-156-1-1245-34 workhagst 2456-135-1235-13-125-1-1245-234-2345
+@shortform_word        whereinafter           5-156-35-1-124 workhinaf 2456-135-1235-13-125-24-1345-1-124
+@shortform_word        whereinagain           5-156-35-1-1245 workhinag 2456-135-1235-13-125-24-1345-1-1245
+@shortform_indicator   womanfriend            2456-135-134-1-1345-124-1235 womanfr Womanfr WOMANFR
+@shortform_word        womenfriends           2456-135-134-26-124-1235-234 womenfrs 2456-135-134-15-1345-124-1235-234
+@shortform_indicator   would've               2456-145-3-1236-15 wd've Wd've WD'VE
+@shortform_indicator   woulda                 2456-145-1 wda Wda WDA
+@shortform_word        wouldest               2456-145-15-34 wdest 2456-145-15-234-2345
+@shortform_indicator   wouldn't               2456-145-1345-3-2345 wdn't Wdn't WDN'T
+@shortform_indicator   wouldn't've            2456-145-1345-3-2345-3-1236-15 wdn't've Wdn't've WDN'T'VE
+@shortform_word        wouldst                2456-145-34 wdst 2456-145-234-2345
+use
 
 
 ########################################
 #   extra shortforms
 ########################################
 
-uses shortform_+ shortform_- rule trans unsaid 136-1345-234-145
+use word_whole_+ word_whole_-
+@shortform_indicator   unrepaid   136-1345-1235-15-234-145 unrepd Unrepd UNREPD
+@shortform_indicator   unsaid     136-1345-234-145 unsd Unsd UNSD
+use
 
 
 ########################################
 #   misc
 ########################################
 
-rule trans rared 1235-1-1235-1246
+uses word_whole_+ word_whole_- rule trans rared 1235-1-1235-1246
+
 
 ################################################################################

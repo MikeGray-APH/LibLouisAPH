@@ -69,8 +69,14 @@ int test_ueb(FILE *output)
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-10-07-contractions.txt", table, conversion, 0, 1);
 //	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-10-13-contractions.txt", table, conversion, 0, 1);
 
-	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-dictionary.txt", table, NULL, 0, 1);
-	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/data/english-words.txt", table, NULL, 0);
+	if(try_cnt == pass_cnt)
+	{
+		try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-dictionary.txt", table, NULL, 0, 1);
+		if(try_cnt == pass_cnt)
+		{
+			try_cnt++;  pass_cnt += test_back_from_file(output,   "test/data/english-words.txt", table, NULL, 0);
+		}
+	}
 
 //	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-fail-expect.txt", table, conversion, 1, 1);
 //	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/languages/ueb/ueb-fail-back.txt", table, NULL, 1);
