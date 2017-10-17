@@ -231,7 +231,7 @@ static char** scan_arguments(char **args, const int argn)
 
 	if(   argn == 1
 	   || (args[1][0] == '-'
-	   && (!strncmp(args[1], "-h", 2) || !strncmp(args[1], "--help", 6))))
+	   && (!strncmp(args[1], "-h", 3) || !strncmp(args[1], "--help", 7))))
 	{
 		print_usage();
 		return NULL;
@@ -239,7 +239,7 @@ static char** scan_arguments(char **args, const int argn)
 
 	if(   argn == 1
 	   || (args[1][0] == '-'
-	   && (!strncmp(args[1], "-v", 2) || !strncmp(args[1], "--version", 9))))
+	   && (!strncmp(args[1], "-v", 3) || !strncmp(args[1], "--version", 10))))
 	{
 		print_version();
 		exit(0);
@@ -264,11 +264,11 @@ static char** scan_arguments(char **args, const int argn)
 
 		if((*args)[2] == 0)
 			return ++args;
-		else if(!strncmp(&((*args)[2]), "back-conversion", 15))
+		else if(!strncmp(&((*args)[2]), "back-conversion", 16))
 			opt_direction = BACKWARD;
-		else if(!strncmp(&((*args)[2]), "unicode-to-digits", 17))
+		else if(!strncmp(&((*args)[2]), "unicode-to-digits", 18))
 			opt_unicode_to_digits = 1;
-		else if(!strncmp(&((*args)[2]), "digits-to-unicode", 17))
+		else if(!strncmp(&((*args)[2]), "digits-to-unicode", 18))
 			opt_digits_to_unicode = 1;
 		else if(!strncmp(&((*args)[2]), "output", 7))
 			opt_output = 1;

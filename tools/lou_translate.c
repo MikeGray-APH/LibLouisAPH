@@ -91,7 +91,7 @@ static char** scan_arguments(char **args, const int argn)
 {
 	if(   argn == 1
 	   || (args[1][0] == '-'
-	   && (!strncmp(args[1], "-h", 2) || !strncmp(args[1], "--help", 6))))
+	   && (!strncmp(args[1], "-h", 3) || !strncmp(args[1], "--help", 7))))
 	{
 		print_usage();
 		exit(0);
@@ -99,7 +99,7 @@ static char** scan_arguments(char **args, const int argn)
 
 	if(   argn == 1
 	   || (args[1][0] == '-'
-	   && (!strncmp(args[1], "-v", 2) || !strncmp(args[1], "--version", 9))))
+	   && (!strncmp(args[1], "-v", 3) || !strncmp(args[1], "--version", 10))))
 	{
 		print_version();
 		exit(0);
@@ -121,7 +121,7 @@ static char** scan_arguments(char **args, const int argn)
 
 		if((*args)[2] == 0)
 			return ++args;
-		else if(!strncmp(&((*args)[2]), "back-translation", 16))
+		else if(!strncmp(&((*args)[2]), "back-translation", 17))
 			direction = BACKWARD;
 		else if(!strncmp(&((*args)[2]), "paths", 6))
 			goto add_paths;

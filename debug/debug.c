@@ -145,7 +145,7 @@ void debug_output_uchar(const Unicode uchar)
 	case u' ':
 	case u'\n':
 	case u'\r':
-	case u'\t':  printf(" ");   break;
+	case u'\t':  printf(" ");  break;
 	default:
 
 		uchars[0] = uchar;
@@ -164,11 +164,11 @@ void debug_output_uchar_escape(const Unicode uchar)
 
 	switch(uchar)
 	{
-	case 0xa0:   printf("\\S");   break;
-	case u' ':   printf("\\s");   break;
-	case u'\n':  printf("\\n");   break;
-	case u'\r':  printf("\\r");   break;
-	case u'\t':  printf("\\t");   break;
+	case 0xa0:   printf("\\S");  break;
+	case u' ':   printf("\\s");  break;
+	case u'\n':  printf("\\n");  break;
+	case u'\r':  printf("\\r");  break;
+	case u'\t':  printf("\\t");  break;
 	default:
 
 		uchars[0] = uchar;

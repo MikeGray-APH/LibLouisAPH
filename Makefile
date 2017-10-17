@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.1.0-dev
+VERSION := 0.2.0
 
 CC = gcc
 
@@ -950,6 +950,8 @@ endif
 
 ################################################################################
 
+.PHONY: deps
+
 deps: build/Makedeps
 	@cat build/Makedeps
 
@@ -1047,9 +1049,9 @@ build/Makedeps: | build
 build:
 	mkdir -p build/
 
-.PHONY: deps
-
 ################################################################################
+
+.PHONY: deps clean cleanse distclean
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),cleanse)
@@ -1069,8 +1071,6 @@ cleanse: clean
 	rm -rf releases/
 
 distclean: cleanse
-
-.PHONY: deps clean cleanse distclean
 
 ################################################################################
 

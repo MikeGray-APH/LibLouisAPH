@@ -244,14 +244,14 @@ static int create_path_file_name(
 
 /******************************************************************************/
 
-static struct table* find_table(const char *file_name)
+static struct table* find_table(const char *file_name, const int file_name_max)
 {
 	struct table *table;
 
 	table = table_list;
 	while(table)
 	{
-		if(!strcmp(file_name, table->file_name))
+		if(!strncmp(file_name, table->file_name, file_name_max))
 			return table;
 		table = table->nxt;
 	}
@@ -269,7 +269,7 @@ struct table* lookup_table(const char *file_name)
 	file_name_len = strlen(file_name);
 
 	/*   has table already been loaded   */
-	table = find_table(file_name);
+	table = find_table(file_name, file_name_len + 1);
 	if(table)
 		return table;
 
@@ -277,7 +277,10 @@ struct table* lookup_table(const char *file_name)
 	if(lookup_hook)
 	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
 	{
-		table = find_table(path);
+		/*   make sure path is NULL terminated   */
+		path[PATH_NAME_MAX - 1] = 0;
+
+		table = find_table(path, PATH_NAME_MAX);
 		if(table)
 			return table;
 		table = table_compile_from_file(path);
@@ -298,7 +301,7 @@ struct table* lookup_table(const char *file_name)
 		paths_len = table_paths_len;
 		while(len = create_path_file_name(path, PATH_NAME_MAX, paths, paths_len, file_name, file_name_len))
 		{
-			table = find_table(path);
+			table = find_table(path, PATH_NAME_MAX);
 			if(table)
 				return table;
 			table = table_compile_from_file(path);
@@ -407,14 +410,14 @@ struct table** lookup_tables(int *table_cnt, const char *table_names)
 
 /******************************************************************************/
 
-static struct conversion* find_conversion(const char *file_name)
+static struct conversion* find_conversion(const char *file_name, const int file_name_max)
 {
 	struct conversion *conversion;
 
 	conversion = conversion_list;
 	while(conversion)
 	{
-		if(!strcmp(file_name, conversion->file_name))
+		if(!strncmp(file_name, conversion->file_name, file_name_max))
 			return conversion;
 		conversion = conversion->nxt;
 	}
@@ -432,7 +435,7 @@ struct conversion* lookup_conversion(const char *file_name)
 	file_name_len = strlen(file_name);
 
 	/*   has conversion already been loaded   */
-	conversion = find_conversion(file_name);
+	conversion = find_conversion(file_name, file_name_len + 1);
 	if(conversion)
 		return conversion;
 
@@ -440,7 +443,10 @@ struct conversion* lookup_conversion(const char *file_name)
 	if(lookup_hook)
 	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
 	{
-		conversion = find_conversion(path);
+		/*   make sure path is NULL terminated   */
+		path[PATH_NAME_MAX - 1] = 0;
+
+		conversion = find_conversion(path, PATH_NAME_MAX);
 		if(conversion)
 			return conversion;
 		conversion = conversion_compile_from_file(path);
@@ -461,7 +467,7 @@ struct conversion* lookup_conversion(const char *file_name)
 		paths_len = table_paths_len;
 		while(len = create_path_file_name(path, PATH_NAME_MAX - 1, paths, paths_len, file_name, file_name_len))
 		{
-			conversion = find_conversion(path);
+			conversion = find_conversion(path, PATH_NAME_MAX);
 			if(conversion)
 				return conversion;
 			conversion = conversion_compile_from_file(path);
@@ -499,6 +505,9 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 	if(lookup_hook)
 	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
 	{
+		/*   make sure path is NULL terminated   */
+		path[PATH_NAME_MAX - 1] = 0;
+
 		file = fopen(path, "r");
 		if(file)
 		{

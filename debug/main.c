@@ -558,10 +558,10 @@ static void log_callback(const int level, const char *message)
 #define INTERNAL(tag)  "\uf007" #tag "\uf007"
 
 //#define TEST_INPUT(input)  test_input_line((const struct table * const*)&table, 1, conversion, input)
-//#define TEST_INPUT(input)  test_input_both_line((const struct table * const*)&table, 1, conversion, input)
+#define TEST_INPUT(input)  test_input_both_line((const struct table * const*)&table, 1, conversion, input)
 //#define TEST_INPUT(input)  test_input_both_pass((const struct table * const*)&table, 1, conversion, input)
 //#define TEST_INPUT(input)  test_input_mapping((const struct table * const*)&table, 1, conversion, input)
-#define TEST_INPUT(input)  test_input_both_mapping((const struct table * const*)&table, 1, conversion, input)
+//#define TEST_INPUT(input)  test_input_both_mapping((const struct table * const*)&table, 1, conversion, input)
 //#define TEST_INPUT(input)  test_input_mapping_vert((const struct table * const*)&table, 1, conversion, input)
 
 int main(void)

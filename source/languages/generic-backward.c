@@ -229,7 +229,7 @@ static int convert_indicators_capital(struct translate *translate)
 		case SYMBOL:  capital_in = 1;  break;
 
 		case END:
-		case TERM:  capital_in = 0; break;
+		case TERM:  capital_in = 0;  break;
 		}
 
 
@@ -356,7 +356,7 @@ static int add_soft_terminators(struct translate *translate)
 
 			continue;
 
-		case TERM:  numeric_in = 0; break;
+		case TERM:  numeric_in = 0;  break;
 
 		/*   numeric space   */
 		case SYMBOL:

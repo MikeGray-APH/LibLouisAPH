@@ -54,7 +54,7 @@ void utf16le_output_char(FILE *output, const Unicode uchar)
 	case u' ':
 	case u'\n':
 	case u'\r':
-	case u'\t':  fputs(" ", output);   break;
+	case u'\t':  fputs(" ", output);  break;
 	default:
 
 		uchars[0] = uchar;
@@ -73,11 +73,11 @@ void utf16le_output_char_escape(FILE *output, const Unicode uchar)
 
 	switch(uchar)
 	{
-	case 0xa0:   fputs("\\S", output);   break;
-	case u' ':   fputs("\\s", output);   break;
-	case u'\n':  fputs("\\n", output);   break;
-	case u'\r':  fputs("\\r", output);   break;
-	case u'\t':  fputs("\\t", output);   break;
+	case 0xa0:   fputs("\\S", output);  break;
+	case u' ':   fputs("\\s", output);  break;
+	case u'\n':  fputs("\\n", output);  break;
+	case u'\r':  fputs("\\r", output);  break;
+	case u'\t':  fputs("\\t", output);  break;
 	default:
 
 		uchars[0] = uchar;

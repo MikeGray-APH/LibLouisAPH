@@ -459,24 +459,12 @@ int generic_process(struct translate *translate, const enum table_hash_type hash
 		/*   nocontract   */
 		switch(translate_get_mode_indicator(translate, table, &table->nocontract))
 		{
-		case FAIL:  return 0;
-		case NONE:  break;
-
-		case BEGIN:
-
-			nocontract_state = BEGIN;
-			break;
-
-		case WORD:
-
-			nocontract_state = WORD;
-			break;
-
+		case FAIL:   return 0;
+		case NONE:                              break;
+		case BEGIN:  nocontract_state = BEGIN;  break;
+		case WORD:   nocontract_state = WORD;   break;
 		case END:
-		case TERM:
-
-			nocontract_state = NONE;
-			break;
+		case TERM:   nocontract_state = NONE;   break;
 
 		case SYMBOL:
 
