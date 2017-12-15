@@ -128,12 +128,14 @@ CWARNS_DEBUG := \
 	-Wwrite-strings \
 	-Wunused \
 	-Wno-parentheses \
+	-Wno-implicit-fallthrough \
+	-Wno-memset-elt-size \
 	-Wno-unknown-warning-option \
 	-Wno-unused-function \
 	-Wno-unused-variable \
 	-Wno-unused-but-set-variable \
 
-CWARNS_OPT := \
+CWARNS_OPTIMAL := \
 	-Werror \
 	-Wall \
 	-Wextra \
@@ -148,6 +150,7 @@ CWARNS_OPT := \
 	-Wundef \
 	-Wwrite-strings \
 	-Wunused \
+	-Wno-implicit-fallthrough \
 	-Wno-inline \
 	-Wno-parentheses \
 	-Wno-unknown-warning-option \
@@ -364,7 +367,7 @@ build/exe-test-langs: $(OBJS_TEST_LANG_BUILD) | build/test
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TEST_LANG_BUILD) $(LDFLAGS)
 
 test-opt: CPPFLAGS += -I source/outputs -I test -D OUTPUT
-test-opt: CFLAGS += -O3 $(CWARNS_OPT)
+test-opt: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 test-opt: build/exe-test-opt
 	@build/exe-test-opt
 
@@ -397,7 +400,7 @@ FILES_LINUX64 := \
 
 dist-linux64: dll-linux64 lib-linux64 translate-linux64 table-linux64 convert-linux64
 
-dll-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPT)
+dll-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPTIMAL)
 dll-linux64: dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so
 
 OBJS_DLL_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/dll/$(OBJ))
@@ -405,7 +408,7 @@ OBJS_DLL_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), di
 dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).so: $(OBJS_DLL_LINUX64) | dists/x86_64-linux
 	$(CC) -o $@ -shared -s $(CFLAGS) $(OBJS_DLL_LINUX64)
 
-lib-linux64: CFLAGS += -O3 $(CWARNS_OPT)
+lib-linux64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 lib-linux64: dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a
 
 OBJS_LIB_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-linux/$(OBJ))
@@ -414,7 +417,7 @@ dists/x86_64-linux/liblouisAPH-linux64-$(VERSION).a: $(OBJS_LIB_LINUX64) | dists
 	ar -rcv $@ $(OBJS_LIB_LINUX64)
 
 convert-linux64: CPPFLAGS += -I source/outputs -D OUTPUT
-convert-linux64: CFLAGS += -O3 $(CWARNS_OPT)
+convert-linux64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 convert-linux64: dists/x86_64-linux/lou_convert
 
 OBJS_CONVERT_LINUX64 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/x86_64-linux/$(OBJ))
@@ -423,7 +426,7 @@ dists/x86_64-linux/lou_convert: $(OBJS_CONVERT_LINUX64) | dists/x86_64-linux
 	$(CC) -o $@ $(CFLAGS) $(OBJS_CONVERT_LINUX64) $(LDFLAGS)
 
 table-linux64: CPPFLAGS += -I source/outputs -D OUTPUT
-table-linux64: CFLAGS += -O3 $(CWARNS_OPT)
+table-linux64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 table-linux64: dists/x86_64-linux/lou_table
 
 OBJS_TABLE_LINUX64 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/x86_64-linux/$(OBJ))
@@ -432,7 +435,7 @@ dists/x86_64-linux/lou_table: $(OBJS_TABLE_LINUX64) | dists/x86_64-linux
 	$(CC) -o $@ $(CFLAGS) $(OBJS_TABLE_LINUX64) $(LDFLAGS)
 
 translate-linux64: CPPFLAGS += -I source/outputs -D OUTPUT
-translate-linux64: CFLAGS += -O3 $(CWARNS_OPT)
+translate-linux64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 translate-linux64: dists/x86_64-linux/lou_translate
 
 OBJS_TRANSLATE_LINUX64 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/x86_64-linux/$(OBJ))
@@ -466,7 +469,7 @@ dists/objects/x86_64-linux/java/properties: | dists/objects/x86_64-linux/java
 	echo Library-Name=liblouisAPH-jni-linux64-$(VERSION).so > dists/objects/x86_64-linux/java/properties
 
 jar-linux64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
-jar-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPT)
+jar-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPTIMAL)
 jar-linux64: dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar
 
 FILES_JAR_LINUX64 := -C dists/x86_64-linux liblouisAPH-jni-linux64-$(VERSION).so -C dists/objects/x86_64-linux/java properties
@@ -505,7 +508,7 @@ FILES_LINUX32 := \
 
 dist-linux32: dll-linux32 lib-linux32 translate-linux32 table-linux32 convert-linux32
 
-dll-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
+dll-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
 dll-linux32: dists/i686-linux/liblouisAPH-linux32-$(VERSION).so
 
 OBJS_DLL_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i686-linux/$(OBJ))
@@ -513,7 +516,7 @@ OBJS_DLL_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), di
 dists/i686-linux/liblouisAPH-linux32-$(VERSION).so: $(OBJS_DLL_LINUX32) | dists/i686-linux
 	$(CC) -o $@ -m32 -shared $(CFLAGS) $(OBJS_DLL_LINUX32)
 
-lib-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
+lib-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
 lib-linux32: dists/i686-linux/liblouisAPH-linux32-$(VERSION).a
 
 OBJS_LIB_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i686-linux/$(OBJ))
@@ -522,7 +525,7 @@ dists/i686-linux/liblouisAPH-linux32-$(VERSION).a: $(OBJS_LIB_LINUX32) | dists/i
 	ar -rcv $@ $(OBJS_LIB_LINUX32)
 
 convert-linux32: CPPFLAGS += -I source/outputs -D OUTPUT
-convert-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
+convert-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
 convert-linux32: dists/i686-linux/lou_convert
 
 OBJS_CONVERT_LINUX32 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/i686-linux/$(OBJ))
@@ -531,7 +534,7 @@ dists/i686-linux/lou_convert: $(OBJS_CONVERT_LINUX32) | dists/i686-linux
 	$(CC) -o $@ -m32 $(CFLAGS) $(OBJS_CONVERT_LINUX32) $(LDFLAGS)
 
 table-linux32: CPPFLAGS += -I source/outputs -D OUTPUT
-table-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
+table-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
 table-linux32: dists/i686-linux/lou_table
 
 OBJS_TABLE_LINUX32 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/i686-linux/$(OBJ))
@@ -540,7 +543,7 @@ dists/i686-linux/lou_table: $(OBJS_TABLE_LINUX32) | dists/i686-linux
 	$(CC) -o $@ -m32 $(CFLAGS) $(OBJS_TABLE_LINUX32) $(LDFLAGS)
 
 translate-linux32: CPPFLAGS += -I source/outputs -D OUTPUT
-translate-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPT)
+translate-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
 translate-linux32: dists/i686-linux/lou_translate
 
 OBJS_TRANSLATE_LINUX32 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/i686-linux/$(OBJ))
@@ -586,7 +589,7 @@ FILES_WIN64 := \
 dist-win64: dll-win64 translate-win64 table-win64 convert-win64
 
 dll-win64: CC = $(CC_WIN64)
-dll-win64: CFLAGS += -O3 $(CWARNS_OPT)
+dll-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 dll-win64: dists/x86_64-win/liblouisAPH-win64-$(VERSION).dll
 
 OBJS_DLL_WIN64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-win/$(OBJ))
@@ -596,7 +599,7 @@ dists/x86_64-win/liblouisAPH-win64-$(VERSION).dll: $(OBJS_DLL_WIN64) | dists/x86
 
 convert-win64: CC = $(CC_WIN64)
 convert-win64: CPPFLAGS += -I source/outputs -D OUTPUT
-convert-win64: CFLAGS += -O3 $(CWARNS_OPT)
+convert-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 convert-win64: dists/x86_64-win/lou_convert.exe
 
 OBJS_CONVERT_WIN64 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/x86_64-win/$(OBJ))
@@ -606,7 +609,7 @@ dists/x86_64-win/lou_convert.exe: $(OBJS_CONVERT_WIN64) | dists/x86_64-win
 
 table-win64: CC = $(CC_WIN64)
 table-win64: CPPFLAGS += -I source/outputs -D OUTPUT
-table-win64: CFLAGS += -O3 $(CWARNS_OPT)
+table-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 table-win64: dists/x86_64-win/lou_table.exe
 
 OBJS_TABLE_WIN64 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/x86_64-win/$(OBJ))
@@ -616,7 +619,7 @@ dists/x86_64-win/lou_table.exe: $(OBJS_TABLE_WIN64) | dists/x86_64-win
 
 translate-win64: CC = $(CC_WIN64)
 translate-win64: CPPFLAGS += -I source/outputs -D OUTPUT
-translate-win64: CFLAGS += -O3 $(CWARNS_OPT)
+translate-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 translate-win64: dists/x86_64-win/lou_translate.exe
 
 OBJS_TRANSLATE_WIN64 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/x86_64-win/$(OBJ))
@@ -651,7 +654,7 @@ dists/objects/x86_64-win/java/properties: | dists/objects/x86_64-win/java
 
 jar-win64: CC = $(CC_WIN64)
 jar-win64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
-jar-win64: CFLAGS += -O3 $(CWARNS_OPT)
+jar-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-win64: dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar
 
 FILES_JAR_WIN64 := -C dists/x86_64-win liblouisAPH-jni-win64-$(VERSION).dll -C dists/objects/x86_64-win/java properties
@@ -701,7 +704,7 @@ FILES_WIN32 := \
 dist-win32: dll-win32 convert-win32 table-win32 translate-win32
 
 dll-win32: CC = $(CC_WIN32)
-dll-win32: CFLAGS += -O3 $(CWARNS_OPT)
+dll-win32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 dll-win32: dists/i686-win/liblouisAPH-win32-$(VERSION).dll
 
 OBJS_DLL_WIN32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i686-win/$(OBJ))
@@ -711,7 +714,7 @@ dists/i686-win/liblouisAPH-win32-$(VERSION).dll: $(OBJS_DLL_WIN32) | dists/i686-
 
 convert-win32: CC = $(CC_WIN32)
 convert-win32: CPPFLAGS += -I source/outputs -D OUTPUT
-convert-win32: CFLAGS = -O3 $(CWARNS_OPT)
+convert-win32: CFLAGS = -O3 $(CWARNS_OPTIMAL)
 convert-win32: dists/i686-win/lou_convert.exe
 
 OBJS_CONVERT_WIN32 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/i686-win/$(OBJ))
@@ -721,7 +724,7 @@ dists/i686-win/lou_convert.exe: $(OBJS_CONVERT_WIN32) | dists/i686-win
 
 table-win32: CC = $(CC_WIN32)
 table-win32: CPPFLAGS += -I source/outputs -D OUTPUT
-table-win32: CFLAGS += -O3 $(CWARNS_OPT)
+table-win32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 table-win32: dists/i686-win/lou_table.exe
 
 OBJS_TABLE_WIN32 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/i686-win/$(OBJ))
@@ -731,7 +734,7 @@ dists/i686-win/lou_table.exe: $(OBJS_TABLE_WIN32) | dists/i686-win
 
 translate-win32: CC = $(CC_WIN32)
 translate-win32: CPPFLAGS += -I source/outputs -D OUTPUT
-translate-win32: CFLAGS += -O3 $(CWARNS_OPT)
+translate-win32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 translate-win32: dists/i686-win/lou_translate.exe
 
 OBJS_TRANSLATE_WIN32 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/i686-win/$(OBJ))
@@ -779,7 +782,7 @@ FILES_MAC64 := \
 dist-mac64: dll-mac64 translate-mac64 table-mac64 convert-mac64
 
 dll-mac64: CC = $(CC_MAC64)
-dll-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+dll-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 dll-mac64: dists/x86_64-mac/liblouisAPH-mac64-$(VERSION).dylib
 
 OBJS_DLL_MAC64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/x86_64-mac/$(OBJ))
@@ -789,7 +792,7 @@ dists/x86_64-mac/liblouisAPH-mac64-$(VERSION).dylib: $(OBJS_DLL_MAC64) | dists/x
 
 convert-mac64: CC = $(CC_MAC64)
 convert-mac64: CPPFLAGS += -I source/outputs -D OUTPUT
-convert-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+convert-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 convert-mac64: dists/x86_64-mac/lou_convert
 
 OBJS_CONVERT_MAC64 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/x86_64-mac/$(OBJ))
@@ -799,7 +802,7 @@ dists/x86_64-mac/lou_convert: $(OBJS_CONVERT_MAC64) | dists/x86_64-mac
 
 table-mac64: CC = $(CC_MAC64)
 table-mac64: CPPFLAGS += -I source/outputs -D OUTPUT
-table-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+table-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 table-mac64: dists/x86_64-mac/lou_table
 
 OBJS_TABLE_MAC64 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/x86_64-mac/$(OBJ))
@@ -809,7 +812,7 @@ dists/x86_64-mac/lou_table: $(OBJS_TABLE_MAC64) | dists/x86_64-mac
 
 translate-mac64: CC = $(CC_MAC64)
 translate-mac64: CPPFLAGS += -I source/outputs -D OUTPUT
-translate-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+translate-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 translate-mac64: dists/x86_64-mac/lou_translate
 
 OBJS_TRANSLATE_MAC64 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/x86_64-mac/$(OBJ))
@@ -844,7 +847,7 @@ dists/objects/x86_64-mac/java/properties: | dists/objects/x86_64-mac/java
 
 jar-mac64: CC = $(CC_MAC64)
 jar-mac64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
-jar-mac64: CFLAGS += -O3 $(CWARNS_OPT)
+jar-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-mac64: dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar
 
 FILES_JAR_MAC64 := -C dists/x86_64-mac liblouisAPH-jni-mac64-$(VERSION).dylib -C dists/objects/x86_64-mac/java properties
@@ -894,7 +897,7 @@ FILES_MAC32 := \
 dist-mac32: dll-mac32 translate-mac32 table-mac32 convert-mac32
 
 dll-mac32: CC = $(CC_MAC32)
-dll-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+dll-mac32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 dll-mac32: dists/i386-mac/liblouisAPH-mac32-$(VERSION).dylib
 
 OBJS_DLL_MAC32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), dists/objects/i386-mac/$(OBJ))
@@ -904,7 +907,7 @@ dists/i386-mac/liblouisAPH-mac32-$(VERSION).dylib: $(OBJS_DLL_MAC32) | dists/i38
 
 convert-mac32: CC = $(CC_MAC32)
 convert-mac32: CPPFLAGS += -I source/outputs -D OUTPUT
-convert-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+convert-mac32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 convert-mac32: dists/i386-mac/lou_convert
 
 OBJS_CONVERT_MAC32 := $(foreach OBJ, $(OBJS_CONVERT), dists/objects/i386-mac/$(OBJ))
@@ -914,7 +917,7 @@ dists/i386-mac/lou_convert: $(OBJS_CONVERT_MAC32) | dists/i386-mac
 
 table-mac32: CC = $(CC_MAC32)
 table-mac32: CPPFLAGS += -I source/outputs -D OUTPUT
-table-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+table-mac32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 table-mac32: dists/i386-mac/lou_table
 
 OBJS_TABLE_MAC32 := $(foreach OBJ, $(OBJS_TABLE), dists/objects/i386-mac/$(OBJ))
@@ -924,7 +927,7 @@ dists/i386-mac/lou_table: $(OBJS_TABLE_MAC32) | dists/i386-mac
 
 translate-mac32: CC = $(CC_MAC32)
 translate-mac32: CPPFLAGS += -I source/outputs -D OUTPUT
-translate-mac32: CFLAGS += -O3 $(CWARNS_OPT)
+translate-mac32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 translate-mac32: dists/i386-mac/lou_translate
 
 OBJS_TRANSLATE_MAC32 := $(foreach OBJ, $(OBJS_TRANSLATE), dists/objects/i386-mac/$(OBJ))
