@@ -225,12 +225,13 @@ build/tools:
 
 .PHONY: java jar
 
-HAS_JAVAC := $(shell if (which javac &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_JAVAC := $(shell if (which javac > /dev/null 2>&1 ); then echo 1; else echo 0; fi )
 
 ifneq ($(HAS_JAVAC),1)
 
 java: FORCE
 	@echo missing javac
+	@false
 
 else
 
@@ -329,6 +330,7 @@ ifneq ($(HAS_JAVAC),1)
 
 test-java: FORCE
 	@echo missing javac
+	@false
 
 else
 
@@ -452,6 +454,7 @@ ifneq ($(HAS_JAVAC),1)
 
 jar-linux64: FORCE
 	@echo missing javac
+	@false
 
 else
 
@@ -569,12 +572,13 @@ releases/LibLouisAPH-linux32-$(VERSION).tar.bz2: $(FILES_LINUX32)
 
 .PHONY: dist-win64 dll-win64 convert-win64 table-win64 translate-win64
 
-HAS_MINGW64 := $(shell if (which $(CC_WIN64) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_MINGW64 := $(shell if (which $(CC_WIN64) > /dev/null 2>&1 ); then echo 1; else echo 0; fi )
 
 ifneq ($(HAS_MINGW64),1)
 
 dist-win64 dll-win64 convert-win64 table-win64 translate-win64: FORCE
 	@echo missing $(CC_WIN64)
+	@false
 
 else
 
@@ -636,6 +640,7 @@ ifneq ($(HAS_JAVAC),1)
 
 jar-win64: FORCE
 	@echo missing javac
+	@false
 
 else
 
@@ -684,12 +689,13 @@ endif
 
 .PHONY: dist-win32 dll-win32 convert-win32 table-win32 translate-win32 release-win32
 
-HAS_MINGW32 := $(shell if (which $(CC_WIN32) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_MINGW32 := $(shell if (which $(CC_WIN32) > /dev/null 2>&1 ); then echo 1; else echo 0; fi )
 
 ifneq ($(HAS_MINGW32),1)
 
 dist-win32 dll-win32 convert-win32 table-win32 translate-win32 release-win32: FORCE
 	@echo missing $(CC_WIN32)
+	@false
 
 else
 
@@ -762,12 +768,13 @@ endif
 
 .PHONY: dist-mac64 dll-mac64 convert-mac64 table-mac64 translate-mac64 release-mac64
 
-HAS_OSXCROSS64 := $(shell if (which $(CC_MAC64) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_OSXCROSS64 := $(shell if (which $(CC_MAC64) > /dev/null 2>&1 ); then echo 1; else echo 0; fi )
 
 ifneq ($(HAS_OSXCROSS64),1)
 
 dist-mac64 dll-mac64 convert-mac64 table-mac64 translate-mac64 release-mac64: FORCE
 	@echo missing $(CC_MAC64)
+	@false
 
 else
 
@@ -829,6 +836,7 @@ ifneq ($(HAS_JAVAC),1)
 
 jar-mac64: FORCE
 	@echo missing javac
+	@false
 
 else
 
@@ -877,12 +885,13 @@ endif
 
 .PHONY: dist-mac32 dll-mac32 convert-mac32 table-mac32 translate-mac32
 
-HAS_OSXCROSS32 := $(shell if (which $(CC_MAC32) &> /dev/null ); then echo 1; else echo 0; fi )
+HAS_OSXCROSS32 := $(shell if (which $(CC_MAC32) > /dev/null 2>&1 ); then echo 1; else echo 0; fi )
 
 ifneq ($(HAS_OSXCROSS32),1)
 
 dist-mac32 dll-mac32 convert-mac32 table-mac32 translate-mac32: FORCE
 	@echo missing $(CC_MAC32)
+	@false
 
 else
 
@@ -972,7 +981,7 @@ build/Makedeps: | build
 			done ; \
 			for SOURCE_DIR in `find $$DIR -type d` ; \
 			do \
-				if ( ls $$SOURCE_DIR/*.c &> /dev/null ) ; \
+				if ( ls $$SOURCE_DIR/*.c > /dev/null 2>&1 ) ; \
 				then \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/$$SOURCE_DIR" >> build/Makedeps ; \
@@ -997,7 +1006,7 @@ build/Makedeps: | build
 			done ; \
 			for SOURCE_DIR in `find $$DIR -type d` ; \
 			do \
-				if ( ls $$SOURCE_DIR/*.c &> /dev/null ) ; \
+				if ( ls $$SOURCE_DIR/*.c > /dev/null 2>&1 ) ; \
 				then \
 					printf '\n' >> build/Makedeps ; \
 					echo "$$BUILD_DIR/$$SOURCE_DIR/%.o: $$SOURCE_DIR/%.c | $$BUILD_DIR/$$SOURCE_DIR" >> build/Makedeps ; \
