@@ -50,7 +50,7 @@ public class Test
 			console.println("testing java");
 
 		//   -Djava.library.path=build
-		LibLouisAPH.loadLibrary("louisAPH-jni");
+		LibLouisAPH.loadLibrarySystem("louisAPH-jni");
 
 		LogCallback logCallback = new LogCallback()
 		{

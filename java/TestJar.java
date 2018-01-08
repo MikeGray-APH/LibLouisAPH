@@ -60,9 +60,10 @@ public class TestJar
 		LibLouisAPH.setLogCallback(logCallback);
 	}
 
-	private static void getVersion()
+	private static void getVersions()
 	{
-		output.println("getVersion         = " + LibLouisAPH.getVersion());
+		output.println("getImplementationVersion  = " + LibLouisAPH.getImplementationVersion());
+		output.println("getVersion                = " + LibLouisAPH.getVersion());
 		output.flush();
 	}
 
@@ -70,7 +71,7 @@ public class TestJar
 
 	private static void testGetPaths(String result, boolean doOutput)
 	{
-		output.print("getPaths           = ");
+		output.print("getPaths                  = ");
 		output.flush();
 		if(doOutput)
 		if(console != output)
@@ -119,7 +120,7 @@ public class TestJar
 
 	private static void testSetPaths(String paths)
 	{
-		output.println("setPaths          := " + paths);
+		output.println("setPaths                 := " + paths);
 		output.flush();
 		if(console != output)
 		{
@@ -140,7 +141,7 @@ public class TestJar
 
 	private static void testAddPaths(String paths, String result)
 	{
-		output.println("addPaths          := " + paths);
+		output.println("addPaths                 := " + paths);
 		output.flush();
 		if(console != output)
 		{
@@ -169,7 +170,7 @@ public class TestJar
 
 		String forward, backward;
 
-		output.print("translateForward   = ");
+		output.print("translateForward          = ");
 		output.flush();
 		if(console != output)
 		{
@@ -227,7 +228,7 @@ public class TestJar
 			console.println("PASS");
 
 
-		output.print("translateBackward  = ");
+		output.print("translateBackward         = ");
 		output.flush();
 		if(console != output)
 		{
@@ -289,7 +290,7 @@ public class TestJar
 	{
 		String forward, backward;
 
-		output.print("convertForward     = ");
+		output.print("convertForward            = ");
 		output.flush();
 		if(console != output)
 		{
@@ -320,7 +321,7 @@ public class TestJar
 			console.println("PASS");
 
 
-		output.print("convertBackward    = ");
+		output.print("convertBackward           = ");
 		output.flush();
 		if(console != output)
 		{
@@ -351,89 +352,9 @@ public class TestJar
 			console.println("PASS");
 	}
 
-/******************************************************************************/
-
-	private static void testInternal() throws IOException, UnsupportedEncodingException
+	private static void doTests()
 	{
-		console = new PrintStream(System.out, true, "UTF-8");
-		try
-		{
-			output = new PrintStream("build/test/output-jar-internal.txt", "UTF-8");
-		}
-		catch(IOException exception)
-		{
-			output = console;
-		}
-
-		output.println("testing jar internal");
-		output.println();
-		output.flush();
-		if(console != output)
-			console.println("testing jar internal");
-
-		LibLouisAPH.loadLibrary();
-		setLogCallback();
-
-		getVersion();
-		testGetPaths(null, true);
-		testTranslation(
-			"x xx xxx xx x",
-			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u282d\u2815\u2812\u282a\u282d\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
-			"jar.rst",
-			null,
-			new int[]{0,2,3,5,7,8,8,8,13,14,16,18,19},
-			new int[]{0,0,1,2,2,3,3,4,5,5,5,5,5,8,9,9,10,10,11,12,12},
-			new int[]{7,8,8,5});
-		testConversion(
-			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u282d\u2815\u2812\u282a\u282d\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
-			">< ><>< =>-<= ><>< ><",
-			"jar.cvt");
-		testSetPaths("test/tables");
-		testTranslation(
-			"x xx xxx xx x",
-			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u2815\u282a\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
-			"link.rst",
-			null,
-			new int[]{0,2,3,5,7,8,8,8,12,13,15,17,18},
-			new int[]{0,0,1,2,2,3,3,4,5,5,5,5,8,9,9,10,10,11,12,12},
-			new int[]{7,8,8,5});
-		testConversion(
-			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u2815\u282a\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
-			">< ><>< >><< ><>< ><",
-			"link.cvt");
-
-		if(console != output)
-		{
-			console.println();
-			output.close();
-		}
-		else
-			output.println();
-	}
-
-	public static void testExternal() throws IOException, UnsupportedEncodingException
-	{
-		console = new PrintStream(System.out, true, "UTF-8");
-		try
-		{
-			output = new PrintStream("build/test/output-jar-external.txt", "UTF-8");
-		}
-		catch(IOException exception)
-		{
-			output = console;
-		}
-
-		output.println("testing jar external");
-		output.println();
-		output.flush();
-		if(console != output)
-			console.println("testing jar external");
-
-		//   -Djava.library.path=build
-		LibLouisAPH.loadLibrary("louisAPH-jni");
-		setLogCallback();
-
-		getVersion();
+		getVersions();
 		testGetPaths(null, true);
 		testSetPaths("tables");
 		testAddPaths("test/tables", "tables:test/tables");
@@ -461,6 +382,189 @@ public class TestJar
 
 /******************************************************************************/
 
+	private static void testInternal() throws IOException, UnsupportedEncodingException
+	{
+		String libraryName, tablePath;
+
+		console = new PrintStream(System.out, true, "UTF-8");
+		try
+		{
+			output = new PrintStream("build/test/output-jar-internal.txt", "UTF-8");
+		}
+		catch(IOException exception)
+		{
+			output = console;
+		}
+
+		output.println("testing jar internal");
+		output.println();
+		output.flush();
+		if(console != output)
+			console.println("testing jar internal");
+
+		LibLouisAPH.loadLibraryInternal();
+		LibLouisAPH.setInternalTablePath();
+		setLogCallback();
+
+		output.print("getInternalLibraryName    = ");
+		output.flush();
+		if(console != output)
+		{
+			console.print("getInternalLibraryName:  ");
+			console.flush();
+		}
+		libraryName = LibLouisAPH.getInternalLibraryName();
+		output.println(libraryName);
+		output.flush();
+		if(!libraryName.equals("/liblouisAPH-jni.so"))
+		{
+			output.println("ERROR:  getInternalLibraryName");
+			output.close();
+			if(console != output)
+				console.println("FAIL");
+			throw new Error("ERROR:  getInternalLibraryName");
+		}
+		if(console != output)
+		{
+			console.println("PASS");
+			console.flush();
+		}
+
+		output.print("getInternalTablePath      = ");
+		output.flush();
+		if(console != output)
+		{
+			console.print("getInternalTablePath:  ");
+			console.flush();
+		}
+		tablePath = LibLouisAPH.getInternalTablePath();
+		output.println(tablePath);
+		output.flush();
+		if(!tablePath.equals("/tables"))
+		{
+			output.println("ERROR:  getInternalTablePath");
+			output.close();
+			if(console != output)
+				console.println("FAIL");
+			throw new Error("ERROR:  getInternalTablePath");
+		}
+		if(console != output)
+		{
+			console.println("PASS");
+			console.flush();
+		}
+
+		doTests();
+	}
+
+	public static void testExternal() throws IOException, UnsupportedEncodingException
+	{
+		String libraryName, resultName;
+
+		console = new PrintStream(System.out, true, "UTF-8");
+		try
+		{
+			output = new PrintStream("build/test/output-jar-external.txt", "UTF-8");
+		}
+		catch(IOException exception)
+		{
+			output = console;
+		}
+
+		output.println("testing jar external");
+		output.println();
+		output.flush();
+		if(console != output)
+			console.println("testing jar external");
+
+		libraryName =   System.getProperty("user.dir")
+		              + System.getProperty("file.separator")
+		              + "build"
+		              + System.getProperty("file.separator")
+		              + "liblouisAPH-jni.so";
+		LibLouisAPH.loadLibraryExternal(libraryName);
+		setLogCallback();
+
+		output.print("getExternalLibraryName    = ");
+		output.flush();
+		if(console != output)
+		{
+			console.print("getExternalLibraryName:  ");
+			console.flush();
+		}
+		resultName = LibLouisAPH.getExternalLibraryName();
+		output.println(libraryName);
+		output.flush();
+		if(!libraryName.equals(resultName))
+		{
+			output.println("ERROR:  getExternalLibraryName");
+			output.close();
+			if(console != output)
+				console.println("FAIL");
+			throw new Error("ERROR:  getExternalLibraryName");
+		}
+		if(console != output)
+		{
+			console.println("PASS");
+			console.flush();
+		}
+
+		doTests();
+	}
+
+	public static void testSystem() throws IOException, UnsupportedEncodingException
+	{
+		String libraryName;
+
+		console = new PrintStream(System.out, true, "UTF-8");
+		try
+		{
+			output = new PrintStream("build/test/output-jar-system.txt", "UTF-8");
+		}
+		catch(IOException exception)
+		{
+			output = console;
+		}
+
+		output.println("testing jar system");
+		output.println();
+		output.flush();
+		if(console != output)
+			console.println("testing jar system");
+
+		//   -Djava.library.path=build
+		LibLouisAPH.loadLibrarySystem("louisAPH-jni");
+		setLogCallback();
+
+		output.print("getSystemLibraryName      = ");
+		output.flush();
+		if(console != output)
+		{
+			console.print("getSystemLibraryName:  ");
+			console.flush();
+		}
+		libraryName = LibLouisAPH.getSystemLibraryName();
+		output.println(libraryName);
+		output.flush();
+		if(!libraryName.equals("louisAPH-jni"))
+		{
+			output.println("ERROR:  getSystemLibraryName");
+			output.close();
+			if(console != output)
+				console.println("FAIL");
+			throw new Error("ERROR:  getSystemLibraryName");
+		}
+		if(console != output)
+		{
+			console.println("PASS");
+			console.flush();
+		}
+
+		doTests();
+	}
+
+/******************************************************************************/
+
 	public static void main(String args[]) throws IOException, UnsupportedEncodingException
 	{
 		if(args.length > 0)
@@ -468,9 +572,10 @@ public class TestJar
 		{
 		case "internal":  testInternal();  return;
 		case "external":  testExternal();  return;
+		case "system":    testSystem();    return;
 		}
 
-		System.err.println("ERROR:  neither internal nor external specified");
+		System.err.println("ERROR:  neither internal, external, nor system specified");
 	}
 
 /******************************************************************************/

@@ -30,11 +30,42 @@ public class Main
 {
 	private static PrintStream consoleOut, consoleErr;
 
+	private static void printUsage()
+	{
+		String usage[] =
+		{
+			"Usage: [OPTIONS] TABLE_LIST [CONVERSION]",
+			"Options:",
+			"   -b          do back translation",
+			"   -p PATHS    use external table paths PATHS",
+			"   -l LIBRARY  use external library LIBRARY",
+			"   -s LIBRARY  use system library LIBRARY",
+			"   -v          print version",
+			"   -h          print this message",
+		};
+
+		for(int i = 0; i < usage.length; i++)
+			System.out.println(usage[i]);
+	}
+
+	private static void printVersion()
+	{
+		String version[] =
+		{
+			"Version:  " + Main.class.getPackage().getImplementationVersion(),
+			"Copyright (C) 2017 American Printing House for the Blind, Inc. <www.aph.org>",
+			"Licensed under the Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>.",
+		};
+
+		for(int i = 0; i < version.length; i++)
+			System.out.println(version[i]);
+	}
+
 	public static void main(String args[]) throws IOException, UnsupportedEncodingException
 	{
 		if(args.length < 1)
 		{
-			System.out.println("Usage:  TABLE_LIST [CONVERSION]");
+			printUsage();
 			return;
 		}
 
@@ -42,10 +73,10 @@ public class Main
 		consoleOut = new PrintStream(System.out, true, "UTF-8");
 		consoleErr = new PrintStream(System.out, true, "UTF-8");
 
-		String libraryFull  = null;
-		String libraryName  = null;
-		String tablePaths   = null;
-		int direction       = 1;
+		String systemLibraryName    = null;
+		String externalLibraryName  = null;
+		String tablePaths           = null;
+		int direction               = 1;
 
 		int argn;
 		for(argn = 0; argn < args.length; argn++)
@@ -54,20 +85,6 @@ public class Main
 		{
 		case "-b":  direction = -1;
 
-		case "-L":
-
-			argn++;
-			if(argn < args.length)
-				libraryFull = args[argn];
-			break;
-
-		case "-l":
-
-			argn++;
-			if(argn < args.length)
-				libraryName = args[argn];
-			break;
-
 		case "-p":
 
 			argn++;
@@ -75,12 +92,22 @@ public class Main
 				tablePaths = args[argn];
 			break;
 
-		case "-v":
+		case "-l":
 
-			System.out.println("Version:  " + new Main().getClass().getPackage().getImplementationVersion());
-			System.out.println("Copyright (C) 2017 American Printing House for the Blind, Inc. <www.aph.org>");
-			System.out.println("Licensed under the Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>.");
-			return;
+			argn++;
+			if(argn < args.length)
+				externalLibraryName = args[argn];
+			break;
+
+		case "-s":
+
+			argn++;
+			if(argn < args.length)
+				systemLibraryName = args[argn];
+			break;
+
+		case "-v":  printVersion();  return;
+		case "-h":  printUsage();    return;
 		}
 		else
 			break;
@@ -93,14 +120,19 @@ public class Main
 		if(argn < args.length)
 			conversion = args[argn];
 
-		if(libraryFull != null)
-			LibLouisAPH.loadLibraryFullName(libraryFull);
-		else if(libraryFull != null)
-			LibLouisAPH.loadLibrary(libraryName);
+		if(systemLibraryName != null)
+			LibLouisAPH.loadLibrarySystem(systemLibraryName);
+		else if(externalLibraryName != null)
+			LibLouisAPH.loadLibraryExternal(externalLibraryName);
 		else
-			LibLouisAPH.loadLibrary();
+			LibLouisAPH.loadLibraryInternal();
 
 		LibLouisAPH.setLogCallback(new MainLogCallback(consoleOut, consoleErr));
+
+		if(tablePaths == null)
+			LibLouisAPH.setInternalTablePath();
+		else
+			LibLouisAPH.setPaths(tablePaths);
 
 		String input, translation;
 		while((input = consoleIn.readLine()) != null)

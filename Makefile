@@ -256,7 +256,7 @@ build/liblouisAPH-jni.so: $(OBJS_JNI_BUILD) build/objects/java/interface-jni.o |
 manifest: build/java/manifest.txt
 
 build/java/manifest.txt: | build/java
-	@echo Implementation-Version: $(VERSION) > $@
+	@echo Implementation-Version: DEV-$(VERSION) > $@
 	@echo >> $@
 
 jar: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
@@ -267,12 +267,13 @@ build/java/org/aph/liblouisaph/Main.class: java/org/aph/liblouisaph/Main.java bu
 	javac -d build/java -classpath build/java -sourcepath java $<
 
 CLASSES_JAR_BUILD  := $(foreach OBJ, $(CLASSES_JAR), -C build/java $(OBJ))
-FILES_JAR_BUILD    := -C build liblouisAPH-jni.so -C build/objects/java properties -C java tables/jar.rst -C java tables/jar.cvt
+FILES_JAR_BUILD    := -C build liblouisAPH-jni.so -C build/objects/java liblouisaph.properties -C java tables/jar.rst -C java tables/jar.cvt
 
-build/objects/java/properties: | build/objects/java
-	echo Library-Name=liblouisAPH-jni.so > build/objects/java/properties
+build/objects/java/liblouisaph.properties: | build/objects/java
+	echo Library-Name=liblouisAPH-jni.so > build/objects/java/liblouisaph.properties
+	echo Table-Path=tables >> build/objects/java/liblouisaph.properties
 
-build/LibLouisAPH.jar: build/java/manifest.txt build/objects/java/properties build/liblouisAPH-jni.so build/java/org/aph/liblouisaph/Main.class
+build/LibLouisAPH.jar: build/java/manifest.txt build/objects/java/liblouisaph.properties build/liblouisAPH-jni.so build/java/org/aph/liblouisaph/Main.class
 	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(FILES_JAR_BUILD) $(TABLES)
 
 build/objects/java:
@@ -348,7 +349,8 @@ test-jar: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I b
 test-jar: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 test-jar: build/java/test/TestJar.class
 	@java -cp build/java/test/:build/LibLouisAPH.jar TestJar internal
-	@java -cp build/java/test/:build/LibLouisAPH.jar -Djava.library.path=build TestJar external
+	@java -cp build/java/test/:build/LibLouisAPH.jar TestJar external
+	@java -cp build/java/test/:build/LibLouisAPH.jar -Djava.library.path=build TestJar system
 
 build/java/test/TestJar.class: java/TestJar.java build/LibLouisAPH.jar | build/java/test build/test
 	javac -d build/java/test/ -classpath build/java/ -sourcepath java $<
@@ -468,17 +470,17 @@ OBJS_JNI_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/x86_6
 dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so: $(OBJS_JNI_LINUX64) dists/objects/x86_64-linux/java/interface-jni.o | dists/x86_64-linux
 	$(CC) -o $@ -shared -s $(OBJS_JNI_LINUX64) dists/objects/x86_64-linux/java/interface-jni.o
 
-dists/objects/x86_64-linux/java/properties: | dists/objects/x86_64-linux/java
-	echo Library-Name=liblouisAPH-jni-linux64-$(VERSION).so > dists/objects/x86_64-linux/java/properties
+dists/objects/x86_64-linux/java/liblouisaph.properties: | dists/objects/x86_64-linux/java
+	echo Library-Name=liblouisAPH-jni-linux64-$(VERSION).so > dists/objects/x86_64-linux/java/liblouisaph.properties
 
 jar-linux64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
 jar-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPTIMAL)
 jar-linux64: dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar
 
-FILES_JAR_LINUX64 := -C dists/x86_64-linux liblouisAPH-jni-linux64-$(VERSION).so -C dists/objects/x86_64-linux/java properties
+FILES_JAR_LINUX64 := -C dists/x86_64-linux liblouisAPH-jni-linux64-$(VERSION).so -C dists/objects/x86_64-linux/java liblouisaph.properties
 
-dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar: build/java/manifest.txt dists/objects/x86_64-linux/java/properties dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/x86_64-linux
-	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_LINUX64)
+dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar: dists/jar/manifest.txt dists/objects/x86_64-linux/java/liblouisaph.properties dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/x86_64-linux
+	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_LINUX64)
 
 dists/objects/x86_64-linux/java:
 	mkdir -p dists/objects/x86_64-linux/java/
@@ -556,6 +558,43 @@ dists/i686-linux/lou_translate: $(OBJS_TRANSLATE_LINUX32) | dists/i686-linux
 
 dists/i686-linux:
 	mkdir -p dists/i686-linux/
+
+.PHONY: jar-linux32
+
+ifneq ($(HAS_JAVAC),1)
+
+jar-linux32: FORCE
+	@echo missing javac
+	@false
+
+else
+
+dist-linux32: jar-linux32
+
+dists/objects/i686-linux/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/objects/i686-linux/java
+	$(CC) -o $@ -m32 -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/i686-linux/$(OBJ))
+
+dists/i686-linux/liblouisAPH-jni-linux32-$(VERSION).so: $(OBJS_JNI_LINUX32) dists/objects/i686-linux/java/interface-jni.o | dists/i686-linux
+	$(CC) -o $@ -m32 -shared -s $(OBJS_JNI_LINUX32) dists/objects/i686-linux/java/interface-jni.o
+
+dists/objects/i686-linux/java/liblouisaph.properties: | dists/objects/i686-linux/java
+	echo Library-Name=liblouisAPH-jni-linux32-$(VERSION).so > dists/objects/i686-linux/java/liblouisaph.properties
+
+jar-linux32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
+jar-linux32: dists/i686-linux/LibLouisAPH-linux32-$(VERSION).jar
+
+FILES_JAR_LINUX32 := -C dists/i686-linux liblouisAPH-jni-linux32-$(VERSION).so -C dists/objects/i686-linux/java liblouisaph.properties
+
+dists/i686-linux/LibLouisAPH-linux32-$(VERSION).jar: dists/jar/manifest.txt dists/objects/i686-linux/java/liblouisaph.properties dists/i686-linux/liblouisAPH-jni-linux32-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/i686-linux
+	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_LINUX32)
+
+dists/objects/i686-linux/java:
+	mkdir -p dists/objects/i686-linux/java/
+
+endif
 
 releases: release-linux32
 
@@ -654,18 +693,18 @@ OBJS_JNI_WIN64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/x86_64-
 dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll: $(OBJS_JNI_WIN64) dists/objects/x86_64-win/java/interface-jni.o | dists/x86_64-win
 	$(CC) -o $@ -shared $(OBJS_JNI_WIN64) dists/objects/x86_64-win/java/interface-jni.o
 
-dists/objects/x86_64-win/java/properties: | dists/objects/x86_64-win/java
-	echo Library-Name=liblouisAPH-jni-win64-$(VERSION).dll > dists/objects/x86_64-win/java/properties
+dists/objects/x86_64-win/java/liblouisaph.properties: | dists/objects/x86_64-win/java
+	echo Library-Name=liblouisAPH-jni-win64-$(VERSION).dll > dists/objects/x86_64-win/java/liblouisaph.properties
 
 jar-win64: CC = $(CC_WIN64)
 jar-win64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
 jar-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-win64: dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar
 
-FILES_JAR_WIN64 := -C dists/x86_64-win liblouisAPH-jni-win64-$(VERSION).dll -C dists/objects/x86_64-win/java properties
+FILES_JAR_WIN64 := -C dists/x86_64-win liblouisAPH-jni-win64-$(VERSION).dll -C dists/objects/x86_64-win/java liblouisaph.properties
 
-dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar: build/java/manifest.txt dists/objects/x86_64-win/java/properties dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll build/java/org/aph/liblouisaph/Main.class | dists/x86_64-win
-	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN64)
+dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar: dists/jar/manifest.txt dists/objects/x86_64-win/java/liblouisaph.properties dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll build/java/org/aph/liblouisaph/Main.class | dists/x86_64-win
+	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN64)
 
 dists/objects/x86_64-win/java:
 	mkdir -p dists/objects/x86_64-win/java/
@@ -750,6 +789,44 @@ dists/i686-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN32) | dists/i686-win
 
 dists/i686-win:
 	mkdir -p dists/i686-win/
+
+.PHONY: jar-win32
+
+ifneq ($(HAS_JAVAC),1)
+
+jar-win32: FORCE
+	@echo missing javac
+	@false
+
+else
+
+dist-win32: jar-win32
+
+dists/objects/i686-win/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/objects/i686-win/java
+	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_WIN32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/i686-win/$(OBJ))
+
+dists/i686-win/liblouisAPH-jni-win32-$(VERSION).so: $(OBJS_JNI_WIN32) dists/objects/i686-win/java/interface-jni.o | dists/i686-win
+	$(CC) -o $@ -fPIC -shared -s $(OBJS_JNI_WIN32) dists/objects/i686-win/java/interface-jni.o
+
+dists/objects/i686-win/java/liblouisaph.properties: | dists/objects/i686-win/java
+	echo Library-Name=liblouisAPH-jni-win32-$(VERSION).so > dists/objects/i686-win/java/liblouisaph.properties
+
+jar-win32: CC = $(CC_WIN32)
+jar-win32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-win32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
+jar-win32: dists/i686-win/LibLouisAPH-win32-$(VERSION).jar
+
+FILES_JAR_WIN32 := -C dists/i686-win liblouisAPH-jni-win32-$(VERSION).so -C dists/objects/i686-win/java liblouisaph.properties
+
+dists/i686-win/LibLouisAPH-win32-$(VERSION).jar: dists/jar/manifest.txt dists/objects/i686-win/java/liblouisaph.properties dists/i686-win/liblouisAPH-jni-win32-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/i686-win
+	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN32)
+
+dists/objects/i686-win/java:
+	mkdir -p dists/objects/i686-win/java/
+
+endif
 
 releases: release-win32
 
@@ -850,18 +927,18 @@ OBJS_JNI_MAC64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/x86_64-
 dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib: $(OBJS_JNI_MAC64) dists/objects/x86_64-mac/java/interface-jni.o | dists/x86_64-mac
 	$(CC) -o $@ -shared $(OBJS_JNI_MAC64) dists/objects/x86_64-mac/java/interface-jni.o
 
-dists/objects/x86_64-mac/java/properties: | dists/objects/x86_64-mac/java
-	echo Library-Name=liblouisAPH-jni-mac64-$(VERSION).dylib > dists/objects/x86_64-mac/java/properties
+dists/objects/x86_64-mac/java/liblouisaph.properties: | dists/objects/x86_64-mac/java
+	echo Library-Name=liblouisAPH-jni-mac64-$(VERSION).dylib > dists/objects/x86_64-mac/java/liblouisaph.properties
 
 jar-mac64: CC = $(CC_MAC64)
 jar-mac64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
 jar-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-mac64: dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar
 
-FILES_JAR_MAC64 := -C dists/x86_64-mac liblouisAPH-jni-mac64-$(VERSION).dylib -C dists/objects/x86_64-mac/java properties
+FILES_JAR_MAC64 := -C dists/x86_64-mac liblouisAPH-jni-mac64-$(VERSION).dylib -C dists/objects/x86_64-mac/java liblouisaph.properties
 
-dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar: build/java/manifest.txt dists/objects/x86_64-mac/java/properties dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib build/java/org/aph/liblouisaph/Main.class | dists/x86_64-mac
-	jar cfme $@ build/java/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_MAC64)
+dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar: dists/jar/manifest.txt dists/objects/x86_64-mac/java/liblouisaph.properties dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib build/java/org/aph/liblouisaph/Main.class | dists/x86_64-mac
+	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_MAC64)
 
 dists/objects/x86_64-mac/java:
 	mkdir -p dists/objects/x86_64-mac/java/
@@ -947,6 +1024,44 @@ dists/i386-mac/lou_translate: $(OBJS_TRANSLATE_MAC32) | dists/i386-mac
 dists/i386-mac:
 	mkdir -p dists/i386-mac/
 
+.PHONY: jar-mac32
+
+ifneq ($(HAS_JAVAC),1)
+
+jar-mac32: FORCE
+	@echo missing javac
+	@false
+
+else
+
+dist-mac32: jar-mac32
+
+dists/objects/i386-mac/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/objects/i386-mac/java
+	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
+
+OBJS_JNI_MAC32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/i386-mac/$(OBJ))
+
+dists/i386-mac/liblouisAPH-jni-mac32-$(VERSION).dylib: $(OBJS_JNI_MAC32) dists/objects/i386-mac/java/interface-jni.o | dists/i386-mac
+	$(CC) -o $@ -shared $(OBJS_JNI_MAC32) dists/objects/i386-mac/java/interface-jni.o
+
+dists/objects/i386-mac/java/liblouisaph.properties: | dists/objects/i386-mac/java
+	echo Library-Name=liblouisAPH-jni-mac32-$(VERSION).dylib > dists/objects/i386-mac/java/liblouisaph.properties
+
+jar-mac32: CC = $(CC_MAC32)
+jar-mac32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-mac32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
+jar-mac32: dists/i386-mac/LibLouisAPH-mac32-$(VERSION).jar
+
+FILES_JAR_MAC32 := -C dists/i386-mac liblouisAPH-jni-mac32-$(VERSION).dylib -C dists/objects/i386-mac/java liblouisaph.properties
+
+dists/i386-mac/LibLouisAPH-mac32-$(VERSION).jar: dists/jar/manifest.txt dists/objects/i386-mac/java/liblouisaph.properties dists/i386-mac/liblouisAPH-jni-mac32-$(VERSION).dylib build/java/org/aph/liblouisaph/Main.class | dists/i386-mac
+	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_MAC32)
+
+dists/objects/i386-mac/java:
+	mkdir -p dists/objects/i386-mac/java/
+
+endif
+
 releases: release-mac32
 
 release-mac32: dist-mac32 releases/LibLouisAPH-mac32-$(VERSION).zip
@@ -957,6 +1072,36 @@ releases/LibLouisAPH-mac32-$(VERSION).zip: $(FILES_MAC32)
 	cp -R tables/ releases/LibLouisAPH-mac32-$(VERSION)/
 	cp LibLouisAPH.h LICENSE-2.0.txt releases/LibLouisAPH-mac32-$(VERSION)/
 	cd releases && zip -r -9 LibLouisAPH-mac32-$(VERSION).zip LibLouisAPH-mac32-$(VERSION)/
+
+endif
+
+########################################
+
+.PHONY: dist-jar
+
+ifneq ($(HAS_JAVAC),1)
+
+dist-jar: FORCE
+	@echo missing javac
+	@false
+
+else
+
+dists: dist-jar
+
+dist-jar: dists/jar/LibLouisAPH-$(VERSION).jar
+
+dist-manifest: dists/jar/manifest.txt
+
+dists/jar/manifest.txt: | dists/jar
+	@echo Implementation-Version: $(VERSION) > $@
+	@echo >> $@
+
+dists/jar/LibLouisAPH-$(VERSION).jar: dists/jar/manifest.txt build/java/org/aph/liblouisaph/LibLouisAPH.class | dists/jar
+	jar cfm $@ dists/jar/manifest.txt -C build/java org/aph/liblouisaph/LibLouisAPH.class -C build/java org/aph/liblouisaph/LogCallback.class
+
+dists/jar:
+	mkdir -p dists/jar/
 
 endif
 

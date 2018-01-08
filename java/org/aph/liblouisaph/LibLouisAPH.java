@@ -27,14 +27,30 @@ import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
 /**
- * The <code>LibLouisAPH</code> class contains static methods for inferfacing
- * with the LibLouisAPH library.
+ * The {@code LibLouisAPH } class contains static methods for inferfacing with
+ * the LibLouisAPH library.
  */
 public class LibLouisAPH
 {
 
 /******************************************************************************/
 
+	/**
+	 * Returns the Implementation-Version from the jar's manifest.
+	 *
+	 * @return  the Implementation-Version string
+	 */
+	public static String getImplementationVersion()
+	{
+		return LibLouisAPH.class.getPackage().getImplementationVersion();
+	}
+
+/******************************************************************************/
+
+	private static String internalLibraryName = null;
+	private static String externalLibraryName = null;
+	private static String systemLibraryName = null;
+	private static String internalTablePath = null;
 	private static String tmpDirName = null;
 
 	private static String getTmpDirName()
@@ -63,63 +79,165 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Loads the native liblouisAPH library stored in the jar file.
-	 *
-	 * @throws IOException if unable to load internal library
-	 */
-	public static void loadLibrary() throws IOException
+	* Returns the current internal table path
+	*
+	* @return  the current internal table path
+	*/
+	public static String getInternalTablePath()
 	{
-		Properties properties = new Properties();
-		properties.load(LibLouisAPH.class.getResourceAsStream("/properties"));
-		if(properties == null)
-			throw new IOException("unable to load jar properties");
-		String dllName = properties.getProperty("Library-Name");
-		if(dllName == null)
-			throw new IOException("unable to find Library-Name in jar properties");
-		InputStream dllInputStream = LibLouisAPH.class.getResourceAsStream("/" + dllName);
-		if(dllInputStream == null)
-			throw new IOException("unable to find /" + dllName + " in jar");
-
-		String libName = getTmpDirName() + File.separator + dllName;
-		File libFile = new File(libName);
-		if(libFile.isFile())
-			return;
-		Files.copy(dllInputStream, libFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		dllInputStream.close();
-		libFile.deleteOnExit();
-
-		System.load(libName);
-		louis_set_lookup_hook();
-		louis_set_log_callback();
+		return internalTablePath;
 	}
 
 	/**
-	 * Loads the native liblouisAPH library <code>libraryName</code>.
+	 * Sets the table path for the tables stored in the jar file.
+	 *
+	 * @param  tablePath  path to the table directory to be used
+	 */
+	public static void setInternalTablePath(String tablePath)
+	{
+		if(tablePath == null)
+		{
+			internalTablePath = null;
+			return;
+		}
+
+		internalTablePath = new String(tablePath);
+
+		/*   normalize slashes   */
+		if(internalTablePath.charAt(0) != '/')
+			internalTablePath = "/" + internalTablePath;
+
+		louis_set_lookup_hook();
+	}
+
+
+	/**
+	 * Sets the table path for the tables stored in the jar file using the
+	 * {@code Table-Path } property from the {@code /properties }
+	 * file from the jar file.
+	 *
+	 * @throws IOException  if unable to load internal library
+	 */
+	public static void setInternalTablePath() throws IOException
+	{
+		Properties properties = new Properties();
+		properties.load(LibLouisAPH.class.getResourceAsStream("/liblouisaph.properties"));
+		if(properties == null)
+			throw new IOException("unable to load jar liblouisaph.properties");
+		String tablePath = properties.getProperty("Table-Path");
+		if(tablePath == null)
+			throw new IOException("unable to find Table-Path in jar liblouisaph.properties");
+		setInternalTablePath(tablePath);
+	}
+
+	/**
+	* Returns the current internal library name
+	*
+	* @return the current internal library name
+	*/
+	public static String getInternalLibraryName()
+	{
+		return internalLibraryName;
+	}
+
+	/**
+	 * Loads the native liblouisAPH library {@code libraryName } stored in
+	 * the jar file.
+	 *
+	 * @param  libraryName  name of the library to be loaded
+	 *
+	 * @throws IOException  if unable to load internal library
+	 */
+	public static void loadLibraryInternal(String libraryName) throws IOException
+	{
+		internalLibraryName = new String(libraryName);
+
+		/*   normalize slashes   */
+		if(internalLibraryName.charAt(0) != '/')
+			internalLibraryName = "/" + internalLibraryName;
+
+		InputStream libraryInputStream = LibLouisAPH.class.getResourceAsStream(internalLibraryName);
+		if(libraryInputStream == null)
+			throw new IOException("unable to find " + internalLibraryName + " in jar");
+
+		int index = internalLibraryName.lastIndexOf('/');
+		String libraryFullName = getTmpDirName() + File.separator + internalLibraryName.substring(index + 1);
+		File libraryFile = new File(libraryFullName);
+		if(libraryFile.isFile())
+			return;
+		Files.copy(libraryInputStream, libraryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		libraryInputStream.close();
+		libraryFile.deleteOnExit();
+
+		loadLibraryExternal(libraryFullName);
+	}
+
+	/**
+	 * Loads the native liblouisAPH library stored in the jar file using the
+	 * {@code Library-Name } property from the {@code /properties } file
+	 * from the jar file.
+	 *
+	 * @throws IOException  if unable to load internal library
+	 */
+	public static void loadLibraryInternal() throws IOException
+	{
+		Properties properties = new Properties();
+		properties.load(LibLouisAPH.class.getResourceAsStream("/liblouisaph.properties"));
+		if(properties == null)
+			throw new IOException("unable to load jar liblouisaph.properties");
+		String libraryName = properties.getProperty("Library-Name");
+		if(libraryName == null)
+			throw new IOException("unable to find Library-Name in jar liblouisaph.properties");
+		loadLibraryInternal(libraryName);
+	}
+
+	/**
+	* Returns the current external library name
+	*
+	* @return  the current external library name
+	*/
+	public static String getExternalLibraryName()
+	{
+		return externalLibraryName;
+	}
+
+	/**
+	 * Loads the native liblouisAPH library file {@code libraryName }.
+	 *
+	 * <p>The library file name must be absolute.</p>
+	 *
+	 * @param  libraryName  file name of the library to be loaded
+	 */
+	public static void loadLibraryExternal(String libraryName)
+	{
+		System.load(libraryName);
+		louis_set_log_callback();
+		externalLibraryName = libraryName;
+	}
+
+	/**
+	* Returns the current system library name
+	*
+	* @return  the current system library name
+	*/
+	public static String getSystemLibraryName()
+	{
+		return systemLibraryName;
+	}
+
+	/**
+	 * Loads the native liblouisAPH library {@code libraryName }.
 	 *
 	 * <p>The library name may not contain a system dependent prefix, suffix,
 	 * or path.  The library is located in a system dependent mannor.</p>
 	 *
 	 * @param  libraryName  name of the library to be loaded
 	 */
-	public static void loadLibrary(String libraryName)
+	public static void loadLibrarySystem(String libraryName)
 	{
 		System.loadLibrary(libraryName);
 		louis_set_log_callback();
-		tmpDirName = null;
-	}
-
-	/**
-	 * Loads the native liblouisAPH library file <code>libraryName</code>.
-	 *
-	 * <p>The library file name must be absolute.</p>
-	 *
-	 * @param  libraryName  file name of the library to be loaded
-	 */
-	public static void loadLibraryFullName(String libraryName)
-	{
-		System.load(libraryName);
-		louis_set_log_callback();
-		tmpDirName = null;
+		systemLibraryName = libraryName;
 	}
 
 /******************************************************************************/
@@ -128,10 +246,10 @@ public class LibLouisAPH
 
 	private static int lookupHook(char path[], String fileName)
 	{
-		if(tmpDirName == null)
+		if(internalTablePath == null)
 			return 0;
 
-		String tablesDirName = getTmpDirName() + File.separator + "tables";
+		String tablesDirName = getTmpDirName() + File.separator + internalTablePath;
 		File tablesDir = new File(tablesDirName);
 		if(!tablesDir.isDirectory())
 		{
@@ -144,7 +262,7 @@ public class LibLouisAPH
 		File tableFile = new File(tableName);
 		if(!tableFile.isFile())
 		{
-			InputStream inputStream = new LibLouisAPH().getClass().getResourceAsStream("/tables/" + fileName);
+			InputStream inputStream = new LibLouisAPH().getClass().getResourceAsStream(internalTablePath + "/" + fileName);
 			if(inputStream == null)
 				return 0;
 
@@ -184,10 +302,10 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Gets the <code>LogCallback</code> object that is receiving log
+	 * Returns the {@code LogCallback } object that is receiving log
 	 * messages from the library.
 	 *
-	 * @return the currently set <code>LogCallback</code> object
+	 * @return  the currently set {@code LogCallback } object
 	 */
 	public static LogCallback getLogCallback()
 	{
@@ -195,12 +313,12 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Sets the <code>LogCallback</code> object that is to receive log
-	 * messages from the library.
+	 * Sets the {@code LogCallback } object that is to receive log messages
+	 * from the library.
 	 *
-	 * @param  logCallback  the <code>LogCallback</code> object to be set
+	 * @param  logCallback  the {@code LogCallback } object to be set
 	 *
-	 * @return the previous set <code>LogCallback</code> object
+	 * @return  the previous set {@code LogCallback } object
 	 */
 	public static LogCallback setLogCallback(LogCallback logCallback)
 	{
@@ -215,7 +333,7 @@ public class LibLouisAPH
 	private static native int louis_get_version(char version[]);
 
 	/**
-	 * Gets the library version.
+	 * Returns the library version.
 	 *
 	 * @return the library version string
 	 */
@@ -235,9 +353,9 @@ public class LibLouisAPH
 	private static native int louis_add_paths(String paths);
 
 	/**
-	 * Gets the current table path list.
+	 * Returns the current table path list.
 	 *
-	 * @return the current table path list string
+	 * @return  the current table path list string
 	 */
 	public static String getPaths()
 	{
@@ -252,11 +370,11 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Sets the current table path list to <code>paths</code>.
+	 * Sets the current table path list to {@code paths }.
 	 *
 	 * @param  paths  the new path list
 	 *
-	 * @return the number of characters of the new current path list
+	 * @return  the number of characters of the new current path list
 	 */
 	public static int setPaths(String paths)
 	{
@@ -264,12 +382,12 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Appends <code>paths</code> to the current table path list with the
-	 * system path separator.
+	 * Appends {@code paths } to the current table path list with the system
+	 * path separator.
 	 *
 	 * @param  paths  list to be appended
 	 *
-	 * @return the number of characters of the new current path list
+	 * @return  the number of characters of the new current path list
 	 */
 	public static int addPaths(String paths)
 	{
@@ -313,7 +431,7 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Returns the forward translation of <code>charsString</code>.
+	 * Returns the forward translation of {@code charsString }.
 	 *
 	 * @param charsString     text to be translated
 	 * @param cellsMax        maximum number of cells in translation
@@ -323,8 +441,8 @@ public class LibLouisAPH
 	 * @param dotsToCharsMap  array to hold mapping from braille to text
 	 * @param cursorMap       array holding cursor position to be mapped
 	 *
-	 * @return <code>String</code> containing the forward translation of
-	 *          <code>charsString</code>, or <code>null</code> if an error
+	 * @return  {@code String } containing the forward translation of
+	 *          {@code charsString }, or {@code null } if an error
 	 *          occurred
 	 */
 	public static String translateForward(String charsString, int cellsMax, String tables, String conversion, int charsToDotsMap[], int dotsToCharsMap[], int cursorMap[])
@@ -333,7 +451,7 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Returns the backward translation of <code>cellsString</code>.
+	 * Returns the backward translation of {@code cellsString }.
 	 *
 	 * @param cellsString     braille to be translated
 	 * @param charsMax        maximum number of characters in translation
@@ -343,8 +461,8 @@ public class LibLouisAPH
 	 * @param dotsToCharsMap  array to hold mapping from braille to text
 	 * @param cursorMap       array holding cursor position to be mapped
 	 *
-	 * @return <code>String</code> containing the backward translation of
-	 *          <code>cellsString</code>, or <code>null</code> if an error
+	 * @return  {@code String } containing the backward translation of
+	 *          {@code cellsString }, or {@code null } if an error
 	 *          occurred
 	 */
 	public static String translateBackward(String cellsString, int charsMax, String tables, String conversion, int dotsToCharsMap[], int charsToDotsMap[], int cursorMap[])
@@ -377,13 +495,13 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Returns the forward conversion of <code>cellsString</code>.
+	 * Returns the forward conversion of {@code cellsString }.
 	 *
 	 * @param cellsString  braille to be forward converted
 	 * @param conversion   name of conversion table
 	 *
-	 * @return <code>String</code> containing the forward conversion of
-	 *          <code>cellsString</code>, or <code>null</code> if an error
+	 * @return  {@code String } containing the forward conversion of
+	 *          {@code cellsString }, or {@code null } if an error
 	 *          occurred
 	 */
 	public static String convertForward(String cellsString, String conversion)
@@ -392,13 +510,13 @@ public class LibLouisAPH
 	}
 
 	/**
-	 * Returns the backward conversion of <code>cellsString</code>.
+	 * Returns the backward conversion of {@code cellsString }.
 	 *
 	 * @param cellsString  braille to be backward converted
 	 * @param conversion   name of conversion table
 	 *
-	 * @return <code>String</code> containing the backward conversion of
-	 *          <code>cellsString</code>, or <code>null</code> if an error
+	 * @return  {@code String } containing the backward conversion of
+	 *          {@code cellsString }, or {@code null } if an error
 	 *          occurred
 	 */
 	public static String convertBackward(String cellsString, String conversion)
