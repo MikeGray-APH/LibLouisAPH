@@ -807,20 +807,20 @@ dists/objects/i686-win/java/interface-jni.o: java/interface-jni.c build/java/Lib
 
 OBJS_JNI_WIN32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/objects/i686-win/$(OBJ))
 
-dists/i686-win/liblouisAPH-jni-win32-$(VERSION).so: $(OBJS_JNI_WIN32) dists/objects/i686-win/java/interface-jni.o | dists/i686-win
+dists/i686-win/liblouisAPH-jni-win32-$(VERSION).dll: $(OBJS_JNI_WIN32) dists/objects/i686-win/java/interface-jni.o | dists/i686-win
 	$(CC) -o $@ -fPIC -shared -s $(OBJS_JNI_WIN32) dists/objects/i686-win/java/interface-jni.o
 
 dists/objects/i686-win/java/liblouisaph.properties: | dists/objects/i686-win/java
-	echo Library-Name=liblouisAPH-jni-win32-$(VERSION).so > dists/objects/i686-win/java/liblouisaph.properties
+	echo Library-Name=liblouisAPH-jni-win32-$(VERSION).dll > dists/objects/i686-win/java/liblouisaph.properties
 
 jar-win32: CC = $(CC_WIN32)
 jar-win32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
 jar-win32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-win32: dists/i686-win/LibLouisAPH-win32-$(VERSION).jar
 
-FILES_JAR_WIN32 := -C dists/i686-win liblouisAPH-jni-win32-$(VERSION).so -C dists/objects/i686-win/java liblouisaph.properties
+FILES_JAR_WIN32 := -C dists/i686-win liblouisAPH-jni-win32-$(VERSION).dll -C dists/objects/i686-win/java liblouisaph.properties
 
-dists/i686-win/LibLouisAPH-win32-$(VERSION).jar: dists/jar/manifest.txt dists/objects/i686-win/java/liblouisaph.properties dists/i686-win/liblouisAPH-jni-win32-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/i686-win
+dists/i686-win/LibLouisAPH-win32-$(VERSION).jar: dists/jar/manifest.txt dists/objects/i686-win/java/liblouisaph.properties dists/i686-win/liblouisAPH-jni-win32-$(VERSION).dll build/java/org/aph/liblouisaph/Main.class | dists/i686-win
 	jar cfme $@ dists/jar/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN32)
 
 dists/objects/i686-win/java:
