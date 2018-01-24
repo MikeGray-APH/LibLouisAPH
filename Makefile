@@ -225,13 +225,33 @@ build/tools:
 
 .PHONY: java jar
 
+#   check for java
+ifdef JAVA_HOME
 HAS_JAVAC := $(shell if (which javac > /dev/null 2>&1 ); then echo 1; else echo 0; fi )
+else
+HAS_JAVAC := -1
+endif
 
 ifneq ($(HAS_JAVAC),1)
+
+#   output java error message
+ifneq ($(HAS_JAVAC),-1)
 
 java: FORCE
 	@echo missing javac
 	@false
+
+jar: java
+
+else
+
+java: FORCE
+	@echo JAVA_HOME not set
+	@false
+
+jar: java
+
+endif
 
 else
 
@@ -329,9 +349,7 @@ test-tools: tools | build/test
 
 ifneq ($(HAS_JAVAC),1)
 
-test-java: FORCE
-	@echo missing javac
-	@false
+test-java: jar
 
 else
 
@@ -454,9 +472,7 @@ dists/x86_64-linux:
 
 ifneq ($(HAS_JAVAC),1)
 
-jar-linux64: FORCE
-	@echo missing javac
-	@false
+jar-linux64: jar
 
 else
 
@@ -563,9 +579,7 @@ dists/i686-linux:
 
 ifneq ($(HAS_JAVAC),1)
 
-jar-linux32: FORCE
-	@echo missing javac
-	@false
+jar-linux32: jar
 
 else
 
@@ -677,9 +691,7 @@ dists/x86_64-win:
 
 ifneq ($(HAS_JAVAC),1)
 
-jar-win64: FORCE
-	@echo missing javac
-	@false
+jar-win64: jar
 
 else
 
@@ -794,9 +806,7 @@ dists/i686-win:
 
 ifneq ($(HAS_JAVAC),1)
 
-jar-win32: FORCE
-	@echo missing javac
-	@false
+jar-win32: jar
 
 else
 
@@ -911,9 +921,7 @@ dists/x86_64-mac:
 
 ifneq ($(HAS_JAVAC),1)
 
-jar-mac64: FORCE
-	@echo missing javac
-	@false
+jar-mac64: jar
 
 else
 
@@ -1028,9 +1036,7 @@ dists/i386-mac:
 
 ifneq ($(HAS_JAVAC),1)
 
-jar-mac32: FORCE
-	@echo missing javac
-	@false
+jar-mac32: jar
 
 else
 
@@ -1081,9 +1087,7 @@ endif
 
 ifneq ($(HAS_JAVAC),1)
 
-dist-jar: FORCE
-	@echo missing javac
-	@false
+dist-jar: jar
 
 else
 
