@@ -489,7 +489,7 @@ int table_convert_escape_markers(const struct table *table, Unicode *uchars, con
 
 /******************************************************************************/
 
-static int rule_chars_compare(const struct rule *const rule0, const struct rule *const rule1)
+static int rule_chars_compare(const struct rule *const rule0, const struct rule *const rule1, const int forward_only)
 {
 	if(rule0->chars_len > rule1->chars_len)
 		return -1;
@@ -499,7 +499,9 @@ static int rule_chars_compare(const struct rule *const rule0, const struct rule 
 		{
 			if(rule1->filter_forward)
 			{
-				if(rule0->dots_len > rule1->dots_len)
+				if(forward_only)
+					return 0;
+				else if(rule0->dots_len > rule1->dots_len)
 					return -1;
 				else if(rule0->dots_len == rule1->dots_len)
 					return 0;
@@ -515,7 +517,9 @@ static int rule_chars_compare(const struct rule *const rule0, const struct rule 
 				return 1;
 			else
 			{
-				if(rule0->dots_len > rule1->dots_len)
+				if(forward_only)
+					return 0;
+				else if(rule0->dots_len > rule1->dots_len)
 					return -1;
 				else if(rule0->dots_len == rule1->dots_len)
 					return 0;
@@ -528,7 +532,7 @@ static int rule_chars_compare(const struct rule *const rule0, const struct rule 
 		return 1;
 }
 
-static int rule_dots_compare(const struct rule *const rule0, const struct rule *const rule1)
+static int rule_dots_compare(const struct rule *const rule0, const struct rule *const rule1, const int backward_only)
 {
 	if(rule0->dots_len > rule1->dots_len)
 		return -1;
@@ -538,7 +542,9 @@ static int rule_dots_compare(const struct rule *const rule0, const struct rule *
 		{
 			if(rule1->filter_backward)
 			{
-				if(rule0->chars_len > rule1->chars_len)
+				if(backward_only)
+					return 0;
+				else if(rule0->chars_len > rule1->chars_len)
 					return -1;
 				else if(rule0->chars_len == rule1->chars_len)
 					return 0;
@@ -554,7 +560,9 @@ static int rule_dots_compare(const struct rule *const rule0, const struct rule *
 				return 1;
 			else
 			{
-				if(rule0->chars_len > rule1->chars_len)
+				if(backward_only)
+					return 0;
+				else if(rule0->chars_len > rule1->chars_len)
 					return -1;
 				else if(rule0->chars_len == rule1->chars_len)
 					return 0;
@@ -619,7 +627,7 @@ static struct rule* rule_add_new(
 	}
 
 	/*   check first rule in chain   */
-	if(rule_chars_compare(rule_crs, rule_new) >= chars_weight)
+	if(rule_chars_compare(rule_crs, rule_new, dots_hash == NULL) >= chars_weight)
 	{
 		rule_new->chars_nxt = rule_crs;
 		chars_hash[hash] = rule_new;
@@ -627,7 +635,7 @@ static struct rule* rule_add_new(
 	}
 
 	/*   find rule position in chain   */
-	while(rule_crs->chars_nxt && rule_chars_compare(rule_crs->chars_nxt, rule_new) < chars_weight)
+	while(rule_crs->chars_nxt && rule_chars_compare(rule_crs->chars_nxt, rule_new, dots_hash == NULL) < chars_weight)
 		rule_crs = rule_crs->chars_nxt;
 
 	rule_new->chars_nxt = rule_crs->chars_nxt;
@@ -650,7 +658,7 @@ static struct rule* rule_add_new(
 	}
 
 	/*   check first rule in chain   */
-	if(rule_dots_compare(rule_crs, rule_new) >= dots_weight)
+	if(rule_dots_compare(rule_crs, rule_new, chars_hash == NULL) >= dots_weight)
 	{
 		rule_new->dots_nxt = rule_crs;
 		dots_hash[hash] = rule_new;
@@ -658,7 +666,7 @@ static struct rule* rule_add_new(
 	}
 
 	/*   find rule position in chain   */
-	while(rule_crs->dots_nxt && rule_dots_compare(rule_crs->dots_nxt, rule_new) < dots_weight)
+	while(rule_crs->dots_nxt && rule_dots_compare(rule_crs->dots_nxt, rule_new, chars_hash == NULL) < dots_weight)
 		rule_crs = rule_crs->dots_nxt;
 
 	rule_new->dots_nxt = rule_crs->dots_nxt;
