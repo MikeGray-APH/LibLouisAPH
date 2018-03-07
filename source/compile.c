@@ -1193,13 +1193,23 @@ static int compile_rule(void)
 	if(!token_parse())
 		goto return_fail;
 
-	if(hash_type == TABLE_HASH_TRANS)
-		dots_len = token_convert_to_dots();
+	if(token_is_equal("-", 1))
+	{
+		//NOTE:  FORWARD direction may noy be necessary
+		direction = FORWARD;
+		dots_len = 0;
+		dots = NULL;
+	}
 	else
-		dots_len = token_convert_escapes_with_dots();
-	if(dots_len <= 0)
-		goto return_fail;
-	dots = token_crs;
+	{
+		if(hash_type == TABLE_HASH_TRANS)
+			dots_len = token_convert_to_dots();
+		else
+			dots_len = token_convert_escapes_with_dots();
+		if(dots_len <= 0)
+			goto return_fail;
+		dots = token_crs;
+	}
 
 	rule = table_add_rule(table, hash_type, direction, rule_filter_forward, rule_filter_backward, chars, chars_len, dots, dots_len, chars_weight, dots_weight);
 	if(!rule)
@@ -1449,13 +1459,23 @@ static int compile_match(void)
 		goto return_fail;
 
 	/*   dots   */
-	if(hash_type == TABLE_HASH_TRANS)
-		dots_len = token_convert_to_dots();
+	if(token_is_equal("-", 1))
+	{
+		//NOTE:  FORWARD direction may noy be necessary
+		direction = FORWARD;
+		dots_len = 0;
+		dots = NULL;
+	}
 	else
-		dots_len = token_convert_escapes_with_dots();
-	if(dots_len <= 0)
-		goto return_fail;
-	dots = token_crs;
+	{
+		if(hash_type == TABLE_HASH_TRANS)
+			dots_len = token_convert_to_dots();
+		else
+			dots_len = token_convert_escapes_with_dots();
+		if(dots_len <= 0)
+			goto return_fail;
+		dots = token_crs;
+	}
 
 	if(!token_parse())
 		goto return_fail;
