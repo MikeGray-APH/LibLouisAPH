@@ -133,6 +133,11 @@ struct rule
 #define TABLE_DOTS_HASH_SIZE       0x100
 #endif
 
+enum table_process_type
+{
+	PROCESS_GENERIC = 0,
+};
+
 enum table_hash_type
 {
 	TABLE_HASH_NONE = 0,
@@ -149,6 +154,8 @@ struct table
 {
 	struct table *nxt, *depends;
 	char *file_name;
+
+	enum table_process_type process;
 
 	struct filter *filters;
 	struct subpattern *subpatterns;

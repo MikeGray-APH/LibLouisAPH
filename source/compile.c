@@ -224,6 +224,28 @@ static int token_convert_escapes_with_dots(void)
 
 /******************************************************************************/
 
+static int compile_process(void)
+{
+	if(!token_parse())
+	{
+		log_message(LOG_ERROR, "%s:%d  missing process", table_file_names[include_depth], table_file_lines[include_depth]);
+		return 0;
+	}
+
+	if(table->process == PROCESS_GENERIC)
+	{
+		if(token_is_equal("generic", 7))
+			table->process = PROCESS_GENERIC;
+		else
+		{
+			log_message(LOG_ERROR, "%s:%d  invalid process", table_file_names[include_depth], table_file_lines[include_depth]);
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
 static int compile_attrs_chars(void)
 {
 	int i;
@@ -298,6 +320,8 @@ static int compile_config(void)
 		return 0;
 	}
 
+	if(token_is_equal("process", 7))
+		return compile_process();
 	if(token_is_equal("attrs_chars", 11))
 		return compile_attrs_chars();
 	if(token_is_equal("control", 7))

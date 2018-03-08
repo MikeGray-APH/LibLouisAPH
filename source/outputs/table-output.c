@@ -25,6 +25,15 @@
 
 /******************************************************************************/
 
+static void process_output(FILE *output, const enum table_process_type process)
+{
+	fputs("process:  ", output);
+	switch(process)
+	{
+	case PROCESS_GENERIC:  fputs("generic\n", output);  break;
+	}
+}
+
 static void unichar_output(FILE *output, const struct unichar *unichar)
 {
 	int i;
@@ -404,6 +413,7 @@ void table_output(FILE *output, const struct table *table)
 		attrs_chars[i] = table->attrs_chars[i];
 
 	fprintf(output, "%s\n", table->file_name);
+	process_output(output, table->process);
 	fprintf(output, "\ncontrol:  0x%04x   0x%04x   0x%04x   0x%04x   0x%04x   0x%04x   0x%04x\n", table->marker_user, table->marker_begin, table->marker_end, table->marker_modifier, table->marker_hard, table->marker_soft, table->marker_internal);
 	fputs("\ncharacters:\n", output);
 	unichar_output_all(output, table);

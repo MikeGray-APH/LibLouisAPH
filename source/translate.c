@@ -462,7 +462,11 @@ int translate_start(Unicode *dots,
 
 	if(direction == FORWARD)
 	{
-		status = translate_generic_forward(&translate_auto);
+		switch(translate_auto.tables[0]->process)
+		{
+		case PROCESS_GENERIC:  status = translate_generic_forward(&translate_auto);  break;
+		default:               status = 0;
+		}
 		if(status < 1)
 		{
 			if(status == 0)
@@ -481,7 +485,11 @@ int translate_start(Unicode *dots,
 		if(conversion)
 			convert_input(&translate_auto, conversion);
 
-		status = translate_generic_backward(&translate_auto);
+		switch(translate_auto.tables[0]->process)
+		{
+		case PROCESS_GENERIC:  status = translate_generic_backward(&translate_auto);  break;
+		default:               status = 0;
+		}
 		if(status < 1)
 		{
 			if(status == 0)
