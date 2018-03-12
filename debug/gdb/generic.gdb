@@ -904,7 +904,7 @@ commands $bpnum
 	spacer
 	out_translate_generic
 
-	printf "next = nt\n\n"
+	printf "next = ntg\n\n"
 
 end
 set $translate_generic_forward_bpnum = $bpnum
@@ -918,7 +918,7 @@ commands $bpnum
 	spacer
 	out_translate_generic
 
-	printf "next = nt\n\n"
+	printf "next = ntg\n\n"
 
 end
 set $translate_generic_backward_bpnum = $bpnum

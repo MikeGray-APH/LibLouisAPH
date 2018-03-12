@@ -45,6 +45,7 @@ OBJS_LANG := \
 	source/languages/generic-common.o \
 	source/languages/generic-forward.o \
 	source/languages/generic-backward.o \
+	source/languages/nemeth-forward.o \
 
 OBJS_OUTPUT := \
 	source/outputs/utf-output.o \
@@ -66,6 +67,7 @@ OBJS_TEST_LANGUAGES := \
 	test/test.o \
 	test/languages.o \
 	test/languages/ueb.o \
+	test/languages/nemeth.o \
 
 OBJ_TEST_LINK := test/link.o
 

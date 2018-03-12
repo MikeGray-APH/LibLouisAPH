@@ -234,8 +234,10 @@ static int compile_process(void)
 
 	if(table->process == PROCESS_GENERIC)
 	{
-		if(token_is_equal("generic", 7))
+		     if(token_is_equal("generic", 7))
 			table->process = PROCESS_GENERIC;
+		else if(token_is_equal("nemeth-ueb", 10))
+			table->process = PROCESS_NEMETH_UEB;
 		else
 		{
 			log_message(LOG_ERROR, "%s:%d  invalid process", table_file_names[include_depth], table_file_lines[include_depth]);

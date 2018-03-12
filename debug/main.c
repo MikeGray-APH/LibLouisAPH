@@ -557,8 +557,9 @@ static void log_callback(const int level, const char *message)
 #define SOFT(tag)      "\uf006" #tag "\uf006"
 #define INTERNAL(tag)  "\uf007" #tag "\uf007"
 
-//#define TEST_INPUT(input)  test_input_line((const struct table * const*)&table, 1, conversion, input)
-#define TEST_INPUT(input)  test_input_both_line((const struct table * const*)&table, 1, conversion, input)
+//#define TEST_INPUT(input)  test_input((const struct table * const*)&table, 1, conversion, input)
+#define TEST_INPUT(input)  test_input_line((const struct table * const*)&table, 1, conversion, input)
+//#define TEST_INPUT(input)  test_input_both_line((const struct table * const*)&table, 1, conversion, input)
 //#define TEST_INPUT(input)  test_input_both_pass((const struct table * const*)&table, 1, conversion, input)
 //#define TEST_INPUT(input)  test_input_mapping((const struct table * const*)&table, 1, conversion, input)
 //#define TEST_INPUT(input)  test_input_both_mapping((const struct table * const*)&table, 1, conversion, input)
@@ -587,7 +588,8 @@ int main(void)
 	//table = lookup_table("english-ueb-grade2.rst");  if(!table) return 1; don't free table
 
 	//table = table_compile_from_file("debug/table.rst");  if(!table) return 1;
-	table = table_compile_from_file("tables/english-ueb-grade2.rst");  if(!table) return 1;
+	//table = table_compile_from_file("tables/english-ueb-grade2.rst");  if(!table) return 1;
+	table = table_compile_from_file("tables/nemeth-ueb.rst");  if(!table) return 1;
 
 	//table_output(stdout, table);  puts("");
 

@@ -528,6 +528,7 @@ static inline int translate_get_emphases_cnt(const struct translate *translate)
 
 static inline unsigned int translate_get_attributes_at(const struct translate *translate, const int at)
 {
+	//TODO:  assert table_crs
 	if(at < 0 || at >= translate->input_len)
 		return 0;
 

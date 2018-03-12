@@ -42,9 +42,10 @@ source debug/gdb/utf.gdb
 source debug/gdb/table.gdb
 source debug/gdb/pattern.gdb
 source debug/gdb/compile.gdb
+source debug/gdb/lookup.gdb
 source debug/gdb/translate.gdb
 source debug/gdb/generic.gdb
-source debug/gdb/lookup.gdb
+source debug/gdb/nemeth.gdb
 
 ########################################
 
@@ -77,14 +78,17 @@ end
 #ena $compile_macro_bpnum
 #ena $table_compile_from_file_bpnum
 
+#ena $create_path_file_name_bpnum
+#ena $lookup_table_bpnum
+#ena $lookup_tables_bpnum
+#ena $lookup_open_file_bpnum
+
 #ena $translate_start_bpnum
 
 #ena $generic_match_rule_bpnum
 #ena $generic_apply_rule_forward_bpnum
 #ena $generic_apply_rule_backward_bpnum
 #ena $generic_process_bpnum
-
-#ena $translate_generic_forward_bpnum
 
 #ena $mark_mode_bpnum
 #ena $indicators_to_words_bpnum
@@ -96,17 +100,15 @@ end
 #ena $capital_words_to_passages_bpnum
 #ena $add_indicators_capital_bpnum
 #ena $add_indicators_numeric_bpnum
+#ena $translate_generic_forward_bpnum
 
 #ena $add_soft_terminators_bpnum
 #ena $convert_indicators_capital_bpnum
 #ena $convert_indicators_numeric_bpnum
-
 #ena $translate_generic_backward_bpnum
 
-#ena $create_path_file_name_bpnum
-#ena $lookup_table_bpnum
-#ena $lookup_tables_bpnum
-#ena $lookup_open_file_bpnum
+#ena $convert_nemeth_scripts_bpnum
+#ena $translate_nemeth_forward_bpnum
 
 ########################################
 

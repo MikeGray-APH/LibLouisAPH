@@ -136,6 +136,7 @@ struct rule
 enum table_process_type
 {
 	PROCESS_GENERIC = 0,
+	PROCESS_NEMETH_UEB,
 };
 
 enum table_hash_type

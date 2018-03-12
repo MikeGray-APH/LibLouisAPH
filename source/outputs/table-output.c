@@ -30,7 +30,8 @@ static void process_output(FILE *output, const enum table_process_type process)
 	fputs("process:  ", output);
 	switch(process)
 	{
-	case PROCESS_GENERIC:  fputs("generic\n", output);  break;
+	case PROCESS_GENERIC:     fputs("generic\n", output);     break;
+	case PROCESS_NEMETH_UEB:  fputs("nemeth-ueb\n", output);  break;
 	}
 }
 

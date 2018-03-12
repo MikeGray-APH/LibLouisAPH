@@ -338,6 +338,7 @@ static void convert_input(struct translate *translate, const struct conversion *
 
 int translate_generic_forward(struct translate *translate);
 int translate_generic_backward(struct translate *translate);
+int translate_nemeth_forward(struct translate *translate);
 
 int translate_start(Unicode *dots,
                     const int dots_len,
@@ -459,13 +460,13 @@ int translate_start(Unicode *dots,
 	}
 
 	/*   start processing   */
-
 	if(direction == FORWARD)
 	{
 		switch(translate_auto.tables[0]->process)
 		{
-		case PROCESS_GENERIC:  status = translate_generic_forward(&translate_auto);  break;
-		default:               status = 0;
+		case PROCESS_GENERIC:     status = translate_generic_forward(&translate_auto);  break;
+		case PROCESS_NEMETH_UEB:  status = translate_nemeth_forward(&translate_auto);   break;
+		default:                  status = 0;
 		}
 		if(status < 1)
 		{
