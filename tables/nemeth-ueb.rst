@@ -212,6 +212,7 @@ eom
 @script_thru \x2014 36-36-36-36   # —
 @script_thru \x2015 36-36-36-36   # ―
 @script_thru \x2026 3-3-3   # …
+rule init ... …
 
 
 #⩦↞↟↠↡↢↣↨↩↪↫↬↯↶↷↺↻↥↧↨↹⇤⇥↾↿⇂⇃⥜⥝⥠⥡⇅⇈⇊⇶⤒⤓⤧⤨⤩⤪⤭⤮⤱⤲⥌⥍⥏⥑⥒⥓⥔⥕⥖⥗⥘⥙⥣⥥⥮⥯≆≲≳≴≵≶≷≸≹⊊⊋⪇⪈⪉⪊⪝⪞⪟⪠⪯⪰⪱⪲⪳⪴⪵⪶⪷⪸⪹⪺⫇⫈⫉⫊⫋⫌
@@ -227,7 +228,7 @@ rule init \x2226 ⠌∥   ∦
 rule init \x2244 ⠌≃   ≄
 rule init \x2247 ⠌≅   ≇
 rule init \x2249 ⠌≈   ≉
-rule init \x2249 ⠌=   ≠
+rule init \x2260 ⠌=   ≠
 rule init \x2262 ⠌≡   ≢
 rule init \x226e ⠌<   ≮
 rule init \x226f ⠌>   ≯
@@ -579,6 +580,7 @@ rule trans \x2205 456-356 ∅
 rule trans \x2207 46-1246 ∇
 rule trans \x221e 6-123456 ∞
 
+rule trans \x2211 46-6-234 ∑
 rule trans \x2212 36 −   minus sign
 rule trans \x2213 36-346 ∓   minus plus
 rule trans \x2223 1256 ∣
@@ -594,6 +596,8 @@ rule trans \x222e 2346-4-1246-14-12456 ∮
 rule trans \x2234 6-16 ∴
 rule trans \x2235 4-34 ∵
 rule trans \x2238 46-36 ∸   dot minus
+
+rule trans \x22c5 16 ·   dot operator
 
 rule trans \x2329 46-46-12356 〈   opening angled bracket
 rule trans \x2329 46-46-23456 〉   closing angled bracket

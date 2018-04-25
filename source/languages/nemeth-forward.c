@@ -110,6 +110,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 	const Unicode base_sup      = u'⠘';
 	const Unicode base_reset    = u'⠐';
 	const Unicode script_comma  = u'⠪';
+	const Unicode not_slash     = u'⠌';
 	Unicode seps[SEPS_MAX];
 	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, crs;
 
@@ -165,6 +166,12 @@ static int convert_nemeth_scripts(struct translate *translate)
 				else if(translate_has_attributes(translate, NEMETH_COMPARATOR))
 				{
 					CHANGE_MARK
+					if(!translate_insert_dots(translate, seps, sep_cnt))
+						return 0;
+				}
+				else if(translate->input[translate->input_crs] == not_slash)
+				{
+					if(translate_has_attributes_at(translate, translate->input_crs + 1, NEMETH_COMPARATOR))
 					if(!translate_insert_dots(translate, seps, sep_cnt))
 						return 0;
 				}
@@ -430,9 +437,25 @@ static int convert_nemeth_scripts(struct translate *translate)
 							need_reset = 1;
 						else if(translate->input[crs + 1] != TABLE_MARKER_INTERNAL)
 							need_reset = 1;
-						else if(!translate_has_attributes_at(translate, crs + 2, NEMETH_COMPARATOR))
+						else if(translate_has_attributes_at(translate, crs + 2, NEMETH_COMPARATOR))
 						{
 							crs += 2;
+							while(crs < translate->input_len)
+							{
+								if(translate->input[crs] == TABLE_MARKER_INTERNAL)
+									break;
+								crs++;
+							}
+							if(crs >= translate->input_len)
+								return 0;//TODO:  log error
+						}
+						else if(crs + 2 >= translate->input_len)
+							need_reset = 1;
+						else if(translate->input[crs + 2] != not_slash)
+							need_reset = 1;
+						else if(translate_has_attributes_at(translate, crs + 3, NEMETH_COMPARATOR))
+						{
+							crs += 3;
 							while(crs < translate->input_len)
 							{
 								if(translate->input[crs] == TABLE_MARKER_INTERNAL)
