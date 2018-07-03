@@ -204,7 +204,7 @@ static int lookup_hook(char *path, const int path_max ATTRIBUTE_UNUSED, const ch
 	if(lookup_hook_set)
 	if(!strncmp(file_name, "hook me", file_name_len + 1))
 	{
-		strncpy(path, "test/tables/hook.rst", 21);
+		strcpy(path, "test/tables/hook.rst");
 		return 1;
 	}
 

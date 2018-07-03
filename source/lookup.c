@@ -74,7 +74,7 @@ static void lookup_env(void)
 		LOG_ALLOCATE_FAIL
 		return;
 	}
-	strncpy(table_paths, env, table_paths_len + 1);
+	strcpy(table_paths, env);
 }
 
 static inline void check_env(void)
@@ -134,12 +134,12 @@ int lookup_get_paths(char *paths, const int paths_max)
 		return 0;
 	}
 
-	if(table_paths_len > paths_max - 1)
+	if(table_paths_len >= paths_max)
 		len = paths_max - 1;
 	else
 		len = table_paths_len;
 
-	strncpy(paths, table_paths, len);
+	memcpy(paths, table_paths, len);
 	paths[len] = 0;
 
 	return len;
@@ -166,7 +166,7 @@ int lookup_set_paths(const char *paths)
 		LOG_ALLOCATE_FAIL
 		return 0;
 	}
-	strncpy(table_paths, paths, table_paths_len + 1);
+	strcpy(table_paths, paths);
 
 	return table_paths_len;
 }
@@ -189,7 +189,7 @@ int lookup_add_paths(const char *paths)
 			LOG_ALLOCATE_FAIL
 			return 0;
 		}
-		strncpy(table_paths, paths, table_paths_len + 1);
+		strcpy(table_paths, paths);
 	}
 	else
 	{
@@ -235,9 +235,9 @@ static int create_path_file_name(
 
 	/*   create path name   */
 	ASSERT(len > 0)
-	strncpy(path, paths, len);
+	memcpy(path, paths, len);
 	path[len] = FILE_SEPARATOR_CHAR;
-	strncpy(&path[len + 1], file_name, file_name_len + 1);
+	strcpy(&path[len + 1], file_name);
 
 	return len;
 }
@@ -335,9 +335,9 @@ struct table** lookup_tables(int *table_cnt, const char *table_names)
 	names_len = strlen(table_names);
 	names = MALLOC(names_len + 1);
 	LOG_ALLOCATE_FAIL_RETURN_NULL(names)
+	strcpy(names, table_names);
 
 	*table_cnt = 1;
-	strncpy(names, table_names, names_len + 1);
 	len = 0;
 	for(i = 0; i < names_len; i++)
 	if(names[i] == '~')
@@ -494,7 +494,7 @@ struct conversion* lookup_conversion(const char *file_name)
 FILE* lookup_open_file(char *path_name, const int path_name_max, const char *file_name, const char *adjacent_name)
 {
 	FILE *file;
-	char path[PATH_NAME_MAX], *paths;
+	char *paths;
 	int file_name_len, paths_len, len;
 
 	ASSERT(file_name)
@@ -503,46 +503,45 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 
 	/*   try lookup hook   */
 	if(lookup_hook)
-	if(lookup_hook(path, PATH_NAME_MAX, file_name, file_name_len))
+	if(lookup_hook(path_name, path_name_max, file_name, file_name_len))
 	{
 		/*   make sure path is NULL terminated   */
-		path[PATH_NAME_MAX - 1] = 0;
+		path_name[path_name_max - 1] = 0;
 
-		file = fopen(path, "r");
+		file = fopen(path_name, "r");
 		if(file)
-		{
-			strncpy(path_name, path, path_name_max);
-			path_name[path_name_max - 1] = 0;
 			return file;
-		}
 	}
 
 	/*   try file_name directly   */
 	file = fopen(file_name, "r");
 	if(file)
 	{
-		strncpy(path_name, file_name, path_name_max);
-		path_name[path_name_max - 1] = 0;
+		len = strlen(file_name);
+		if(len >= path_name_max)
+			len = path_name_max - 1;
+		memcpy(path_name, file_name, len);
+		path_name[len] = 0;
 		return file;
 	}
 
 	/*   try directory of adjacent_name   */
 	if(adjacent_name)
 	{
-		strncpy(path, adjacent_name, PATH_NAME_MAX);
-		paths = strrchr(path, FILE_SEPARATOR_CHAR);
-		if(paths)
+		len = strlen(adjacent_name);
+		if(len < path_name_max)
 		{
-			paths++;
-			if((paths - path) + file_name_len + 1 <= PATH_NAME_MAX)
+			strcpy(path_name, adjacent_name);
+			paths = strrchr(path_name, FILE_SEPARATOR_CHAR);
+			if(paths)
 			{
-				strncpy(paths, file_name, file_name_len + 1);
-				file = fopen(path, "r");
-				if(file)
+				paths++;
+				if((paths - path_name) + file_name_len + 1 <= path_name_max)
 				{
-					strncpy(path_name, path, path_name_max);
-					path_name[path_name_max - 1] = 0;
-					return file;
+					strcpy(paths, file_name);
+					file = fopen(path_name, "r");
+					if(file)
+						return file;
 				}
 			}
 		}
@@ -554,15 +553,11 @@ FILE* lookup_open_file(char *path_name, const int path_name_max, const char *fil
 	{
 		paths = table_paths;
 		paths_len = table_paths_len;
-		while(len = create_path_file_name(path, PATH_NAME_MAX - 1, paths, paths_len, file_name, file_name_len))
+		while(len = create_path_file_name(path_name, path_name_max - 1, paths, paths_len, file_name, file_name_len))
 		{
-			file = fopen(path, "r");
+			file = fopen(path_name, "r");
 			if(file)
-			{
-				strncpy(path_name, path, path_name_max);
-				path_name[path_name_max - 1] = 0;
 				return file;
-			}
 
 			len++;
 			paths = &paths[len];

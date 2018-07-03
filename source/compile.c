@@ -1760,7 +1760,8 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 		LOG_ALLOCATE_FAIL
 		goto return_fail_free;
 	}
-	strncpy(macro->ctag, ctag, ctag_len + 1);
+	memcpy(macro->ctag, ctag, ctag_len);
+	macro->ctag[ctag_len] = 0;
 
 	file_name_len = strlen(file_name);
 	macro->file_name = MALLOC(file_name_len + 1);
@@ -1769,7 +1770,7 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 		LOG_ALLOCATE_FAIL
 		goto return_fail_free;
 	}
-	strncpy(macro->file_name, file_name, file_name_len + 1);
+	strcpy(macro->file_name, file_name);
 
 	macro->tag = MALLOC((tag_len + 1) * sizeof(Unicode));
 	if(!macro->tag)
@@ -2116,7 +2117,7 @@ struct table* table_compile_from_file(const char *file_name)
 	file_name_len = strlen(file_name);
 	table->file_name = MALLOC(file_name_len + 1);
 	LOG_ALLOCATE_FAIL_RETURN_NULL(table->file_name)
-	strncpy(table->file_name, file_name, file_name_len + 1);
+	strcpy(table->file_name, file_name);
 
 	rule_attrs = 0;
 	rule_filter_forward =
@@ -2251,7 +2252,7 @@ struct conversion* conversion_compile_from_file(const char *file_name)
 	file_name_len = strlen(file_name);
 	conversion->file_name = MALLOC(file_name_len + 1);
 	LOG_ALLOCATE_FAIL_RETURN_NULL(conversion->file_name)
-	strncpy(conversion->file_name, file_name, file_name_len + 1);
+	strcpy(conversion->file_name, file_name);
 
 	table_file_lines[0] = 0;
 

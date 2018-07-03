@@ -31,9 +31,9 @@ int louis_get_version(char *version, const int version_max)
 	int version_len;
 
 	version_len = strlen(VERSION);
-	if(version_len > version_max - 1)
+	if(version_len >= version_max)
 		version_len = version_max - 1;
-	strncpy(version, VERSION, version_len + 1);
+	memcpy(version, VERSION, version_len);
 	version[version_len] = 0;
 	return version_len;
 }

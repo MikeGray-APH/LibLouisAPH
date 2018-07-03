@@ -84,18 +84,26 @@ void log_message_with_token(const enum log_level level, const Unicode *token, co
 {
 	va_list args;
 	char message[LOG_MESSAGE_MAX], reformat[LOG_MESSAGE_MAX], *at;
-	int len;
+	int format_len, len, crs;
+
+	format_len = strlen(format);
+	if(format_len >= LOG_MESSAGE_MAX)
+		format_len = LOG_MESSAGE_MAX - 1;
 
 	at = strstr(format, "%TOKEN");
 	if(at)
 	{
-		len = at - format;
-		strncpy(reformat, format, len);
-		utf16le_convert_to_utf8(&reformat[len], LOG_MESSAGE_MAX - len, token, token_len);
-		strncpy(&reformat[len + token_len], &format[len + 6], LOG_MESSAGE_MAX - len - 6);
+		crs = at - format;
+		memcpy(reformat, format, crs);
+		len = utf16le_convert_to_utf8(&reformat[crs], LOG_MESSAGE_MAX - crs, token, token_len);
+		memcpy(&reformat[crs + len], &format[crs + 6], format_len - crs - 6);
+		reformat[(format_len - 6) + len] = 0;
 	}
 	else
-		strncpy(reformat, format, LOG_MESSAGE_MAX);
+	{
+		memcpy(reformat, format, format_len);
+		reformat[format_len] = 0;
+	}
 
 #ifdef LOG_OUTPUT_TO_FILE
 
