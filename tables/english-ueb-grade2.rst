@@ -85,7 +85,7 @@
 include english-ueb-grade1.rst
 
 set contraction bit00
-attrs = $contraction
+attrs + $contraction
 
 
 ########################################
@@ -1874,5 +1874,9 @@ use
 
 uses word_whole_+ word_whole_- rule trans rared 1235-1-1235-1246
 
+
+########################################
+
+attrs - $contraction
 
 ################################################################################

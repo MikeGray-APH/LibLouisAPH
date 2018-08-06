@@ -67,6 +67,7 @@ OBJS_TEST_LANGUAGES := \
 	test/test.o \
 	test/languages.o \
 	test/languages/ueb.o \
+	test/languages/ueb-math.o \
 	test/languages/nemeth.o \
 
 OBJ_TEST_LINK := test/link.o

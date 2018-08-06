@@ -49,6 +49,7 @@ static void log_callback(const int level, const char *message)
 
 int test_nemeth(FILE *output);
 int test_ueb(FILE *output);
+int test_ueb_math(FILE *output);
 
 int main(void)
 {
@@ -64,6 +65,7 @@ int main(void)
 	clock_begin = clock();
 
 	fail_cnt += test_nemeth(NULL);
+	fail_cnt += test_ueb_math(NULL);
 	fail_cnt += test_ueb(NULL);
 
 	clock_end = clock();
