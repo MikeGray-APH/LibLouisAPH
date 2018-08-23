@@ -1349,6 +1349,52 @@ static void mark_nonalphabetic_words(unsigned int *indicators, unsigned char *wo
 	}
 }
 
+static void mark_capital_whole_words(unsigned int *indicators, unsigned char *words, const struct translate *translate)
+{
+	int emp_word, word_begin, letter_cnt, i;
+
+	word_begin =
+	emp_word = -1;
+	letter_cnt = 0;
+
+	for(i = 0; i < translate->input_len; i++)
+	{
+		/*   skip indicators   */
+		if(words[i] & WORD_INDICATOR)
+			continue;
+
+		if(word_begin < 0)
+		{
+			if(words[i] & WORD_CHAR)
+			{
+				word_begin = i;
+				emp_word = -1;
+				letter_cnt = 0;
+			}
+		}
+
+		if(word_begin >= 0)
+		{
+			if(emp_word < 0)
+			if(indicators[i] & (EMP_WORD | EMP_SYMBOL))
+				emp_word = i;
+
+			if(translate_has_attributes_at(translate, i, CHAR_LOWER))
+				letter_cnt++;
+
+			if(!(words[i] & WORD_CHAR))
+			{
+				if(!letter_cnt)
+				if(emp_word >= 0)
+					words[emp_word] |= WORD_WHOLE;
+				word_begin = -1;
+				emp_word = -1;
+				letter_cnt = 0;
+			}
+		}
+	}
+}
+
 static int is_indicator_in_word(const struct translate *translate, const int at)
 {
 	int crs;
@@ -1378,9 +1424,23 @@ static int is_indicator_delimiter_capital(const struct translate *translate, con
 	return 0;
 }
 
+static int get_word_capital_whole(unsigned char *words, const int word_start, const struct translate *translate)
+{
+	int i;
+
+	for(i = word_start; i < translate->input_len; i++)
+	{
+		if(!(words[i] & WORD_CHAR))
+			break;
+		if(words[i] & WORD_WHOLE)
+			return i;
+	}
+	return -1;
+}
+
 static void capital_words_to_passages(unsigned int *indicators, unsigned char *words, const struct translate *translate, const struct table *table, const int passage_len)
 {
-	int word_in, word_cnt, pass_in, pass_begin, pass_end, indicator_in, i;
+	int word_in, word_cnt, pass_in, pass_begin, pass_end, indicator_in, word_whole, i;
 
 	pass_begin =
 	pass_end = -1;
@@ -1404,53 +1464,67 @@ static void capital_words_to_passages(unsigned int *indicators, unsigned char *w
 			continue;
 		}
 
-		/*   beginning of word   */
-		if(!word_in)
-		if(words[i] & WORD_CHAR)
+		if(!pass_in)
 		{
-			word_in = 1;
-			if(words[i] & WORD_WHOLE)
+			/*   word starting   */
+			if(!word_in)
 			{
-				if(!pass_in && !(words[i] & WORD_NONLETTER))
+				if(words[i] & WORD_CHAR)
 				{
-					pass_in = 1;
-					pass_begin = i;
-					pass_end = -1;
-					word_cnt = 1;
+					word_in = 1;
+					word_whole = get_word_capital_whole(words, i, translate);
+					if(word_whole >= 0)
+					if(!(words[word_whole] & WORD_NONLETTER))
+					{
+						pass_in = 1;
+						pass_begin = word_whole;
+						pass_end = -1;
+						word_cnt = 1;
+						i = word_whole;
+					}
 				}
-				else if(!(words[i] & WORD_NONLETTER))
-					word_cnt++;
-				continue;
 			}
-			else if(pass_in)
+
+			/*   word ending   */
+			else
 			{
-				if(word_cnt >= passage_len)
-				if(pass_end >= 0)
-					convert_to_passage(indicators, words, pass_begin, pass_end);
-				pass_in = 0;
+				if(!(words[i] & WORD_CHAR))
+					word_in = 0;
 			}
 		}
-
-		/*   end of word   */
-		if(word_in)
-		if(!(words[i] & WORD_CHAR))
+		else
 		{
-			word_in = 0;
-			if(pass_in)
-				pass_end = i;
-		}
+			/*   word starting   */
+			if(!word_in)
+			{
+				if(words[i] & WORD_CHAR)
+				{
+					word_in = 1;
+					word_whole = get_word_capital_whole(words, i, translate);
+					if(word_whole >= 0)
+					{
+						if(!(words[word_whole] & WORD_NONLETTER))
+							word_cnt++;
+					}
+					else
+					{
+						if(word_cnt >= passage_len)
+						if(pass_end >= 0)
+							convert_to_passage(indicators, words, pass_begin, pass_end);
+						pass_in = 0;
+					}
+				}
+			}
 
-		if(pass_in)
-		if(   indicators[i] & EMP_BEGIN
-		   || indicators[i] & EMP_END
-		   || indicators[i] & EMP_WORD
-		   || indicators[i] & EMP_SYMBOL
-		   || indicators[i] & EMP_RESET)
-		{
-			if(word_cnt >= passage_len)
-			if(pass_end >= 0)
-				convert_to_passage(indicators, words, pass_begin, pass_end);
-			pass_in = 0;
+			/*   word ending   */
+			else
+			{
+				if(!(words[i] & WORD_CHAR))
+				{
+					word_in = 0;
+					pass_end = i;
+				}
+			}
 		}
 	}
 
@@ -1720,6 +1794,7 @@ static int add_indicators_capital(struct translate *translate)
 	{
 		indicators_to_words(indicators, words, translate);
 		mark_nonalphabetic_words(indicators, words, translate);
+		mark_capital_whole_words(indicators, words, translate);
 		if(table->capital.begin_len && table->capital.passage_len)
 		{
 			capital_words_to_passages(indicators, words, translate, table, table->capital.passage_len);

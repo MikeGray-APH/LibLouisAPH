@@ -479,9 +479,63 @@ commands $bpnum
 	spacer
 	out_mark_nonalphabetic_words
 
+	printf "next = mnaw\n\n"
+
 end
 set $mark_nonalphabetic_words_bpnum = $bpnum
 dis $mark_nonalphabetic_words_bpnum
+
+define mnaw
+n_mark_nonalphabetic_words
+end
+
+########################################
+
+define out_mark_capital_whole_words
+
+	printf "translate:\n"
+	if translate > 0
+		out_translate_input_at translate i
+	end
+
+	printf "\n"
+
+	printf "word_begin  = %d\n", word_begin
+	printf "emp_word    = %d\n", emp_word
+	printf "letter_cnt  = %d\n", letter_cnt
+
+	printf "\n"
+
+	out_indicators_words translate indicators words
+
+	printf "\n"
+end
+
+define n_mark_capital_whole_words
+	next
+	spacer
+	out_mark_capital_whole_words
+end
+
+break mark_capital_whole_words
+commands $bpnum
+
+	set word_begin = 0
+	set emp_word = 0
+	set letter_cnt = 0
+
+	spacer
+	out_mark_capital_whole_words
+
+	printf "next = mcww\n\n"
+
+end
+set $mark_capital_whole_words_bpnum = $bpnum
+dis $mark_capital_whole_words_bpnum
+
+define mcww
+n_mark_capital_whole_words
+end
 
 ########################################
 
@@ -550,6 +604,7 @@ define out_capital_words_to_passages
 	printf "word_in       = %d\n", word_in
 	printf "word_cnt      = %d\n", word_cnt
 	printf "indicator_in  = %d\n", indicator_in
+	printf "word_whole    = %d\n", word_whole
 
 	printf "\n"
 
@@ -573,6 +628,7 @@ commands $bpnum
 	set word_in = 0
 	set word_cnt = 0
 	set indicator_in = 0
+	set word_whole = 0
 
 	spacer
 	out_capital_words_to_passages
