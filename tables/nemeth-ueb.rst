@@ -506,7 +506,7 @@ rule trans \x007b 46-12356 {
 rule trans \x007c 1256 |
 rule trans \x007d 46-23456 }
 rule trans \x00a7 4-6-234 §
-#ule trans \x00b0 46-16 °
+rule trans \x00b0 46-16 °   degree (nemeth uses ring operator ∘)
 rule trans \x00b1 346-36 ±   plus minus
 rule trans \x00b6 4-6-1234 ¶
 rule trans \x00b7 34 ·   dot operator
@@ -521,7 +521,6 @@ rule trans \x019b 4-46-123 ƛ
 rule trans \x2010 36 ‐   hyphen
 rule trans \x2011 36 ‑   non-breaking hyphen
 rule trans \x2016 1256-1256 ‖   double vertical bar
-rule trans \x2018 46-16 ∘   ring operator
 
 rule trans \x2020 456-12456 †
 rule trans \x2020 456-456-12456 ‡
@@ -578,6 +577,7 @@ rule trans \x2203 4-123456 ∃
 rule init  \x2204 ⠌∃   ∄
 rule trans \x2205 456-356 ∅
 rule trans \x2207 46-1246 ∇
+rule trans \x2218 46-16 ∘   ring operator
 rule trans \x221e 6-123456 ∞
 
 rule trans \x2211 46-6-234 ∑
