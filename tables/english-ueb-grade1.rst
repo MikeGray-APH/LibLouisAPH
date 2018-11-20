@@ -843,6 +843,7 @@ rule trans      \x2204 45-26-4-156    # ∄ there does not exist
 rule trans      \x2205 4-245          # ∅ empty set
 rule trans      \x2207 45-145         # ∇ nabla
 rule trans      \x2208 45-15          # ∈ element of
+rule trans      \x2209 45-15-4-156    # ∉ not element of
 rule trans      \x220b 4-45-15        # ∋ contains (such that)
 rule trans      \x2211 6-46-234       # ∑ sum (capitol sigma)
 @mark_mod_trans \x2212 5-36           # − minus sign   not hyphen, not delimiter
