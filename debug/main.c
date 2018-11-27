@@ -588,8 +588,9 @@ int main(void)
 	//table = lookup_table("english-ueb-grade2.rst");  if(!table) return 1; don't free table
 
 	//table = table_compile_from_file("debug/table.rst");  if(!table) return 1;
-	//table = table_compile_from_file("tables/english-ueb-grade2.rst");  if(!table) return 1;
-	table = table_compile_from_file("tables/nemeth-ueb.rst");  if(!table) return 1;
+	table = table_compile_from_file("tables/english-ueb-grade2.rst");  if(!table) return 1;
+	//table = table_compile_from_file("tables/english-ueb-math.rst");  if(!table) return 1;
+	//table = table_compile_from_file("tables/nemeth-ueb.rst");  if(!table) return 1;
 
 	//table_output(stdout, table);  puts("");
 

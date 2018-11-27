@@ -680,6 +680,24 @@ rule trans \xf50b ⠠⠼    fraction-complex-end
 match pretrans - \xf508\I %~   - \xf508 -
 match pretrans %~ \I\xf50b  -   - \xf50b -
 
+#   underscripts
+
+rule trans \xf5a0 -
+rule trans \xf5a1 -
+rule trans \xf5a2 -
+
+#   overscripts
+
+rule trans \xf5a3 -
+rule trans \xf5a4 -
+rule trans \xf5a5 -
+
+#   under/overscripts
+
+rule trans \xf5a6 -
+rule trans \xf5a7 -
+rule trans \xf5a8 -
+
 #   roots
 
 rule trans \xf5b0 126
@@ -690,4 +708,23 @@ rule trans \xf5b4 12456
 
 match pretrans %~ \I ⠨*\xf5b2   - - -
 match pretrans %~ \I ⠨*\xf5b4   - - -
+
+#   tables
+
+rule init \xf600 -   table-begin
+rule init \xf601 -   table-end
+rule init \xf602 -   table-row-begin
+rule init \xf603 -   table-row-end
+rule init \xf604 -   table-cell-begin
+rule init \xf605 -   table-cell-end
+
+rule init \xf610 -   table-nemeth-round-open
+rule init \xf611 -   table-nemeth-round-close
+rule init \xf612 -   table-nemeth-square-open
+rule init \xf613 -   table-nemeth-square-close
+rule init \xf614 -   table-nemeth-curly-open
+rule init \xf615 -   table-nemeth-curly-close
+rule init \xf616 -   table-nemeth-angled-open
+rule init \xf617 -   table-nemeth-angled-close
+rule init \xf618 -   table-nemeth-bar
 

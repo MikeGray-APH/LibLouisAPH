@@ -568,7 +568,7 @@ end
 define out_translate_start
 
 	printf "translate:\n"
-	out_translate &translate
+	out_translate &translate_auto
 
 	printf "\n"
 
@@ -589,7 +589,7 @@ end
 break translate_start
 commands $bpnum
 
-	call memset(&translate, 0, sizeof(translate))
+	call (void*)memset(&translate_auto, 0, sizeof(translate_auto))
 
 	spacer
 	out_translate_start

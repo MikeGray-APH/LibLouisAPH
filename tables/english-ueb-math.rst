@@ -85,10 +85,19 @@ rule trans \xf5a0 -
 rule trans \xf5a1 46-26
 rule trans \xf5a2 -
 
+#   underine
+rule trans \xf5a1_\xf5a2 6-156
+rule trans \xf5a1\x0332\xf5a2 6-156   combining
+
 #   overscripts
 rule trans \xf5a3 -
 rule trans \xf5a4 46-35
 rule trans \xf5a5 -
+
+#   overline (vinculum)
+rule trans \xf5a4\x203e\xf5a5 156   ‾
+rule trans \xf5a4\x0305\xf5a5 156   combining
+rule trans \xf5a4\x00af\xf5a5 156   !?!
 
 #   under/overscripts
 rule trans \xf5a6 -
