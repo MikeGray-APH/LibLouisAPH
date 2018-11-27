@@ -112,7 +112,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 	const Unicode script_comma  = u'⠪';
 	const Unicode not_slash     = u'⠌';
 	Unicode seps[SEPS_MAX];
-	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, crs;
+	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, crs, seq;
 
 	translate->table_crs = 0;
 
@@ -498,8 +498,29 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 			if(sep_cnt > 0 && translate->input[translate->input_crs] == u',')
 			{
-				if(!translate_insert_dots_for_chars(translate, &script_comma, 1, 1))
-					return 0;
+				/*   maybe a sequence?   */
+				seq = 0;
+				if(translate->input_crs + 3 < translate->input_len)
+				if(translate_has_attributes_at(translate, translate->input_crs + 1, NEMETH_DIGIT))
+				if(translate_has_attributes_at(translate, translate->input_crs + 2, NEMETH_DIGIT))
+				if(translate_has_attributes_at(translate, translate->input_crs + 3, NEMETH_DIGIT))
+				if(translate->input_crs > 0)
+				if(translate_has_attributes_at(translate, translate->input_crs - 1, NEMETH_DIGIT))
+					seq = 1;
+
+				if(seq == 0)
+				{
+					CHANGE_MARK
+					if(!translate_insert_dots_for_chars(translate, &script_comma, 1, 1))
+						return 0;
+					if(translate_has_attributes(translate, NEMETH_SPACE))
+						translate_skip(translate, 1, 1);
+				}
+				else
+				{
+					if(!translate_copy_to_output(translate, 1, 1))
+						return 0;
+				}
 			}
 			else if(!translate_copy_to_output(translate, 1, 1))
 				return 0;
