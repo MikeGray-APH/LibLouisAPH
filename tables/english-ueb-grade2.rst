@@ -300,6 +300,7 @@ uses not_modifier_<+ not_modifier_45_- rule trans ed 1246
 rule trans airedale 1-24-1235-15-145-1-123-15
 rule trans comedown 14-135-134-15-145-246-1345
 rule trans daredevil 145-345-15-145-15-1236-24-123
+rule trans doubleday 145-1256-12-123-15-5-145
 rule trans dumbledore 145-136-134-12-123-15-145-135-1235-15
 rule trans hoedown 125-135-15-145-246-1345
 rule trans kettledrum 13-15-2345-2345-123-15-145-1235-136-134
