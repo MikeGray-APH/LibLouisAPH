@@ -427,6 +427,37 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1translate(
 	conversion_chars = NULL;
 	if(conversion_string)
 		conversion_chars = (*env)->GetStringUTFChars(env, conversion_string, NULL);
+
+#if defined _WIN32
+
+	jint *chars_to_dots_map_jints, *dots_to_chars_map_jints, *cursor_map_jint;
+
+	chars_to_dots_map_jints = NULL;
+	chars_to_dots_map_ints = NULL;
+	if(chars_to_dots_map_array)
+	{
+		chars_to_dots_map_jints = (*env)->GetIntArrayElements(env, chars_to_dots_map_array, NULL);
+		chars_to_dots_map_ints = MALLOC(chars_len * sizeof(int));
+	}
+
+	dots_to_chars_map_jints = NULL;
+	dots_to_chars_map_ints = NULL;
+	if(dots_to_chars_map_array)
+	{
+		dots_to_chars_map_jints = (*env)->GetIntArrayElements(env, dots_to_chars_map_array, NULL);
+		dots_to_chars_map_ints = MALLOC(dots_len * sizeof(int));
+	}
+
+	cursor_map_jint = NULL;
+	cursor_map_int = NULL;
+	if(cursor_map_array)
+	{
+		cursor_map_jint = (*env)->GetIntArrayElements(env, cursor_map_array, NULL);
+		cursor_map_int = MALLOC(sizeof(int));
+	}
+
+#else
+
 	chars_to_dots_map_ints = NULL;
 	if(chars_to_dots_map_array)
 		chars_to_dots_map_ints = (*env)->GetIntArrayElements(env, chars_to_dots_map_array, NULL);
@@ -436,6 +467,8 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1translate(
 	cursor_map_int = NULL;
 	if(cursor_map_array)
 		cursor_map_int = (*env)->GetIntArrayElements(env, cursor_map_array, NULL);
+
+#endif
 
 	if(direction_int > 0)
 		direction = FORWARD;
@@ -451,12 +484,53 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1translate(
 	(*env)->ReleaseStringUTFChars(env, tables_string, tables_chars);
 	if(conversion_chars)
 		(*env)->ReleaseStringUTFChars(env, conversion_string, conversion_chars);
+
+#if defined _WIN32
+
+	int i;
+
+	if(chars_to_dots_map_jints)
+	{
+		if(chars_to_dots_map_ints)
+		{
+			for(i = 0; i < chars_len; i++)
+				chars_to_dots_map_jints[i] = chars_to_dots_map_ints[i];
+			FREE(chars_to_dots_map_ints);
+		}
+		(*env)->ReleaseIntArrayElements(env, chars_to_dots_map_array, chars_to_dots_map_jints, 0);
+	}
+
+	if(dots_to_chars_map_jints)
+	{
+		if(dots_to_chars_map_ints)
+		{
+			for(i = 0; i < chars_len; i++)
+				dots_to_chars_map_jints[i] = dots_to_chars_map_ints[i];
+			FREE(dots_to_chars_map_ints);
+		}
+		(*env)->ReleaseIntArrayElements(env, dots_to_chars_map_array, dots_to_chars_map_jints, 0);
+	}
+
+	if(cursor_map_jint)
+	{
+		if(cursor_map_int)
+		{
+			cursor_map_jint[0] = cursor_map_int[0];
+			FREE(cursor_map_int);
+		}
+		(*env)->ReleaseIntArrayElements(env, cursor_map_array, cursor_map_jint, 0);
+	}
+
+#else
+
 	if(chars_to_dots_map_ints)
 		(*env)->ReleaseIntArrayElements(env, chars_to_dots_map_array, chars_to_dots_map_ints, 0);
 	if(dots_to_chars_map_ints)
 		(*env)->ReleaseIntArrayElements(env, dots_to_chars_map_array, dots_to_chars_map_ints, 0);
 	if(cursor_map_int)
 		(*env)->ReleaseIntArrayElements(env, cursor_map_array, cursor_map_int, 0);
+
+#endif
 
 	return status;
 }
