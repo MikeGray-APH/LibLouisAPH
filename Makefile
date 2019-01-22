@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.3
+VERSION := 0.2.4
 
 CC = gcc
 
@@ -283,10 +283,10 @@ build/java:
 build/java/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java | build/java
 	javac -d build/java -classpath build/java -sourcepath java $<
 
-build/java/LibLouisAPH-jni.h: build/java/org/aph/liblouisaph/LibLouisAPH.class
+build/java/org_aph_liblouisaph_LibLouisAPH.h: build/java/org/aph/liblouisaph/LibLouisAPH.class
 	javah -o $@ -classpath build/java -force org.aph.liblouisaph.LibLouisAPH
 
-build/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | build/java
+build/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | build/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), build/objects/dll/$(OBJ))
@@ -551,8 +551,8 @@ FILES_RELEASE_LINUX64 := \
 	$(FILES_RELEASE_LINUX64) \
 	dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so \
 	dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar \
-	dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-javadoc.jar \
-	dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-sources.jar \
+	dists/x86_64-linux/LibLouisAPH-sources-$(VERSION).jar \
+	dists/x86_64-linux/LibLouisAPH-javadoc-$(VERSION).jar \
 
 jars-linux64: jar-linux64 javadoc-jar-linux64 sources-jar-linux64
 
@@ -574,7 +574,7 @@ dists/x86_64-linux/liblouisaph.properties: | dists/x86_64-linux
 	echo Library-Name=liblouisAPH-jni-linux64-$(VERSION).so > dists/x86_64-linux/liblouisaph.properties
 	echo Table-Path=tables >> dists/x86_64-linux/liblouisaph.properties
 
-dists/x86_64-linux/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/x86_64-linux/objects/java
+dists/x86_64-linux/objects/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | dists/x86_64-linux/objects/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_LINUX64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/x86_64-linux/objects/dll/$(OBJ))
@@ -587,15 +587,15 @@ FILES_JAR_LINUX64 := -C dists/x86_64-linux liblouisAPH-jni-linux64-$(VERSION).so
 dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar: dists/x86_64-linux/manifest.txt dists/x86_64-linux/liblouisaph.properties dists/x86_64-linux/liblouisAPH-jni-linux64-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/x86_64-linux
 	jar cfme $@ dists/x86_64-linux/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(FILES_JAR_LINUX64) $(TABLES)
 
-sources-jar-linux64: dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-sources.jar
+sources-jar-linux64: dists/x86_64-linux/LibLouisAPH-sources-$(VERSION).jar
 
-dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-sources.jar: build/LibLouisAPH-sources.jar | dists/x86_64-linux
-	cp build/LibLouisAPH-sources.jar dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-sources.jar
+dists/x86_64-linux/LibLouisAPH-sources-$(VERSION).jar: build/LibLouisAPH-sources.jar | dists/x86_64-linux
+	cp $< $@
 
-javadoc-jar-linux64: dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-javadoc.jar
+javadoc-jar-linux64: dists/x86_64-linux/LibLouisAPH-javadoc-$(VERSION).jar
 
-dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-javadoc.jar: build/LibLouisAPH-javadoc.jar | dists/x86_64-linux
-	cp build/LibLouisAPH-javadoc.jar dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION)-javadoc.jar
+dists/x86_64-linux/LibLouisAPH-javadoc-$(VERSION).jar: build/LibLouisAPH-javadoc.jar | dists/x86_64-linux
+	cp $< $@
 
 endif
 
@@ -703,8 +703,8 @@ FILES_RELEASE_LINUX32 := \
 	$(FILES_RELEASE_LINUX32) \
 	dists/i686-linux/liblouisAPH-jni-linux32-$(VERSION).so \
 	dists/i686-linux/LibLouisAPH-linux32-$(VERSION).jar \
-	dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-javadoc.jar \
-	dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-sources.jar \
+	dists/i686-linux/LibLouisAPH-sources-$(VERSION).jar \
+	dists/i686-linux/LibLouisAPH-javadoc-$(VERSION).jar \
 
 jars-linux32: jar-linux32 javadoc-jar-linux32 sources-jar-linux32
 
@@ -726,7 +726,7 @@ dists/i686-linux/liblouisaph.properties: | dists/i686-linux
 	echo Library-Name=liblouisAPH-jni-linux32-$(VERSION).so > dists/i686-linux/liblouisaph.properties
 	echo Table-Path=tables >> dists/i686-linux/liblouisaph.properties
 
-dists/i686-linux/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/i686-linux/objects/java
+dists/i686-linux/objects/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | dists/i686-linux/objects/java
 	$(CC) -o $@ -m32 -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_LINUX32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/i686-linux/objects/$(OBJ))
@@ -739,15 +739,15 @@ FILES_JAR_LINUX32 := -C dists/i686-linux liblouisAPH-jni-linux32-$(VERSION).so -
 dists/i686-linux/LibLouisAPH-linux32-$(VERSION).jar: dists/i686-linux/manifest.txt dists/i686-linux/liblouisaph.properties dists/i686-linux/liblouisAPH-jni-linux32-$(VERSION).so build/java/org/aph/liblouisaph/Main.class | dists/i686-linux
 	jar cfme $@ dists/i686-linux/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_LINUX32)
 
-sources-jar-linux32: dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-sources.jar
+sources-jar-linux32: dists/i686-linux/LibLouisAPH-sources-$(VERSION).jar
 
-dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-sources.jar: build/LibLouisAPH-sources.jar | dists/i686-linux
-	cp build/LibLouisAPH-sources.jar dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-sources.jar
+dists/i686-linux/LibLouisAPH-sources-$(VERSION).jar: build/LibLouisAPH-sources.jar | dists/i686-linux
+	cp $< $@
 
-javadoc-jar-linux32: dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-javadoc.jar
+javadoc-jar-linux32: dists/i686-linux/LibLouisAPH-javadoc-$(VERSION).jar
 
-dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-javadoc.jar: build/LibLouisAPH-javadoc.jar | dists/i686-linux
-	cp build/LibLouisAPH-javadoc.jar dists/i686-linux/LibLouisAPH-linux32-$(VERSION)-javadoc.jar
+dists/i686-linux/LibLouisAPH-javadoc-$(VERSION).jar: build/LibLouisAPH-javadoc.jar | dists/i686-linux
+	cp $< $@
 
 endif
 
@@ -855,8 +855,8 @@ FILES_RELEASE_WIN64 := \
 	$(FILES_RELEASE_WIN64) \
 	dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll \
 	dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar \
-	dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-javadoc.jar \
-	dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-sources.jar \
+	dists/x86_64-win/LibLouisAPH-sources-$(VERSION).jar \
+	dists/x86_64-win/LibLouisAPH-javadoc-$(VERSION).jar \
 
 jars-win64: jar-win64 javadoc-jar-win64 sources-jar-win64
 
@@ -879,7 +879,7 @@ dists/x86_64-win/liblouisaph.properties: | dists/x86_64-win
 	echo Library-Name=liblouisAPH-jni-win64-$(VERSION).dll > dists/x86_64-win/liblouisaph.properties
 	echo Table-Path=tables >> dists/x86_64-win/liblouisaph.properties
 
-dists/x86_64-win/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/x86_64-win/objects/java
+dists/x86_64-win/objects/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | dists/x86_64-win/objects/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_WIN64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/x86_64-win/objects/$(OBJ))
@@ -892,15 +892,15 @@ FILES_JAR_WIN64 := -C dists/x86_64-win liblouisAPH-jni-win64-$(VERSION).dll -C d
 dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar: dists/x86_64-win/manifest.txt dists/x86_64-win/liblouisaph.properties dists/x86_64-win/liblouisAPH-jni-win64-$(VERSION).dll build/java/org/aph/liblouisaph/Main.class | dists/x86_64-win
 	jar cfme $@ dists/x86_64-win/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN64)
 
-sources-jar-win64: dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-sources.jar
+sources-jar-win64: dists/x86_64-win/LibLouisAPH-sources-$(VERSION).jar
 
-dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-sources.jar: build/LibLouisAPH-sources.jar | dists/x86_64-win
-	cp build/LibLouisAPH-sources.jar dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-sources.jar
+dists/x86_64-win/LibLouisAPH-sources-$(VERSION).jar: build/LibLouisAPH-sources.jar | dists/x86_64-win
+	cp $< $@
 
-javadoc-jar-win64: dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-javadoc.jar
+javadoc-jar-win64: dists/x86_64-win/LibLouisAPH-javadoc-$(VERSION).jar
 
-dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-javadoc.jar: build/LibLouisAPH-javadoc.jar | dists/x86_64-win
-	cp build/LibLouisAPH-javadoc.jar dists/x86_64-win/LibLouisAPH-win64-$(VERSION)-javadoc.jar
+dists/x86_64-win/LibLouisAPH-javadoc-$(VERSION).jar: build/LibLouisAPH-javadoc.jar | dists/x86_64-win
+	cp $< $@
 
 endif
 
@@ -1021,8 +1021,8 @@ FILES_RELEASE_WIN32 := \
 	$(FILES_RELEASE_WIN32) \
 	dists/i686-win/liblouisAPH-jni-win32-$(VERSION).dll \
 	dists/i686-win/LibLouisAPH-win32-$(VERSION).jar \
-	dists/i686-win/LibLouisAPH-win32-$(VERSION)-javadoc.jar \
-	dists/i686-win/LibLouisAPH-win32-$(VERSION)-sources.jar \
+	dists/i686-win/LibLouisAPH-sources-$(VERSION).jar \
+	dists/i686-win/LibLouisAPH-javadoc-$(VERSION).jar \
 
 jars-win32: jar-win32 javadoc-jar-win32 sources-jar-win32
 
@@ -1045,7 +1045,7 @@ dists/i686-win/liblouisaph.properties: | dists/i686-win
 	echo Library-Name=liblouisAPH-jni-win32-$(VERSION).dll > dists/i686-win/liblouisaph.properties
 	echo Table-Path=tables >> dists/i686-win/liblouisaph.properties
 
-dists/i686-win/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/i686-win/objects/java
+dists/i686-win/objects/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | dists/i686-win/objects/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_WIN32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/i686-win/objects/$(OBJ))
@@ -1058,15 +1058,15 @@ FILES_JAR_WIN32 := -C dists/i686-win liblouisAPH-jni-win32-$(VERSION).dll -C dis
 dists/i686-win/LibLouisAPH-win32-$(VERSION).jar: dists/i686-win/manifest.txt dists/i686-win/liblouisaph.properties dists/i686-win/liblouisAPH-jni-win32-$(VERSION).dll build/java/org/aph/liblouisaph/Main.class | dists/i686-win
 	jar cfme $@ dists/i686-win/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_WIN32)
 
-sources-jar-win32: dists/i686-win/LibLouisAPH-win32-$(VERSION)-sources.jar
+sources-jar-win32: dists/i686-win/LibLouisAPH-sources-$(VERSION).jar
 
-dists/i686-win/LibLouisAPH-win32-$(VERSION)-sources.jar: build/LibLouisAPH-sources.jar | dists/i686-win
-	cp build/LibLouisAPH-sources.jar dists/i686-win/LibLouisAPH-win32-$(VERSION)-sources.jar
+dists/i686-win/LibLouisAPH-sources-$(VERSION).jar: build/LibLouisAPH-sources.jar | dists/i686-win
+	cp $< $@
 
-javadoc-jar-win32: dists/i686-win/LibLouisAPH-win32-$(VERSION)-javadoc.jar
+javadoc-jar-win32: dists/i686-win/LibLouisAPH-javadoc-$(VERSION).jar
 
-dists/i686-win/LibLouisAPH-win32-$(VERSION)-javadoc.jar: build/LibLouisAPH-javadoc.jar | dists/i686-win
-	cp build/LibLouisAPH-javadoc.jar dists/i686-win/LibLouisAPH-win32-$(VERSION)-javadoc.jar
+dists/i686-win/LibLouisAPH-javadoc-$(VERSION).jar: build/LibLouisAPH-javadoc.jar | dists/i686-win
+	cp $< $@
 
 endif
 
@@ -1174,8 +1174,8 @@ FILES_RELEASE_MAC64 := \
 	$(FILES_RELEASE_MAC64) \
 	dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib \
 	dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar \
-	dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-javadoc.jar \
-	dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-sources.jar \
+	dists/x86_64-mac/LibLouisAPH-sources-$(VERSION).jar \
+	dists/x86_64-mac/LibLouisAPH-javadoc-$(VERSION).jar \
 
 jars-mac64: jar-mac64 javadoc-jar-mac64 sources-jar-mac64
 
@@ -1198,7 +1198,7 @@ dists/x86_64-mac/liblouisaph.properties: | dists/x86_64-mac
 	echo Library-Name=liblouisAPH-jni-mac64-$(VERSION).dylib > dists/x86_64-mac/liblouisaph.properties
 	echo Table-Path=tables >> dists/x86_64-mac/liblouisaph.properties
 
-dists/x86_64-mac/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/x86_64-mac/objects/java
+dists/x86_64-mac/objects/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | dists/x86_64-mac/objects/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_MAC64 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/x86_64-mac/objects/$(OBJ))
@@ -1211,15 +1211,15 @@ FILES_JAR_MAC64 := -C dists/x86_64-mac liblouisAPH-jni-mac64-$(VERSION).dylib -C
 dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar: dists/x86_64-mac/manifest.txt dists/x86_64-mac/liblouisaph.properties dists/x86_64-mac/liblouisAPH-jni-mac64-$(VERSION).dylib build/java/org/aph/liblouisaph/Main.class | dists/x86_64-mac
 	jar cfme $@ dists/x86_64-mac/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_MAC64)
 
-sources-jar-mac64: dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-sources.jar
+sources-jar-mac64: dists/x86_64-mac/LibLouisAPH-sources-$(VERSION).jar
 
-dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-sources.jar: build/LibLouisAPH-sources.jar | dists/x86_64-mac
-	cp build/LibLouisAPH-sources.jar dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-sources.jar
+dists/x86_64-mac/LibLouisAPH-sources-$(VERSION).jar: build/LibLouisAPH-sources.jar | dists/x86_64-mac
+	cp $< $@
 
-javadoc-jar-mac64: dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-javadoc.jar
+javadoc-jar-mac64: dists/x86_64-mac/LibLouisAPH-javadoc-$(VERSION).jar
 
-dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-javadoc.jar: build/LibLouisAPH-javadoc.jar | dists/x86_64-mac
-	cp build/LibLouisAPH-javadoc.jar dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION)-javadoc.jar
+dists/x86_64-mac/LibLouisAPH-javadoc-$(VERSION).jar: build/LibLouisAPH-javadoc.jar | dists/x86_64-mac
+	cp $< $@
 
 endif
 
@@ -1327,8 +1327,8 @@ FILES_RELEASE_MAC32 := \
 	$(FILES_RELEASE_MAC32) \
 	dists/i386-mac/liblouisAPH-jni-mac32-$(VERSION).dylib \
 	dists/i386-mac/LibLouisAPH-mac32-$(VERSION).jar \
-	dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-javadoc.jar \
-	dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-sources.jar \
+	dists/i386-mac/LibLouisAPH-sources-$(VERSION).jar \
+	dists/i386-mac/LibLouisAPH-javadoc-$(VERSION).jar \
 
 jars-mac32: jar-mac32 javadoc-jar-mac32 sources-jar-mac32
 
@@ -1351,7 +1351,7 @@ dists/i386-mac/liblouisaph.properties: | dists/i386-mac
 	echo Library-Name=liblouisAPH-jni-mac32-$(VERSION).dylib > dists/i386-mac/liblouisaph.properties
 	echo Table-Path=tables >> dists/i386-mac/liblouisaph.properties
 
-dists/i386-mac/objects/java/interface-jni.o: java/interface-jni.c build/java/LibLouisAPH-jni.h | dists/i386-mac/objects/java
+dists/i386-mac/objects/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | dists/i386-mac/objects/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
 
 OBJS_JNI_MAC32 := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG), dists/i386-mac/objects/$(OBJ))
@@ -1364,15 +1364,15 @@ FILES_JAR_MAC32 := -C dists/i386-mac liblouisAPH-jni-mac32-$(VERSION).dylib -C d
 dists/i386-mac/LibLouisAPH-mac32-$(VERSION).jar: dists/i386-mac/manifest.txt dists/i386-mac/liblouisaph.properties dists/i386-mac/liblouisAPH-jni-mac32-$(VERSION).dylib build/java/org/aph/liblouisaph/Main.class | dists/i386-mac
 	jar cfme $@ dists/i386-mac/manifest.txt org.aph.liblouisaph.Main $(CLASSES_JAR_BUILD) $(TABLES) $(FILES_JAR_MAC32)
 
-sources-jar-mac32: dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-sources.jar
+sources-jar-mac32: dists/i386-mac/LibLouisAPH-sources-$(VERSION).jar
 
-dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-sources.jar: build/LibLouisAPH-sources.jar | dists/i386-mac
-	cp build/LibLouisAPH-sources.jar dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-sources.jar
+dists/i386-mac/LibLouisAPH-sources-$(VERSION).jar: build/LibLouisAPH-sources.jar | dists/i386-mac
+	cp $< $@
 
-javadoc-jar-mac32: dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-javadoc.jar
+javadoc-jar-mac32: dists/i386-mac/LibLouisAPH-javadoc-$(VERSION).jar
 
-dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-javadoc.jar: build/LibLouisAPH-javadoc.jar | dists/i386-mac
-	cp build/LibLouisAPH-javadoc.jar dists/i386-mac/LibLouisAPH-mac32-$(VERSION)-javadoc.jar
+dists/i386-mac/LibLouisAPH-javadoc-$(VERSION).jar: build/LibLouisAPH-javadoc.jar | dists/i386-mac
+	cp $< $@
 
 endif
 
@@ -1411,9 +1411,6 @@ dist-jar: dists/jar/LibLouisAPH-$(VERSION).jar
 
 dists/jar/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java | dists/jar
 	javac -d dists/jar -classpath dists/jar -sourcepath java $<
-
-dists/jar/LibLouisAPH-jni.h: dists/jar/org/aph/liblouisaph/LibLouisAPH.class | dists/jar
-	javah -o $@ -classpath dists/jar -force org.aph.liblouisaph.LibLouisAPH
 
 dists/jar/manifest.txt: | dists/jar
 	@echo Implementation-Name: LibLouisAPH >  $@

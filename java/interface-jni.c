@@ -20,7 +20,7 @@
 #include <string.h>
 
 #include <jni.h>
-#include "LibLouisAPH-jni.h"
+#include "org_aph_liblouisaph_LibLouisAPH.h"
 
 #include "translate.h"
 #include "lookup.h"
