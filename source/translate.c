@@ -462,7 +462,8 @@ int translate_start(Unicode *dots,
 	/*   start processing   */
 	if(direction == FORWARD)
 	{
-		switch(translate_auto.tables[0]->process)
+		/*   only process from last table in tables   */
+		switch(translate_auto.tables[translate_auto.table_cnt - 1]->process)
 		{
 		case PROCESS_GENERIC:     status = translate_generic_forward(&translate_auto);  break;
 		case PROCESS_NEMETH_UEB:  status = translate_nemeth_forward(&translate_auto);   break;
