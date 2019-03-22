@@ -32,6 +32,7 @@ import java.util.Properties;
  */
 public class LibLouisAPH
 {
+	private static Object llaphLock = new Object();
 
 /******************************************************************************/
 
@@ -107,7 +108,10 @@ public class LibLouisAPH
 		if(internalTablePath.charAt(0) != '/')
 			internalTablePath = "/" + internalTablePath;
 
-		louis_set_lookup_hook();
+		synchronized(llaphLock)
+		{
+			louis_set_lookup_hook();
+		}
 	}
 
 
@@ -211,8 +215,12 @@ public class LibLouisAPH
 	public static void loadLibraryExternal(String libraryName)
 	{
 		System.load(libraryName);
-		louis_set_log_callback();
 		externalLibraryName = libraryName;
+
+		synchronized(llaphLock)
+		{
+			louis_set_log_callback();
+		}
 	}
 
 	/**
@@ -236,8 +244,13 @@ public class LibLouisAPH
 	public static void loadLibrarySystem(String libraryName)
 	{
 		System.loadLibrary(libraryName);
-		louis_set_log_callback();
 		systemLibraryName = libraryName;
+
+		synchronized(llaphLock)
+		{
+			louis_set_log_callback();
+		}
+
 	}
 
 /******************************************************************************/
@@ -339,9 +352,20 @@ public class LibLouisAPH
 	 */
 	public static String getVersion()
 	{
-		int versionLength = louis_get_version_length();
-		char versionChars[] = new char[versionLength + 1];
-		versionLength = louis_get_version(versionChars);
+		int versionLength;
+		char versionChars[];
+
+		synchronized(llaphLock)
+		{
+			versionLength = louis_get_version_length();
+			if(versionLength == 0)
+				return null;
+			versionChars = new char[versionLength + 1];
+			versionLength = louis_get_version(versionChars);
+		}
+		if(versionLength == 0 || versionChars == null)
+			return null;
+
 		return new String(versionChars, 0, versionLength);
 	}
 
@@ -359,13 +383,20 @@ public class LibLouisAPH
 	 */
 	public static String getPaths()
 	{
-		int pathsLength = louis_get_paths_length();
-		if(pathsLength == 0)
+		int pathsLength;
+		char pathsChars[];
+
+		synchronized(llaphLock)
+		{
+			pathsLength = louis_get_paths_length();
+			if(pathsLength == 0)
+				return null;
+			pathsChars = new char[pathsLength + 1];
+			pathsLength = louis_get_paths(pathsChars);
+		}
+		if(pathsLength == 0 || pathsChars == null)
 			return null;
-		char pathsChars[] = new char[pathsLength + 1];
-		pathsLength = louis_get_paths(pathsChars);
-		if(pathsLength == 0)
-			return null;
+
 		return new String(pathsChars, 0, pathsLength);
 	}
 
@@ -378,7 +409,12 @@ public class LibLouisAPH
 	 */
 	public static int setPaths(String paths)
 	{
-		return louis_set_paths(paths);
+		int result;
+		synchronized(llaphLock)
+		{
+			result = louis_set_paths(paths);
+		}
+		return result;
 	}
 
 	/**
@@ -391,7 +427,12 @@ public class LibLouisAPH
 	 */
 	public static int addPaths(String paths)
 	{
-		return louis_add_paths(paths);
+		int result;
+		synchronized(llaphLock)
+		{
+			result = louis_add_paths(paths);
+		}
+		return result;
 	}
 
 /******************************************************************************/
@@ -411,11 +452,13 @@ public class LibLouisAPH
 			dotsToCharsMapInts = new int[dotsMax];
 
 		int length = 0;
-		if(forward)
-			length = louis_translate(dotsChars, charsString, tables, conversion, +1, charsToDotsMapInts, dotsToCharsMapInts, cursorMap);
-		else
-			length = louis_translate(dotsChars, charsString, tables, conversion, -1, charsToDotsMapInts, dotsToCharsMapInts, cursorMap);
-
+		synchronized(llaphLock)
+		{
+			if(forward)
+				length = louis_translate(dotsChars, charsString, tables, conversion, +1, charsToDotsMapInts, dotsToCharsMapInts, cursorMap);
+			else
+				length = louis_translate(dotsChars, charsString, tables, conversion, -1, charsToDotsMapInts, dotsToCharsMapInts, cursorMap);
+		}
 		if(length <= 0)
 			return null;
 
@@ -483,11 +526,13 @@ public class LibLouisAPH
 		cellsString.getChars(0, cellsString.length(), cellsChars, 0);
 
 		int status;
-		if(forward)
-			status = louis_convert(cellsChars, conversion, +1);
-		else
-			status = louis_convert(cellsChars, conversion, -1);
-
+		synchronized(llaphLock)
+		{
+			if(forward)
+				status = louis_convert(cellsChars, conversion, +1);
+			else
+				status = louis_convert(cellsChars, conversion, -1);
+		}
 		if(status <= 0)
 			return null;
 

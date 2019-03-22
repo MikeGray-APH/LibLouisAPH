@@ -30,17 +30,48 @@
 
 /******************************************************************************/
 
-static JNIEnv *lookup_env = NULL;
-static jclass lookup_class = NULL;
-static jmethodID lookup_hook = NULL;
+static JavaVM *lookup_vm = NULL;
+static jint lookup_version = 0;
 
 static int lookup_hook_function(char *path, const int path_max, const char *file_name, const int file_name_len ATTRIBUTE_UNUSED)
 {
+	JNIEnv *lookup_env;
+	jclass lookup_class;
+	jmethodID lookup_hook;
+	jclass no_method_class;
+	jthrowable exception;
+	jboolean boolean;
 	jstring file_name_string;
 	jcharArray path_array;
 	jchar *path_chars;
 	jint status;
 	int i;
+
+	if(!lookup_vm)
+		return 0;
+
+	(*lookup_vm)->GetEnv(lookup_vm, (void**)&lookup_env, lookup_version);
+	//log_message(LOG_DEBUG, "lookup_hook_function lookup_env:  %x", lookup_env);
+
+	lookup_class = (*lookup_env)->FindClass(lookup_env, "org/aph/liblouisaph/LibLouisAPH");
+	if(lookup_class == NULL)
+		return 0;
+	//log_message(LOG_DEBUG, "lookup_hook_function lookup_class:  %x", lookup_class);
+
+	no_method_class = (*lookup_env)->FindClass(lookup_env, "java/lang/NoSuchMethodException");
+	if(no_method_class == NULL)
+		return 0;
+
+	lookup_hook = (*lookup_env)->GetStaticMethodID(lookup_env, lookup_class, "lookupHook", "([CLjava/lang/String;)I");
+	exception = (*lookup_env)->ExceptionOccurred(lookup_env);
+	if(exception != NULL)
+	{
+		boolean = (*lookup_env)->IsInstanceOf(lookup_env, exception, no_method_class);
+		if(boolean != JNI_TRUE)
+			(*lookup_env)->ExceptionClear(lookup_env);
+		return 0;
+	}
+	//log_message(LOG_DEBUG, "lookup_hook_function lookup_hook:  %x", lookup_hook);
 
 	if(lookup_env && lookup_class && lookup_hook)
 	{
@@ -62,44 +93,53 @@ static int lookup_hook_function(char *path, const int path_max, const char *file
 }
 
 JNIEXPORT void JNICALL
-Java_org_aph_liblouisaph_LibLouisAPH_louis_1set_1lookup_1hook(JNIEnv *env, jclass this_class)
+Java_org_aph_liblouisaph_LibLouisAPH_louis_1set_1lookup_1hook(JNIEnv *env, jclass this_class ATTRIBUTE_UNUSED)
 {
-	jclass no_method_class;
-	jthrowable exception;
-	jboolean boolean;
-
-	lookup_env = env;
-
-	lookup_class = this_class;
-	if(lookup_class == NULL)
-		return;
-
-	no_method_class = (*env)->FindClass(env, "java/lang/NoSuchMethodException");
-	if(no_method_class == NULL)
-		return;
-
-	lookup_hook = (*env)->GetStaticMethodID(env, lookup_class, "lookupHook", "([CLjava/lang/String;)I");
-	exception = (*env)->ExceptionOccurred(env);
-	if(exception != NULL)
-	{
-		boolean = (*env)->IsInstanceOf(env, exception, no_method_class);
-		if(boolean != JNI_TRUE)
-			(*env)->ExceptionClear(env);
-		return;
-	}
+	(*env)->GetJavaVM(env, &lookup_vm);
+	lookup_version = (*env)->GetVersion(env);
+	log_message(LOG_DEBUG, "lookup hook GetJavaVM:  %x %x from %x", lookup_vm, lookup_version, env);
 
 	lookup_set_hook(lookup_hook_function);
 }
 
 /******************************************************************************/
 
-static JNIEnv *log_env = NULL;
-static jclass log_class = NULL;
-static jmethodID log_callback = NULL;
+static JavaVM *log_vm = NULL;
+static jint log_version = 0;
 
 static void log_callback_function(const int level, const char *message)
 {
+	JNIEnv *log_env;
+	jclass log_class;
+	jmethodID log_callback;
+	jclass no_method_class;
+	jthrowable exception;
+	jboolean boolean;
 	jstring string;
+
+	if(!log_vm)
+		return;
+
+	(*log_vm)->GetEnv(log_vm, (void**)&log_env, log_version);
+	//log_message(LOG_DEBUG, "lookup_hook_function log_env:  %x", log_version);
+
+	log_class = (*log_env)->FindClass(log_env, "org/aph/liblouisaph/LibLouisAPH");
+	if(log_class == NULL)
+		return;
+
+	no_method_class = (*log_env)->FindClass(log_env, "java/lang/NoSuchMethodException");
+	if(no_method_class == NULL)
+		return;
+
+	log_callback = (*log_env)->GetStaticMethodID(log_env, log_class, "logCallback", "(ILjava/lang/String;)V");
+	exception = (*log_env)->ExceptionOccurred(log_env);
+	if(exception != NULL)
+	{
+		boolean = (*log_env)->IsInstanceOf(log_env, exception, no_method_class);
+		if(boolean != JNI_TRUE)
+			(*log_env)->ExceptionClear(log_env);
+		return;
+	}
 
 	if(log_env && log_class && log_callback)
 	{
@@ -111,38 +151,9 @@ static void log_callback_function(const int level, const char *message)
 JNIEXPORT void JNICALL
 Java_org_aph_liblouisaph_LibLouisAPH_louis_1set_1log_1callback(JNIEnv *env, jclass this_class ATTRIBUTE_UNUSED)
 {
-	jclass no_method_class;
-	jthrowable exception;
-	jboolean boolean;
-
-	log_env = env;
-
-	log_class = this_class;//(*env)->FindClass(env, "org/aph/liblouisaph/LibLouisAPH");
-	if(log_class == NULL)
-	{
-		//puts("\nERROR:  log_class == NULL");
-		return;
-	}
-
-	no_method_class = (*env)->FindClass(env, "java/lang/NoSuchMethodException");
-	if(no_method_class == NULL)
-	{
-		//puts("\nERROR:  no_method_class == NULL");
-		return;
-	}
-
-	log_callback = (*env)->GetStaticMethodID(env, log_class, "logCallback", "(ILjava/lang/String;)V");
-	exception = (*env)->ExceptionOccurred(env);
-	if(exception != NULL)
-	{
-		boolean = (*env)->IsInstanceOf(env, exception, no_method_class);
-		if(boolean != JNI_TRUE)
-		{
-			//puts("\nERROR:  no_method_class thrown");
-			(*env)->ExceptionClear(env);
-		}
-		return;
-	}
+	(*env)->GetJavaVM(env, &log_vm);
+	log_version = (*env)->GetVersion(env);
+	log_message(LOG_DEBUG, "log hook GetJavaVM:  %x %x from %x", log_vm, log_version, env);
 
 	log_set_callback(log_callback_function);
 }
