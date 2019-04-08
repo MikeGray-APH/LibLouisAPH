@@ -307,7 +307,7 @@ static int compile_control(void)
 		table->marker_modifier = *token_crs;
 	else
 	{
-		log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid control type %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  invalid control type %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 		return 0;
 	}
 
@@ -413,7 +413,7 @@ static int token_convert_to_int(void)
 		var = variable_find(&token_crs[1], token_len - 1);
 		if(!var)
 		{
-			log_message_with_token(LOG_ERROR, &token_crs[1], token_len - 1, "%s:%d  variable $%TOKEN not found", table_file_names[include_depth], table_file_lines[include_depth]);
+			log_message(LOG_ERROR, "%s:%d  variable $%#S not found", table_file_names[include_depth], table_file_lines[include_depth], &token_crs[1], token_len - 1);
 			return 0;
 		}
 		token_int = var->value;
@@ -432,7 +432,7 @@ static int token_convert_to_int(void)
 		return 1;
 	}
 
-	log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid value %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+	log_message(LOG_ERROR, "%s:%d  invalid value %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 	return 0;
 }
 
@@ -1063,7 +1063,7 @@ static struct filter* token_get_filter(void)
 	filter = filter_find(token_crs, token_len);
 	if(!filter)
 	{
-		log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  filter %TOKEN not found", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  filter %#S not found", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 		return NULL;
 	}
 	return filter;
@@ -1180,7 +1180,7 @@ static int compile_rule(void)
 			dots_weight = 1;
 		else
 		{
-			log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid rule option %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+			log_message(LOG_ERROR, "%s:%d  invalid rule option %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 			return 0;
 		}
 
@@ -1204,7 +1204,7 @@ static int compile_rule(void)
 		hash_type = TABLE_HASH_FINI;
 	else
 	{
-		log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid rule type %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  invalid rule type %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 		return 0;
 	}
 
@@ -1292,7 +1292,7 @@ static int compile_match(void)
 			dots_weight = 1;
 		else
 		{
-			log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid match option %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+			log_message(LOG_ERROR, "%s:%d  invalid match option %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 			return 0;
 		}
 
@@ -1316,7 +1316,7 @@ static int compile_match(void)
 		hash_type = TABLE_HASH_FINI;
 	else
 	{
-		log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid match type %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  invalid match type %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 		return 0;
 	}
 
@@ -1708,7 +1708,7 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 	ctag_len = utf16le_convert_to_utf8(ctag, INPUT_LINE_MAX, token_crs, token_len);
 	if(!ctag_len)
 	{
-		log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  invalid macro tag %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  invalid macro tag %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 		return 0;
 	}
 
@@ -1817,13 +1817,13 @@ static int do_macro(void)
 	macro = token_find_macro();
 	if(!macro)
 	{
-		log_message_with_token(LOG_ERROR, &token_crs[1], token_len - 1, "%s:%d  macro %TOKEN not found", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  macro %#S not found", table_file_names[include_depth], table_file_lines[include_depth], &token_crs[1], token_len - 1);
 		return 0;
 	}
 
 	if(macro_depth + 1 >= MACRO_DEPTH_MAX)
 	{
-		log_message_with_token(LOG_ERROR, &token_crs[1], token_len - 1, "%s:%d  macro %TOKEN too deep", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  macro %#S too deep", table_file_names[include_depth], table_file_lines[include_depth], &token_crs[1], token_len - 1);
 		return 0;
 	}
 
@@ -1966,7 +1966,7 @@ static int token_compile(void)
 	else if(token_is_equal("match", 5))
 		status = compile_match();
 	else
-		log_message_with_token(LOG_ERROR, token_crs, token_len, "%s:%d  unknown opcode %TOKEN", table_file_names[include_depth], table_file_lines[include_depth]);
+		log_message(LOG_ERROR, "%s:%d  unknown opcode %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
 
 	if(!status)
 		log_included_file_errors();

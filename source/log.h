@@ -56,16 +56,21 @@ void (*log_get_callback(void))(const int level, const char *message);
 void log_set_callback(void (*callback)(const int level, const char *message));
 
 
-/* Log message at log_level level.  Formatting with v*printf is used.
+/* Log message at log_level level.
+ *
+ * Formatting is like printf with the the following conversion specifiers:
+ *   %d   decimal int
+ *   %u   decimal unsigned int
+ *   %x   hexadecimal unsigned int
+ *   %o   octal unsigned int
+ *   %b   binary unsigned int
+ *   %c   char
+ *   %s   char* string
+ *   %C   Unicode char
+ *   %S   Unicode* string
+ *   %#S  Unicode* string, requires string length to be next argument
 */
 void log_message(const enum log_level level, const char *format, ...);
-
-
-/* Log message at log_level level with token.  Formatting with v*printf is used.
- * Before formatting is done, the string %TOKEN is replaced with the conversion
- * of token to UTF-8.
-*/
-void log_message_with_token(const enum log_level level, const Unicode *token, const int token_len, const char *format, ...);
 
 /******************************************************************************/
 
