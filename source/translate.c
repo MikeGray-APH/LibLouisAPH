@@ -487,7 +487,8 @@ int translate_start(Unicode *dots,
 		if(conversion)
 			convert_input(&translate_auto, conversion);
 
-		switch(translate_auto.tables[0]->process)
+		/*   only process from last table in tables   */
+		switch(translate_auto.tables[translate_auto.table_cnt - 1]->process)
 		{
 		case PROCESS_GENERIC:  status = translate_generic_backward(&translate_auto);  break;
 		default:               status = 0;
