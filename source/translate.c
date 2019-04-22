@@ -506,15 +506,18 @@ int translate_start(Unicode *dots,
 	if(translate_auto.output_len > translate_auto.dots_len)
 	{
 		log_message(LOG_WARNING, "output exceeded dots_len:  %d > %d", translate_auto.output_len, translate_auto.dots_len);
-		translate_auto.output_len = translate_auto.dots_len;
+		memcpy(dots, translate_auto.output, dots_len * sizeof(Unicode));
+		if(dots_to_chars_map)
+			memcpy(dots_to_chars_map, translate_auto.output_to_input_map, dots_len * sizeof(int));
 	}
-
-	memcpy(dots, translate_auto.output, translate_auto.output_len * sizeof(Unicode));
+	else
+	{
+		memcpy(dots, translate_auto.output, translate_auto.output_len * sizeof(Unicode));
+		if(dots_to_chars_map)
+			memcpy(dots_to_chars_map, translate_auto.output_to_input_map, translate_auto.output_len * sizeof(int));
+	}
 	if(chars_to_dots_map)
 		memcpy(chars_to_dots_map, translate_auto.input_to_output_map, input_len * sizeof(int));
-	if(dots_to_chars_map)
-		memcpy(dots_to_chars_map, translate_auto.output_to_input_map, translate_auto.output_len * sizeof(int));
-
 	if(cursor)
 		*cursor = translate_auto.cursor_pos;
 
@@ -530,6 +533,7 @@ int translate_start(Unicode *dots,
 		FREE(translate_auto.input_to_output_map);
 		FREE(translate_auto.output_to_input_map);
 	}
+
 	return translate_auto.output_len;
 }
 
