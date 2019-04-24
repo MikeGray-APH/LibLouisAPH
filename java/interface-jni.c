@@ -515,7 +515,7 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1translate(
 	{
 		if(dots_to_chars_map_ints)
 		{
-			for(i = 0; i < chars_len; i++)
+			for(i = 0; i < dots_len; i++)
 				dots_to_chars_map_jints[i] = dots_to_chars_map_ints[i];
 			FREE(dots_to_chars_map_ints);
 		}
