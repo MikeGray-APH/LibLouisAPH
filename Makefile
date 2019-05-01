@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.10
+VERSION := 0.2.11
 
 CC = gcc
 
@@ -185,6 +185,7 @@ build/exe-db: $(OBJS_DB_BUILD) | build
 db: build/exe-db
 	gdb --command=debug/gdb/main.gdb build/exe-db
 
+dll: CPPFLAGS += -D DEBUG
 dll: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 dll: build/liblouisAPH.so
 
@@ -193,6 +194,7 @@ OBJS_DLL_BUILD := $(foreach OBJ, $(OBJS_LIB) $(OBJS_LANG) $(OBJ_LIB_IFACE), buil
 build/liblouisAPH.so: $(OBJS_DLL_BUILD) | build
 	$(CC) -o $@ -shared $(CFLAGS) $(OBJS_DLL_BUILD)
 
+lib: CPPFLAGS += -D DEBUG
 lib: CFLAGS += -ggdb -fstack-protector $(CWARNS_DEBUG)
 lib: build/liblouisAPH.a
 
