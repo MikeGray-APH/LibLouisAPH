@@ -414,6 +414,7 @@ void table_output(FILE *output, const struct table *table)
 		attrs_chars[i] = table->attrs_chars[i];
 
 	fprintf(output, "%s\n", table->file_name);
+	fputs("\n", output);
 	process_output(output, table->process);
 	fprintf(output, "\ncontrol:  0x%04x   0x%04x   0x%04x   0x%04x   0x%04x   0x%04x   0x%04x\n", table->marker_user, table->marker_begin, table->marker_end, table->marker_modifier, table->marker_hard, table->marker_soft, table->marker_internal);
 	fputs("\ncharacters:\n", output);

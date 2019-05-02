@@ -29,9 +29,72 @@
 
 #define FORWARD   (+1)
 #define BACKWARD  (-1)
-#define INPUT_BUFFER_MAX   0x1000
+
+#ifndef BUFFER_MAX
+#define BUFFER_MAX  0x1000
+#endif
 
 static int opt_direction, opt_unicode_to_digits, opt_digits_to_unicode, opt_output;
+
+/******************************************************************************/
+
+static int string_strip_newlines(char *cchars)
+{
+	int cchars_len;
+
+	cchars_len = strlen(cchars);
+	while(cchars_len > 0)
+	{
+		if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
+			cchars[cchars_len - 1] = 0;
+		else
+			break;
+		cchars_len--;
+	}
+
+	return cchars_len;
+}
+
+static int input_line(char **input, int *input_max, int *input_len)
+{
+	if(fgets(*input, *input_max, stdin))
+	{
+		/*   check if entire line was read   */
+		*input_len = string_strip_newlines(*input);
+		if(*input_len >= *input_max - 1)
+		{
+			*input_max += BUFFER_MAX;
+			*input = realloc(*input, *input_max);
+			if(!*input)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 0;
+			}
+			ASSERT((*input)[*input_len] == 0)
+
+			while(fgets(&(*input)[*input_len], *input_max - *input_len, stdin))
+			{
+				*input_len = string_strip_newlines(*input);
+				if(*input_len < *input_max - 1)
+					break;
+
+				*input_max += BUFFER_MAX;
+				*input = realloc(*input, *input_max);
+				if(!*input)
+				{
+					fprintf(stderr, "FATAL:  out of memory\n");
+					return 0;
+				}
+				ASSERT((*input)[*input_len] == 0)
+			}
+
+		}
+	}
+	else
+		return 0;
+
+	return 1;
+}
 
 /******************************************************************************/
 
@@ -114,18 +177,60 @@ static void convert_digits_to_unicode(const char *dots)
 	free(cchars);
 }
 
+static void convert_digits_to_unicode_stdin(void)
+{
+	char *input;
+	int input_max, input_len;
+
+	input_max = BUFFER_MAX;
+	input = malloc(input_max);
+	memset(input, 0, input_max);
+
+	while(input_line(&input, &input_max, &input_len))
+	{
+		/*   empty string   */
+		if(input_len == 0)
+		{
+			puts("");
+			continue;
+		}
+
+		convert_digits_to_unicode(input);
+	}
+
+	free(input);
+}
+
+/******************************************************************************/
+
 static void convert_unicode_to_digits(const char *dots)
 {
 	unichar *uchars;
 	char *cchars;
-	int dots_len, cchars_len, uchars_len, crs, off;
+	int cchars_max;
+	int uchars_max, uchars_len;
+	int dots_len, dots_crs, crs, off;
 
 	dots_len = strlen(dots);
-	uchars_len = dots_len;
-	cchars_len = uchars_len * 11;
-	uchars = malloc((uchars_len + 1) * sizeof(unichar));
-	cchars = malloc(cchars_len + 1);
-	utf8_convert_to_utf16(uchars, (uchars_len + 1), dots, dots_len, NULL);
+
+	uchars_max = dots_len;
+	uchars = malloc(uchars_max * sizeof(unichar));
+	uchars_len = utf8_convert_to_utf16(uchars, uchars_max, dots, dots_len, &dots_crs);
+	if(dots_len > dots_crs)
+	{
+		uchars_max = uchars_len + 1;
+		uchars = realloc(uchars, uchars_max * sizeof(unichar));
+		if(!uchars)
+		{
+			fprintf(stderr, "FATAL:  out of memory\n");
+			return;
+		}
+		uchars_len = utf8_convert_to_utf16(uchars, uchars_max, dots, dots_len, &dots_crs);
+		ASSERT(dots_crs == dots_len)
+	}
+
+	cchars_max = uchars_len * 11;
+	cchars = malloc(cchars_max);
 
 	crs = 0;
 	for(off = 0; off < uchars_len; off++)
@@ -156,12 +261,106 @@ static void convert_unicode_to_digits(const char *dots)
 		if(off + 1 < uchars_len)
 		if(uchars[off + 1])
 			cchars[crs++] = '-';
+
+		ASSERT(crs < cchars_max)
 	}
 
 	cchars[crs] = 0;
 	printf("%s\n", cchars);
 	free(uchars);
 	free(cchars);
+}
+
+static void convert_unicode_to_digits_stdin(void)
+{
+	char *input;
+	int input_max, input_len;
+
+	input_max = BUFFER_MAX;
+	input = malloc(input_max);
+	memset(input, 0, input_max);
+
+	while(input_line(&input, &input_max, &input_len))
+	{
+		/*   empty string   */
+		if(input_len == 0)
+		{
+			puts("");
+			continue;
+		}
+
+		convert_unicode_to_digits(input);
+	}
+
+	free(input);
+}
+
+/******************************************************************************/
+
+static int do_conversion(struct conversion *conversion)
+{
+	char *cchars;
+	unichar *uchars;
+	int cchars_max, cchars_len, cchars_crs;
+	int uchars_max, uchars_len, uchars_crs;
+
+	cchars_max = BUFFER_MAX;
+	cchars = malloc(cchars_max);
+	memset(cchars, 0, cchars_max);
+
+	uchars_max = BUFFER_MAX;
+	uchars = malloc(uchars_max * sizeof(unichar));
+	memset(uchars, 0, uchars_max * sizeof(unichar));
+
+	while(input_line(&cchars, &cchars_max, &cchars_len))
+	{
+		/*   empty string   */
+		if(cchars_len == 0)
+		{
+			puts("");
+			continue;
+		}
+
+		uchars_len = utf8_convert_to_utf16(uchars, uchars_max, cchars, cchars_len, &cchars_crs);
+		if(cchars_len > cchars_crs)
+		{
+			uchars_max = uchars_len + 1;
+			uchars = realloc(uchars, uchars_max * sizeof(unichar));
+			if(!uchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+			uchars_len = utf8_convert_to_utf16(uchars, uchars_max, cchars, cchars_len, &cchars_crs);
+			ASSERT(cchars_crs == cchars_len)
+		}
+
+		if(opt_direction == FORWARD)
+			conversion_convert_to(uchars, uchars_len, conversion);
+		else if(opt_direction == BACKWARD)
+			conversion_convert_from(uchars, uchars_len, conversion);
+
+		cchars_len = utf16_convert_to_utf8(cchars, cchars_max, uchars, uchars_len, &uchars_crs);
+		if(uchars_len > uchars_crs)
+		{
+			cchars_max = cchars_len + 1;
+			cchars = realloc(cchars, cchars_max);
+			if(!cchars)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+			cchars_len = utf16_convert_to_utf8(cchars, cchars_max, uchars, uchars_len, &uchars_crs);
+			ASSERT(uchars_crs == uchars_len)
+		}
+
+		printf("%s\n", cchars);
+	}
+
+	free(cchars);
+	free(uchars);
+
+	return 0;
 }
 
 /******************************************************************************/
@@ -234,7 +433,7 @@ static char** scan_arguments(char **args, const int argn)
 	   && (!strncmp(args[1], "-h", 3) || !strncmp(args[1], "--help", 7))))
 	{
 		print_usage();
-		return NULL;
+		exit(0);
 	}
 
 	if(   argn == 1
@@ -290,21 +489,12 @@ static char** scan_arguments(char **args, const int argn)
 int main(int argn, char **args)
 {
 	struct conversion *conversion;
-	char *cchars;
-	unichar *uchars;
-	int cchars_len, uchars_len, max_len;
 
 	args = scan_arguments(args, argn);
 	if(!args)
 		return 1;
 
 	log_set_callback(log_callback);
-
-	max_len = INPUT_BUFFER_MAX;
-	cchars = malloc(max_len);
-	uchars = malloc(max_len * sizeof(unichar));
-	memset(cchars, 0, max_len);
-	memset(uchars, 0, max_len * sizeof(unichar));
 
 	if(opt_unicode_to_digits)
 	{
@@ -315,11 +505,7 @@ int main(int argn, char **args)
 			args++;
 		}
 		else
-		{
-			memset(cchars, 0, INPUT_BUFFER_MAX);
-			while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
-				convert_unicode_to_digits(cchars);
-		}
+			convert_unicode_to_digits_stdin();
 
 		return 0;
 	}
@@ -333,11 +519,7 @@ int main(int argn, char **args)
 			args++;
 		}
 		else
-		{
-			memset(cchars, 0, INPUT_BUFFER_MAX);
-			while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
-				convert_digits_to_unicode(cchars);
-		}
+			convert_digits_to_unicode_stdin();
 
 		return 0;
 	}
@@ -348,97 +530,16 @@ int main(int argn, char **args)
 		return 1;
 	}
 
-	 conversion = lookup_conversion(*args);
-	 if(!conversion)
+	conversion = lookup_conversion(*args);
+	if(!conversion)
 		return 1;
 
 	if(opt_output)
-	{
 		conversion_output(stdout, conversion);
-		return 0;
-	}
+	else if(do_conversion(conversion))
+		return 1;
 
-	while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
-	{
-		/*   check if entire line was read   */
-		cchars_len = strlen(cchars);
-		if(cchars[cchars_len - 1] != '\n' && cchars[cchars_len - 1] != '\r')
-		{
-			max_len += INPUT_BUFFER_MAX;
-			cchars = realloc(cchars, max_len);
-			if(!cchars)
-			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
-			}
-
-			while(fgets(&cchars[cchars_len], INPUT_BUFFER_MAX, stdin))
-			{
-				cchars_len = strlen(cchars);
-				if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
-					break;
-
-				max_len += INPUT_BUFFER_MAX;
-				cchars = realloc(cchars, max_len);
-				if(!cchars)
-				{
-					fprintf(stderr, "FATAL:  out of memory\n");
-					return 1;
-				}
-			}
-
-			uchars = realloc(uchars, max_len * sizeof(unichar));
-			if(!uchars)
-			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
-			}
-		}
-
-		/*   trim return whitespace at end   */
-		for(cchars_len = strlen(cchars); cchars_len > 0; cchars_len--)
-		if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
-			cchars[cchars_len - 1] = 0;
-		else
-			break;
-		if(cchars_len < 0)
-		{
-			puts("");
-			continue;
-		}
-
-		uchars_len = utf8_convert_to_utf16(uchars, max_len, cchars, cchars_len, NULL);
-		if(opt_direction == FORWARD)
-			conversion_convert_to(uchars, uchars_len, conversion);
-		else if(opt_direction == BACKWARD)
-			conversion_convert_from(uchars, uchars_len, conversion);
-
-		/*   check that there should be enough room
-		     for UTF conversion   */
-		if(uchars_len * 3 >= max_len)
-		{
-			max_len = uchars_len * 3 + 1;
-
-			cchars = realloc(cchars, max_len);
-			if(!cchars)
-			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
-			}
-
-			uchars = realloc(uchars, max_len * sizeof(unichar));
-			if(!uchars)
-			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
-			}
-		}
-
-		utf16_convert_to_utf8(cchars, max_len, uchars, uchars_len, NULL);
-		printf("%s\n", cchars);
-	}
-
-	conversion_free(conversion);
+	lookup_fini();
 
 	return 0;
 }

@@ -53,7 +53,8 @@ void conversion_output(FILE *output, const struct conversion *conversion)
 			else
 				fputs(" ", output);
 			utf16_output_char(output, cell);
-			fputs(" ", output);
+			if(x != 15)
+				fputs(" ", output);
 			cell++;
 		}
 		fputs("\n", output);

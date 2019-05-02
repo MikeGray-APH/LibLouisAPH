@@ -506,7 +506,7 @@ int translate_start(unichar *dots,
 
 	if(translate_auto.output_len > translate_auto.dots_len)
 	{
-		log_message(LOG_WARNING, "output exceeded dots_len:  %d > %d", translate_auto.output_len, translate_auto.dots_len);
+		//log_message(LOG_WARNING, "output exceeded dots_len:  %d > %d", translate_auto.output_len, translate_auto.dots_len);
 		memcpy(dots, translate_auto.output, dots_len * sizeof(unichar));
 		if(dots_to_chars_map)
 			memcpy(dots_to_chars_map, translate_auto.output_to_input_map, dots_len * sizeof(int));

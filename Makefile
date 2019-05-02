@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.12
+VERSION := 0.2.13
 
 CC = gcc
 
@@ -402,6 +402,7 @@ test-link: build/liblouisAPH.so build/exe-test-link
 build/exe-test-link: build/objects/$(OBJ_TEST_LINK)
 	$(CC) -o $@ $(CFLAGS) build/objects/$(OBJ_TEST_LINK) $(LDFLAGS)
 
+test-tools: CPPFLAGS += -D BUFFER_MAX=7
 test-tools: tools | build/test
 	@./test/tools.sh
 

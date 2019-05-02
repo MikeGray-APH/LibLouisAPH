@@ -25,10 +25,34 @@
 #include "lookup.h"
 #include "log.h"
 
-#define INPUT_BUFFER_MAX  0x1000
+
+#ifndef BUFFER_MAX
+#define BUFFER_MAX  0x1000
+#endif
+
+//#define PREALLOCATE
 
 static enum rule_direction direction;
-static int opt_echo_no_processed;
+static int opt_echo_no_processed, opt_output_mapped;
+
+/******************************************************************************/
+
+static int string_strip_newlines(char *cchars)
+{
+	int cchars_len;
+
+	cchars_len = strlen(cchars);
+	while(cchars_len > 0)
+	{
+		if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
+			cchars[cchars_len - 1] = 0;
+		else
+			break;
+		cchars_len--;
+	}
+
+	return cchars_len;
+}
 
 /******************************************************************************/
 
@@ -62,6 +86,8 @@ static void print_usage(void)
 		"Options:",
 		"   -b         do back translation",
 		"   -p PATHS   add PATHS to table paths",
+		"   -m         output mappings",
+		"   -M         output mappings as list",
 		"   -v         print version",
 		"   -h         print this message",
 		NULL
@@ -116,6 +142,9 @@ static char** scan_arguments(char **args, const int argn)
 		lookup_add_paths(*args);
 		break;
 
+	case 'm':  opt_output_mapped = 1;  break;
+	case 'M':  opt_output_mapped = 2;  break;
+
 	/*   read long arguments   */
 	case '-':
 
@@ -125,6 +154,10 @@ static char** scan_arguments(char **args, const int argn)
 			direction = BACKWARD;
 		else if(!strncmp(&((*args)[2]), "paths", 6))
 			goto add_paths;
+		else if(!strncmp(&((*args)[2]), "output-mappings-as-list", 24))
+			opt_output_mapped = 2;
+		else if(!strncmp(&((*args)[2]), "output-mappings", 16))
+			opt_output_mapped = 1;
 		else if(!strncmp(&((*args)[2]), "echo-no-processed", 18))
 			opt_echo_no_processed = 1;
 		else
@@ -145,11 +178,17 @@ int main(int argn, char **args)
 	struct table **tables;
 	int table_cnt;
 	struct conversion *conversion;
-	char *cchars;
-	unichar *uchars, *trans;
-	int cchars_len, uchars_len, trans_len, max_len;
+	char *cinput, *coutput, cchar[15];
+	unichar *uinput, *uoutput;
+	int cinput_len, cinput_max, cinput_crs;
+	int coutput_len, coutput_max;
+	int uinput_len, uinput_max;
+	int uoutput_len, uoutput_max, uoutput_crs;
+	int *chars_to_cells, *cells_to_chars;
+	int tens, ten;
 
 	direction = FORWARD;
+	opt_output_mapped =
 	opt_echo_no_processed = 0;
 
 	args = scan_arguments(args, argn);
@@ -176,120 +215,310 @@ int main(int argn, char **args)
 	else
 		conversion = NULL;
 
-	max_len = INPUT_BUFFER_MAX;
-	cchars = malloc(max_len);
-	uchars = malloc(max_len * sizeof(unichar));
-	trans  = malloc(max_len * sizeof(unichar));
-	memset(cchars, 0, max_len);
-	memset(uchars, 0, max_len * sizeof(unichar));
-	memset(trans, 0, max_len * sizeof(unichar));
+	cinput_max = BUFFER_MAX;
+	cinput = malloc(cinput_max);
+	memset(cinput, 0, cinput_max);
 
-	while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
+	coutput_max = BUFFER_MAX;
+	coutput = malloc(coutput_max);
+	memset(coutput, 0, coutput_max);
+
+	uinput_max = BUFFER_MAX;
+	uinput = malloc(uinput_max * sizeof(unichar));
+	memset(uinput, 0, uinput_max);
+
+	uoutput_max = BUFFER_MAX;
+	//uoutput_len = 0;
+	uoutput = malloc(uoutput_max * sizeof(unichar));
+	memset(uoutput, 0, uoutput_max);
+
+	chars_to_cells =
+	cells_to_chars = NULL;
+
+	while(fgets(cinput, cinput_max, stdin))
 	{
 		/*   check if entire line was read   */
-		cchars_len = strlen(cchars);
-		if(cchars[cchars_len - 1] != '\n' && cchars[cchars_len - 1] != '\r')
+		cinput_len = string_strip_newlines(cinput);
+		if(cinput_len >= cinput_max - 1)
 		{
-			max_len += INPUT_BUFFER_MAX;
-			cchars = realloc(cchars, max_len);
-			if(!cchars)
+			cinput_max += BUFFER_MAX;
+			cinput = realloc(cinput, cinput_max);
+			if(!cinput)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
 				return 1;
 			}
+			ASSERT(cinput[cinput_len] == 0)
 
-			while(fgets(&cchars[cchars_len], INPUT_BUFFER_MAX, stdin))
+			while(fgets(&cinput[cinput_len], cinput_max - cinput_len, stdin))
 			{
-				cchars_len = strlen(cchars);
-				if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
+				cinput_len = string_strip_newlines(cinput);
+				if(cinput_len < cinput_max - 1)
 					break;
 
-				max_len += INPUT_BUFFER_MAX;
-				cchars = realloc(cchars, max_len);
-				if(!cchars)
+				cinput_max += BUFFER_MAX;
+				cinput = realloc(cinput, cinput_max);
+				if(!cinput)
 				{
 					fprintf(stderr, "FATAL:  out of memory\n");
 					return 1;
 				}
-			}
-
-			uchars = realloc(uchars, max_len * sizeof(unichar));
-			if(!uchars)
-			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
-			}
-
-			trans = realloc(trans,  max_len * sizeof(unichar));
-			if(!trans)
-			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
+				ASSERT(cinput[cinput_len] == 0)
 			}
 		}
 
-		/*   trim return whitespace at end   */
-		for(cchars_len = strlen(cchars); cchars_len > 0; cchars_len--)
-		if(cchars[cchars_len - 1] == '\n' || cchars[cchars_len - 1] == '\r')
-			cchars[cchars_len - 1] = 0;
-		else
-			break;
-		if(cchars_len < 0)
+		/*   empty string   */
+		if(cinput_len == 0)
 		{
 			puts("");
 			continue;
 		}
 
-		uchars_len = utf8_convert_to_utf16(uchars, max_len, cchars, cchars_len, NULL);
-		trans_len = translate_start(
-			trans, max_len, uchars, uchars_len,
+#ifdef PREALLOCATE
+		if(uinput_max < cinput_max)
+		{
+			uinput_max = cinput_max;
+			uinput = realloc(uinput, uinput_max * sizeof(unichar));
+			if(!uinput)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+		}
+#endif
+
+		uinput_len = utf8_convert_to_utf16(uinput, uinput_max, cinput, cinput_len, &cinput_crs);
+		if(cinput_len > cinput_crs)
+		{
+			uinput_max = uinput_len + 1;
+			uinput = realloc(uinput, uinput_max * sizeof(unichar));
+			if(!uinput)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+			uinput_len = utf8_convert_to_utf16(uinput, uinput_max, cinput, cinput_len, &cinput_crs);
+			ASSERT(cinput_crs == cinput_len)
+		}
+
+		if(opt_output_mapped)
+		{
+			chars_to_cells = malloc(uinput_len * sizeof(int));
+			cells_to_chars = malloc(uoutput_max * sizeof(int));
+		}
+
+#ifdef PREALLOCATE
+		if(uoutput_max < uinput_max)
+		{
+			uoutput_max = uinput_max;
+			uoutput = realloc(uoutput, uoutput_max * sizeof(unichar));
+			if(!uoutput)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+			if(opt_output_mapped)
+			{
+				cells_to_chars = realloc(cells_to_chars, uoutput_max * sizeof(int));
+				if(!cells_to_chars)
+				{
+					fprintf(stderr, "FATAL:  out of memory\n");
+					return 1;
+				}
+			}
+		}
+#endif
+
+		uoutput_len = translate_start(
+			uoutput, uoutput_max, uinput, uinput_len,
 			(const struct table * const*)tables, table_cnt, conversion, direction,
-			NULL, NULL, NULL);
-		if(trans_len <= 0)
+			chars_to_cells, cells_to_chars, NULL);
+		if(uoutput_len <= 0)
 		{
 			if(opt_echo_no_processed)
-				printf("%s\n", cchars);
+				printf("%s\n", cinput);
 			else
 				puts("");
 			continue;
 		}
-
-		/*   check that there should be enough room
-		     for UTF conversion   */
-		if(trans_len * 3 >= max_len)
+		if(uoutput_len >= uoutput_max)
 		{
-			max_len = trans_len * 3 + 1;
-
-			cchars = realloc(cchars, max_len);
-			if(!cchars)
+			uoutput_max = uoutput_len + 1;
+			uoutput = realloc(uoutput, uoutput_max * sizeof(unichar));
+			if(!uoutput)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
 				return 1;
 			}
-
-			uchars = realloc(uchars, max_len * sizeof(unichar));
-			if(!uchars)
+			if(opt_output_mapped)
 			{
-				fprintf(stderr, "FATAL:  out of memory\n");
-				return 1;
+				cells_to_chars = realloc(cells_to_chars, uoutput_max * sizeof(int));
+				if(!cells_to_chars)
+				{
+					fprintf(stderr, "FATAL:  out of memory\n");
+					return 1;
+				}
 			}
+			uoutput_len = translate_start(
+				uoutput, uoutput_max, uinput, uinput_len,
+				(const struct table * const*)tables, table_cnt, conversion, direction,
+				chars_to_cells, cells_to_chars, NULL);
+		}
 
-			trans = realloc(trans,  max_len * sizeof(unichar));
-			if(!trans)
+#ifdef PREALLOCATE
+		if(coutput_max < uoutput_max)
+		{
+			coutput_max = uoutput_max;
+			coutput = realloc(coutput, coutput_max);
+			if(!coutput)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
 				return 1;
 			}
 		}
+#endif
 
-		utf16_convert_to_utf8(cchars, max_len, trans, trans_len, NULL);
-		printf("%s\n", cchars);
+		coutput_len = utf16_convert_to_utf8(coutput, coutput_max, uoutput, uoutput_len, &uoutput_crs);
+		if(uoutput_len > uoutput_crs)
+		{
+			coutput_max = coutput_len + 1;
+			coutput = realloc(coutput, coutput_max);
+			if(!coutput)
+			{
+				fprintf(stderr, "FATAL:  out of memory\n");
+				return 1;
+			}
+			coutput_len = utf16_convert_to_utf8(coutput, coutput_max, uoutput, uoutput_len, &uoutput_crs);
+			ASSERT(uoutput_crs == uoutput_len)
+		}
+
+		if(opt_output_mapped)
+		{
+			if(opt_output_mapped == 1)
+			{
+				tens = -1;
+				for(int i = 0; i < uinput_len; i++)
+				{
+					ten = (i / 10) % 10;
+					if(tens == ten)
+						printf(" ");
+					else
+					{
+						printf("%d", ten);
+						tens = ten;
+					}
+				}
+				puts("");
+				for(int i = 0; i < uinput_len; i++)
+					printf("%d", i % 10);
+				puts("");
+
+				printf("%s\n", cinput);
+
+				tens = -1;
+				for(int i = 0; i < uinput_len; i++)
+				if(chars_to_cells[i] < 0)
+					printf(" ");
+				else
+				{
+					ten = (chars_to_cells[i] / 10) % 10;
+					if(tens == ten)
+						printf(" ");
+					else
+					{
+						printf("%d", ten);
+						tens = ten;
+					}
+				}
+				puts("");
+
+				for(int i = 0; i < uinput_len; i++)
+				if(chars_to_cells[i] < 0)
+					printf("-");
+				else
+					printf("%d", chars_to_cells[i] % 10);
+				puts("");
+
+				puts("");
+
+				tens = -1;
+				for(int i = 0; i < uoutput_len; i++)
+				{
+					ten = (i / 10) % 10;
+					if(tens == ten)
+						printf(" ");
+					else
+					{
+						printf("%d", ten);
+						tens = ten;
+					}
+				}
+				puts("");
+				for(int i = 0; i < uoutput_len; i++)
+					printf("%d", i % 10);
+				puts("");
+
+				printf("%s\n", coutput);
+
+				tens = -1;
+				for(int i = 0; i < uoutput_len; i++)
+				if(cells_to_chars[i] < 0)
+					printf(" ");
+				else
+				{
+					ten = (cells_to_chars[i] / 10) % 10;
+					if(tens == ten)
+						printf(" ");
+					else
+					{
+						printf("%d", ten);
+						tens = ten;
+					}
+				}
+				puts("");
+				for(int i = 0; i < uoutput_len; i++)
+				if(cells_to_chars[i] < 0)
+					printf("-");
+				else
+					printf("%d", cells_to_chars[i] % 10);
+				puts("");
+
+				puts("");
+			}
+			else if(opt_output_mapped == 2)
+			{
+				for(int i = 0; i < uinput_len; i++)
+				{
+					memset(cchar, 0, 15);
+					utf16_convert_to_utf8(cchar, 15, &uinput[i], 1, NULL);
+					printf("[%d]\t%s\t%d\n", i, cchar, chars_to_cells[i]);
+				}
+				puts("");
+				for(int i = 0; i < uoutput_len; i++)
+				{
+					memset(cchar, 0, 15);
+					utf16_convert_to_utf8(cchar, 15, &uoutput[i], 1, NULL);
+					printf("[%d]\t%s\t%d\n", i, cchar, cells_to_chars[i]);
+				}
+				puts("");
+			}
+
+			free(chars_to_cells);
+			free(cells_to_chars);
+
+			chars_to_cells =
+			cells_to_chars = NULL;
+		}
+		else
+			printf("%s\n", coutput);
+
 	}
 
 	free(tables);
-	free(cchars);
-	free(uchars);
-	free(trans);
+	free(cinput);
+	free(uinput);
+	free(coutput);
+	free(uoutput);
 	lookup_fini();
 
 	return 0;

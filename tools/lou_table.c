@@ -34,7 +34,7 @@ static void get_ambiguous_rules_chars(
 	const int rules_hash_size)
 {
 	const struct rule *rule, *nxt;
-	int i;
+	int i, j;
 
 	for(i = 0; i < rules_hash_size; i++)
 	{
@@ -45,30 +45,33 @@ static void get_ambiguous_rules_chars(
 			while(nxt)
 			{
 				if(   utf16_are_equal(rule->chars, rule->chars_len, nxt->chars, nxt->chars_len)
-				   && !utf16_are_equal(rule->chars, rule->chars_len, nxt->chars, nxt->chars_len)
+				   && !utf16_are_equal(rule->dots, rule->dots_len, nxt->dots, nxt->dots_len)
 				   && (opt_ignore_filters || (!rule->filter_backward && !nxt->filter_backward)))
 				{
 					if(rule->chars_len == 1)
 						utf16_output_char_escape(stdout, rule->chars[0]);
 					else
 						utf16_output(stdout, rule->chars, rule->chars_len);
-					printf(" ");
-					if(rule->chars_len == 1)
-						utf16_output_char_escape(stdout, rule->chars[0]);
-					else
-						utf16_output(stdout, rule->chars, rule->chars_len);
 
+					printf("   \t");
+
+					if(rule->dots_len == 1)
+						utf16_output_char_escape(stdout, rule->dots[0]);
+					else
+						utf16_output(stdout, rule->dots, rule->dots_len);
+					printf("\t");
+					if(nxt->dots_len == 1)
+						utf16_output_char_escape(stdout, nxt->dots[0]);
+					else
+						utf16_output(stdout, nxt->dots, nxt->dots_len);
+
+					printf("   \t");
+
+					for(j = 0; j < rule->dots_len; j++)
+						printf("\\x%04x", rule->dots[j]);
 					printf("   ");
-
-					if(nxt->chars_len == 1)
-						utf16_output_char_escape(stdout, nxt->chars[0]);
-					else
-						utf16_output(stdout, nxt->chars, nxt->chars_len);
-					printf(" ");
-					if(nxt->chars_len == 1)
-						utf16_output_char_escape(stdout, nxt->chars[0]);
-					else
-						utf16_output(stdout, nxt->chars, nxt->chars_len);
+					for(j = 0; j < nxt->dots_len; j++)
+						printf("\\x%04x", nxt->dots[j]);
 
 					puts("");
 				}
@@ -82,13 +85,18 @@ static void get_ambiguous_rules_chars(
 static void table_get_ambiguous_rules_chars(const struct table *table)
 {
 	puts("chars init:");
-	get_ambiguous_rules_chars((const struct rule*const*)table->init_chars_hash, TABLE_TRANS_HASH_SIZE);
+	if(table->init_chars_hash_cnt)
+		get_ambiguous_rules_chars((const struct rule*const*)table->init_chars_hash, TABLE_TRANS_HASH_SIZE);
 	puts("");
+
 	puts("chars pretrans:");
-	get_ambiguous_rules_chars((const struct rule*const*)table->pretrans_chars_hash, TABLE_TRANS_HASH_SIZE);
+	if(table->pretrans_chars_hash_cnt)
+		get_ambiguous_rules_chars((const struct rule*const*)table->pretrans_chars_hash, TABLE_TRANS_HASH_SIZE);
 	puts("");
+
 	puts("chars trans:");
-	get_ambiguous_rules_chars((const struct rule*const*)table->trans_chars_hash, TABLE_TRANS_HASH_SIZE);
+	if(table->trans_chars_hash_cnt)
+		get_ambiguous_rules_chars((const struct rule*const*)table->trans_chars_hash, TABLE_TRANS_HASH_SIZE);
 }
 
 static void get_ambiguous_rules_dots(
@@ -147,13 +155,18 @@ static void get_ambiguous_rules_dots(
 static void table_get_ambiguous_rules_dots(const struct table *table)
 {
 	puts("dots init:");
-	get_ambiguous_rules_dots((const struct rule*const*)table->init_dots_hash, TABLE_DOTS_HASH_SIZE);
+	if(table->init_dots_hash_cnt)
+		get_ambiguous_rules_dots((const struct rule*const*)table->init_dots_hash, TABLE_DOTS_HASH_SIZE);
 	puts("");
+
 	puts("dots pretrans:");
-	get_ambiguous_rules_dots((const struct rule*const*)table->pretrans_dots_hash, TABLE_DOTS_HASH_SIZE);
+	if(table->pretrans_dots_hash_cnt)
+		get_ambiguous_rules_dots((const struct rule*const*)table->pretrans_dots_hash, TABLE_DOTS_HASH_SIZE);
 	puts("");
+
 	puts("dots trans:");
-	get_ambiguous_rules_dots((const struct rule*const*)table->trans_dots_hash, TABLE_DOTS_HASH_SIZE);
+	if(table->trans_dots_hash_cnt)
+		get_ambiguous_rules_dots((const struct rule*const*)table->trans_dots_hash, TABLE_DOTS_HASH_SIZE);
 }
 
 /******************************************************************************/
@@ -218,7 +231,7 @@ static char** scan_arguments(char **args, const int argn)
 	   && (!strncmp(args[1], "-h", 3) || !strncmp(args[1], "--help", 7))))
 	{
 		print_usage();
-		return NULL;
+		exit(0);
 	}
 
 	if(   argn == 1
@@ -303,26 +316,29 @@ int main(int argn, char **args)
 	if(!table)
 		return 1;
 
-	printf("%s\n", args[0]);
-
 	if(!out_ambiguouos_chars && !out_ambiguouos_dots)
 		table_output(stdout, table);
-
-	puts("");
-
-	if(out_ambiguouos_chars)
+	else
 	{
-		puts("ambiguous char rules:");
-		table_get_ambiguous_rules_chars(table);
+		printf("%s\n", args[0]);
 		puts("");
+
+		if(out_ambiguouos_chars)
+		{
+			puts("ambiguous char rules:\n");
+			table_get_ambiguous_rules_chars(table);
+			puts("");
+		}
+
+		if(out_ambiguouos_dots)
+		{
+			puts("ambiguous dot rules:\n");
+			table_get_ambiguous_rules_dots(table);
+			puts("");
+		}
 	}
 
-	if(out_ambiguouos_dots)
-	{
-		puts("ambiguous dot rules:");
-		table_get_ambiguous_rules_dots(table);
-		puts("");
-	}
+	lookup_fini();
 
 	return 0;
 }
