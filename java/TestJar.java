@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import org.aph.liblouisaph.LibLouisAPH;
 import org.aph.liblouisaph.LogCallback;
@@ -32,6 +33,29 @@ public class TestJar
 
 /******************************************************************************/
 
+	private static ArrayList<String> logs = new ArrayList<String>();
+
+	private static void outputLogs()
+	{
+		for(String log : logs)
+		{
+			output.println(log);
+		//	if(console != output)
+		//		console.println(log);
+		}
+		logs = new ArrayList<String>();
+	}
+
+	private static void outputLogsError(String error)
+	{
+		outputLogs();
+		output.println("ERROR:  " + error);
+		output.close();
+		if(console != output)
+			console.println("FAIL");
+		throw new Error(error);
+	}
+
 	private static void setLogCallback()
 	{
 		LogCallback logCallback = new LogCallback()
@@ -40,321 +64,283 @@ public class TestJar
 			{
 				switch(logLevel)
 				{
-				case 0:
-					output.println();
-					output.flush();
-					return;
+				case 0:  logs.add("unknown log level " + logLevel);  break;
 
-				case LogCallback.LOG_ALL:      output.print("ALL:  ");      break;
-				case LogCallback.LOG_TRACE:    output.print("TRACE:  ");    break;
-				case LogCallback.LOG_DEBUG:    output.print("DEBUG:  ");    break;
-				case LogCallback.LOG_INFO:     output.print("INFO:  ");     break;
-				case LogCallback.LOG_WARNING:  output.print("WARNING:  ");  break;
-				case LogCallback.LOG_ERROR:    output.print("ERROR:  ");    break;
-				case LogCallback.LOG_FATAL:    output.print("FATAL:  ");    break;
+				case LogCallback.LOG_ALL:      logs.add("ALL:  " + logMessage);      break;
+				case LogCallback.LOG_TRACE:    logs.add("TRACE:  " + logMessage);    break;
+				case LogCallback.LOG_DEBUG:    logs.add("DEBUG:  " + logMessage);    break;
+				case LogCallback.LOG_INFO:     logs.add("INFO:  " + logMessage);     break;
+				case LogCallback.LOG_WARNING:  logs.add("WARNING:  " + logMessage);  break;
+				case LogCallback.LOG_ERROR:    logs.add("ERROR:  " + logMessage);    break;
+				case LogCallback.LOG_FATAL:    logs.add("FATAL:  " + logMessage);    break;
 				}
-				output.println(logMessage);
-				output.flush();
+
+//				switch(logLevel)
+//				{
+//				case 0:
+//					output.println();
+//					output.flush();
+//					return;
+//
+//				case LogCallback.LOG_ALL:      output.print("ALL:  ");      break;
+//				case LogCallback.LOG_TRACE:    output.print("TRACE:  ");    break;
+//				case LogCallback.LOG_DEBUG:    output.print("DEBUG:  ");    break;
+//				case LogCallback.LOG_INFO:     output.print("INFO:  ");     break;
+//				case LogCallback.LOG_WARNING:  output.print("WARNING:  ");  break;
+//				case LogCallback.LOG_ERROR:    output.print("ERROR:  ");    break;
+//				case LogCallback.LOG_FATAL:    output.print("FATAL:  ");    break;
+//				}
+//				output.println(logMessage);
+//				output.flush();
+
+//				switch(logLevel)
+//				{
+//				case 0:
+//					output.println();
+//					output.flush();
+//					return;
+//
+//				case LogCallback.LOG_ALL:      console.print("ALL:  ");      break;
+//				case LogCallback.LOG_TRACE:    console.print("TRACE:  ");    break;
+//				case LogCallback.LOG_DEBUG:    console.print("DEBUG:  ");    break;
+//				case LogCallback.LOG_INFO:     console.print("INFO:  ");     break;
+//				case LogCallback.LOG_WARNING:  console.print("WARNING:  ");  break;
+//				case LogCallback.LOG_ERROR:    console.print("ERROR:  ");    break;
+//				case LogCallback.LOG_FATAL:    console.print("FATAL:  ");    break;
+//				}
+//				console.println(logMessage);
+//				console.flush();
 			}
 		};
 		LibLouisAPH.setLogCallback(logCallback);
-	}
-
-	private static void getVersions()
-	{
-		output.println("getImplementationVersion  = " + LibLouisAPH.getImplementationVersion());
-		output.println("getVersion                = " + LibLouisAPH.getVersion());
-		output.flush();
 	}
 
 /******************************************************************************/
 
 	private static void testGetPaths(String result, boolean doOutput)
 	{
-		output.print("getPaths                  = ");
+		output.print("getPaths            = ");
 		output.flush();
 		if(doOutput)
 		if(console != output)
 			console.print("getPaths:  ");
 
 		String paths = LibLouisAPH.getPaths();
+
+		/*   result should be null   */
 		if(paths == null)
 		if(result == null)
 		{
 			output.println();
-			output.flush();
 			if(console != output)
 				console.println("PASS");
+			outputLogs();
 			return;
 		}
 		else
 		{
-			output.println("ERROR:  getPaths null");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getPaths");
+			output.println();
+			outputLogsError("getPaths:  null != " + result);
 		}
 		else if(result == null)
 		{
-			output.println("ERROR:  getPaths !null");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getPaths");
+			output.println();
+			outputLogsError("getPaths:  " + paths + " != null");
 		}
 
 		output.println(paths);
 		output.flush();
+
 		if(!paths.equals(result))
-		{
-			output.println("ERROR:  getPaths \"" + result + "\"");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getPaths");
-		}
+			outputLogsError("getPaths:  " + paths + " != " + result);
+
 		if(console != output)
 			console.println("PASS");
+		outputLogs();
 	}
 
 	private static void testSetPaths(String paths)
 	{
-		output.println("setPaths                 := " + paths);
+		output.println("setPaths           := " + paths);
 		output.flush();
 		if(console != output)
 		{
 			console.print("setPaths:  ");
 			console.flush();
 		}
+
 		if(LibLouisAPH.setPaths(paths) == 0)
-		{
-			output.println("ERROR:  setPaths");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  setPaths");
-		}
+			outputLogsError("setPaths");
 
 		testGetPaths(paths, false);
 	}
 
 	private static void testAddPaths(String paths, String result)
 	{
-		output.println("addPaths                 := " + paths);
+		output.println("addPaths           := " + paths);
 		output.flush();
 		if(console != output)
 		{
 			console.print("addPaths:  ");
 			console.flush();
 		}
+
 		if(LibLouisAPH.addPaths(paths) == 0)
-		{
-			output.println("ERROR:  addPaths");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  addPaths");
-		}
+			outputLogsError("addPaths");
 
 		testGetPaths(result, false);
 	}
 
 /******************************************************************************/
 
-	private static void testTranslation(String chars, String result, String table, String conversion, int charsToDots[], int dotsToChars[], int cursors[])
+	private static void testTranslation(String chars, String cells, String tables, String conversion, int charsToDots[], int dotsToChars[], int cursors[])
 	{
-		int charsToDotsMap[] = new int[0x100];
-		int dotsToCharsMap[] = new int[0x100];
-		int cursorMap[] = new int[1];
+		int inputToOutput[] = new int[0x100];
+		int outputToInput[] = new int[0x100];
+		int cursor[] = new int[1];
 
 		String forward, backward;
 
-		output.print("translateForward          = ");
+		output.print  ("translateForward    = ");
 		output.flush();
 		if(console != output)
 		{
 			console.print("translateForward:  ");
 			console.flush();
 		}
-		cursorMap[0] = cursors[0];
-		forward = LibLouisAPH.translateForward(chars, chars.length() * 7, table, conversion, charsToDotsMap, dotsToCharsMap, cursorMap);
+
+		cursor[0] = cursors[0];
+		forward = LibLouisAPH.translateForward(chars, 0x100, tables, conversion, inputToOutput, outputToInput, cursor);
 		if(forward == null)
 		{
 			output.println();
-			output.println("ERROR:  translateForward null");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateForward");
+			outputLogsError("translateForward:  null");
 		}
+
 		output.println(forward);
 		output.flush();
-		if(!forward.equals(result))
-		{
-			output.println("ERROR:  translateForward translation");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateForward");
-		}
-		for(int i = 0; i < 13; i++)
-		if(charsToDotsMap[i] != charsToDots[i])
-		{
-			output.println("ERROR:  translateForward charsToDotsMap");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateForward");
-		}
-		for(int i = 0; i < 20; i++)
-		if(dotsToCharsMap[i] != dotsToChars[i])
-		{
-			output.println("ERROR:  translateForward dotsToCharsMap");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateForward");
-		}
-		if(cursorMap[0] != cursors[1])
-		{
-			output.println("ERROR:  translateForward cursor");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateForward");
-		}
+
+		if(!forward.equals(cells))
+			outputLogsError("translateForward:  != " + cells);
+
+		for(int i = 0; i < charsToDots.length; i++)
+		if(charsToDots[i] != inputToOutput[i])
+			outputLogsError("translateForward:  charsToDots[" + i + "]  " + charsToDots[i] + " != " + inputToOutput[i]);
+
+		for(int i = 0; i < dotsToChars.length; i++)
+		if(dotsToChars[i] != outputToInput[i])
+			outputLogsError("translateForward:  dotsToChars[" + i + "]  " + dotsToChars[i] + " != " + outputToInput[i]);
+
+		if(cursor[0] != cursors[1])
+			outputLogsError("translateForward:  cursor  " + cursor[0] + " != " + cursors[1]);
+
 		if(console != output)
 			console.println("PASS");
+		outputLogs();
 
 
-		output.print("translateBackward         = ");
+		output.print("translateBackward   = ");
 		output.flush();
 		if(console != output)
 		{
 			console.print("translateBackward:  ");
 			console.flush();
 		}
-		cursorMap[0] = cursors[2];
-		backward = LibLouisAPH.translateBackward(forward, forward.length() * 7, table, conversion, charsToDotsMap, dotsToCharsMap, cursorMap);
+
+		cursor[0] = cursors[2];
+		backward = LibLouisAPH.translateBackward(cells, 0x100, tables, conversion, inputToOutput, outputToInput, cursor);
 		if(backward == null)
 		{
 			output.println();
-			output.println("ERROR:  translateBackward null");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateBackward");
+			outputLogsError("translateBackward:  null");
 		}
+
 		output.println(backward);
 		output.flush();
+
 		if(!backward.equals(chars))
-		{
-			output.println("ERROR:  translateBackward translation");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateBackward");
-		}
-		for(int i = 0; i < 20; i++)
-		if(charsToDotsMap[i] != dotsToChars[i])
-		{
-			output.println("ERROR:  translateBackward charsToDotsMap");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateBackward");
-		}
-		for(int i = 0; i < 13; i++)
-		if(dotsToCharsMap[i] != charsToDots[i])
-		{
-			output.println("ERROR:  translateBackward dotsToCharsMap");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateBackward");
-		}
-		if(cursorMap[0] != cursors[3])
-		{
-			output.println("ERROR:  translateBackward cursor");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  translateBackward");
-		}
+			outputLogsError("translateBackward:  != " + chars);
+
+		for(int i = 0; i < dotsToChars.length; i++)
+		if(dotsToChars[i] != inputToOutput[i])
+			outputLogsError("translateBackward:  dotsToChars[" + i + "]  " + dotsToChars[i] + " != " + inputToOutput[i]);
+
+		for(int i = 0; i < charsToDots.length; i++)
+		if(charsToDots[i] != outputToInput[i])
+			outputLogsError("translateBackward:  charsToDots[" + i + "]  " + charsToDots[i] + " != " + outputToInput[i]);
+
+		if(cursor[0] != cursors[3])
+			outputLogsError("translateBackward:  cursor  " + cursor[0] + " != " + cursors[3]);
+
 		if(console != output)
 			console.println("PASS");
+		outputLogs();
 	}
 
-	private static void testConversion(String cells, String result, String conversion)
+	private static void testConversion(String cells, String converted, String conversion)
 	{
 		String forward, backward;
 
-		output.print("convertForward            = ");
+		output.print("convertForward      = ");
 		output.flush();
 		if(console != output)
 		{
 			console.print("convertForward:  ");
 			console.flush();
 		}
+
 		forward = LibLouisAPH.convertForward(cells, conversion);
 		if(forward == null)
 		{
 			output.println();
-			output.println("ERROR:  convertForward null");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  convertForward");
+			outputLogsError("convertForward:  null");
 		}
+
 		output.println(forward);
 		output.flush();
-		if(!forward.equals(result))
-		{
-			output.println("ERROR:  convertForward conversion");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  convertForward");
-		}
+
+		if(!forward.equals(converted))
+			outputLogsError("convertForward:  != " +  converted);
+
 		if(console != output)
 			console.println("PASS");
+		outputLogs();
 
 
-		output.print("convertBackward           = ");
+		output.print("convertBackward     = ");
 		output.flush();
 		if(console != output)
 		{
 			console.print("convertBackward:  ");
 			console.flush();
 		}
-		backward = LibLouisAPH.convertBackward(forward, conversion);
+
+		backward = LibLouisAPH.convertBackward(converted, conversion);
 		if(backward == null)
 		{
 			output.println();
-			output.println("ERROR:  null");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  convertBackward null");
+			outputLogsError("convertBackward:  null");
 		}
+
 		output.println(backward);
 		output.flush();
+
 		if(!backward.equals(cells))
-		{
-			output.println("ERROR:  convertBackward conversion");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  convertBackward");
-		}
+			outputLogsError("convertBackward:  != " +  cells);
+
 		if(console != output)
 			console.println("PASS");
+		outputLogs();
 	}
+
+/******************************************************************************/
 
 	private static void doTests()
 	{
-		getVersions();
+		output.println("getImplementationVersion  = " + LibLouisAPH.getImplementationVersion());
+		output.println("getVersion                = " + LibLouisAPH.getVersion());
+		output.flush();
+
 		testGetPaths(null, true);
 		testSetPaths("tables");
 		testAddPaths("test/tables", "tables:test/tables");
@@ -363,9 +349,9 @@ public class TestJar
 			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u2815\u282a\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
 			"link.rst",
 			null,
-			new int[]{0,2,3,5,7,8,8,8,12,13,15,17,18},
-			new int[]{0,0,1,2,2,3,3,4,5,5,5,5,8,9,9,10,10,11,12,12},
-			new int[]{7,8,8,5});
+			new int[]{0,2,3,5,7,8,8,8,12,13,15,17,18,},
+			new int[]{0,0,1,2,2,3,3,4,5,5,5,5,8,9,9,10,10,11,12,12,},
+			new int[]{7,8,8,5,});
 		testConversion(
 			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u2815\u282a\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
 			">< ><>< >><< ><>< ><",
@@ -417,18 +403,13 @@ public class TestJar
 		output.println(libraryName);
 		output.flush();
 		if(!libraryName.equals("/liblouisAPH-jni.so"))
-		{
-			output.println("ERROR:  getInternalLibraryName");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getInternalLibraryName");
-		}
+			outputLogsError("getInternalLibraryName:  != " +  libraryName);
 		if(console != output)
 		{
 			console.println("PASS");
 			console.flush();
 		}
+		outputLogs();
 
 		output.print("getInternalTablePath      = ");
 		output.flush();
@@ -441,18 +422,13 @@ public class TestJar
 		output.println(tablePath);
 		output.flush();
 		if(!tablePath.equals("/tables"))
-		{
-			output.println("ERROR:  getInternalTablePath");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getInternalTablePath");
-		}
+			outputLogsError("getInternalTablePath:  != " +  tablePath);
 		if(console != output)
 		{
 			console.println("PASS");
 			console.flush();
 		}
+		outputLogs();
 
 		doTests();
 	}
@@ -496,18 +472,13 @@ public class TestJar
 		output.println(libraryName);
 		output.flush();
 		if(!libraryName.equals(resultName))
-		{
-			output.println("ERROR:  getExternalLibraryName");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getExternalLibraryName");
-		}
+			outputLogsError("getExternalLibraryName:  != " +  libraryName);
 		if(console != output)
 		{
 			console.println("PASS");
 			console.flush();
 		}
+		outputLogs();
 
 		doTests();
 	}
@@ -547,18 +518,13 @@ public class TestJar
 		output.println(libraryName);
 		output.flush();
 		if(!libraryName.equals("louisAPH-jni"))
-		{
-			output.println("ERROR:  getSystemLibraryName");
-			output.close();
-			if(console != output)
-				console.println("FAIL");
-			throw new Error("ERROR:  getSystemLibraryName");
-		}
+			outputLogsError("getSystemLibraryName:  != " +  libraryName);
 		if(console != output)
 		{
 			console.println("PASS");
 			console.flush();
 		}
+		outputLogs();
 
 		doTests();
 	}
