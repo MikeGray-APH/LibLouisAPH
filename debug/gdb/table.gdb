@@ -16,24 +16,24 @@
 
 ################################################################################
 
-define out_unichar
+define out_character
 
-	set $unichar = (struct unichar*)$arg0
-	printf "   0x%lx\n", $unichar
+	set $character = (struct character*)$arg0
+	printf "   0x%lx\n", $character
 
-	printf "      uchar       = 0x%04x   ", $unichar->uchar
-	if $unichar->uchar > 0
-		call uchar_output_escape($unichar->uchar, (void*)0, (void*)0)
+	printf "      uchar       = 0x%04x   ", $character->uchar
+	if $character->uchar > 0
+		call uchar_output_escape($character->uchar, (void*)0, (void*)0)
 	end
 	printf "\n"
 
 	printf "      other_case  = "
-	if $unichar->other_case > 0
-		printf "0x%04x   ", $unichar->other_case->uchar
-		if $unichar->uchar > 0
-			call uchar_output_escape($unichar->other_case->uchar, (void*)0, (void*)0)
+	if $character->other_case > 0
+		printf "0x%04x   ", $character->other_case->uchar
+		if $character->uchar > 0
+			call uchar_output_escape($character->other_case->uchar, (void*)0, (void*)0)
 		end
-		printf "   0x%lx", $unichar->other_case
+		printf "   0x%lx", $character->other_case
 	else
 		printf "NULL"
 	end
@@ -45,7 +45,7 @@ end
 
 define out_dot_string
 
-	set $dot = (Unicode*)$arg0
+	set $dot = (unichar*)$arg0
 	set $dot_len = (int)$arg1
 
 	set $i0 = 0

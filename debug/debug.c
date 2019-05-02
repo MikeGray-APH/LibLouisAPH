@@ -46,7 +46,7 @@ static inline void cchars_convert_spaces(char *cchars, const int cchars_len)
 
 /******************************************************************************/
 
-void debug_output(const Unicode *uchars, const int uchars_len)
+void debug_output(const unichar *uchars, const int uchars_len)
 {
 	char cchars[0x4000];
 	int cchars_len;
@@ -59,14 +59,14 @@ void debug_output(const Unicode *uchars, const int uchars_len)
 	}
 
 	memset(cchars, 0, 0x4000);
-	cchars_len = utf16le_convert_to_utf8(cchars, 0x4000, uchars, uchars_len);
+	cchars_len = utf16_convert_to_utf8(cchars, 0x4000, uchars, uchars_len, NULL);
 	cchars_convert_spaces(cchars, cchars_len);
 
 	printf("%s", cchars);
 	fflush(stdout);
 }
 
-void debug_output_line(const Unicode *uchars, const int uchars_len)
+void debug_output_line(const unichar *uchars, const int uchars_len)
 {
 	char cchars[0x4000];
 	int cchars_len;
@@ -81,14 +81,14 @@ void debug_output_line(const Unicode *uchars, const int uchars_len)
 	}
 
 	memset(cchars, 0, 0x4000);
-	cchars_len = utf16le_convert_to_utf8(cchars, 0x4000, uchars, uchars_len);
+	cchars_len = utf16_convert_to_utf8(cchars, 0x4000, uchars, uchars_len, NULL);
 	cchars_convert_spaces(cchars, cchars_len);
 
 	printf("%s\n", cchars);
 	fflush(stdout);
 }
 
-void debug_output_pad(const Unicode *uchars, const int uchars_len)
+void debug_output_pad(const unichar *uchars, const int uchars_len)
 {
 	char cchars[0x4000];
 	int cchars_len, i;
@@ -101,7 +101,7 @@ void debug_output_pad(const Unicode *uchars, const int uchars_len)
 	}
 
 	memset(cchars, 0, 0x4000);
-	cchars_len = utf16le_convert_to_utf8(cchars, 0x4000, uchars, uchars_len);
+	cchars_len = utf16_convert_to_utf8(cchars, 0x4000, uchars, uchars_len, NULL);
 	cchars_convert_spaces(cchars, cchars_len);
 
 	printf("%s", cchars);
@@ -110,7 +110,7 @@ void debug_output_pad(const Unicode *uchars, const int uchars_len)
 	fflush(stdout);
 }
 
-void debug_output_chomp(const Unicode *uchars, const int uchars_len)
+void debug_output_chomp(const unichar *uchars, const int uchars_len)
 {
 	char cchars[0x4000], *crs;
 	int cchars_len;
@@ -123,7 +123,7 @@ void debug_output_chomp(const Unicode *uchars, const int uchars_len)
 	}
 
 	memset(cchars, 0, 0x4000);
-	cchars_len = utf16le_convert_to_utf8(cchars, 0x4000, uchars, uchars_len);
+	cchars_len = utf16_convert_to_utf8(cchars, 0x4000, uchars, uchars_len, NULL);
 	cchars_convert_spaces(cchars, cchars_len);
 
 	for(crs = cchars; *crs; crs++);
@@ -134,10 +134,10 @@ void debug_output_chomp(const Unicode *uchars, const int uchars_len)
 	fflush(stdout);
 }
 
-void debug_output_uchar(const Unicode uchar)
+void debug_output_uchar(const unichar uchar)
 {
 	char cchars[16];
-	Unicode uchars[2];
+	unichar uchars[2];
 
 	switch(uchar)
 	{
@@ -150,17 +150,17 @@ void debug_output_uchar(const Unicode uchar)
 
 		uchars[0] = uchar;
 		uchars[1] = 0;
-		utf16le_convert_to_utf8(cchars, 16, uchars, 2);
+		utf16_convert_to_utf8(cchars, 16, uchars, 2, NULL);
 		printf("%s", cchars);
 	}
 
 	fflush(stdout);
 }
 
-void debug_output_uchar_escape(const Unicode uchar)
+void debug_output_uchar_escape(const unichar uchar)
 {
 	char cchars[16];
-	Unicode uchars[2];
+	unichar uchars[2];
 
 	switch(uchar)
 	{
@@ -173,16 +173,16 @@ void debug_output_uchar_escape(const Unicode uchar)
 
 		uchars[0] = uchar;
 		uchars[1] = 0;
-		utf16le_convert_to_utf8(cchars, 16, uchars, 2);
+		utf16_convert_to_utf8(cchars, 16, uchars, 2, NULL);
 		printf("%s", cchars);
 	}
 
 	fflush(stdout);
 }
 
-void debug_output_convert_private(const struct table *table, const Unicode *uchars, const int uchars_len)
+void debug_output_convert_private(const struct table *table, const unichar *uchars, const int uchars_len)
 {
-	Unicode convert[0x4000];
+	unichar convert[0x4000];
 
 	if(uchars_len > 0x3fff)
 	{
@@ -190,10 +190,10 @@ void debug_output_convert_private(const struct table *table, const Unicode *ucha
 		return;
 	}
 
-	memset(convert, 0, 0x4000 * sizeof(Unicode));
-	memcpy(convert, uchars, uchars_len * sizeof(Unicode));
+	memset(convert, 0, 0x4000 * sizeof(unichar));
+	memcpy(convert, uchars, uchars_len * sizeof(unichar));
 	table_convert_markers(table, convert, uchars_len);
-	utf16le_output(stdout, convert, uchars_len);
+	utf16_output(stdout, convert, uchars_len);
 }
 
 /******************************************************************************/
@@ -202,23 +202,23 @@ void debug_output_convert_private(const struct table *table, const Unicode *ucha
  * seems to have flushing issues.
 */
 
-void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_crs);
-void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_chars_);
-void pattern_print_line(FILE *output, const Unicode *expr_data, const char *attrs_chars_);
+void pattern_print_expression(FILE *output, const unichar *expr_data, int expr_crs);
+void pattern_print(FILE *output, const unichar *expr_data, const char *attrs_chars_);
+void pattern_print_line(FILE *output, const unichar *expr_data, const char *attrs_chars_);
 
-void debug_pattern_print_expression(const Unicode *expr_data, int expr_crs)
+void debug_pattern_print_expression(const unichar *expr_data, int expr_crs)
 {
 	pattern_print_expression(stdout, expr_data, expr_crs);
 	fflush(stdout);
 }
 
-void debug_pattern_print(const Unicode *expr_data, const char *attrs_chars_)
+void debug_pattern_print(const unichar *expr_data, const char *attrs_chars_)
 {
 	pattern_print(stdout, expr_data, attrs_chars_);
 	fflush(stdout);
 }
 
-void debug_pattern_print_line(const Unicode *expr_data, const char *attrs_chars_)
+void debug_pattern_print_line(const unichar *expr_data, const char *attrs_chars_)
 {
 	pattern_print_line(stdout, expr_data, attrs_chars_);
 	fflush(stdout);

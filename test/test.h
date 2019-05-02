@@ -42,9 +42,9 @@ int test_expect_cursor(
 	const int table_cnt,
 	const struct conversion *conversion,
 	const enum rule_direction direction,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int cursor_chars,
 	const int cursor_dots);
@@ -64,9 +64,9 @@ int test_expect_mapping(
 	const int table_cnt,
 	const struct conversion *conversion,
 	const enum rule_direction direction,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int *chars_to_dots,
 	const int *dots_to_chars);
@@ -112,9 +112,9 @@ static inline int test_expect(
 	const int table_cnt,
 	const struct conversion *conversion,
 	const enum rule_direction direction,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len)
 {
 	return test_expect_cursor(output, tables, table_cnt, conversion, direction, chars, chars_len, dots, dots_len, -1, -1);

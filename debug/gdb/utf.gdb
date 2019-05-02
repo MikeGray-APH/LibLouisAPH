@@ -16,7 +16,7 @@
 
 ################################################################################
 
-define out_utf16le_convert_escapes
+define out_utf16_convert_escapes
 
 	printf "uchars      = "
 	call debug_output_chomp(uchars, uchars_len)
@@ -34,13 +34,13 @@ define out_utf16le_convert_escapes
 	printf "\n"
 end
 
-define n_utf16le_convert_escapes
+define n_utf16_convert_escapes
 	next
 	spacer
-	out_utf16le_convert_escapes
+	out_utf16_convert_escapes
 end
 
-break utf16le_convert_escapes
+break utf16_convert_escapes
 commands $bpnum
 
 	set crs = 0
@@ -48,10 +48,10 @@ commands $bpnum
 	set hex = 0
 
 	spacer
-	out_utf16le_convert_escapes
+	out_utf16_convert_escapes
 
 end
-set $utf16le_convert_escapes_bpnum = $bpnum
-dis $utf16le_convert_escapes_bpnum
+set $utf16_convert_escapes_bpnum = $bpnum
+dis $utf16_convert_escapes_bpnum
 
 ################################################################################

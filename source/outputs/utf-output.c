@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-void utf16le_output(FILE *output, const Unicode *uchars, const int uchars_len)
+void utf16_output(FILE *output, const unichar *uchars, const int uchars_len)
 {
 	char *cchars;
 	int cchars_len;
@@ -36,17 +36,17 @@ void utf16le_output(FILE *output, const Unicode *uchars, const int uchars_len)
 	cchars_len = uchars_len * 8;
 	cchars = MALLOC(cchars_len + 1);
 
-	utf16le_convert_to_utf8(cchars, (cchars_len + 1), uchars, uchars_len);
+	utf16_convert_to_utf8(cchars, (cchars_len + 1), uchars, uchars_len, NULL);
 	fprintf(output, "%s", cchars);
 	fflush(output);
 
 	FREE(cchars);
 }
 
-void utf16le_output_char(FILE *output, const Unicode uchar)
+void utf16_output_char(FILE *output, const unichar uchar)
 {
 	char cchars[16];
-	Unicode uchars[2];
+	unichar uchars[2];
 
 	switch(uchar)
 	{
@@ -59,17 +59,17 @@ void utf16le_output_char(FILE *output, const Unicode uchar)
 
 		uchars[0] = uchar;
 		uchars[1] = 0;
-		utf16le_convert_to_utf8(cchars, 16, uchars, 2);
+		utf16_convert_to_utf8(cchars, 16, uchars, 2, NULL);
 		fprintf(output, "%s", cchars);
 	}
 
 	fflush(output);
 }
 
-void utf16le_output_char_escape(FILE *output, const Unicode uchar)
+void utf16_output_char_escape(FILE *output, const unichar uchar)
 {
 	char cchars[16];
-	Unicode uchars[2];
+	unichar uchars[2];
 
 	switch(uchar)
 	{
@@ -82,7 +82,7 @@ void utf16le_output_char_escape(FILE *output, const Unicode uchar)
 
 		uchars[0] = uchar;
 		uchars[1] = 0;
-		utf16le_convert_to_utf8(cchars, 16, uchars, 2);
+		utf16_convert_to_utf8(cchars, 16, uchars, 2, NULL);
 		fprintf(output, "%s", cchars);
 	}
 

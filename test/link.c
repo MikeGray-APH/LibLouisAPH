@@ -54,7 +54,7 @@ static inline void utf16_copy(unsigned short *dst, const unsigned short *src, co
 }
 
 /*   copied from utf-convert.c   */
-int utf16le_convert_to_utf8(char *cchars, const int cchars_max, const unsigned short *uchars, const int uchars_len)
+int utf16_convert_to_utf8(char *cchars, const int cchars_max, const unsigned short *uchars, const int uchars_len)
 {
 	int crs, i;
 
@@ -271,7 +271,7 @@ int main(void)
 			puts("FAIL");
 		return 1;
 	}
-	utf16le_convert_to_utf8(cchars, 0x100, uchars, uchars_len);
+	utf16_convert_to_utf8(cchars, 0x100, uchars, uchars_len);
 	fprintf(output, "%s\n", cchars);
 	if(uchars_len != 20)
 	{
@@ -327,7 +327,7 @@ int main(void)
 			puts("FAIL");
 		return 1;
 	}
-	utf16le_convert_to_utf8(cchars, 0x100, uchars, uchars_len);
+	utf16_convert_to_utf8(cchars, 0x100, uchars, uchars_len);
 	fprintf(output, "%s\n", cchars);
 	if(uchars_len != 13)
 	{
@@ -382,7 +382,7 @@ int main(void)
 			puts("FAIL");
 		return 1;
 	}
-	utf16le_convert_to_utf8(cchars, 0x100, uchars, 20);
+	utf16_convert_to_utf8(cchars, 0x100, uchars, 20);
 	fprintf(output, "%s\n", cchars);
 	for(i = 0; i < 20; i++)
 	if(convert[i] != uchars[i])
@@ -407,7 +407,7 @@ int main(void)
 			puts("FAIL");
 		return 1;
 	}
-	utf16le_convert_to_utf8(cchars, 0x100, uchars, 20);
+	utf16_convert_to_utf8(cchars, 0x100, uchars, 20);
 	fprintf(output, "%s\n", cchars);
 	for(i = 0; i < 20; i++)
 	if(trans[i] != uchars[i])

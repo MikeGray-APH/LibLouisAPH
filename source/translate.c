@@ -33,7 +33,7 @@
 */
 unsigned int translate_get_attributes_at(const struct translate *translate, const int at)
 {
-	static Unicode uchar_prv = 0;
+	static unichar uchar_prv = 0;
 	static unsigned int attrs_prv = 0;
 
 	if(at < 0 || at >= translate->input_len)
@@ -42,7 +42,7 @@ unsigned int translate_get_attributes_at(const struct translate *translate, cons
 	if(uchar_prv == translate->input[at])
 		return attrs_prv;
 	uchar_prv = translate->input[at];
-	return attrs_prv = table_get_unichar_attributes(translate->tables[translate->table_crs], translate->input[at]);
+	return attrs_prv = table_get_character_attributes(translate->tables[translate->table_crs], translate->input[at]);
 }
 #endif
 
@@ -77,7 +77,7 @@ int translate_check_output_max(struct translate *translate, const int increment)
 
 	while(translate->output_len + increment >= translate->output_max)
 		translate->output_max += translate->output_inc;
-	translate->output = REALLOC(translate->output, translate->output_max * sizeof(Unicode));
+	translate->output = REALLOC(translate->output, translate->output_max * sizeof(unichar));
 	if(!translate->output)
 	{
 		LOG_ALLOCATE_FAIL
@@ -119,7 +119,7 @@ int translate_skip(struct translate *translate, const int chars_cnt, const int c
 	return 1;
 }
 
-int translate_insert_dots(struct translate *translate, const Unicode *dots, const int dots_len)
+int translate_insert_dots(struct translate *translate, const unichar *dots, const int dots_len)
 {
 	int i;
 
@@ -140,7 +140,7 @@ int translate_insert_dots(struct translate *translate, const Unicode *dots, cons
 	return 1;
 }
 
-int translate_insert_dots_for_chars(struct translate *translate, const Unicode *dots, const int dots_len, const int chars_cnt)
+int translate_insert_dots_for_chars(struct translate *translate, const unichar *dots, const int dots_len, const int chars_cnt)
 {
 	int i;
 
@@ -272,13 +272,13 @@ int translate_output_to_input(struct translate *translate)
 	translate->input_len = translate->output_len;
 	translate->input_crs = 0;
 
-	translate->output = MALLOC(translate->output_max * sizeof(Unicode));
+	translate->output = MALLOC(translate->output_max * sizeof(unichar));
 	if(!translate->output)
 	{
 		LOG_ALLOCATE_FAIL
 		return 0;
 	}
-	DB_MEMSET(translate->output, 0, translate->output_max * sizeof(Unicode));
+	DB_MEMSET(translate->output, 0, translate->output_max * sizeof(unichar));
 	translate->output_len = 0;
 
 	if(!translate->maps_use)
@@ -313,7 +313,7 @@ static void convert_output(struct translate *translate, const struct conversion 
 		translate->output[i] = conversion->unknown;
 }
 
-static Unicode convert_from_output(const struct conversion *conversion, const Unicode uchar)
+static unichar convert_from_output(const struct conversion *conversion, const unichar uchar)
 {
 	int i;
 
@@ -340,9 +340,9 @@ int translate_generic_forward(struct translate *translate);
 int translate_generic_backward(struct translate *translate);
 int translate_nemeth_forward(struct translate *translate);
 
-int translate_start(Unicode *dots,
+int translate_start(unichar *dots,
                     const int dots_len,
-                    const Unicode *chars,
+                    const unichar *chars,
                     const int chars_len,
                     const struct table *const*tables,
                     const int table_cnt,
@@ -382,7 +382,7 @@ int translate_start(Unicode *dots,
 
 	/*   initialize input/output   */
 
-	translate_auto.input = MALLOC((input_len + 1) * sizeof(Unicode));
+	translate_auto.input = MALLOC((input_len + 1) * sizeof(unichar));
 	if(!translate_auto.input)
 	{
 		LOG_ALLOCATE_FAIL
@@ -397,14 +397,14 @@ int translate_start(Unicode *dots,
 	if(translate_auto.output_inc < 0x100)
 		translate_auto.output_inc = 0x100;
 	translate_auto.output_max += translate_auto.output_inc - input_len;
-	translate_auto.output = MALLOC(translate_auto.output_max * sizeof(Unicode));
+	translate_auto.output = MALLOC(translate_auto.output_max * sizeof(unichar));
 	if(!translate_auto.output)
 	{
 		LOG_ALLOCATE_FAIL
 		FREE(translate_auto.input);
 		return -1;
 	}
-	DB_MEMSET(translate_auto.output, 0, translate_auto.output_max * sizeof(Unicode));
+	DB_MEMSET(translate_auto.output, 0, translate_auto.output_max * sizeof(unichar));
 
 	if(cursor)
 		translate_auto.cursor_pos = *cursor;
@@ -507,13 +507,13 @@ int translate_start(Unicode *dots,
 	if(translate_auto.output_len > translate_auto.dots_len)
 	{
 		log_message(LOG_WARNING, "output exceeded dots_len:  %d > %d", translate_auto.output_len, translate_auto.dots_len);
-		memcpy(dots, translate_auto.output, dots_len * sizeof(Unicode));
+		memcpy(dots, translate_auto.output, dots_len * sizeof(unichar));
 		if(dots_to_chars_map)
 			memcpy(dots_to_chars_map, translate_auto.output_to_input_map, dots_len * sizeof(int));
 	}
 	else
 	{
-		memcpy(dots, translate_auto.output, translate_auto.output_len * sizeof(Unicode));
+		memcpy(dots, translate_auto.output, translate_auto.output_len * sizeof(unichar));
 		if(dots_to_chars_map)
 			memcpy(dots_to_chars_map, translate_auto.output_to_input_map, translate_auto.output_len * sizeof(int));
 	}

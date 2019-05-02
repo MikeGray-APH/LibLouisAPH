@@ -21,13 +21,13 @@
 
 /******************************************************************************/
 
-typedef unsigned short Unicode;
+typedef unsigned short unichar;
 
 /******************************************************************************/
 
 /* Returns 1 if uchars0 and uchars1 are equal, 0 otherwise.
 */
-static inline int utf16_are_equal(const Unicode *uchars0, const int uchars0_len, const Unicode *uchars1, const int uchars1_len)
+static inline int utf16_are_equal(const unichar *uchars0, const int uchars0_len, const unichar *uchars1, const int uchars1_len)
 {
 	int i;
 
@@ -44,14 +44,14 @@ static inline int utf16_are_equal(const Unicode *uchars0, const int uchars0_len,
  *
  * Checks equality with casting instead of using conversion.
 */
-static inline int utf16_is_equal_cchars(const Unicode *uchars, const int uchars_len, const char *cchars, const int cchars_len)
+static inline int utf16_is_equal_cchars(const unichar *uchars, const int uchars_len, const char *cchars, const int cchars_len)
 {
 	int i;
 
 	if(uchars_len != cchars_len)
 		return 0;
 	for(i = 0; i < cchars_len; i++)
-	if(uchars[i] != (Unicode)cchars[i])
+	if(uchars[i] != (unichar)cchars[i])
 		return 0;
 	return 1;
 }
@@ -61,7 +61,7 @@ static inline int utf16_is_equal_cchars(const Unicode *uchars, const int uchars_
  * Does not stop processing on NULL character.  Assumes that both dst and src
  * have at least len characters.
 */
-static inline void utf16_copy(Unicode *dst, const Unicode *src, const int len)
+static inline void utf16_copy(unichar *dst, const unichar *src, const int len)
 {
 	int i;
 
@@ -71,9 +71,9 @@ static inline void utf16_copy(Unicode *dst, const Unicode *src, const int len)
 }
 
 
-/* Returns 1 is uchar is a Unicode space character, otherwise 0.
+/* Returns 1 is uchar is a unichar space character, otherwise 0.
 */
-static inline int is_space(const Unicode uchar)
+static inline int is_space(const unichar uchar)
 {
 	switch(uchar)
 	{

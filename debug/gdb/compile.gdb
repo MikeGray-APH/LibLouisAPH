@@ -131,9 +131,9 @@ define out_compile_chars
 
 	out_parse
 
-	printf "unichar:\n"
-	if unichar > 0
-		out_unichar unichar
+	printf "character:\n"
+	if character > 0
+		out_character character
 	end
 
 	printf "\n"
@@ -153,7 +153,7 @@ end
 break compile_chars
 commands $bpnum
 
-	set unichar = (void*)0
+	set character = (void*)0
 	set bit = 0
 
 	spacer

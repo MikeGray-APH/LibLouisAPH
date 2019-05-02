@@ -49,26 +49,26 @@ static void get_ambiguous_rules_chars(
 				   && (opt_ignore_filters || (!rule->filter_backward && !nxt->filter_backward)))
 				{
 					if(rule->chars_len == 1)
-						utf16le_output_char_escape(stdout, rule->chars[0]);
+						utf16_output_char_escape(stdout, rule->chars[0]);
 					else
-						utf16le_output(stdout, rule->chars, rule->chars_len);
+						utf16_output(stdout, rule->chars, rule->chars_len);
 					printf(" ");
 					if(rule->chars_len == 1)
-						utf16le_output_char_escape(stdout, rule->chars[0]);
+						utf16_output_char_escape(stdout, rule->chars[0]);
 					else
-						utf16le_output(stdout, rule->chars, rule->chars_len);
+						utf16_output(stdout, rule->chars, rule->chars_len);
 
 					printf("   ");
 
 					if(nxt->chars_len == 1)
-						utf16le_output_char_escape(stdout, nxt->chars[0]);
+						utf16_output_char_escape(stdout, nxt->chars[0]);
 					else
-						utf16le_output(stdout, nxt->chars, nxt->chars_len);
+						utf16_output(stdout, nxt->chars, nxt->chars_len);
 					printf(" ");
 					if(nxt->chars_len == 1)
-						utf16le_output_char_escape(stdout, nxt->chars[0]);
+						utf16_output_char_escape(stdout, nxt->chars[0]);
 					else
-						utf16le_output(stdout, nxt->chars, nxt->chars_len);
+						utf16_output(stdout, nxt->chars, nxt->chars_len);
 
 					puts("");
 				}
@@ -111,21 +111,21 @@ static void get_ambiguous_rules_dots(
 				   && (opt_ignore_filters || (!rule->filter_backward && !nxt->filter_backward)))
 				{
 					if(rule->dots_len == 1)
-						utf16le_output_char_escape(stdout, rule->dots[0]);
+						utf16_output_char_escape(stdout, rule->dots[0]);
 					else
-						utf16le_output(stdout, rule->dots, rule->dots_len);
+						utf16_output(stdout, rule->dots, rule->dots_len);
 
 					printf("   \t");
 
 					if(rule->chars_len == 1)
-						utf16le_output_char_escape(stdout, rule->chars[0]);
+						utf16_output_char_escape(stdout, rule->chars[0]);
 					else
-						utf16le_output(stdout, rule->chars, rule->chars_len);
+						utf16_output(stdout, rule->chars, rule->chars_len);
 					printf("\t");
 					if(nxt->chars_len == 1)
-						utf16le_output_char_escape(stdout, nxt->chars[0]);
+						utf16_output_char_escape(stdout, nxt->chars[0]);
 					else
-						utf16le_output(stdout, nxt->chars, nxt->chars_len);
+						utf16_output(stdout, nxt->chars, nxt->chars_len);
 
 					printf("   \t");
 

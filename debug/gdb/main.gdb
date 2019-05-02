@@ -55,7 +55,7 @@ end
 
 ########################################
 
-#ena $utf16le_convert_escapes_bpnum
+#ena $utf16_convert_escapes_bpnum
 
 #ena $rule_add_new_bpnum
 #ena $rule_match_forward_bpnum

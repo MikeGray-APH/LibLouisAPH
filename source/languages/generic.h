@@ -60,7 +60,7 @@ enum RULE_ATTRIBUTE
  *
  * Returns status of successful insertion.
 */
-int generic_insert_marked(struct translate *translate, const Unicode *indicator, const int indicator_len, const Unicode delimiter);
+int generic_insert_marked(struct translate *translate, const unichar *indicator, const int indicator_len, const unichar delimiter);
 
 
 /* Removes all occurences of pairs of internal markers and the characters
@@ -106,56 +106,56 @@ int generic_process(struct translate *translate, const enum table_hash_type hash
  * or the uchar itself if none corresponded.
 */
 
-static inline Unicode generic_upper_to_lower(const struct table *table, const Unicode uchar)
+static inline unichar generic_upper_to_lower(const struct table *table, const unichar uchar)
 {
-	struct unichar *unichar;
+	struct character *character;
 
-	unichar = table_find_unichar(table, uchar);
-	if(!unichar)
+	character = table_find_character(table, uchar);
+	if(!character)
 		return uchar;
-	if(!(unichar->attrs & CHAR_UPPER))
+	if(!(character->attrs & CHAR_UPPER))
 		return uchar;
 
-	return unichar->joins[0]->uchar;
+	return character->joins[0]->uchar;
 }
 
-static inline Unicode generic_lower_to_upper(const struct table *table, const Unicode uchar)
+static inline unichar generic_lower_to_upper(const struct table *table, const unichar uchar)
 {
-	struct unichar *unichar;
+	struct character *character;
 
-	unichar = table_find_unichar(table, uchar);
-	if(!unichar)
+	character = table_find_character(table, uchar);
+	if(!character)
 		return uchar;
-	if(!(unichar->attrs & CHAR_LOWER))
+	if(!(character->attrs & CHAR_LOWER))
 		return uchar;
 
-	return unichar->joins[0]->uchar;
+	return character->joins[0]->uchar;
 }
 
-static inline Unicode generic_digit_to_uchar(const struct table *table, const Unicode digit)
+static inline unichar generic_digit_to_uchar(const struct table *table, const unichar digit)
 {
-	struct unichar *unichar;
+	struct character *character;
 
-	unichar = table_find_unichar(table, digit);
-	if(!unichar)
+	character = table_find_character(table, digit);
+	if(!character)
 		return digit;
-	if(!(unichar->attrs & CHAR_NUMERIC_DIGIT))
+	if(!(character->attrs & CHAR_NUMERIC_DIGIT))
 		return digit;
 
-	return unichar->joins[1]->uchar;
+	return character->joins[1]->uchar;
 }
 
-static inline Unicode generic_uchar_to_digit(const struct table *table, const Unicode uchar)
+static inline unichar generic_uchar_to_digit(const struct table *table, const unichar uchar)
 {
-	struct unichar *unichar;
+	struct character *character;
 
-	unichar = table_find_unichar(table, uchar);
-	if(!unichar)
+	character = table_find_character(table, uchar);
+	if(!character)
 		return uchar;
-	if(!(unichar->attrs & CHAR_NUMERIC_UCHAR))
+	if(!(character->attrs & CHAR_NUMERIC_UCHAR))
 		return uchar;
 
-	return unichar->joins[1]->uchar;
+	return character->joins[1]->uchar;
 }
 
 /******************************************************************************/

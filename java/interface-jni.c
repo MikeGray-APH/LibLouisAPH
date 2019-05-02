@@ -314,9 +314,9 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1add_1paths(JNIEnv *env, jclass this_
 
 /*   copied from interface.c   */
 static int lookup_and_translate(
-	Unicode *dots,
+	unichar *dots,
 	const int dots_len,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
 	const char *table_names,
 	const char *conversion_name,
@@ -387,9 +387,9 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1translate(
 		log_message(LOG_FATAL, "louis_translate:  sizeof(int) = %u != sizeof(jint) = %u", sizeof(int), sizeof(jint));
 		return -1;
 	}
-	if(sizeof(Unicode) != sizeof(jchar))
+	if(sizeof(unichar) != sizeof(jchar))
 	{
-		log_message(LOG_FATAL, "louis_translate:  sizeof(Unicode) = %u != sizeof(jchar) = %u", sizeof(Unicode), sizeof(jchar));
+		log_message(LOG_FATAL, "louis_translate:  sizeof(unichar) = %u != sizeof(jchar) = %u", sizeof(unichar), sizeof(jchar));
 		return -1;
 	}
 

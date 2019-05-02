@@ -146,7 +146,7 @@ int main(int argn, char **args)
 	int table_cnt;
 	struct conversion *conversion;
 	char *cchars;
-	Unicode *uchars, *trans;
+	unichar *uchars, *trans;
 	int cchars_len, uchars_len, trans_len, max_len;
 
 	direction = FORWARD;
@@ -178,11 +178,11 @@ int main(int argn, char **args)
 
 	max_len = INPUT_BUFFER_MAX;
 	cchars = malloc(max_len);
-	uchars = malloc(max_len * sizeof(Unicode));
-	trans  = malloc(max_len * sizeof(Unicode));
+	uchars = malloc(max_len * sizeof(unichar));
+	trans  = malloc(max_len * sizeof(unichar));
 	memset(cchars, 0, max_len);
-	memset(uchars, 0, max_len * sizeof(Unicode));
-	memset(trans, 0, max_len * sizeof(Unicode));
+	memset(uchars, 0, max_len * sizeof(unichar));
+	memset(trans, 0, max_len * sizeof(unichar));
 
 	while(fgets(cchars, INPUT_BUFFER_MAX, stdin))
 	{
@@ -213,14 +213,14 @@ int main(int argn, char **args)
 				}
 			}
 
-			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			uchars = realloc(uchars, max_len * sizeof(unichar));
 			if(!uchars)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
 				return 1;
 			}
 
-			trans = realloc(trans,  max_len * sizeof(Unicode));
+			trans = realloc(trans,  max_len * sizeof(unichar));
 			if(!trans)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
@@ -240,7 +240,7 @@ int main(int argn, char **args)
 			continue;
 		}
 
-		uchars_len = utf8_convert_to_utf16le(uchars, max_len, cchars, cchars_len);
+		uchars_len = utf8_convert_to_utf16(uchars, max_len, cchars, cchars_len, NULL);
 		trans_len = translate_start(
 			trans, max_len, uchars, uchars_len,
 			(const struct table * const*)tables, table_cnt, conversion, direction,
@@ -267,14 +267,14 @@ int main(int argn, char **args)
 				return 1;
 			}
 
-			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			uchars = realloc(uchars, max_len * sizeof(unichar));
 			if(!uchars)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
 				return 1;
 			}
 
-			trans = realloc(trans,  max_len * sizeof(Unicode));
+			trans = realloc(trans,  max_len * sizeof(unichar));
 			if(!trans)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
@@ -282,7 +282,7 @@ int main(int argn, char **args)
 			}
 		}
 
-		utf16le_convert_to_utf8(cchars, max_len, trans, trans_len);
+		utf16_convert_to_utf8(cchars, max_len, trans, trans_len, NULL);
 		printf("%s\n", cchars);
 	}
 

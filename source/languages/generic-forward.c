@@ -44,7 +44,7 @@
 
 /******************************************************************************/
 
-static int is_marked_equal_to_at(const struct translate *translate, const Unicode *name, const int name_len, const int at)
+static int is_marked_equal_to_at(const struct translate *translate, const unichar *name, const int name_len, const int at)
 {
 	int i;
 
@@ -59,7 +59,7 @@ static int is_marked_equal_to_at(const struct translate *translate, const Unicod
 	return translate->input[at + 1 + i] == translate->input[at];
 }
 
-static inline int is_marked_equal_to(const struct translate *translate, const Unicode *name, const int name_len)
+static inline int is_marked_equal_to(const struct translate *translate, const unichar *name, const int name_len)
 {
 	return is_marked_equal_to_at(translate, name, name_len, translate->input_crs);
 }
@@ -1179,7 +1179,7 @@ static int add_indicators_emphases(struct translate *translate)
 
 /******************************************************************************/
 
-static int is_indicator_delimiter(const struct table *table, const Unicode uchar)
+static int is_indicator_delimiter(const struct table *table, const unichar uchar)
 {
 	if(uchar == table->marker_user)
 		return 1;
@@ -1734,7 +1734,7 @@ static int insert_indicators_capital_at(struct translate *translate, const struc
 
 static int insert_indicators_capital(struct translate *translate, const struct table *table, const unsigned int *indicators)
 {
-	Unicode lower;
+	unichar lower;
 
 	translate->input_crs =
 	translate->output_len = 0;
@@ -1830,7 +1830,7 @@ static int is_letter_before(const struct translate *translate, const struct tabl
 
 	for(i = translate->input_crs - 1; i >= 0; i--)
 	{
-		attrs = table_get_unichar_attributes(table, translate->input[i]);
+		attrs = table_get_character_attributes(table, translate->input[i]);
 		if(attrs & CHAR_LETTER)
 			return 1;
 		if(!(attrs & CHAR_NUMERIC_CONT))
@@ -1846,7 +1846,7 @@ static int is_digit_after(const struct translate *translate, const struct table 
 
 	for(i = translate->input_crs + 1; i < translate->input_len; i++)
 	{
-		attrs = table_get_unichar_attributes(table, translate->input[i]);
+		attrs = table_get_character_attributes(table, translate->input[i]);
 		if(attrs & CHAR_NUMERIC_DIGIT)
 			return 1;
 		if(!(attrs & CHAR_NUMERIC_CONT))
@@ -1860,7 +1860,7 @@ static int add_indicators_numeric(struct translate *translate)
 	const struct table *table;
 	unsigned int attrs;
 	int numeric_in, numeric_passage_in, nocontract_in;
-	Unicode uchar;
+	unichar uchar;
 
 	/*   only copy indicators from last table in tables   */
 	table = translate->tables[translate->table_cnt - 1];
@@ -1928,7 +1928,7 @@ static int add_indicators_numeric(struct translate *translate)
 		}
 
 		/*   numeric mode   */
-		attrs = table_get_unichar_attributes(table, translate->input[translate->input_crs]);
+		attrs = table_get_character_attributes(table, translate->input[translate->input_crs]);
 		if(!numeric_in)
 		{
 			if(attrs & CHAR_NUMERIC_DIGIT)

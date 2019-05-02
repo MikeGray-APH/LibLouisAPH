@@ -28,7 +28,7 @@
 #include "log.h"
 #include "test.h"
 
-static Unicode *token_crs, *token_nxt;
+static unichar *token_crs, *token_nxt;
 static int token_len;
 
 /******************************************************************************/
@@ -38,22 +38,22 @@ static int test_expect_both(
 	const struct table *const*tables,
 	const int table_cnt,
 	const struct conversion *conversion,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len)
 {
-	Unicode *forward, *backward;
+	unichar *forward, *backward;
 	int forward_len, backward_len, status;
 
 	backward = NULL;
 
-	forward = MALLOC((dots_len + 1) * sizeof(Unicode));
-	memset(forward, 0, (dots_len + 1) * sizeof(Unicode));
+	forward = MALLOC((dots_len + 1) * sizeof(unichar));
+	memset(forward, 0, (dots_len + 1) * sizeof(unichar));
 
-	utf16le_output(output, chars, chars_len);
+	utf16_output(output, chars, chars_len);
 	fputs("   ", output);
-	utf16le_output(output, dots, dots_len);
+	utf16_output(output, dots, dots_len);
 	forward_len = translate_start(forward, dots_len, chars, chars_len, tables, table_cnt, conversion, FORWARD, NULL, NULL, NULL);
 	if(forward_len == -1)
 	{
@@ -62,7 +62,7 @@ static int test_expect_both(
 		goto free_and_return_status;
 	}
 	fputs("   ", output);
-	utf16le_output(output, forward, forward_len);
+	utf16_output(output, forward, forward_len);
 	if(!utf16_are_equal(forward, forward_len, dots, dots_len))
 	{
 		fputs("\nERROR:  translation forward\n", output);
@@ -70,8 +70,8 @@ static int test_expect_both(
 		goto free_and_return_status;
 	}
 
-	backward = MALLOC((chars_len + 1) * sizeof(Unicode));
-	memset(backward, 0, (chars_len + 1) * sizeof(Unicode));
+	backward = MALLOC((chars_len + 1) * sizeof(unichar));
+	memset(backward, 0, (chars_len + 1) * sizeof(unichar));
 	backward_len = translate_start(backward, chars_len, forward, forward_len, tables, table_cnt, conversion, BACKWARD, NULL, NULL, NULL);
 	if(backward_len == -1)
 	{
@@ -80,7 +80,7 @@ static int test_expect_both(
 		goto free_and_return_status;
 	}
 	fputs("   ", output);
-	utf16le_output(output, backward, backward_len);
+	utf16_output(output, backward, backward_len);
 	if(!utf16_are_equal(backward, backward_len, chars, chars_len))
 	{
 		fputs("\nERROR:  translation backward\n", output);
@@ -108,14 +108,14 @@ int test_expect_cursor(
 	const int table_cnt,
 	const struct conversion *conversion,
 	const enum rule_direction direction,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int cursor_chars,
 	const int cursor_dots)
 {
-	Unicode *trans;
+	unichar *trans;
 	int trans_len, cursor, status;
 
 	if(direction == BOTH)
@@ -128,12 +128,12 @@ int test_expect_cursor(
 
 	status = 0;
 
-	trans = MALLOC((dots_len + 1) * sizeof(Unicode));
-	memset(trans, 0, (dots_len + 1) * sizeof(Unicode));
+	trans = MALLOC((dots_len + 1) * sizeof(unichar));
+	memset(trans, 0, (dots_len + 1) * sizeof(unichar));
 
-	utf16le_output(output, chars, chars_len);
+	utf16_output(output, chars, chars_len);
 	fputs("   ", output);
-	utf16le_output(output, dots, dots_len);
+	utf16_output(output, dots, dots_len);
 	trans_len = translate_start(trans, dots_len, chars, chars_len, tables, table_cnt, conversion, direction, NULL, NULL, &cursor);
 	if(trans_len == -1)
 	{
@@ -142,7 +142,7 @@ int test_expect_cursor(
 	}
 
 	fputs("   ", output);
-	utf16le_output(output, trans, trans_len);
+	utf16_output(output, trans, trans_len);
 	if(!utf16_are_equal(trans, trans_len, dots, dots_len))
 	{
 		fputs("\nERROR:  translation\n", output);
@@ -175,9 +175,9 @@ static int test_expect_mapping_both(
 	const struct table *const*tables,
 	const int table_cnt,
 	const struct conversion *conversion,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int *chars_to_dots,
 	const int *dots_to_chars)
@@ -207,14 +207,14 @@ int test_expect_mapping(
 	const int table_cnt,
 	const struct conversion *conversion,
 	const enum rule_direction direction,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int *chars_to_dots_map,
 	const int *dots_to_chars_map)
 {
-	Unicode *trans, *uchars;
+	unichar *trans, *uchars;
 	int *trans_chars_to_dots_map, *trans_dots_to_chars_map;
 	int trans_len, status, i;
 
@@ -225,10 +225,10 @@ int test_expect_mapping(
 
 	status = 0;
 
-	trans = MALLOC((dots_len + 1) * sizeof(Unicode));
+	trans = MALLOC((dots_len + 1) * sizeof(unichar));
 	trans_chars_to_dots_map = MALLOC((chars_len + 1) * sizeof(int));
 	trans_dots_to_chars_map = MALLOC((dots_len + 1) * sizeof(int));
-	memset(trans, 0, (dots_len + 1) * sizeof(Unicode));
+	memset(trans, 0, (dots_len + 1) * sizeof(unichar));
 	memset(trans_chars_to_dots_map, 0, (chars_len + 1) * sizeof(int));
 	memset(trans_dots_to_chars_map, 0, (dots_len + 1) * sizeof(int));
 
@@ -238,13 +238,13 @@ int test_expect_mapping(
 		fputs("ERROR:  translate\n", output);
 		goto free_and_return_status;
 	}
-	uchars = MALLOC((chars_len + 1) * sizeof(Unicode));
+	uchars = MALLOC((chars_len + 1) * sizeof(unichar));
 	utf16_copy(uchars, chars, chars_len + 1);
 	for(i = 0; i < chars_len; i++)
 		fprintf(output, "%x", (i % 16));
 	fputs("\n", output);
 	table_convert_markers(tables[table_cnt - 1], uchars, chars_len);
-	utf16le_output(output, uchars, chars_len);
+	utf16_output(output, uchars, chars_len);
 	fputs("\n", output);
 
 	for(i = 0; i < chars_len; i++)
@@ -265,10 +265,10 @@ int test_expect_mapping(
 	for(i = 0; i < trans_len; i++)
 		fprintf(output, "%x", (i % 16));
 	fputs("\n", output);
-	utf16le_output(output, dots, dots_len);
+	utf16_output(output, dots, dots_len);
 	fputs("\n", output);
 	table_convert_markers(tables[table_cnt - 1], trans, trans_len);
-	utf16le_output(output, trans, trans_len);
+	utf16_output(output, trans, trans_len);
 	fputs("\n", output);
 
 	for(i = 0; i < trans_len; i++)
@@ -369,7 +369,7 @@ static int token_parse(void)
 	return 1;
 }
 
-static int token_init(Unicode *uchars)
+static int token_init(unichar *uchars)
 {
 	if(!uchars)
 		return 0;
@@ -386,10 +386,10 @@ static int token_init(Unicode *uchars)
 static inline int token_convert_escapes(const struct table *table)
 {
 	token_len = table_convert_escape_markers(table, token_crs, token_len);
-	return token_len = utf16le_convert_escapes(token_crs, token_len);
+	return token_len = utf16_convert_escapes(token_crs, token_len);
 }
 
-static int utf16_are_equal_ambiguous(const Unicode *uchars0, const int uchars0_len, const Unicode *uchars1, const int uchars1_len)
+static int utf16_are_equal_ambiguous(const unichar *uchars0, const int uchars0_len, const unichar *uchars1, const int uchars1_len)
 {
 	int i;
 
@@ -435,9 +435,9 @@ static int utf16_are_equal_ambiguous(const Unicode *uchars0, const int uchars0_l
 
 /******************************************************************************/
 
-static int remove_soft(const Unicode *uchars, const int uchars_len, const int at)
+static int remove_soft(const unichar *uchars, const int uchars_len, const int at)
 {
-	Unicode soft;
+	unichar soft;
 	int i;
 
 	soft = uchars[at];
@@ -448,7 +448,7 @@ static int remove_soft(const Unicode *uchars, const int uchars_len, const int at
 	return i + 1;
 }
 
-static int strip_input(Unicode *original, const Unicode *uchars, const int uchars_len, const struct table *table)
+static int strip_input(unichar *original, const unichar *uchars, const int uchars_len, const struct table *table)
 {
 	int off, crs;
 
@@ -480,21 +480,21 @@ static int strip_input(Unicode *original, const Unicode *uchars, const int uchar
 
 /******************************************************************************/
 
-static Unicode* test_input_uchars(
+static unichar* test_input_uchars(
 	FILE *output,
 	int *trans_len_ref,
 	const struct table *table,
 	const struct conversion *conversion,
-	const Unicode *uchars,
+	const unichar *uchars,
 	const int uchars_len,
 	const enum rule_direction direction)
 {
-	Unicode *trans;
+	unichar *trans;
 	int trans_len;
 
 	trans_len = uchars_len * 31;
-	trans  = MALLOC((trans_len + 1) * sizeof(Unicode));
-	memset(trans, 0, (trans_len + 1) * sizeof(Unicode));
+	trans  = MALLOC((trans_len + 1) * sizeof(unichar));
+	memset(trans, 0, (trans_len + 1) * sizeof(unichar));
 
 	*trans_len_ref = translate_start(trans, trans_len, uchars, uchars_len, &table, 1, conversion, direction, NULL, NULL, NULL);
 	if(*trans_len_ref == -1)
@@ -525,7 +525,7 @@ int test_back_from_file(
 	const int output_pass_fail)
 {
 	FILE *file;
-	Unicode token_line[INPUT_LINE_MAX], *uchars, *original, *trans, *reverse;
+	unichar token_line[INPUT_LINE_MAX], *uchars, *original, *trans, *reverse;
 	char cchars[INPUT_LINE_MAX];
 	int cchars_len, uchars_len, original_len, trans_len, reverse_len, line;
 	int pass, fail;
@@ -577,14 +577,14 @@ int test_back_from_file(
 		if(cchars_len <= 0)
 			continue;
 
-		uchars_len = utf8_convert_to_utf16le(token_line, INPUT_LINE_MAX, cchars, INPUT_LINE_MAX);
+		uchars_len = utf8_convert_to_utf16(token_line, INPUT_LINE_MAX, cchars, INPUT_LINE_MAX, NULL);
 		uchars_len = table_convert_escape_markers(table, token_line, uchars_len);
-		uchars_len = utf16le_convert_escapes(token_line, uchars_len);
+		uchars_len = utf16_convert_escapes(token_line, uchars_len);
 		uchars = token_line;
 
 		original_len = uchars_len;
-		original = MALLOC((original_len + 1) * sizeof(Unicode));
-		memset(original, 0, (original_len + 1) * sizeof(Unicode));
+		original = MALLOC((original_len + 1) * sizeof(unichar));
+		memset(original, 0, (original_len + 1) * sizeof(unichar));
 		original_len = strip_input(original, uchars, uchars_len, table);
 
 		trans = test_input_uchars(output, &trans_len, table, conversion, uchars, uchars_len, FORWARD);
@@ -614,16 +614,16 @@ int test_back_from_file(
 			}
 
 			table_convert_markers(table, uchars, uchars_len);
-			utf16le_output(output, uchars, uchars_len);
+			utf16_output(output, uchars, uchars_len);
 			if(!utf16_are_equal(original, original_len, uchars, uchars_len))
 			{
 				fputs("   ", output);
-				utf16le_output(output, original, original_len);
+				utf16_output(output, original, original_len);
 			}
 			fputs("   ", output);
-			utf16le_output(output, trans, trans_len);
+			utf16_output(output, trans, trans_len);
 			fputs("   ", output);
-			utf16le_output(output, reverse, reverse_len);
+			utf16_output(output, reverse, reverse_len);
 			fputs("\n", output);
 			fflush(output);
 		}
@@ -634,16 +634,16 @@ int test_back_from_file(
 				fail++;
 
 				table_convert_markers(table, uchars, uchars_len);
-				utf16le_output(output, uchars, uchars_len);
+				utf16_output(output, uchars, uchars_len);
 				if(!utf16_are_equal(original, original_len, uchars, uchars_len))
 				{
 					fputs("   ", output);
-					utf16le_output(output, original, original_len);
+					utf16_output(output, original, original_len);
 				}
 				fputs("   ", output);
-				utf16le_output(output, trans, trans_len);
+				utf16_output(output, trans, trans_len);
 				fputs("   ", output);
-				utf16le_output(output, reverse, reverse_len);
+				utf16_output(output, reverse, reverse_len);
 				fputs("\n", output);
 				fflush(output);
 			}
@@ -683,7 +683,7 @@ int test_expect_from_file(
 	const int do_back)
 {
 	FILE *file;
-	Unicode token_line[INPUT_LINE_MAX], *uchars, *original, *expect, *trans, *reverse;
+	unichar token_line[INPUT_LINE_MAX], *uchars, *original, *expect, *trans, *reverse;
 	char cchars[INPUT_LINE_MAX];
 	int cchars_len, uchars_len, original_len, expect_len, trans_len, reverse_len, line;
 	int pass, fail;
@@ -742,8 +742,8 @@ int test_expect_from_file(
 		if(cchars_len <= 0)
 			continue;
 
-		memset(token_line, 0, INPUT_LINE_MAX * sizeof(Unicode));
-		utf8_convert_to_utf16le(token_line, INPUT_LINE_MAX - 1, cchars, INPUT_LINE_MAX);
+		memset(token_line, 0, INPUT_LINE_MAX * sizeof(unichar));
+		utf8_convert_to_utf16(token_line, INPUT_LINE_MAX - 1, cchars, INPUT_LINE_MAX, NULL);
 
 		if(!token_init(token_line))
 			continue;
@@ -753,8 +753,8 @@ int test_expect_from_file(
 		uchars_len = token_len;
 
 		original_len = uchars_len;
-		original = MALLOC((original_len + 1) * sizeof(Unicode));
-		memset(original, 0, (original_len + 1) * sizeof(Unicode));
+		original = MALLOC((original_len + 1) * sizeof(unichar));
+		memset(original, 0, (original_len + 1) * sizeof(unichar));
 		original_len = strip_input(original, uchars, uchars_len, table);
 
 		if(!token_parse())
@@ -803,20 +803,20 @@ int test_expect_from_file(
 				fputs("+  ", output);
 			}
 			table_convert_markers(table, uchars, uchars_len);
-			utf16le_output(output, uchars, uchars_len);
+			utf16_output(output, uchars, uchars_len);
 			if(!utf16_are_equal(original, original_len, uchars, uchars_len))
 			{
 				fputs("   ", output);
-				utf16le_output(output, original, original_len);
+				utf16_output(output, original, original_len);
 			}
 			fputs("   ", output);
-			utf16le_output(output, expect, expect_len);
+			utf16_output(output, expect, expect_len);
 			fputs("   ", output);
-			utf16le_output(output, trans, trans_len);
+			utf16_output(output, trans, trans_len);
 			if(reverse)
 			{
 				fputs("   ", output);
-				utf16le_output(output, reverse, reverse_len);
+				utf16_output(output, reverse, reverse_len);
 			}
 			fputs("\n", output);
 			fflush(output);
@@ -829,20 +829,20 @@ int test_expect_from_file(
 				fail++;
 
 				table_convert_markers(table, uchars, uchars_len);
-				utf16le_output(output, uchars, uchars_len);
+				utf16_output(output, uchars, uchars_len);
 				if(!utf16_are_equal_ambiguous(original, original_len, uchars, uchars_len))
 				{
 					fputs("   ", output);
-					utf16le_output(output, original, original_len);
+					utf16_output(output, original, original_len);
 				}
 				fputs("   ", output);
-				utf16le_output(output, expect, expect_len);
+				utf16_output(output, expect, expect_len);
 				fputs("   ", output);
-				utf16le_output(output, trans, trans_len);
+				utf16_output(output, trans, trans_len);
 				if(reverse)
 				{
 					fputs("   ", output);
-					utf16le_output(output, reverse, reverse_len);
+					utf16_output(output, reverse, reverse_len);
 				}
 				fputs("\n", output);
 				fflush(output);

@@ -35,8 +35,8 @@ static const char *table_file_names[INCLUDE_DEPTH_MAX];
 static int include_depth, table_file_lines[INCLUDE_DEPTH_MAX];
 
 static unsigned int rule_attrs;
-static Unicode token_line[INPUT_LINE_MAX];
-static Unicode *token_crs, *token_nxt;
+static unichar token_line[INPUT_LINE_MAX];
+static unichar *token_crs, *token_nxt;
 static int token_len, token_int;
 
 static int token_compile(void);
@@ -66,7 +66,7 @@ static int token_parse(void)
 	return 1;
 }
 
-static int token_init(Unicode *uchars)
+static int token_init(unichar *uchars)
 {
 	if(!uchars)
 		return 0;
@@ -88,7 +88,7 @@ static int token_is_equal(const char *cchars, const int cchars_len)
 static inline int token_convert_escapes(void)
 {
 	token_len = table_convert_escape_markers(table, token_crs, token_len);
-	return token_len = utf16le_convert_escapes(token_crs, token_len);
+	return token_len = utf16_convert_escapes(token_crs, token_len);
 }
 
 /* Returns length of converted characters or -1 if invalid character is found.
@@ -108,9 +108,9 @@ static inline int token_convert_escapes(void)
  *    1-20-3          ->  1-0-3
  *    1-1234567802-3  ->  1-2-3
 */
-static int convert_to_dots(Unicode *uchars, const int uchars_len)
+static int convert_to_dots(unichar *uchars, const int uchars_len)
 {
-	Unicode cell;
+	unichar cell;
 	int crs, off;
 
 	cell = 0;
@@ -129,7 +129,7 @@ static int convert_to_dots(Unicode *uchars, const int uchars_len)
 		else if(uchars[off] == u'0')
 			cell = 0x2800;
 		else if(uchars[off] >= u'1' && uchars[off] <= u'8')
-			cell |= (Unicode)BIT(uchars[off] - u'1');
+			cell |= (unichar)BIT(uchars[off] - u'1');
 		else if(uchars[off] == u'-')
 		{
 			if(cell)
@@ -156,7 +156,7 @@ static inline int token_convert_to_dots(void)
 	return token_len = convert_to_dots(token_crs, token_len);
 }
 
-static int convert_with_dots(Unicode *uchars, const int uchars_len)
+static int convert_with_dots(unichar *uchars, const int uchars_len)
 {
 	int esc, crs, off, cells_len, cells_end, i;
 
@@ -272,7 +272,7 @@ static int compile_attrs_chars(void)
 
 static int compile_control(void)
 {
-	Unicode *type;
+	unichar *type;
 	int type_len;
 
 	if(!token_parse())
@@ -337,7 +337,7 @@ static int compile_config(void)
 struct variable
 {
 	struct variable *nxt;
-	Unicode *uchars;
+	unichar *uchars;
 	int uchars_len;
 	unsigned int value;
 };
@@ -357,7 +357,7 @@ static void variable_free(struct variable *var)
 	FREE(var);
 }
 
-static struct variable* variable_find(const Unicode *uchars, const int uchars_len)
+static struct variable* variable_find(const unichar *uchars, const int uchars_len)
 {
 	struct variable *var;
 
@@ -371,14 +371,14 @@ static struct variable* variable_find(const Unicode *uchars, const int uchars_le
 	return var;
 }
 
-static struct variable* variable_add(const Unicode *uchars, const int uchars_len, const int value)
+static struct variable* variable_add(const unichar *uchars, const int uchars_len, const int value)
 {
 	struct variable *var;
 
 	var = MALLOC(sizeof(struct variable));
 	LOG_ALLOCATE_FAIL_RETURN_NULL(var)
 
-	var->uchars = MALLOC((uchars_len + 1) * sizeof(Unicode));
+	var->uchars = MALLOC((uchars_len + 1) * sizeof(unichar));
 	if(!var->uchars)
 	{
 		LOG_ALLOCATE_FAIL
@@ -405,7 +405,7 @@ static int token_convert_to_int(void)
 	case u'0':  case u'1':  case u'2':  case u'3':  case u'4':
 	case u'5':  case u'6':  case u'7':  case u'8':  case u'9':
 
-		token_int = utf16le_convert_to_int(token_crs, token_len);
+		token_int = utf16_convert_to_int(token_crs, token_len);
 		return 1;
 
 	case u'$':
@@ -438,7 +438,7 @@ static int token_convert_to_int(void)
 
 static int compile_set(void)
 {
-	Unicode *var_name;
+	unichar *var_name;
 	int var_len, value;
 
 	if(!token_parse())
@@ -449,7 +449,7 @@ static int compile_set(void)
 	if(token_crs[0] == u'=')
 	{
 		if(token_parse())
-			var_enum = utf16le_convert_to_int(token_crs, token_len);
+			var_enum = utf16_convert_to_int(token_crs, token_len);
 		else
 			var_enum = 0;
 
@@ -594,7 +594,7 @@ static int mode_compile(struct mode *mode)
 static int compile_mode(void)
 {
 	struct mode mode_auto, *mode;
-	Unicode *name;
+	unichar *name;
 	int name_len;
 
 	if(!token_parse())
@@ -632,7 +632,7 @@ static int compile_mode(void)
 		return 1;
 	}
 
-	mode_auto.name = MALLOC((name_len + 1) * sizeof(Unicode));
+	mode_auto.name = MALLOC((name_len + 1) * sizeof(unichar));
 	if(!mode_auto.name)
 	{
 		LOG_ALLOCATE_FAIL
@@ -678,8 +678,8 @@ static unsigned int chars_scan_bits(void)
 
 static int compile_chars(void)
 {
-	struct unichar *unichar;
-	Unicode *uchars;
+	struct character *character;
+	unichar *uchars;
 	unsigned int uchars_len, bit, i;
 
 	if(!token_parse())
@@ -703,10 +703,10 @@ static int compile_chars(void)
 
 	for(i = 0; i < uchars_len; i++)
 	{
-		unichar = table_find_or_add_unichar(table, uchars[i]);
-		if(!unichar)
+		character = table_find_or_add_character(table, uchars[i]);
+		if(!character)
 			return 0;
-		unichar->attrs |= bit;
+		character->attrs |= bit;
 	}
 
 	return 1;
@@ -716,7 +716,7 @@ static int compile_chars(void)
 
 static int compile_join(void)
 {
-	struct unichar *unichar0, *unichar1;
+	struct character *character0, *character1;
 	int index;
 	unsigned int attrs0, attrs1;
 
@@ -745,8 +745,8 @@ static int compile_join(void)
 		log_message(LOG_ERROR, "%s:%d  invalid character", table_file_names[include_depth], table_file_lines[include_depth]);
 		return 0;
 	}
-	unichar0 = table_find_or_add_unichar(table, token_crs[0]);
-	if(!unichar0)
+	character0 = table_find_or_add_character(table, token_crs[0]);
+	if(!character0)
 		return 0;
 
 	if(!token_parse())
@@ -761,8 +761,8 @@ static int compile_join(void)
 		return 0;
 	}
 
-	unichar1 = table_find_or_add_unichar(table, token_crs[0]);
-	if(!unichar1)
+	character1 = table_find_or_add_character(table, token_crs[0]);
+	if(!character1)
 		return 0;
 
 	attrs0 = 0;
@@ -777,10 +777,10 @@ static int compile_join(void)
 			attrs1 = token_int;
 	}
 
-	unichar0->attrs |= attrs0;
-	unichar0->joins[index] = unichar1;
-	unichar1->attrs |= attrs1;
-	unichar1->joins[index] = unichar0;
+	character0->attrs |= attrs0;
+	character0->joins[index] = character1;
+	character1->attrs |= attrs1;
+	character1->joins[index] = character0;
 
 	return 1;
 }
@@ -841,7 +841,7 @@ static struct filter *rule_filter_forward, *rule_filter_backward;
 static int compile_pattern(void)
 {
 	struct subpattern *subpattern;
-	Unicode pattern[PATTERN_MAX], *token_tag, *token_src, *tag, *expr_data, *src_data;
+	unichar pattern[PATTERN_MAX], *token_tag, *token_src, *tag, *expr_data, *src_data;
 	int tag_len, expr_len, src_len;
 
 	tag =
@@ -875,7 +875,7 @@ static int compile_pattern(void)
 	if(token_crs[0] == u'<' && token_len == 1)
 		pattern_reverse(pattern);
 
-	tag = MALLOC((tag_len + 1) * sizeof(Unicode));
+	tag = MALLOC((tag_len + 1) * sizeof(unichar));
 	if(!tag)
 	{
 		LOG_ALLOCATE_FAIL
@@ -883,15 +883,15 @@ static int compile_pattern(void)
 	}
 	utf16_copy(tag, token_tag, tag_len + 1);
 
-	expr_data = MALLOC((expr_len + 1) * sizeof(Unicode));
+	expr_data = MALLOC((expr_len + 1) * sizeof(unichar));
 	if(!expr_data)
 	{
 		LOG_ALLOCATE_FAIL
 		goto return_fail_free;
 	}
-	memcpy(expr_data, pattern, (expr_len + 1) * sizeof(Unicode));
+	memcpy(expr_data, pattern, (expr_len + 1) * sizeof(unichar));
 
-	src_data = MALLOC((src_len + 1) * sizeof(Unicode));
+	src_data = MALLOC((src_len + 1) * sizeof(unichar));
 	if(!src_data)
 	{
 		LOG_ALLOCATE_FAIL
@@ -936,7 +936,7 @@ static int compile_pattern(void)
 static int compile_filter(void)
 {
 	struct filter *filter;
-	Unicode pattern[PATTERN_MAX], *name, *before, *after;
+	unichar pattern[PATTERN_MAX], *name, *before, *after;
 	int name_len, before_len, after_len;
 
 	DB_MEMSET(pattern, 0, PATTERN_MAX)
@@ -971,13 +971,13 @@ static int compile_filter(void)
 		if(!before_len)
 			goto return_fail;
 		pattern_reverse(pattern);
-		before = MALLOC((before_len + 1) * sizeof(Unicode));
+		before = MALLOC((before_len + 1) * sizeof(unichar));
 		if(!before)
 		{
 			LOG_ALLOCATE_FAIL
 			goto return_fail_free;
 		}
-		memcpy(before, pattern, (before_len + 1) * sizeof(Unicode));
+		memcpy(before, pattern, (before_len + 1) * sizeof(unichar));
 	}
 
 	if(!token_parse())
@@ -995,13 +995,13 @@ static int compile_filter(void)
 		after_len = pattern_compile(pattern, PATTERN_MAX, token_crs, token_len, table->attrs_chars, table->subpatterns);
 		if(!after_len)
 			goto return_fail;
-		after = MALLOC((after_len + 1) * sizeof(Unicode));
+		after = MALLOC((after_len + 1) * sizeof(unichar));
 		if(!after)
 		{
 			LOG_ALLOCATE_FAIL
 			goto return_fail_free;
 		}
-		memcpy(after, pattern, (after_len + 1) * sizeof(Unicode));
+		memcpy(after, pattern, (after_len + 1) * sizeof(unichar));
 	}
 
 	filter = filter_allocate();
@@ -1010,7 +1010,7 @@ static int compile_filter(void)
 		LOG_ALLOCATE_FAIL
 		goto return_fail_free;
 	}
-	filter->name = MALLOC((name_len + 1) * sizeof(Unicode));
+	filter->name = MALLOC((name_len + 1) * sizeof(unichar));
 	if(!filter->name)
 	{
 		LOG_ALLOCATE_FAIL
@@ -1042,7 +1042,7 @@ static int compile_filter(void)
 	return 0;
 }
 
-static struct filter* filter_find(const Unicode *uchars, const int uchars_len)
+static struct filter* filter_find(const unichar *uchars, const int uchars_len)
 {
 	struct filter *filter;
 
@@ -1159,7 +1159,7 @@ static int compile_rule(void)
 	struct rule *rule;
 	enum table_hash_type hash_type;
 	enum rule_direction direction;
-	Unicode *chars, *dots;
+	unichar *chars, *dots;
 	int chars_len, dots_len;
 	int chars_weight, dots_weight;
 
@@ -1260,11 +1260,11 @@ static int compile_match(void)
 	struct rule *rule;
 	enum table_hash_type hash_type;
 	enum rule_direction direction;
-	Unicode *chars, *dots;
+	unichar *chars, *dots;
 	int chars_len, dots_len;
 	int chars_weight, dots_weight;
 	struct filter *filter_forward, *filter_backward;
-	Unicode pattern[PATTERN_MAX], *before, *after;
+	unichar pattern[PATTERN_MAX], *before, *after;
 	int before_len, after_len;
 
 	filter_forward =
@@ -1334,13 +1334,13 @@ static int compile_match(void)
 		if(rule_filter_forward->before)
 		{
 			before_len = rule_filter_forward->before_len;
-			before = MALLOC((before_len + 1) * sizeof(Unicode));
+			before = MALLOC((before_len + 1) * sizeof(unichar));
 			if(!before)
 			{
 				LOG_ALLOCATE_FAIL
 				goto return_fail_free;
 			}
-			memcpy(before, rule_filter_forward->before, (before_len + 1) * sizeof(Unicode));
+			memcpy(before, rule_filter_forward->before, (before_len + 1) * sizeof(unichar));
 		}
 		else
 		{
@@ -1356,13 +1356,13 @@ static int compile_match(void)
 		if(!before_len)
 			goto return_fail;
 		pattern_reverse(pattern);
-		before = MALLOC((before_len + 1) * sizeof(Unicode));
+		before = MALLOC((before_len + 1) * sizeof(unichar));
 		if(!before)
 		{
 			LOG_ALLOCATE_FAIL
 			goto return_fail_free;
 		}
-		memcpy(before, pattern, (before_len + 1) * sizeof(Unicode));
+		memcpy(before, pattern, (before_len + 1) * sizeof(unichar));
 	}
 
 	if(!token_parse())
@@ -1388,13 +1388,13 @@ static int compile_match(void)
 		if(rule_filter_forward->after)
 		{
 			after_len = rule_filter_forward->after_len;
-			after = MALLOC((after_len + 1) * sizeof(Unicode));
+			after = MALLOC((after_len + 1) * sizeof(unichar));
 			if(!after)
 			{
 				LOG_ALLOCATE_FAIL
 				goto return_fail_free;
 			}
-			memcpy(after, rule_filter_forward->after, (after_len + 1) * sizeof(Unicode));
+			memcpy(after, rule_filter_forward->after, (after_len + 1) * sizeof(unichar));
 		}
 		else
 		{
@@ -1409,13 +1409,13 @@ static int compile_match(void)
 		after_len = pattern_compile(pattern, PATTERN_MAX, token_crs, token_len, table->attrs_chars, table->subpatterns);
 		if(!after_len)
 			goto return_fail;
-		after = MALLOC((after_len + 1) * sizeof(Unicode));
+		after = MALLOC((after_len + 1) * sizeof(unichar));
 		if(!after)
 		{
 			LOG_ALLOCATE_FAIL
 			goto return_fail_free;
 		}
-		memcpy(after, pattern, (after_len + 1) * sizeof(Unicode));
+		memcpy(after, pattern, (after_len + 1) * sizeof(unichar));
 	}
 
 	if(before || after)
@@ -1450,13 +1450,13 @@ static int compile_match(void)
 		if(rule_filter_backward->before)
 		{
 			before_len = rule_filter_backward->before_len;
-			before = MALLOC((before_len + 1) * sizeof(Unicode));
+			before = MALLOC((before_len + 1) * sizeof(unichar));
 			if(!before)
 			{
 				LOG_ALLOCATE_FAIL
 				goto return_fail_free;
 			}
-			memcpy(before, rule_filter_backward->before, (before_len + 1) * sizeof(Unicode));
+			memcpy(before, rule_filter_backward->before, (before_len + 1) * sizeof(unichar));
 		}
 		else
 		{
@@ -1472,13 +1472,13 @@ static int compile_match(void)
 		if(!before_len)
 			goto return_fail;
 		pattern_reverse(pattern);
-		before = MALLOC((before_len + 1) * sizeof(Unicode));
+		before = MALLOC((before_len + 1) * sizeof(unichar));
 		if(!before)
 		{
 			LOG_ALLOCATE_FAIL
 			goto return_fail_free;
 		}
-		memcpy(before, pattern, (before_len + 1) * sizeof(Unicode));
+		memcpy(before, pattern, (before_len + 1) * sizeof(unichar));
 	}
 
 	if(!token_parse())
@@ -1517,13 +1517,13 @@ static int compile_match(void)
 		if(rule_filter_backward->after)
 		{
 			after_len = rule_filter_backward->after_len;
-			after = MALLOC((after_len + 1) * sizeof(Unicode));
+			after = MALLOC((after_len + 1) * sizeof(unichar));
 			if(!after)
 			{
 				LOG_ALLOCATE_FAIL
 				goto return_fail_free;
 			}
-			memcpy(after, rule_filter_backward->after, (after_len + 1) * sizeof(Unicode));
+			memcpy(after, rule_filter_backward->after, (after_len + 1) * sizeof(unichar));
 		}
 		else
 		{
@@ -1538,13 +1538,13 @@ static int compile_match(void)
 		after_len = pattern_compile(pattern, PATTERN_MAX, token_crs, token_len, table->attrs_chars, table->subpatterns);
 		if(!after_len)
 			goto return_fail;
-		after = MALLOC((after_len + 1) * sizeof(Unicode));
+		after = MALLOC((after_len + 1) * sizeof(unichar));
 		if(!after)
 		{
 			LOG_ALLOCATE_FAIL
 			goto return_fail_free;
 		}
-		memcpy(after, pattern, (after_len + 1) * sizeof(Unicode));
+		memcpy(after, pattern, (after_len + 1) * sizeof(unichar));
 	}
 
 	if(before || after)
@@ -1597,8 +1597,8 @@ struct macro
 {
 	struct macro *nxt;
 	char *ctag;
-	Unicode *tag;
-	Unicode **lines;
+	unichar *tag;
+	unichar **lines;
 	int tag_len, lines_cnt, processing;
 	char *file_name;
 	int file_line;
@@ -1664,7 +1664,7 @@ static void macro_free(struct macro *macro)
 	FREE(macro);
 }
 
-static struct macro* macro_find(const Unicode *uchars, const int uchars_len)
+static struct macro* macro_find(const unichar *uchars, const int uchars_len)
 {
 	struct macro *macro;
 
@@ -1686,13 +1686,13 @@ static inline struct macro* token_find_macro(void)
 static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *file_name)
 {
 	struct macro *macro;
-	Unicode tag[INPUT_LINE_MAX], *lines[MACRO_LINES_MAX];
+	unichar tag[INPUT_LINE_MAX], *lines[MACRO_LINES_MAX];
 	char ctag[INPUT_LINE_MAX];
 	int ctag_len, file_name_len, tag_len, line_len, lines_cnt, table_line_begin, i;
 
-	DB_MEMSET(tag, 0, INPUT_LINE_MAX * sizeof(Unicode));
+	DB_MEMSET(tag, 0, INPUT_LINE_MAX * sizeof(unichar));
 	DB_MEMSET(ctag, 0, INPUT_LINE_MAX);
-	DB_MEMSET(lines, 0, MACRO_LINES_MAX * sizeof(Unicode*));
+	DB_MEMSET(lines, 0, MACRO_LINES_MAX * sizeof(unichar*));
 
 	if(!token_parse())
 	{
@@ -1705,7 +1705,7 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 	tag_len = token_len;
 	utf16_copy(tag, token_crs, token_len + 1);
 
-	ctag_len = utf16le_convert_to_utf8(ctag, INPUT_LINE_MAX, token_crs, token_len);
+	ctag_len = utf16_convert_to_utf8(ctag, INPUT_LINE_MAX, token_crs, token_len, NULL);
 	if(!ctag_len)
 	{
 		log_message(LOG_ERROR, "%s:%d  invalid macro tag %#S", table_file_names[include_depth], table_file_lines[include_depth], token_crs, token_len);
@@ -1731,9 +1731,9 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 		if(lines_cnt >= MACRO_LINES_MAX)
 			continue;
 
-		line_len = utf8_convert_to_utf16le(token_line, INPUT_LINE_MAX, cchars, INPUT_LINE_MAX) + 1;
+		line_len = utf8_convert_to_utf16(token_line, INPUT_LINE_MAX, cchars, INPUT_LINE_MAX, NULL) + 1;
 
-		lines[lines_cnt] = MALLOC((line_len + 1) * sizeof(Unicode));
+		lines[lines_cnt] = MALLOC((line_len + 1) * sizeof(unichar));
 		if(!lines[lines_cnt])
 		{
 			LOG_ALLOCATE_FAIL
@@ -1772,7 +1772,7 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 	}
 	strcpy(macro->file_name, file_name);
 
-	macro->tag = MALLOC((tag_len + 1) * sizeof(Unicode));
+	macro->tag = MALLOC((tag_len + 1) * sizeof(unichar));
 	if(!macro->tag)
 	{
 		LOG_ALLOCATE_FAIL
@@ -1781,7 +1781,7 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 	utf16_copy(macro->tag, tag, tag_len + 1);
 	macro->tag_len = tag_len;
 
-	macro->lines = MALLOC(lines_cnt * sizeof(Unicode*));
+	macro->lines = MALLOC(lines_cnt * sizeof(unichar*));
 	if(!macro->lines)
 	{
 		LOG_ALLOCATE_FAIL
@@ -1809,7 +1809,7 @@ static int compile_macro(FILE *file, char cchars[INPUT_LINE_MAX], const char *fi
 
 static int do_macro(void)
 {
-	Unicode line[INPUT_LINE_MAX], *args[MACRO_ARGUMENTS_MAX];
+	unichar line[INPUT_LINE_MAX], *args[MACRO_ARGUMENTS_MAX];
 	int args_lens[MACRO_ARGUMENTS_MAX], args_cnt;
 	struct macro *macro;
 	int i, j, off, crs, arg;
@@ -1834,7 +1834,7 @@ static int do_macro(void)
 	}
 	macro->processing = 1;
 
-	memset(args,      0, MACRO_ARGUMENTS_MAX * sizeof(Unicode*));
+	memset(args,      0, MACRO_ARGUMENTS_MAX * sizeof(unichar*));
 	memset(args_lens, 0, MACRO_ARGUMENTS_MAX * sizeof(int));
 	args_cnt = 0;
 
@@ -1857,7 +1857,7 @@ static int do_macro(void)
 
 	for(i = 0; i < macro->lines_cnt; i++)
 	{
-		DB_MEMSET(line, 0, INPUT_LINE_MAX * sizeof(Unicode))
+		DB_MEMSET(line, 0, INPUT_LINE_MAX * sizeof(unichar))
 
 		/*   convert args   */
 		off =
@@ -2077,8 +2077,8 @@ static void file_read(FILE *file, const char *file_name)
 			continue;
 		}
 
-		memset(token_line, 0, INPUT_LINE_MAX * sizeof(Unicode));
-		utf8_convert_to_utf16le(token_line, INPUT_LINE_MAX - 1, cchars, INPUT_LINE_MAX);
+		memset(token_line, 0, INPUT_LINE_MAX * sizeof(unichar));
+		utf8_convert_to_utf16(token_line, INPUT_LINE_MAX - 1, cchars, INPUT_LINE_MAX, NULL);
 
 		if(!token_init(token_line))
 			continue;
@@ -2194,7 +2194,7 @@ struct table* table_compile_from_file(const char *file_name)
 
 static int compile_convert(struct conversion *conversion)
 {
-	Unicode cell, uchar;
+	unichar cell, uchar;
 
 	if(!token_parse())
 		goto return_fail;
@@ -2283,8 +2283,8 @@ struct conversion* conversion_compile_from_file(const char *file_name)
 		if(cchars[0] == '#')
 			continue;
 
-		memset(token_line, 0, INPUT_LINE_MAX * sizeof(Unicode));
-		utf8_convert_to_utf16le(token_line, INPUT_LINE_MAX - 1, cchars, INPUT_LINE_MAX);
+		memset(token_line, 0, INPUT_LINE_MAX * sizeof(unichar));
+		utf8_convert_to_utf16(token_line, INPUT_LINE_MAX - 1, cchars, INPUT_LINE_MAX, NULL);
 
 		if(!token_init(token_line))
 			continue;

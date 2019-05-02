@@ -45,7 +45,7 @@ enum NEMETH_CHAR_DOT_ATTRIBUTE
 
 static int convert_nemeth_roots(struct translate *translate)
 {
-	Unicode levels[SEPS_MAX];
+	unichar levels[SEPS_MAX];
 	int level_cnt;
 
 	translate->table_crs = 0;
@@ -97,21 +97,21 @@ static int convert_nemeth_roots(struct translate *translate)
 
 static int convert_nemeth_scripts(struct translate *translate)
 {
-//	const Unicode sub_beg       = u'\uf580';
-	const Unicode sub_sep       = u'\uf581';
-	const Unicode sub_end       = u'\uf582';
-//	const Unicode sup_beg       = u'\uf583';
-//	const Unicode sup_sep       = u'\uf584';
-	const Unicode sup_end       = u'\uf585';
-//	const Unicode sbp_beg       = u'\uf586';
-	const Unicode sbp_sep       = u'\uf587';
-	const Unicode sbp_end       = u'\uf588';
-	const Unicode base_sub      = u'⠰';
-	const Unicode base_sup      = u'⠘';
-	const Unicode base_reset    = u'⠐';
-	const Unicode script_comma  = u'⠪';
-	const Unicode not_slash     = u'⠌';
-	Unicode seps[SEPS_MAX];
+//	const unichar sub_beg       = u'\uf580';
+	const unichar sub_sep       = u'\uf581';
+	const unichar sub_end       = u'\uf582';
+//	const unichar sup_beg       = u'\uf583';
+//	const unichar sup_sep       = u'\uf584';
+	const unichar sup_end       = u'\uf585';
+//	const unichar sbp_beg       = u'\uf586';
+	const unichar sbp_sep       = u'\uf587';
+	const unichar sbp_end       = u'\uf588';
+	const unichar base_sub      = u'⠰';
+	const unichar base_sup      = u'⠘';
+	const unichar base_reset    = u'⠐';
+	const unichar script_comma  = u'⠪';
+	const unichar not_slash     = u'⠌';
+	unichar seps[SEPS_MAX];
 	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, crs, seq;
 
 	translate->table_crs = 0;
@@ -538,7 +538,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 static int add_numeric_indicators(struct translate *translate)
 {
-	const Unicode indicator = u'⠼';
+	const unichar indicator = u'⠼';
 
 	translate->table_crs = 0;
 

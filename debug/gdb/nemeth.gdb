@@ -45,7 +45,7 @@ end
 break convert_nemeth_scripts
 commands $bpnum
 
-	call memset(translate->output, 0, translate->output_max * sizeof(Unicode))
+	call memset(translate->output, 0, translate->output_max * sizeof(unichar))
 	set translate->output_len = 0
 	set sep_cnt = 0
 	set sbp_cnt = 0

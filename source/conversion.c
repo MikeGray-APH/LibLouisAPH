@@ -66,7 +66,7 @@ void conversion_free(struct conversion *conversion)
 	FREE(conversion);
 }
 
-int conversion_set_cell(struct conversion *conversion, const Unicode cell, const Unicode uchar)
+int conversion_set_cell(struct conversion *conversion, const unichar cell, const unichar uchar)
 {
 	if(cell >= 0x2800 && cell <= 0x28ff)
 		conversion->converts[cell & 0xff] = uchar;
@@ -76,13 +76,13 @@ int conversion_set_cell(struct conversion *conversion, const Unicode cell, const
 	return 1;
 }
 
-int conversion_set_unknown(struct conversion *conversion, const Unicode uchar)
+int conversion_set_unknown(struct conversion *conversion, const unichar uchar)
 {
 	conversion->unknown = uchar;
 	return 1;
 }
 
-void conversion_convert_to(Unicode *dots, const int dots_len, const struct conversion *conversion)
+void conversion_convert_to(unichar *dots, const int dots_len, const struct conversion *conversion)
 {
 	int i;
 
@@ -96,7 +96,7 @@ void conversion_convert_to(Unicode *dots, const int dots_len, const struct conve
 		dots[i] = conversion->unknown;
 }
 
-static Unicode convert_uchar_from(const struct conversion *conversion, const Unicode uchar)
+static unichar convert_uchar_from(const struct conversion *conversion, const unichar uchar)
 {
 	int i;
 
@@ -107,7 +107,7 @@ static Unicode convert_uchar_from(const struct conversion *conversion, const Uni
 	return conversion->unknown;
 }
 
-void conversion_convert_from(Unicode *uchars, const int uchars_len, const struct conversion *conversion)
+void conversion_convert_from(unichar *uchars, const int uchars_len, const struct conversion *conversion)
 {
 	int i;
 

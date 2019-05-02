@@ -30,7 +30,7 @@
 
 /******************************************************************************/
 
-int generic_insert_marked(struct translate *translate, const Unicode *indicator, const int indicator_len, const Unicode delimiter)
+int generic_insert_marked(struct translate *translate, const unichar *indicator, const int indicator_len, const unichar delimiter)
 {
 	CHANGE_MARK
 
@@ -50,7 +50,7 @@ int generic_insert_marked(struct translate *translate, const Unicode *indicator,
 
 /******************************************************************************/
 
-static inline int get_next_delimiter(struct translate *translate, const int at, const Unicode delimiter)
+static inline int get_next_delimiter(struct translate *translate, const int at, const unichar delimiter)
 {
 	int off;
 
@@ -209,7 +209,7 @@ int generic_remove_hard_and_modifier_delimiters(struct translate *translate)
 
 #include <stdio.h>
 
-void debug_output_line(const Unicode *uchars, const int uchars_len);
+void debug_output_line(const unichar *uchars, const int uchars_len);
 static enum table_hash_type current_hash_type;
 
 static void output_hash_type(void)
@@ -348,7 +348,7 @@ static int rule_is_filtered(const struct translate *translate, const struct rule
 static const struct rule* generic_match_rule(struct translate *translate, const enum table_hash_type hash_type, const enum rule_direction direction, const unsigned int contract)
 {
 	const struct rule *rule;
-	const Unicode *input;
+	const unichar *input;
 	int len;
 
 	for(translate->table_crs = 0; translate->table_crs < translate->table_cnt; translate->table_crs++)
@@ -453,7 +453,7 @@ int generic_process(struct translate *translate, const enum table_hash_type hash
 	{
 		/*   nocontract word stops on space   */
 		if(nocontract_state == WORD)
-		if(table_get_unichar_attributes(table, translate->input[translate->input_crs]) & CHAR_SPACE)
+		if(table_get_character_attributes(table, translate->input[translate->input_crs]) & CHAR_SPACE)
 			nocontract_state = NONE;
 
 		/*   nocontract   */

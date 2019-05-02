@@ -28,10 +28,10 @@
 
 struct expression
 {
-	Unicode type;
-	Unicode prv;
-	Unicode nxt;
-	Unicode data[1];
+	unichar type;
+	unichar prv;
+	unichar nxt;
+	unichar data[1];
 };
 
 /*   gdb won't know what struct expression is unless it is actually used   */
@@ -42,7 +42,7 @@ static int  space = 30;
 
 /******************************************************************************/
 
-static void attrs_output_brackets(const Unicode attrs0, const Unicode attrs1)
+static void attrs_output_brackets(const unichar attrs0, const unichar attrs1)
 {
 	int cnt, i;
 
@@ -59,28 +59,28 @@ static void attrs_output_brackets(const Unicode attrs0, const Unicode attrs1)
 
 	for(i = 0; i < 16; i++)
 	if(attrs0 & BIT(i))
-		utf16le_output_char_escape(stdout, attrs_chars[i]);
+		utf16_output_char_escape(stdout, attrs_chars[i]);
 	for(i = 0; i < 16; i++)
 	if(attrs1 & BIT(i))
-		utf16le_output_char_escape(stdout, attrs_chars[i + 16]);
+		utf16_output_char_escape(stdout, attrs_chars[i + 16]);
 
 	if(cnt > 1)
 		printf("]");
 }
 
-static void attrs_output(const Unicode attrs0, const Unicode attrs1)
+static void attrs_output(const unichar attrs0, const unichar attrs1)
 {
 	int i;
 
 	for(i = 0; i < 16; i++)
 	if(attrs0 & BIT(i))
-		utf16le_output_char_escape(stdout, attrs_chars[i]);
+		utf16_output_char_escape(stdout, attrs_chars[i]);
 	for(i = 0; i < 16; i++)
 	if(attrs1 & BIT(i))
-		utf16le_output_char_escape(stdout, attrs_chars[i + 16]);
+		utf16_output_char_escape(stdout, attrs_chars[i + 16]);
 }
 
-static void pattern_output_expression(const Unicode *expr_data, int expr_crs)
+static void pattern_output_expression(const unichar *expr_data, int expr_crs)
 {
 	int i;
 
@@ -190,7 +190,7 @@ static void pattern_output_expression(const Unicode *expr_data, int expr_crs)
 
 			printf("[]   \t%d\t%d\t", EXPR_PRV(expr_crs), EXPR_NXT(expr_crs));
 			for(i = 0; i < EXPR_DATA_0(expr_crs); i++)
-				utf16le_output_char_escape(stdout, EXPR_CONST_DATA(expr_crs)[i + 1]);
+				utf16_output_char_escape(stdout, EXPR_CONST_DATA(expr_crs)[i + 1]);
 			puts("");
 			break;
 
@@ -228,7 +228,7 @@ static void pattern_output_expression(const Unicode *expr_data, int expr_crs)
 	return;
 }
 
-void pattern_output(const Unicode *expr_data)
+void pattern_output(const unichar *expr_data)
 {
 	printf("%d    \tlength\n", expr_data[0]);
 	printf("%d    \tloops\n", expr_data[1]);
@@ -242,7 +242,7 @@ void pattern_output(const Unicode *expr_data)
 #ifndef DEBUG
 static
 #endif
-void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_crs)
+void pattern_print_expression(FILE *output, const unichar *expr_data, int expr_crs)
 {
 	int i;
 
@@ -310,12 +310,12 @@ void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_c
 		case PTN_CHARS:
 
 			if(EXPR_DATA_0(expr_crs) == 1)
-				utf16le_output_char_escape(stdout, EXPR_DATA_1(expr_crs));
+				utf16_output_char_escape(stdout, EXPR_DATA_1(expr_crs));
 			else
 			{
 				fputs("[", output);
 				for(i = 0; i < EXPR_DATA_0(expr_crs); i++)
-					utf16le_output_char_escape(output, EXPR_CONST_DATA(expr_crs)[i + 1]);
+					utf16_output_char_escape(output, EXPR_CONST_DATA(expr_crs)[i + 1]);
 				fputs("]", output);
 			}
 			break;
@@ -342,7 +342,7 @@ void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_c
 	return;
 }
 
-void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_chars_)
+void pattern_print(FILE *output, const unichar *expr_data, const char *attrs_chars_)
 {
 	set_attrs_chars(attrs_chars_);
 
@@ -351,7 +351,7 @@ void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_cha
 	fflush(output);
 }
 
-void pattern_print_line(FILE *output, const Unicode *expr_data, const char *attrs_chars_)
+void pattern_print_line(FILE *output, const unichar *expr_data, const char *attrs_chars_)
 {
 	pattern_print(output, expr_data, attrs_chars_);
 	fputs("\n", output);

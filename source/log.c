@@ -122,7 +122,7 @@ void log_message(const enum log_level level, const char *format, ...)
 	va_list args;
 	char message[LOG_MESSAGE_MAX], *arg_string;
 	size_t fcrs, mcrs, len;
-	Unicode *arg_uchars, arg_uchar;
+	unichar *arg_uchars, arg_uchar;
 	unsigned int arg_unt;
 	int arg_int;
 
@@ -188,18 +188,18 @@ void log_message(const enum log_level level, const char *format, ...)
 
 		case 'C':
 
-			arg_uchar = (Unicode)va_arg(args, int);
-			len = utf16le_convert_to_utf8(&message[mcrs], LOG_MESSAGE_MAX - mcrs, &arg_uchar, 1);
+			arg_uchar = (unichar)va_arg(args, int);
+			len = utf16_convert_to_utf8(&message[mcrs], LOG_MESSAGE_MAX - mcrs, &arg_uchar, 1, NULL);
 			mcrs += len;
 			break;
 
 		case 'S':
 
-			arg_uchars = (Unicode*)va_arg(args, Unicode*);
+			arg_uchars = (unichar*)va_arg(args, unichar*);
 			len = 0;
 			while(arg_uchars[len])
 				len++;
-			len = utf16le_convert_to_utf8(&message[mcrs], LOG_MESSAGE_MAX - mcrs, arg_uchars, len);
+			len = utf16_convert_to_utf8(&message[mcrs], LOG_MESSAGE_MAX - mcrs, arg_uchars, len, NULL);
 			mcrs += len;
 			break;
 
@@ -215,9 +215,9 @@ void log_message(const enum log_level level, const char *format, ...)
 			}
 			if(format[fcrs] == 'S')
 			{
-				arg_uchars = (Unicode*)va_arg(args, Unicode*);
+				arg_uchars = (unichar*)va_arg(args, unichar*);
 				arg_int = va_arg(args, int);
-				len = utf16le_convert_to_utf8(&message[mcrs], LOG_MESSAGE_MAX - mcrs, arg_uchars, arg_int);
+				len = utf16_convert_to_utf8(&message[mcrs], LOG_MESSAGE_MAX - mcrs, arg_uchars, arg_int, NULL);
 				mcrs += len;
 			}
 			else

@@ -29,7 +29,7 @@ void table_output(FILE *output, const struct table *table);
 
 /******************************************************************************/
 
-static inline void table_convert_markers(const struct table *table, Unicode *uchars, const int uchars_len)
+static inline void table_convert_markers(const struct table *table, unichar *uchars, const int uchars_len)
 {
 	int i;
 

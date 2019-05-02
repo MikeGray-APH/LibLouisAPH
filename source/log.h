@@ -66,9 +66,9 @@ void log_set_callback(void (*callback)(const int level, const char *message));
  *   %b   binary unsigned int
  *   %c   char
  *   %s   char* string
- *   %C   Unicode char
- *   %S   Unicode* string
- *   %#S  Unicode* string, requires string length to be next argument
+ *   %C   unichar char
+ *   %S   unichar* string
+ *   %#S  unichar* string, requires string length to be next argument
 */
 void log_message(const enum log_level level, const char *format, ...);
 

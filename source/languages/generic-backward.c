@@ -29,7 +29,7 @@
 /******************************************************************************/
 
 /*   returns -1 on error, 0 when nothing skipped, <0 when input/output switch needed   */
-static int convert_indicators_mode(struct translate *translate, const struct mode *mode, const Unicode delimiter)
+static int convert_indicators_mode(struct translate *translate, const struct mode *mode, const unichar delimiter)
 {
 	int cnt;
 
@@ -177,7 +177,7 @@ static int convert_indicators_capital(struct translate *translate)
 {
 	const struct table *table;
 	int capital_in, numeric_in;
-	Unicode upper;
+	unichar upper;
 
 	/*   only remove indicators contained in last table in tables   */
 	table = translate->tables[translate->table_cnt - 1];
@@ -475,7 +475,7 @@ static int convert_indicators_numeric(struct translate *translate)
 {
 	const struct table *table;
 	int numeric_in, numeric_passage_in;
-	Unicode uchar;
+	unichar uchar;
 
 	/*   only remove indicators contained in last table in tables   */
 	table = translate->tables[translate->table_cnt - 1];

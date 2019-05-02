@@ -33,7 +33,7 @@ struct translate;
 struct subpattern
 {
 	struct subpattern *nxt;
-	Unicode *tag, *expr_data, *src_data;
+	unichar *tag, *expr_data, *src_data;
 	int tag_len, expr_len, src_len, processing;
 };
 
@@ -51,9 +51,9 @@ void subpattern_free(struct subpattern *subpattern);
  * Returns length of compiled pattern.
 */
 int pattern_compile(
-	Unicode *expr_data,
+	unichar *expr_data,
 	const int expr_len,
-	const Unicode *input,
+	const unichar *input,
 	const int input_len,
 	const char *attrs_chars,
 	struct subpattern *subpatterns);
@@ -61,18 +61,18 @@ int pattern_compile(
 
 /* Reverses compiled pattern in expr_data.
 */
-void pattern_reverse(Unicode *expr_data);
+void pattern_reverse(unichar *expr_data);
 
 
 /* Returns 1 if input matches the pattern stored in expr_data, 0 otherwise.
 */
 int pattern_check(
 	const struct translate *translate,
-	const Unicode *input,
+	const unichar *input,
 	const int input_start,
 	const int input_minmax,
 	const int input_dir,
-	const Unicode *expr_data,
+	const unichar *expr_data,
 	const char *attrs_chars_,
 	struct subpattern *subpatterns);
 

@@ -60,18 +60,18 @@ static int opt_direction, opt_unicode_to_digits, opt_digits_to_unicode, opt_outp
 */
 static void convert_digits_to_unicode(const char *dots)
 {
-	Unicode *uchars;
+	unichar *uchars;
 	char *cchars;
 	int dots_len, cchars_len, uchars_len;
-	Unicode cell;
+	unichar cell;
 	int crs, off;
 
 	dots_len = strlen(dots);
 	uchars_len = dots_len;
 	cchars_len = uchars_len * 11;
-	uchars = malloc((uchars_len + 1) * sizeof(Unicode));
+	uchars = malloc((uchars_len + 1) * sizeof(unichar));
 	cchars = malloc(cchars_len + 1);
-	utf8_convert_to_utf16le(uchars, (uchars_len + 1), dots, dots_len);
+	utf8_convert_to_utf16(uchars, (uchars_len + 1), dots, dots_len, NULL);
 
 	cell = 0;
 	crs = 0;
@@ -89,7 +89,7 @@ static void convert_digits_to_unicode(const char *dots)
 		else if(uchars[off] == u'0')
 			cell = 0x2800;
 		else if(uchars[off] >= u'1' && uchars[off] <= u'8')
-			cell |= (Unicode)BIT(uchars[off] - u'1');
+			cell |= (unichar)BIT(uchars[off] - u'1');
 		else if(uchars[off] == u'-')
 		{
 			if(cell)
@@ -108,7 +108,7 @@ static void convert_digits_to_unicode(const char *dots)
 		cell = 0;
 	}
 	uchars[crs] = 0;
-	utf16le_convert_to_utf8(cchars, (cchars_len + 1), uchars, crs);
+	utf16_convert_to_utf8(cchars, (cchars_len + 1), uchars, crs, NULL);
 	printf("%s\n", cchars);
 	free(uchars);
 	free(cchars);
@@ -116,16 +116,16 @@ static void convert_digits_to_unicode(const char *dots)
 
 static void convert_unicode_to_digits(const char *dots)
 {
-	Unicode *uchars;
+	unichar *uchars;
 	char *cchars;
 	int dots_len, cchars_len, uchars_len, crs, off;
 
 	dots_len = strlen(dots);
 	uchars_len = dots_len;
 	cchars_len = uchars_len * 11;
-	uchars = malloc((uchars_len + 1) * sizeof(Unicode));
+	uchars = malloc((uchars_len + 1) * sizeof(unichar));
 	cchars = malloc(cchars_len + 1);
-	utf8_convert_to_utf16le(uchars, (uchars_len + 1), dots, dots_len);
+	utf8_convert_to_utf16(uchars, (uchars_len + 1), dots, dots_len, NULL);
 
 	crs = 0;
 	for(off = 0; off < uchars_len; off++)
@@ -291,7 +291,7 @@ int main(int argn, char **args)
 {
 	struct conversion *conversion;
 	char *cchars;
-	Unicode *uchars;
+	unichar *uchars;
 	int cchars_len, uchars_len, max_len;
 
 	args = scan_arguments(args, argn);
@@ -302,9 +302,9 @@ int main(int argn, char **args)
 
 	max_len = INPUT_BUFFER_MAX;
 	cchars = malloc(max_len);
-	uchars = malloc(max_len * sizeof(Unicode));
+	uchars = malloc(max_len * sizeof(unichar));
 	memset(cchars, 0, max_len);
-	memset(uchars, 0, max_len * sizeof(Unicode));
+	memset(uchars, 0, max_len * sizeof(unichar));
 
 	if(opt_unicode_to_digits)
 	{
@@ -387,7 +387,7 @@ int main(int argn, char **args)
 				}
 			}
 
-			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			uchars = realloc(uchars, max_len * sizeof(unichar));
 			if(!uchars)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
@@ -407,7 +407,7 @@ int main(int argn, char **args)
 			continue;
 		}
 
-		uchars_len = utf8_convert_to_utf16le(uchars, max_len, cchars, cchars_len);
+		uchars_len = utf8_convert_to_utf16(uchars, max_len, cchars, cchars_len, NULL);
 		if(opt_direction == FORWARD)
 			conversion_convert_to(uchars, uchars_len, conversion);
 		else if(opt_direction == BACKWARD)
@@ -426,7 +426,7 @@ int main(int argn, char **args)
 				return 1;
 			}
 
-			uchars = realloc(uchars, max_len * sizeof(Unicode));
+			uchars = realloc(uchars, max_len * sizeof(unichar));
 			if(!uchars)
 			{
 				fprintf(stderr, "FATAL:  out of memory\n");
@@ -434,7 +434,7 @@ int main(int argn, char **args)
 			}
 		}
 
-		utf16le_convert_to_utf8(cchars, max_len, uchars, uchars_len);
+		utf16_convert_to_utf8(cchars, max_len, uchars, uchars_len, NULL);
 		printf("%s\n", cchars);
 	}
 

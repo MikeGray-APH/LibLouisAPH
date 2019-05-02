@@ -69,9 +69,9 @@ int louis_add_paths(const char *paths)
 }
 
 static int lookup_and_translate(
-	Unicode *dots,
+	unichar *dots,
 	const int dots_len,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
 	const char *table_names,
 	const char *conversion_name,
@@ -118,9 +118,9 @@ static int lookup_and_translate(
 
 ATTRIBUTE_DLL_EXPORT
 int louis_translate_forward(
-	Unicode *dots,
+	unichar *dots,
 	const int dots_len,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
 	const char *table_names,
 	const char *conversion_name,
@@ -136,9 +136,9 @@ int louis_translate_forward(
 
 ATTRIBUTE_DLL_EXPORT
 int louis_translate_backward(
-	Unicode *chars,
+	unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const char *table_names,
 	const char *conversion_name,
@@ -153,7 +153,7 @@ int louis_translate_backward(
 }
 
 ATTRIBUTE_DLL_EXPORT
-int louis_convert_to(Unicode *chars, const int chars_len, const char *conversion_name)
+int louis_convert_to(unichar *chars, const int chars_len, const char *conversion_name)
 {
 	struct conversion *conversion;
 
@@ -166,7 +166,7 @@ int louis_convert_to(Unicode *chars, const int chars_len, const char *conversion
 }
 
 ATTRIBUTE_DLL_EXPORT
-int louis_convert_from(Unicode *dots, const int dots_len, const char *conversion_name)
+int louis_convert_from(unichar *dots, const int dots_len, const char *conversion_name)
 {
 	struct conversion *conversion;
 

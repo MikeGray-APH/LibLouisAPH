@@ -28,7 +28,7 @@
 #if 1
 void conversion_output(FILE *output, const struct conversion *conversion)
 {
-	Unicode uchar, cell;
+	unichar uchar, cell;
 	int x, y;
 
 	if(!conversion)
@@ -37,7 +37,7 @@ void conversion_output(FILE *output, const struct conversion *conversion)
 	fprintf(output, "%s\n", conversion->file_name);
 
 	fputs("unknown:  ", output);
-	utf16le_output_char_escape(output, conversion->unknown);
+	utf16_output_char_escape(output, conversion->unknown);
 	fputs("\n", output);
 
 	fputs("\n", output);
@@ -49,10 +49,10 @@ void conversion_output(FILE *output, const struct conversion *conversion)
 		{
 			uchar = conversion->converts[(y * 16) + x];
 			if(uchar != cell)
-				utf16le_output_char(output, uchar);
+				utf16_output_char(output, uchar);
 			else
 				fputs(" ", output);
-			utf16le_output_char(output, cell);
+			utf16_output_char(output, cell);
 			fputs(" ", output);
 			cell++;
 		}
@@ -71,13 +71,13 @@ void conversion_output(FILE *output, const struct conversion *conversion)
 
 	fprintf(output, "%s\n", conversion->file_name);
 
-	utf16le_output_char_escape(output, conversion->unknown);
+	utf16_output_char_escape(output, conversion->unknown);
 	fputs("\n", output);
 
 	for(y = 0; y < 16; y++)
 	{
 		for(x = 0; x < 16; x++)
-			utf16le_output_char(output, conversion->converts[(y * 16) + x]);
+			utf16_output_char(output, conversion->converts[(y * 16) + x]);
 		fputs("\n", output);
 	}
 

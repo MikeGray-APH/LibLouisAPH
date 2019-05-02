@@ -50,8 +50,8 @@ enum pattern_type
 #define EXPR_DATA_0_IN(at, buffer)      (buffer[(at) + 3])
 #define EXPR_DATA_1_IN(at, buffer)      (buffer[(at) + 4])
 #define EXPR_DATA_2_IN(at, buffer)      (buffer[(at) + 5])
-#define EXPR_DATA_IN(at, buffer)        ((Unicode*)&buffer[(at) + 3])
-#define EXPR_CONST_DATA_IN(at, buffer)  ((const Unicode*)&buffer[(at) + 3])
+#define EXPR_DATA_IN(at, buffer)        ((unichar*)&buffer[(at) + 3])
+#define EXPR_CONST_DATA_IN(at, buffer)  ((const unichar*)&buffer[(at) + 3])
 
 #define EXPR_TYPE(at)        EXPR_TYPE_IN((at), expr_data)
 #define EXPR_PRV(at)         EXPR_PRV_IN((at), expr_data)

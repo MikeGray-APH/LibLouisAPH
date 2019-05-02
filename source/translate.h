@@ -43,16 +43,16 @@ struct translate
 	const struct table *const*tables;
 	int table_crs, table_cnt;
 
-	const Unicode *chars;
-	Unicode *dots;
+	const unichar *chars;
+	unichar *dots;
 	int chars_len, dots_len;
 	int *chars_to_dots_map, *dots_to_chars_map;
 
-	Unicode *input;
+	unichar *input;
 	int input_crs, input_len;
 	int *input_to_output_map, *input_map;
 
-	Unicode *output;
+	unichar *output;
 	int output_len, output_max, output_inc;
 	int *output_to_input_map;
 
@@ -98,7 +98,7 @@ int translate_skip(struct translate *translate, const int chars_cnt, const int c
  *
  * Returns status of successful insertion.
 */
-int translate_insert_dots(struct translate *translate, const Unicode *dots, const int dots_len);
+int translate_insert_dots(struct translate *translate, const unichar *dots, const int dots_len);
 
 
 /* Appends dots to output and shifts the input_crs chars_cnt number of
@@ -107,7 +107,7 @@ int translate_insert_dots(struct translate *translate, const Unicode *dots, cons
  *
  * Returns status of successful insertion.
 */
-int translate_insert_dots_for_chars(struct translate *translate, const Unicode *dots, const int dots_len, const int chars_cnt);
+int translate_insert_dots_for_chars(struct translate *translate, const unichar *dots, const int dots_len, const int chars_cnt);
 
 
 /* Copies count characters at input_crs to output.  If do_map is set, input and
@@ -158,9 +158,9 @@ int translate_output_to_input(struct translate *translate);
  * and no translation was performed, and -1 if an error occurred.  The resulting
  * translation is stored in dots (regardless of direction).
 */
-int translate_start(Unicode *dots,
+int translate_start(unichar *dots,
                     const int dots_len,
-                    const Unicode *chars,
+                    const unichar *chars,
                     const int chars_len,
                     const struct table *const*tables,
                     const int table_cnt,
@@ -224,7 +224,7 @@ static inline void translate_increment(struct translate *translate, const int ch
  *
  * Returns status of successful insertion.
 */
-static inline int translate_insert_dot(struct translate *translate, const Unicode dot)
+static inline int translate_insert_dot(struct translate *translate, const unichar dot)
 {
 	return translate_insert_dots(translate, &dot, 1);
 }
@@ -235,7 +235,7 @@ static inline int translate_insert_dot(struct translate *translate, const Unicod
  *
  * Returns status of successful insertion.
 */
-static inline int translate_insert_dot_for_chars(struct translate *translate, const Unicode dot, const int chars_len)
+static inline int translate_insert_dot_for_chars(struct translate *translate, const unichar dot, const int chars_len)
 {
 	return translate_insert_dots_for_chars(translate, &dot, 1, chars_len);
 }
@@ -245,7 +245,7 @@ static inline int translate_insert_dot_for_chars(struct translate *translate, co
 /* Returns 1 if input from at or input_crs is equal to uchars, 0 otherwise.
 */
 
-static inline int translate_is_equal_at(const struct translate *translate, const Unicode *uchars, const int uchars_len, const int at)
+static inline int translate_is_equal_at(const struct translate *translate, const unichar *uchars, const int uchars_len, const int at)
 {
 	int i;
 
@@ -262,7 +262,7 @@ static inline int translate_is_equal_at(const struct translate *translate, const
 	return uchars_len;
 }
 
-static inline int translate_is_equal(const struct translate *translate, const Unicode *uchars, const int uchars_len)
+static inline int translate_is_equal(const struct translate *translate, const unichar *uchars, const int uchars_len)
 {
 	return translate_is_equal_at(translate, uchars, uchars_len, translate->input_crs);
 }
@@ -532,7 +532,7 @@ static inline unsigned int translate_get_attributes_at(const struct translate *t
 	if(at < 0 || at >= translate->input_len)
 		return 0;
 
-	return table_get_unichar_attributes(translate->tables[translate->table_crs], translate->input[at]);
+	return table_get_character_attributes(translate->tables[translate->table_crs], translate->input[at]);
 }
 
 static inline unsigned int translate_get_attributes(const struct translate *translate)

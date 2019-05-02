@@ -28,7 +28,7 @@ struct conversion
 {
 	struct conversion *nxt;
 	char *file_name;
-	Unicode converts[256], unknown;
+	unichar converts[256], unknown;
 };
 
 /******************************************************************************/
@@ -46,24 +46,24 @@ void conversion_free(struct conversion *conversion);
  *
  * Returns 1 if successfully added, 0 if an error occurred.
 */
-int conversion_set_cell(struct conversion *conversion, const Unicode cell, const Unicode uchar);
+int conversion_set_cell(struct conversion *conversion, const unichar cell, const unichar uchar);
 
 
 /* Sets any unknown characters to be converted to uchar.
  *
  * Returns 1 if successfully added, 0 if an error occurred.
 */
-int conversion_set_unknown(struct conversion *conversion, const Unicode uchar);
+int conversion_set_unknown(struct conversion *conversion, const unichar uchar);
 
 
 /* Converts uchars from text to braille cells.
 */
-void conversion_convert_to(Unicode *dots, const int dots_len, const struct conversion *conversion);
+void conversion_convert_to(unichar *dots, const int dots_len, const struct conversion *conversion);
 
 
 /* Converts cells from braille cells to text.
 */
-void conversion_convert_from(Unicode *uchars, const int uchars_len, const struct conversion *conversion);
+void conversion_convert_from(unichar *uchars, const int uchars_len, const struct conversion *conversion);
 
 
 /* Returns conversion that was loaded and compiled from file file_name, or NULL

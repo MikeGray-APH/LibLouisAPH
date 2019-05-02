@@ -25,9 +25,9 @@
 
 /******************************************************************************/
 
-void utf16le_output(FILE *output, const Unicode *uchars, const int uchars_len);
-void utf16le_output_char(FILE *output, const Unicode uchar);
-void utf16le_output_char_escape(FILE *output, const Unicode uchar);
+void utf16_output(FILE *output, const unichar *uchars, const int uchars_len);
+void utf16_output_char(FILE *output, const unichar uchar);
+void utf16_output_char_escape(FILE *output, const unichar uchar);
 
 /******************************************************************************/
 

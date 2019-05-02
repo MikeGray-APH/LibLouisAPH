@@ -32,8 +32,8 @@ static int subpattern_level;
 #ifdef PATTERN_OUTPUT_TRACE
 
 #include "utf-output.h"
-void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_chars_);
-void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_crs);
+void pattern_print(FILE *output, const unichar *expr_data, const char *attrs_chars_);
+void pattern_print_expression(FILE *output, const unichar *expr_data, int expr_crs);
 
 #ifndef OUTPUT
 #error OUTPUT needs to be defined
@@ -62,7 +62,7 @@ void pattern_print_expression(FILE *output, const Unicode *expr_data, int expr_c
 
 #ifdef PATTERN_OUTPUT_TRACE
 
-void pattern_output(const Unicode *expr_data);
+void pattern_output(const unichar *expr_data);
 
 static char spaces[] = "..............................";
 static int  space = 30;
@@ -70,12 +70,12 @@ static int  space = 30;
 static void do_output(
 	const int type, const int ret,
 	const int input, const int input_minmax, const int input_crs, const int input_dir,
-	const Unicode *expr_data, const int expr_crs,
+	const unichar *expr_data, const int expr_crs,
 	const int not,
 	const int loop_crs, const int *loop_cnts,
 	const char *msg)
 {
-	const Unicode *data;
+	const unichar *data;
 	int cnt, i;
 
 	switch(type)
@@ -127,7 +127,7 @@ static void do_output(
 	printf("%-5d ", expr_crs);
 
 	if(input)
-		utf16le_output_char_escape(stdout, input);
+		utf16_output_char_escape(stdout, input);
 	else
 		printf(" ");
 	printf(" ");
@@ -172,7 +172,7 @@ static void do_output(
 
 		printf("   ");
 		for(i = 1; i < cnt; i++)
-			utf16le_output_char(stdout, data[i]);
+			utf16_output_char(stdout, data[i]);
 		break;
 
 	case PTN_ALTERNATE:
@@ -238,7 +238,7 @@ void subpattern_free(struct subpattern *subpattern)
 	FREE(subpattern);
 }
 
-static struct subpattern* subpattern_find(struct subpattern *subpatterns, const Unicode *uchars, const int uchars_len)
+static struct subpattern* subpattern_find(struct subpattern *subpatterns, const unichar *uchars, const int uchars_len)
 {
 	struct subpattern *subpattern;
 	int i;
@@ -261,7 +261,7 @@ static struct subpattern* subpattern_find(struct subpattern *subpatterns, const 
 
 /******************************************************************************/
 
-static void attr_from_char(Unicode *attrs0, Unicode *attrs1, const Unicode uchar)
+static void attr_from_char(unichar *attrs0, unichar *attrs1, const unichar uchar)
 {
 	int i;
 
@@ -283,27 +283,27 @@ static void attr_from_char(Unicode *attrs0, Unicode *attrs1, const Unicode uchar
 /******************************************************************************/
 
 static int pattern_compile_1(
-	const Unicode *input,
+	const unichar *input,
 	const int input_len,
 	int *input_crs,
-	Unicode *expr_data,
+	unichar *expr_data,
 	const int expr_len,
-	Unicode *expr_crs,
-	Unicode *loop_cnts,
+	unichar *expr_crs,
+	unichar *loop_cnts,
 	struct subpattern *subpatterns);
 
 static int pattern_compile_expression(
-	const Unicode *input,
+	const unichar *input,
 	const int input_len,
 	int *input_crs,
-	Unicode *expr_data,
+	unichar *expr_data,
 	const int expr_len,
-	Unicode *expr_crs,
-	Unicode *loop_cnts,
+	unichar *expr_crs,
+	unichar *loop_cnts,
 	struct subpattern *subpatterns)
 {
 	struct subpattern *subpattern;
-	Unicode *data, attrs0, attrs1;;
+	unichar *data, attrs0, attrs1;;
 	int expr_start, expr_end, expr_sub, expr_crs_prv;
 	int input_end, subinput_crs;
 	int set, esc, nest, i;
@@ -524,7 +524,7 @@ static int pattern_compile_expression(
 			}
 
 			esc = 0;
-			data[i++] = (Unicode)input[*input_crs];
+			data[i++] = (unichar)input[*input_crs];
 		}
 		data[0] = i - 1;
 		(*input_crs)++;
@@ -566,7 +566,7 @@ static int pattern_compile_expression(
 				}
 
 				esc = 0;
-				data[i++] = (Unicode)input[*input_crs];
+				data[i++] = (unichar)input[*input_crs];
 			}
 			data[0] = i - 1;
 			(*input_crs)++;
@@ -637,7 +637,7 @@ static int pattern_compile_expression(
 			return 0;
 		EXPR_TYPE(*expr_crs) = PTN_CHARS;
 		EXPR_DATA_0(*expr_crs) = 1;
-		EXPR_DATA_1(*expr_crs) = (Unicode)input[*input_crs];
+		EXPR_DATA_1(*expr_crs) = (unichar)input[*input_crs];
 		(*input_crs)++;
 		return *expr_crs += 5;
 	}
@@ -649,13 +649,13 @@ static int pattern_compile_expression(
  * on returning the expr_crs is set to the last end expression, not after it.
 */
 static int pattern_compile_1(
-	const Unicode *input,
+	const unichar *input,
 	const int input_len,
 	int *input_crs,
-	Unicode *expr_data,
+	unichar *expr_data,
 	const int expr_len,
-	Unicode *expr_crs,
-	Unicode *loop_cnts,
+	unichar *expr_crs,
+	unichar *loop_cnts,
 	struct subpattern *subpatterns)
 {
 	int expr_crs_prv;
@@ -696,7 +696,7 @@ static int pattern_compile_1(
 
 /* Resolve optional and loop expressions.
 */
-static int pattern_compile_2(Unicode *expr_data, int expr_at, const int expr_len, Unicode *expr_crs)
+static int pattern_compile_2(unichar *expr_data, int expr_at, const int expr_len, unichar *expr_crs)
 {
 	int expr_start, expr_end, expr_prv, expr_sub;
 
@@ -754,7 +754,7 @@ static int pattern_compile_2(Unicode *expr_data, int expr_at, const int expr_len
 
 /* Resolves alternative expressions.
 */
-static int pattern_compile_3(Unicode *expr_data, int expr_at, const int expr_len, Unicode *expr_crs)
+static int pattern_compile_3(unichar *expr_data, int expr_at, const int expr_len, unichar *expr_crs)
 {
 	int expr_mrk, expr_start, expr_end, expr_sub_start, expr_sub_end;
 
@@ -853,9 +853,9 @@ static int pattern_compile_3(Unicode *expr_data, int expr_at, const int expr_len
 }
 
 int pattern_compile(
-	Unicode *expr_data,
+	unichar *expr_data,
 	const int expr_len,
-	const Unicode *input,
+	const unichar *input,
 	const int input_len,
 	const char *attrs_chars_,
 	struct subpattern *subpatterns)
@@ -885,9 +885,9 @@ int pattern_compile(
 
 /******************************************************************************/
 
-static void pattern_reverse_expression(Unicode *expr_data, const int expr_start);
+static void pattern_reverse_expression(unichar *expr_data, const int expr_start);
 
-static void pattern_reverse_branch(Unicode *expr_data, const int expr_at)
+static void pattern_reverse_branch(unichar *expr_data, const int expr_at)
 {
 	switch(EXPR_TYPE(expr_at))
 	{
@@ -912,9 +912,9 @@ static void pattern_reverse_branch(Unicode *expr_data, const int expr_at)
 	}
 }
 
-static void pattern_reverse_expression(Unicode *expr_data, const int expr_start)
+static void pattern_reverse_expression(unichar *expr_data, const int expr_start)
 {
-	Unicode expr_end, expr_crs, expr_prv;
+	unichar expr_end, expr_crs, expr_prv;
 
 	expr_end = EXPR_NXT(expr_start);
 
@@ -960,14 +960,14 @@ static void pattern_reverse_expression(Unicode *expr_data, const int expr_start)
 	EXPR_PRV(expr_end) = expr_crs;
 }
 
-void pattern_reverse(Unicode *expr_data)
+void pattern_reverse(unichar *expr_data)
 {
 	pattern_reverse_expression(expr_data, 2);
 }
 
 /******************************************************************************/
 
-static int pattern_check_chars(const Unicode input_char, const Unicode *expr_data)
+static int pattern_check_chars(const unichar input_char, const unichar *expr_data)
 {
 	int expr_cnt, i;
 
@@ -982,30 +982,30 @@ static int pattern_check_chars(const Unicode input_char, const Unicode *expr_dat
 	return 1;
 }
 
-static int pattern_check_attrs(const Unicode input_char, const Unicode *expr_data)
+static int pattern_check_attrs(const unichar input_char, const unichar *expr_data)
 {
 	int attrs;
 
 	attrs = ((expr_data[1] << 16) | expr_data[0]);
-	if(!(table_get_unichar_attributes(translate->tables[translate->table_crs], input_char) & attrs))
+	if(!(table_get_character_attributes(translate->tables[translate->table_crs], input_char) & attrs))
 		return 0;
 	return 1;
 }
 
 static int subpattern_check(
-	const Unicode *input,
+	const unichar *input,
 	int *input_crs,
 	const int input_minmax,
 	const int input_dir,
-	const Unicode *expr_data,
+	const unichar *expr_data,
 	struct subpattern *subpatterns);
 
 static int pattern_check_expression(
-	const Unicode * const input,
+	const unichar * const input,
 	int *input_crs,
 	const int input_minmax,
 	const int input_dir,
-	const Unicode * const expr_data,
+	const unichar * const expr_data,
 	struct subpattern *subpatterns,
 	int expr_crs,
 	int not,
@@ -1305,11 +1305,11 @@ static int pattern_check_expression(
 }
 
 static int subpattern_check(
-	const Unicode *input,
+	const unichar *input,
 	int *input_crs,
 	const int input_minmax,
 	const int input_dir,
-	const Unicode *expr_data,
+	const unichar *expr_data,
 	struct subpattern *subpatterns)
 {
 	int ret, *loop_cnts;
@@ -1323,7 +1323,7 @@ static int subpattern_check(
 	pattern_print(stdout, expr_data, attrs_chars);
 	puts("");
 	printf(" ");
-	utf16le_output(stdout, input, 0x100);
+	utf16_output(stdout, input, 0x100);
 	puts("");
 	for(int i = 0; i <= *input_crs; i++)
 		printf(" ");
@@ -1353,11 +1353,11 @@ static int subpattern_check(
 
 int pattern_check(
 	const struct translate *translate_,
-	const Unicode *input,
+	const unichar *input,
 	const int input_start,
 	const int input_minmax,
 	const int input_dir,
-	const Unicode *expr_data,
+	const unichar *expr_data,
 	const char *attrs_chars_,
 	struct subpattern *subpatterns)
 {

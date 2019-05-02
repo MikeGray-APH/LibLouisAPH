@@ -31,10 +31,10 @@
 
 #define UNICHAR_JOIN_MAX  3
 
-struct unichar
+struct character
 {
-	struct unichar *nxt, *joins[UNICHAR_JOIN_MAX];
-	Unicode uchar;
+	struct character *nxt, *joins[UNICHAR_JOIN_MAX];
+	unichar uchar;
 	unsigned int attrs;
 };
 
@@ -45,9 +45,9 @@ struct unichar
 struct filter
 {
 	struct filter *nxt;
-	Unicode *before, *after;
+	unichar *before, *after;
 	int before_len, after_len;
-	Unicode *name;
+	unichar *name;
 	int name_len;
 
 };
@@ -70,13 +70,13 @@ struct mode
 {
 	struct mode *nxt;
 	int id;
-	Unicode begin[INDICATOR_MAX];
-	Unicode end[INDICATOR_MAX];
-	Unicode word[INDICATOR_MAX];
-	Unicode term[INDICATOR_MAX];
-	Unicode symbol[INDICATOR_MAX];
+	unichar begin[INDICATOR_MAX];
+	unichar end[INDICATOR_MAX];
+	unichar word[INDICATOR_MAX];
+	unichar term[INDICATOR_MAX];
+	unichar symbol[INDICATOR_MAX];
 	int begin_len, end_len, word_len, term_len, symbol_len, passage_len;
-	Unicode *name;
+	unichar *name;
 	int name_len;
 };
 
@@ -96,7 +96,7 @@ struct rule
 	unsigned int attrs;
 	enum rule_direction direction;
 	struct rule *chars_nxt, *dots_nxt;
-	Unicode chars[RULE_CHARS_MAX], dots[RULE_DOTS_MAX];
+	unichar chars[RULE_CHARS_MAX], dots[RULE_DOTS_MAX];
 	int chars_len, dots_len;
 	struct filter *filter_forward, *filter_backward;
 };
@@ -165,9 +165,9 @@ struct table
 	struct mode nocontract, capital, numeric, *emphases;
 	int nocontract_set, capital_set, numeric_set, emphases_cnt;
 
-	Unicode marker_user, marker_begin, marker_end, marker_modifier, marker_hard, marker_soft, marker_internal;
+	unichar marker_user, marker_begin, marker_end, marker_modifier, marker_hard, marker_soft, marker_internal;
 
-	struct unichar *unichar_hash[TABLE_UNICHAR_HASH_SIZE];
+	struct character *character_hash[TABLE_UNICHAR_HASH_SIZE];
 
 #ifdef TABLE_ALLOCATE_HASHES
 	struct rule **init_chars_hash, **init_dots_hash;
@@ -225,8 +225,8 @@ void table_fini(struct table *table);
 struct table* table_allocate(void) ATTRIBUTE_FUNCTION_MALLOC;
 void table_free(struct table *table);
 
-struct unichar* unichar_allocate(void) ATTRIBUTE_FUNCTION_MALLOC;
-void unichar_free(struct unichar *unichar);
+struct character* character_allocate(void) ATTRIBUTE_FUNCTION_MALLOC;
+void character_free(struct character *character);
 
 struct mode* mode_allocate(void) ATTRIBUTE_FUNCTION_MALLOC;
 void mode_free(struct mode *mode);
@@ -244,7 +244,7 @@ void rule_free_backward(struct rule *rule);
  *
  * Returns the adjusted length of uchars.
 */
-int table_convert_escape_markers(const struct table *table, Unicode *uchars, const int uchars_len);
+int table_convert_escape_markers(const struct table *table, unichar *uchars, const int uchars_len);
 
 
 /* Returns new rule that was added depending on hash_type, direction, chars,
@@ -259,9 +259,9 @@ struct rule* table_add_rule(
 	const enum rule_direction direction,
 	struct filter *filter_forward,
 	struct filter *filter_backward,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int chars_weight,
 	const int dots_weight);
@@ -277,21 +277,21 @@ const struct rule* table_match_rule(
 	const struct table *table,
 	const enum table_hash_type hash_type,
 	const enum rule_direction direction,
-	const Unicode *uchars,
+	const unichar *uchars,
 	const int uchars_len,
 	const struct rule *at);
 
 
-/* Returns unichar that corresponds to uchar, or NULL if uchar does not
- * correspond to unichar.
+/* Returns character that corresponds to uchar, or NULL if uchar does not
+ * correspond to character.
 */
-struct unichar* table_find_unichar(const struct table *table, const Unicode uchar);
+struct character* table_find_character(const struct table *table, const unichar uchar);
 
 
-/* Returns unichar that corresponds to uchar, adding a new unichar if there is
+/* Returns character that corresponds to uchar, adding a new character if there is
  * not one corresponding to uchar.
 */
-struct unichar* table_find_or_add_unichar(struct table *table, const Unicode uchar);
+struct character* table_find_or_add_character(struct table *table, const unichar uchar);
 
 
 /* Returns table that was loaded and compiled from file file_name, or NULL on
@@ -303,13 +303,13 @@ struct table* table_compile_from_file(const char *file_name);
 
 /* Returns attributes of uchar.
 */
-static inline unsigned int table_get_unichar_attributes(const struct table *table, const Unicode uchar)
+static inline unsigned int table_get_character_attributes(const struct table *table, const unichar uchar)
 {
-	struct unichar *unichar;
+	struct character *character;
 
-	unichar = table_find_unichar(table, uchar);
-	if(unichar)
-		return unichar->attrs;
+	character = table_find_character(table, uchar);
+	if(character)
+		return character->attrs;
 	else
 		return 0;
 }

@@ -43,7 +43,7 @@ void table_fini(struct table *table)
 	memset(&rule_auto, 0, sizeof(struct rule));
 
 	for(i = 0; i < TABLE_UNICHAR_HASH_SIZE; i++)
-		unichar_free(table->unichar_hash[i]);
+		character_free(table->character_hash[i]);
 
 #ifdef TABLE_ALLOCATE_HASHES
 
@@ -249,7 +249,7 @@ void table_free(struct table *table)
 
 /******************************************************************************/
 
-static inline int uchar_get_hash(const Unicode uchar, const unsigned int hash_size)
+static inline int uchar_get_hash(const unichar uchar, const unsigned int hash_size)
 {
 	return uchar % hash_size;
 }
@@ -257,73 +257,73 @@ static inline int uchar_get_hash(const Unicode uchar, const unsigned int hash_si
 /******************************************************************************/
 
 ATTRIBUTE_FUNCTION_MALLOC
-struct unichar* unichar_allocate(void)
+struct character* character_allocate(void)
 {
-	struct unichar *unichar;
+	struct character *character;
 
-	unichar = MALLOC(sizeof(struct unichar));
-	LOG_ALLOCATE_FAIL_RETURN_NULL(unichar)
-	memset(unichar, 0, sizeof(struct unichar));
-	return unichar;
+	character = MALLOC(sizeof(struct character));
+	LOG_ALLOCATE_FAIL_RETURN_NULL(character)
+	memset(character, 0, sizeof(struct character));
+	return character;
 }
 
-void unichar_free(struct unichar *unichar)
+void character_free(struct character *character)
 {
-	if(!unichar)
+	if(!character)
 		return;
 
-	unichar_free(unichar->nxt);
-	FREE(unichar);
+	character_free(character->nxt);
+	FREE(character);
 }
 
 /******************************************************************************/
 
-struct unichar* table_find_unichar(const struct table *table, const Unicode uchar)
+struct character* table_find_character(const struct table *table, const unichar uchar)
 {
-	struct unichar *unichar;
+	struct character *character;
 	int hash;
 
 	hash = uchar_get_hash(uchar, TABLE_UNICHAR_HASH_SIZE);
-	unichar = table->unichar_hash[hash];
+	character = table->character_hash[hash];
 
-	while(unichar)
-	if(unichar->uchar == uchar)
+	while(character)
+	if(character->uchar == uchar)
 		break;
 	else
-		unichar = unichar->nxt;
+		character = character->nxt;
 
-	return unichar;
+	return character;
 }
 
-struct unichar* table_find_or_add_unichar(struct table *table, const Unicode uchar)
+struct character* table_find_or_add_character(struct table *table, const unichar uchar)
 {
-	struct unichar *unichar;
+	struct character *character;
 	int hash;
 
 	hash = uchar_get_hash(uchar, TABLE_UNICHAR_HASH_SIZE);
-	if(!table->unichar_hash[hash])
-		table->unichar_hash[hash] =
-		unichar = unichar_allocate();
+	if(!table->character_hash[hash])
+		table->character_hash[hash] =
+		character = character_allocate();
 	else
 	{
-		unichar = table->unichar_hash[hash];
+		character = table->character_hash[hash];
 
 		/*   find end of list, checking for match
 		     along the way   */
-		while(unichar->nxt)
-		if(unichar->uchar == uchar)
-			return unichar;
+		while(character->nxt)
+		if(character->uchar == uchar)
+			return character;
 		else
-			unichar = unichar->nxt;
-		if(unichar->uchar == uchar)
-			return unichar;
+			character = character->nxt;
+		if(character->uchar == uchar)
+			return character;
 
-		unichar->nxt = unichar_allocate();
-		unichar = unichar->nxt;
+		character->nxt = character_allocate();
+		character = character->nxt;
 	}
 
-	unichar->uchar = uchar;
-	return unichar;
+	character->uchar = uchar;
+	return character;
 }
 
 /******************************************************************************/
@@ -437,7 +437,7 @@ void rule_free_backward(struct rule *rule)
 
 /******************************************************************************/
 
-int table_convert_escape_markers(const struct table *table, Unicode *uchars, const int uchars_len)
+int table_convert_escape_markers(const struct table *table, unichar *uchars, const int uchars_len)
 {
 	int crs, off;
 
@@ -584,9 +584,9 @@ static struct rule* rule_add_new(
 	const unsigned int dots_hash_size,
 	struct filter *filter_forward,
 	struct filter *filter_backward,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int chars_weight,
 	const int dots_weight)
@@ -688,9 +688,9 @@ struct rule* table_add_rule(
 	const enum rule_direction direction,
 	struct filter *filter_forward,
 	struct filter *filter_backward,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
-	const Unicode *dots,
+	const unichar *dots,
 	const int dots_len,
 	const int chars_weight,
 	const int dots_weight)
@@ -998,7 +998,7 @@ struct rule* table_add_rule(
 
 /******************************************************************************/
 
-static int rule_chars_is_match(const struct rule *rule, const Unicode *uchars, const int uchars_len)
+static int rule_chars_is_match(const struct rule *rule, const unichar *uchars, const int uchars_len)
 {
 	int i;
 
@@ -1012,7 +1012,7 @@ static int rule_chars_is_match(const struct rule *rule, const Unicode *uchars, c
 	return 1;
 }
 
-static int rule_dots_is_match(const struct rule *rule, const Unicode *uchars, const int uchars_len)
+static int rule_dots_is_match(const struct rule *rule, const unichar *uchars, const int uchars_len)
 {
 	int i;
 
@@ -1029,7 +1029,7 @@ static int rule_dots_is_match(const struct rule *rule, const Unicode *uchars, co
 static const struct rule* rule_match_forward(
 	const struct rule *const*rule_hash,
 	const unsigned int hash_size,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
 	const struct rule *at)
 {
@@ -1061,7 +1061,7 @@ static const struct rule* rule_match_forward(
 static const struct rule* rule_match_backward(
 	const struct rule * const *rule_hash,
 	const unsigned int hash_size,
-	const Unicode *chars,
+	const unichar *chars,
 	const int chars_len,
 	const struct rule *at)
 {
@@ -1092,7 +1092,7 @@ const struct rule* table_match_rule(
 	const struct table *table,
 	const enum table_hash_type hash_type,
 	const enum rule_direction direction,
-	const Unicode *uchars,
+	const unichar *uchars,
 	const int uchars_len,
 	const struct rule *at)
 {

@@ -35,20 +35,20 @@ static void process_output(FILE *output, const enum table_process_type process)
 	}
 }
 
-static void unichar_output(FILE *output, const struct unichar *unichar)
+static void character_output(FILE *output, const struct character *character)
 {
 	int i;
 
-	utf16le_output_char_escape(output, unichar->uchar);
+	utf16_output_char_escape(output, character->uchar);
 	fputs("\t", output);
-	fprintf(output, "0x%04x   0x%08x", unichar->uchar, unichar->attrs);
+	fprintf(output, "0x%04x   0x%08x", character->uchar, character->attrs);
 
 	fputs("   ", output);
 	for(i = 0; i < UNICHAR_JOIN_MAX; i++)
 	{
 		fputs("[", output);
-		if(unichar->joins[i])
-			utf16le_output_char_escape(output, unichar->joins[i]->uchar);
+		if(character->joins[i])
+			utf16_output_char_escape(output, character->joins[i]->uchar);
 		else
 			fputs(" ", output);
 		fputs("]", output);
@@ -57,44 +57,44 @@ static void unichar_output(FILE *output, const struct unichar *unichar)
 	fputs("\n", output);
 }
 
-static void unichar_output_all(FILE *output, const struct table *table)
+static void character_output_all(FILE *output, const struct table *table)
 {
-	struct unichar *unichar;
+	struct character *character;
 	int i;
 
 	for(i = 0; i < TABLE_UNICHAR_HASH_SIZE; i++)
 	{
-		unichar = table->unichar_hash[i];
-		while(unichar)
+		character = table->character_hash[i];
+		while(character)
 		{
-			unichar_output(output, unichar);
-			unichar = unichar->nxt;
+			character_output(output, character);
+			character = character->nxt;
 		}
 	}
 }
 
-static void unichar_hash_output(FILE *output, const struct table *table)
+static void character_hash_output(FILE *output, const struct table *table)
 {
-	struct unichar *unichar;
+	struct character *character;
 	int i, cnt, most;
 
 	most = 0;
 	for(i = 0; i < TABLE_UNICHAR_HASH_SIZE; i++)
-	if(table->unichar_hash[i])
+	if(table->character_hash[i])
 	{
 		fprintf(output, "[%5d]", i);
-		unichar = table->unichar_hash[i];
+		character = table->character_hash[i];
 		cnt = 0;
-		while(unichar)
+		while(character)
 		{
 			cnt++;
 
 			fputs(" ", output);
-			if(is_space(unichar->uchar))
+			if(is_space(character->uchar))
 				fputs(" ", output);
 			else
-				utf16le_output_char_escape(output, unichar->uchar);
-			unichar = unichar->nxt;
+				utf16_output_char_escape(output, character->uchar);
+			character = character->nxt;
 		}
 		fputs("\n", output);
 
@@ -120,7 +120,7 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 	else
 	for(i = 0; i < mode->begin_len; i++)
 	if(mode->begin[i])
-		utf16le_output_char(output, mode->begin[i]);
+		utf16_output_char(output, mode->begin[i]);
 
 	fputs("  ", output);
 
@@ -130,7 +130,7 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 	else
 	for(i = 0; i < mode->end_len; i++)
 	if(mode->end[i])
-		utf16le_output_char(output, mode->end[i]);
+		utf16_output_char(output, mode->end[i]);
 
 	if(mode->word_len)
 	{
@@ -142,7 +142,7 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 		else
 		for(i = 0; i < mode->word_len; i++)
 		if(mode->word[i])
-			utf16le_output_char(output, mode->word[i]);
+			utf16_output_char(output, mode->word[i]);
 
 		fputs("  ", output);
 
@@ -151,7 +151,7 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 		else
 		for(i = 0; i < mode->term_len; i++)
 		if(mode->term[i])
-			utf16le_output_char(output, mode->term[i]);
+			utf16_output_char(output, mode->term[i]);
 
 		fputs("  ", output);
 
@@ -160,7 +160,7 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 		else
 		for(i = 0; i < mode->symbol_len; i++)
 		if(mode->symbol[i])
-			utf16le_output_char(output, mode->symbol[i]);
+			utf16_output_char(output, mode->symbol[i]);
 
 		fprintf(output, "  %d", mode->passage_len);
 	}
@@ -172,7 +172,7 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 	if(name)
 		fprintf(output, "%s", name);
 	else
-		utf16le_output(output, mode->name, mode->name_len);
+		utf16_output(output, mode->name, mode->name_len);
 
 	fputs("\n", output);
 
@@ -181,14 +181,14 @@ static void mode_output(FILE *output, const struct mode *mode, const char *name)
 
 static char attrs_chars[32];
 
-void pattern_print(FILE *output, const Unicode *expr_data, const char *attrs_chars);
+void pattern_print(FILE *output, const unichar *expr_data, const char *attrs_chars);
 
-static void pattern_print_reverse(FILE *output, Unicode *expr_data, const int expr_len)
+static void pattern_print_reverse(FILE *output, unichar *expr_data, const int expr_len)
 {
-	Unicode *expr_rev;
+	unichar *expr_rev;
 
-	expr_rev = MALLOC(expr_len * sizeof(Unicode));
-	memcpy(expr_rev, expr_data, expr_len * sizeof(Unicode));
+	expr_rev = MALLOC(expr_len * sizeof(unichar));
+	memcpy(expr_rev, expr_data, expr_len * sizeof(unichar));
 	pattern_reverse(expr_rev);
 	pattern_print(output, expr_rev, attrs_chars);
 	FREE(expr_rev);
@@ -205,11 +205,11 @@ static void subpattern_output(FILE *output, const struct subpattern *subpattern)
 
 	fputs("   ", output);
 
-	utf16le_output(output, subpattern->tag, subpattern->tag_len);
+	utf16_output(output, subpattern->tag, subpattern->tag_len);
 
 	fputs("   ", output);
 
-	utf16le_output(output, subpattern->src_data, subpattern->src_len);
+	utf16_output(output, subpattern->src_data, subpattern->src_len);
 
 	for(i = 0; i < subpattern->src_len; i++)
 	{
@@ -238,7 +238,7 @@ static void filter_output(FILE *output, const struct filter *filter)
 
 	fputs("   ", output);
 	if(filter->name)
-		utf16le_output(output, filter->name, filter->name_len);
+		utf16_output(output, filter->name, filter->name_len);
 	else
 		fputs("   -", output);
 
@@ -257,7 +257,7 @@ static void filter_output(FILE *output, const struct filter *filter)
 	fputs("\n", output);
 }
 
-static void output_dots_string(FILE *output, const Unicode *dots, const int dots_len)
+static void output_dots_string(FILE *output, const unichar *dots, const int dots_len)
 {
 	int i;
 
@@ -323,17 +323,17 @@ static void rules_output(FILE *output, const struct rule *const*rule_hash, const
 			if(direction == FORWARD)
 			{
 				if(rule->chars_len == 1)
-					utf16le_output_char_escape(output, rule->chars[0]);
+					utf16_output_char_escape(output, rule->chars[0]);
 				else
-					utf16le_output(output, rule->chars, rule->chars_len);
+					utf16_output(output, rule->chars, rule->chars_len);
 				fputs(" ", output);
 				if(use_dots)
 					output_dots_string(output, rule->dots, rule->dots_len);
 				else
 				if(rule->dots_len == 1)
-					utf16le_output_char_escape(output, rule->dots[0]);
+					utf16_output_char_escape(output, rule->dots[0]);
 				else
-					utf16le_output(output, rule->dots, rule->dots_len);
+					utf16_output(output, rule->dots, rule->dots_len);
 			}
 			else
 			{
@@ -341,14 +341,14 @@ static void rules_output(FILE *output, const struct rule *const*rule_hash, const
 					output_dots_string(output, rule->dots, rule->dots_len);
 				else
 				if(rule->dots_len == 1)
-					utf16le_output_char_escape(output, rule->dots[0]);
+					utf16_output_char_escape(output, rule->dots[0]);
 				else
-					utf16le_output(output, rule->dots, rule->dots_len);
+					utf16_output(output, rule->dots, rule->dots_len);
 				fputs(" ", output);
 				if(rule->chars_len == 1)
-					utf16le_output_char_escape(output, rule->chars[0]);
+					utf16_output_char_escape(output, rule->chars[0]);
 				else
-					utf16le_output(output, rule->chars, rule->chars_len);
+					utf16_output(output, rule->chars, rule->chars_len);
 			}
 			if(rule->attrs)
 				fprintf(output, " <0x%08x>", rule->attrs);
@@ -369,7 +369,7 @@ static void rules_output(FILE *output, const struct rule *const*rule_hash, const
 						fputs("-", output);
 				}
 				else
-					utf16le_output(output, rule->filter_forward->name, rule->filter_forward->name_len);
+					utf16_output(output, rule->filter_forward->name, rule->filter_forward->name_len);
 			}
 
 			if(rule->filter_backward)
@@ -390,7 +390,7 @@ static void rules_output(FILE *output, const struct rule *const*rule_hash, const
 						fputs("-", output);
 				}
 				else
-					utf16le_output(output, rule->filter_backward->name, rule->filter_backward->name_len);
+					utf16_output(output, rule->filter_backward->name, rule->filter_backward->name_len);
 			}
 
 			if(direction == FORWARD)
@@ -417,9 +417,9 @@ void table_output(FILE *output, const struct table *table)
 	process_output(output, table->process);
 	fprintf(output, "\ncontrol:  0x%04x   0x%04x   0x%04x   0x%04x   0x%04x   0x%04x   0x%04x\n", table->marker_user, table->marker_begin, table->marker_end, table->marker_modifier, table->marker_hard, table->marker_soft, table->marker_internal);
 	fputs("\ncharacters:\n", output);
-	unichar_output_all(output, table);
+	character_output_all(output, table);
 	fputs("\ncharacter hash:\n", output);
-	unichar_hash_output(output, table);
+	character_hash_output(output, table);
 	fprintf(output, "\nmodes:  [%d]\n", table->emphases_cnt);
 	mode_output(output, &table->nocontract, "nocontract");
 	mode_output(output, &table->capital, "capital");
