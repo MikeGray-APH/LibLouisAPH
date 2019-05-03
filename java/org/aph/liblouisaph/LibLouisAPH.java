@@ -444,13 +444,21 @@ public class LibLouisAPH
 	{
 		char dotsChars[] = new char[dotsMax];
 
-		int charsToDotsMapInts[] = null;
-		if(charsToDotsMap != null)
-			charsToDotsMapInts = new int[charsString.length()];
+		boolean mapping = false;
+		if(charsToDotsMap != null && dotsToCharsMap != null)
+			mapping = true;
+		if(charsToDotsMap == null && dotsToCharsMap != null)
+			logCallback(LogCallback.LOG_WARNING, "dotsToCharsMap ignored");
+		if(charsToDotsMap != null && dotsToCharsMap == null)
+			logCallback(LogCallback.LOG_WARNING, "charsToDotsMap ignored");
 
+		int charsToDotsMapInts[] = null;
 		int dotsToCharsMapInts[] = null;
-		if(dotsToCharsMap != null)
+		if(mapping)
+		{
+			charsToDotsMapInts = new int[charsString.length()];
 			dotsToCharsMapInts = new int[dotsMax];
+		}
 
 		int length = 0;
 		synchronized(llaphLock)
@@ -463,13 +471,13 @@ public class LibLouisAPH
 		if(length <= 0)
 			return null;
 
-		if(charsToDotsMapInts != null)
-		for(int i = 0; i < charsString.length() && i < charsToDotsMap.length; i++)
-			charsToDotsMap[i] = charsToDotsMapInts[i];
-
-		if(dotsToCharsMapInts != null)
-		for(int i = 0; i < length && i < dotsToCharsMap.length; i++)
-			dotsToCharsMap[i] = dotsToCharsMapInts[i];
+		if(mapping)
+		{
+			for(int i = 0; i < charsString.length() && i < charsToDotsMap.length; i++)
+				charsToDotsMap[i] = charsToDotsMapInts[i];
+			for(int i = 0; i < length && i < dotsToCharsMap.length; i++)
+				dotsToCharsMap[i] = dotsToCharsMapInts[i];
+		}
 
 		return new String(dotsChars, 0, length);
 	}
