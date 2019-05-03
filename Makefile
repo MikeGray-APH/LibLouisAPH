@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.15
+VERSION := 0.2.16
 
 CC = gcc
 
@@ -107,16 +107,19 @@ OBJS_TRANSLATE := \
 CLASSES_JAR := \
 	org/aph/liblouisaph/LogCallback.class \
 	org/aph/liblouisaph/LibLouisAPH.class \
+	org/aph/liblouisaph/Translation.class \
 	org/aph/liblouisaph/MainLogCallback.class \
 	org/aph/liblouisaph/Main.class \
 
 SOURCES_JAR := \
 	org/aph/liblouisaph/LogCallback.java \
+	org/aph/liblouisaph/Translation.java \
 	org/aph/liblouisaph/LibLouisAPH.java \
 	org/aph/liblouisaph/Main.java \
 
 SOURCES_JAVADOC := \
 	org/aph/liblouisaph/LogCallback.java \
+	org/aph/liblouisaph/Translation.java \
 	org/aph/liblouisaph/LibLouisAPH.java \
 
 TABLES := \
@@ -282,7 +285,7 @@ java: build/liblouisAPH-jni.so
 build/java:
 	mkdir -p build/java/
 
-build/java/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java | build/java
+build/java/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java java/org/aph/liblouisaph/Translation.java | build/java
 	javac -d build/java -classpath build/java -sourcepath java $<
 
 build/java/org_aph_liblouisaph_LibLouisAPH.h: build/java/org/aph/liblouisaph/LibLouisAPH.class
@@ -1412,7 +1415,7 @@ dists: dist-jar
 
 dist-jar: dists/jar/LibLouisAPH-$(VERSION).jar
 
-dists/jar/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java | dists/jar
+dists/jar/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java java/org/aph/liblouisaph/Translation.java | dists/jar
 	javac -d dists/jar -classpath dists/jar -sourcepath java $<
 
 dists/jar/manifest.txt: | dists/jar
@@ -1423,7 +1426,7 @@ dists/jar/manifest.txt: | dists/jar
 	@echo >> $@
 
 dists/jar/LibLouisAPH-$(VERSION).jar: dists/jar/manifest.txt dists/jar/org/aph/liblouisaph/LibLouisAPH.class | dists/jar
-	jar cfm $@ dists/jar/manifest.txt -C dists/jar org/aph/liblouisaph/LibLouisAPH.class -C dists/jar org/aph/liblouisaph/LogCallback.class
+	jar cfm $@ dists/jar/manifest.txt -C dists/jar org/aph/liblouisaph/LibLouisAPH.class -C dists/jar org/aph/liblouisaph/LogCallback.class -C dists/jar org/aph/liblouisaph/Translation.class
 
 dists/jar:
 	mkdir -p dists/jar/

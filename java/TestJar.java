@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import org.aph.liblouisaph.LibLouisAPH;
 import org.aph.liblouisaph.LogCallback;
+import org.aph.liblouisaph.Translation;
 
 public class TestJar
 {
@@ -193,7 +194,7 @@ public class TestJar
 
 /******************************************************************************/
 
-	private static void testTranslation(String chars, String cells, String tables, String conversion, int charsToDots[], int dotsToChars[], int cursors[])
+	private static void testTranslations(String chars, String cells, String tables, String conversion, int charsToDots[], int dotsToChars[], int cursors[])
 	{
 		int inputToOutput[] = new int[0x100];
 		int outputToInput[] = new int[0x100];
@@ -333,6 +334,101 @@ public class TestJar
 		outputLogs();
 	}
 
+	private static void testTranslation(String chars, String dots, String tables, String conversion, int charsToDotsMap[], int dotsToCharsMap[], int cursors[])
+	{
+		Translation translation;
+
+		output.print("translate forward         = ");
+		output.flush();
+		if(console != output)
+		{
+			console.print("translate forward:  ");
+			console.flush();
+		}
+
+		translation = LibLouisAPH.translate(chars, tables, conversion, true, true, cursors[0]);
+		if(translation == null)
+		{
+			output.println();
+			outputLogsError("ERROR:  translate forward:  null");
+		}
+		output.println(translation.dots);
+		output.flush();
+
+		if(!translation.chars.equals(chars))
+			outputLogsError("ERROR:  translate.chars forward:  " + chars);
+
+		if(!translation.dots.equals(dots))
+			outputLogsError("ERROR:  translate.dots forward:  " + dots);
+
+		if(translation.charsToDotsMap.length != charsToDotsMap.length)
+			outputLogsError("ERROR:  translate.charsToDotsMap.length forward:  " + translation.charsToDotsMap.length + " != " + charsToDotsMap.length);
+		for(int i = 0; i < charsToDotsMap.length; i++)
+		if(translation.charsToDotsMap[i] != charsToDotsMap[i])
+			outputLogsError("ERROR:  translate.charsToDotsMap forward");
+
+		if(translation.dotsToCharsMap.length != dotsToCharsMap.length)
+			outputLogsError("ERROR:  translate.dotsToCharsMap.length forward:  " + translation.dotsToCharsMap.length + " != " + dotsToCharsMap.length);
+		for(int i = 0; i < dotsToCharsMap.length; i++)
+		if(translation.dotsToCharsMap[i] != dotsToCharsMap[i])
+			outputLogsError("ERROR:  translate.dotsToCharsMap forward");
+
+		if(translation.cursorChars != cursors[0])
+			outputLogsError("ERROR:  translation.cursorChars forward:  " + translation.cursorChars + " != " + cursors[0]);
+		if(translation.cursorDots != cursors[1])
+			outputLogsError("ERROR:  translation.cursorDots forward:  " + translation.cursorDots + " != " + cursors[1]);
+
+		if(console != output)
+			console.println("PASS");
+		outputLogs();
+
+
+		/*   test backward   */
+		output.print("translate backward        = ");
+		output.flush();
+		if(console != output)
+		{
+			console.print("translate backward:  ");
+			console.flush();
+		}
+
+		translation = LibLouisAPH.translate(dots, tables, conversion, false, true, cursors[3]);
+		if(translation == null)
+		{
+			output.println();
+			outputLogsError("ERROR:  translate backward:  null");
+		}
+		output.println(translation.chars);
+		output.flush();
+
+		if(!translation.chars.equals(chars))
+			outputLogsError("ERROR:  translate.chars backward:  " + chars);
+
+		if(!translation.dots.equals(dots))
+			outputLogsError("ERROR:  translate.dots backward:  " + dots);
+
+		if(translation.charsToDotsMap.length != charsToDotsMap.length)
+			outputLogsError("ERROR:  translate.charsToDotsMap.length backward:  " + translation.charsToDotsMap.length + " != " + charsToDotsMap.length);
+		for(int i = 0; i < charsToDotsMap.length; i++)
+		if(translation.charsToDotsMap[i] != charsToDotsMap[i])
+			outputLogsError("ERROR:  translate.charsToDotsMap backward");
+
+		if(translation.dotsToCharsMap.length != dotsToCharsMap.length)
+			outputLogsError("ERROR:  translate.dotsToCharsMap.length backward:  " + translation.dotsToCharsMap.length + " != " + dotsToCharsMap.length);
+		for(int i = 0; i < dotsToCharsMap.length; i++)
+		if(translation.dotsToCharsMap[i] != dotsToCharsMap[i])
+			outputLogsError("ERROR:  translate.dotsToCharsMap backward");
+
+		if(translation.cursorChars != cursors[2])
+			outputLogsError("ERROR:  translation.cursorChars backward:  " + translation.cursorChars + " != " + cursors[2]);
+		if(translation.cursorDots != cursors[3])
+			outputLogsError("ERROR:  translation.cursorDots backward:  " + translation.cursorDots + " != " + cursors[3]);
+
+		if(console != output)
+			console.println("PASS");
+		outputLogs();
+	}
+
 /******************************************************************************/
 
 	private static void doTests()
@@ -344,7 +440,7 @@ public class TestJar
 		testGetPaths(null, true);
 		testSetPaths("tables");
 		testAddPaths("test/tables", "tables:test/tables");
-		testTranslation(
+		testTranslations(
 			"x xx xxx xx x",
 			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u2815\u282a\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
 			"link.rst",
@@ -356,6 +452,18 @@ public class TestJar
 			"\u2815\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u2815\u282a\u282a\u2800\u2815\u282a\u2815\u282a\u2800\u2815\u282a",
 			">< ><>< >><< ><>< ><",
 			"link.cvt");
+		testTranslation(
+			"x xx xxx xx x",
+			  "\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u2800"
+			+ "\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u2800"
+			+ "\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u2800"
+			+ "\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d\u2800"
+			+ "\u282d\u282d\u282d\u282d\u282d\u2815\u282a\u282d\u282d\u282d\u282d\u282d",
+			"java.rst",
+			null,
+			new int[]{0,12,13,25,37,38,50,62,74,75,87,99,100,},
+			new int[]{0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,8,9,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,11,12,12,12,12,12,12,12,12,12,12,12,12,},
+			new int[]{2,13,2,15});
 
 		if(console != output)
 		{

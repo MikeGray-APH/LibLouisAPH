@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -567,6 +568,120 @@ public class LibLouisAPH
 	public static String convertBackward(String cellsString, String conversion)
 	{
 		return convert(cellsString, conversion, false);
+	}
+
+/******************************************************************************/
+
+	/**
+	 * Returns a {@code Translation } object of {@code input}.
+	 *
+	 * @param input           text to be translated
+	 * @param tables          names of translation tables
+	 * @param conversion      name of conversion table, or {@code null }
+	 * @param forward         {@code true } for forward translation, else
+	 *                        backward translation
+	 * @param mapping         {@code true } to include mappings
+	 * @param cursor          cursor position to be mapped, or -1 to ignore
+	 *
+	 * @return  {@code Translation } object containing the translation,
+	 *          mappings, and cursor positions, or {@code null } if an error
+	 *          occurred
+	 */
+	public static Translation translate(String input, String tables, String conversion, boolean forward, boolean mapping, int cursor)
+	{
+		char output[] = new char[input.length() * 4];
+
+		int inputToOutputMap[] = null;
+		int outputToInputMap[] = null;
+		if(mapping)
+		{
+			inputToOutputMap = new int[input.length()];
+			outputToInputMap = new int[output.length];
+		}
+
+		int cursorMap[] = null;
+		if(cursor >= 0)
+		{
+			cursorMap = new int[1];
+			cursorMap[0] = cursor;
+		}
+
+		int length = 0;
+		synchronized(llaphLock)
+		{
+			if(forward)
+				length = louis_translate(output, input, tables, conversion, +1, inputToOutputMap, outputToInputMap, cursorMap);
+			else
+				length = louis_translate(output, input, tables, conversion, -1, inputToOutputMap, outputToInputMap, cursorMap);
+		}
+		if(length <= 0)
+			return null;
+
+		if(length >= output.length)
+		{
+			logCallback(LogCallback.LOG_WARNING, "increasing output length to " + length);
+			output = new char[length];
+			if(mapping)
+				outputToInputMap = new int[output.length];
+			if(cursorMap != null)
+				cursorMap[0] = cursor;
+
+			length = 0;
+			synchronized(llaphLock)
+			{
+				if(forward)
+					length = louis_translate(output, input, tables, conversion, +1, inputToOutputMap, outputToInputMap, cursorMap);
+				else
+					length = louis_translate(output, input, tables, conversion, -1, inputToOutputMap, outputToInputMap, cursorMap);
+			}
+			if(length <= 0)
+				return null;
+		}
+
+		Translation translation = new Translation();
+		translation.tables = tables;
+		translation.conversion = conversion;
+
+		if(forward)
+		{
+			translation.chars = input;
+			translation.dots = new String(output, 0, length);
+
+			if(inputToOutputMap != null)
+				translation.charsToDotsMap = inputToOutputMap;
+			if(outputToInputMap != null)
+				translation.dotsToCharsMap = Arrays.copyOf(outputToInputMap, length);
+
+			if(cursorMap != null)
+			{
+				translation.cursorChars = cursor;
+				translation.cursorDots = cursorMap[0];
+			}
+			else
+				translation.cursorChars =
+				translation.cursorDots = -1;
+		}
+		else
+		{
+			translation.chars = new String(output, 0, length);
+			translation.dots = input;
+
+			if(inputToOutputMap != null)
+				translation.charsToDotsMap = Arrays.copyOf(outputToInputMap, length);
+			if(outputToInputMap != null)
+				translation.dotsToCharsMap = inputToOutputMap;
+
+			if(cursorMap != null)
+			{
+				translation.cursorChars = cursorMap[0];
+				translation.cursorDots = cursor;
+			}
+			else
+				translation.cursorChars =
+				translation.cursorDots = -1;
+		}
+
+		return translation;
 	}
 
 /******************************************************************************/
