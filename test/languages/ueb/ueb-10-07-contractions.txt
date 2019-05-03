@@ -570,9 +570,9 @@ toenail TOENAIL
 \"Sudden!\" 8,SUDD560
 \"Comin'?\" 8,COM9'80
 linen… L95444
-\Bitalic\Bbein'\Eitalic\E .129'
-(bein') \"<29'\">
-##FAIL bein' 2IN'
+##FAIL \Bitalic\Bbein'\Eitalic\E .129'
+##FAIL (bein') \"<29'\">
+bein' 2IN'
 ##FAIL “bein'” ^82IN'^0
 
 #   10.7.1 page 125

@@ -207,9 +207,11 @@ uses - - rule trans for 123456
 uses - - rule trans of 12356
 
 rule trans aeroflot 1-12456-135-124-123-135-2345
+rule trans aerofoil 1-12456-135-124-135-24-123
 rule trans biofeedback 12-24-135-124-15-1246-12-1-14-13
 rule trans chlorofluorocarbon 16-123-135-1235-135-124-123-136-135-1235-135-14-345-12-135-1345
 rule trans chloroform 16-123-135-1235-135-123456-134
+rule trans cofounder 14-135-124-46-145-12456
 rule trans filofax 124-24-123-135-124-1-1346
 rule trans hydrofoil 125-13456-145-1235-135-124-135-24-123
 rule trans insofar 35-234-135-124-345
@@ -218,9 +220,11 @@ rule trans microfilm 134-24-14-1235-135-124-24-123-134
 rule trans microwave 134-24-14-1235-135-2456-1-1236-15
 rule trans microwaved 134-24-14-1235-135-2456-1-1236-1246
 rule trans microwaving 134-24-14-1235-135-2456-1-1236-346
+rule trans photoflash 1234-125-135-2345-135-124-123-1-146
 rule trans pianoforte 1234-24-1-1345-135-123456-2345-15
 rule trans proforma 1234-1235-135-123456-134-1
 rule trans retrofit 1235-15-2345-1235-135-124-24-2345
+rule trans retroflex 1235-15-2345-1235-135-124-123-15-1346
 rule trans riboflavin 1235-24-12-135-124-123-1-1236-35
 rule trans styrofoam 34-13456-1235-135-124-135-1-134
 rule trans twofer 2345-2456-135-124-12456
@@ -262,7 +266,10 @@ rule trans prostheses 1234-1235-135-234-2346-234-15-234
 rule trans prosthesis 1234-1235-135-234-2346-234-24-234
 rule trans prosthetic 1234-1235-135-234-2346-2345-24-14
 rule trans softhearted 234-12356-2345-125-15-345-2345-1246
+rule trans sontheim 234-135-1345-2345-125-15-24-134
+rule trans sontheimer 234-135-1345-2345-125-15-24-134-12456
 rule trans southeast 234-1256-1456-2-34
+rule trans southend 234-1256-1456-26-145
 rule trans sweetheart 234-2456-15-15-2345-125-15-345-2345
 rule trans thence 1456-56-15
 
@@ -282,6 +289,8 @@ use word_whole_begin_+ word_whole_begin_-
 uses - - rule trans ar 345
 
 rule trans aright 1-5-1235
+rule trans flearidden 124-123-15-1-1235-24-145-145-26   fywk
+rule trans indiarubber 35-145-24-1-1235-136-23-12456   fywk
 rule trans infrared 35-124-1235-1-1235-1246
 rule trans tearoom 2345-2-1235-135-135-134
 
@@ -335,6 +344,7 @@ uses - - rule trans gh 126
 rule trans bighearted 12-24-1245-125-15-345-2345-1246
 rule trans bighorn 12-24-1245-125-135-1235-1345
 rule trans bunghole 12-136-1345-1245-125-135-123-15
+rule trans cunnyngham 14-136-1345-1345-13456-1345-1245-125-1-134
 rule trans doghouse 145-135-1245-125-1256-234-15
 rule trans foghorn 124-135-1245-125-135-1235-1345
 rule trans pigheaded 1234-24-1245-125-2-145-1246
@@ -356,6 +366,8 @@ rule trans vainglory 1236-1-35-1245-123-135-1235-13456
 uses word_whole_+ word_whole_- rule trans ou 135-136
 uses - - rule trans ou 1256
 
+uses word_whole_+ word_whole_- rule trans prounion 1234-1235-135-136-1345-24-135-1345
+
 ## ow
 uses - - rule trans ow 246
 
@@ -373,6 +385,7 @@ uses word_whole_+ word_whole_- rule trans sh 234-125
 uses - not_modifier_45_- rule trans sh 146
 
 rule trans asshole 1-234-234-125-135-123-15
+rule trans deshabille 145-15-234-125-1-12-24-123-123-15
 rule trans chisholm 16-24-234-125-135-123-134
 rule trans dachshund 145-1-16-234-125-136-1345-145
 rule trans florsheim 124-123-135-1235-234-125-15-24-134
@@ -382,6 +395,7 @@ rule trans mishandle 134-24-234-125-12346-123-15
 rule trans mishandled 134-24-234-125-12346-123-1246
 rule trans mishandling 134-24-234-125-12346-123-346
 rule trans mishap 134-24-234-125-1-1234
+rule trans mishear 134-24-234-125-15-345
 
 ## st   10.4.2   ⠘⠌acute
 uses word_whole_+ word_whole_- rule trans st 234-2345
@@ -420,6 +434,7 @@ rule trans adulthood 1-145-136-123-2345-125-135-135-145
 rule trans anthill 1-1345-2345-125-24-123-123
 rule trans bartholdi 12-345-2345-125-135-123-145-24
 rule trans beethoven 12-15-15-2345-125-135-1236-26
+rule trans carthorse 14-345-2345-125-135-1235-234-15
 rule trans courthouse 14-1256-1235-2345-125-1256-234-15
 rule trans foothill 124-135-135-2345-125-24-123-123
 rule trans foothold 124-135-135-2345-125-135-123-145
@@ -449,6 +464,7 @@ rule trans warthog 2456-345-2345-125-135-1245
 uses word_whole_+ word_whole_- rule trans wh 2456-125
 uses - - rule trans wh 156
 
+rule trans newhaven 1345-15-2456-125-1-1236-26
 rule trans rawhide 1235-1-2456-125-24-145-15
 rule trans sawhorse 234-1-2456-125-135-1235-234-15
 
@@ -568,10 +584,15 @@ match trans @[WORD_<+] be [bfhjmopqwxz]   @[WORD_<-] 23 @[B_>-]|@[F_>-]|@[H_>-]|
 
 use word_whole_+ word_whole_-
 rule trans bede 12-1246-15
+rule trans bein 23-24-1345
 rule trans bela 12-15-123-1
 use
 
-uses word_whole_begin_+ word_whole_begin_- rule trans beretta 12-12456-15-2345-2345-1
+use word_whole_begin_+ word_whole_begin_-
+rule trans beretta 12-12456-15-2345-2345-1
+rule trans betws 12-15-2345-2456-234
+use
+
 match trans @[WORD_<+] benet @[APOSS_+]@[WORD_>+]   @[WORD_<-] 23-1345-15-2345 @[APOSS_-]@[WORD_>-]
 
 ## cc   10.6.5   10.6.6   ⠈⠒stroke      ⠘⠒diaeresis
@@ -626,6 +647,7 @@ rule trans disc 145-24-234-14
 rule trans discharacter 256-5-16
 rule trans dish 145-24-146
 rule trans diss 145-24-234-234
+rule trans disulphide 145-24-234-136-123-1234-125-24-145-15
 use
 
 ## ea   10.6.5   10.6.6   10.6.7
@@ -639,6 +661,7 @@ rule trans wiseacr 2456-24-234-15-1-14-1235
 use word_whole_+ word_whole_-
 rule trans leann 123-15-1-1345-1345       # leanness
 rule trans leanne 123-15-1-1345-1345-15   # leanness
+rule trans preadmit 1234-1235-15-1-145-134-24-2345
 
 use word_whole_begin_+ word_whole_begin_-
 rule trans boreas 12-135-1235-15-1-234
@@ -729,6 +752,11 @@ uses not_modifier_<+ - rule trans character 5-16
 ## day
 uses not_modifier_<+ - rule trans day 5-145
 
+use word_whole_begin_+ word_whole_begin_-
+rule trans dayan 145-1-13456-1-1345
+rule trans whaddaya 156-1-145-145-1-13456-1
+use
+
 ## ever   10.7.4
 uses not_modifier_<+ - rule trans ever 5-15
 
@@ -783,6 +811,8 @@ rule trans severed 234-5-15-1246
 
 use
 
+rule trans keever 13-15-15-1236-12456   fywk
+
 ## father
 uses not_modifier_<+ - rule trans father 5-124
 
@@ -800,6 +830,7 @@ uses not_modifier_<+ - rule trans here 5-125
 
 use word_whole_begin_+ word_whole_begin_-
 rule trans adhered 1-145-125-12456-1246
+rule trans adherer 1-145-125-12456-12456
 rule trans adherence 1-145-125-12456-56-15
 rule trans adherent 1-145-125-12456-26-2345
 rule trans ciphered 14-24-1234-125-12456-1246
@@ -1049,6 +1080,8 @@ uses not_modifier_<+ - rule trans word 45-2456
 ## work
 uses not_modifier_<+ - rule trans work 5-2456
 
+uses word_whole_begin_+ word_whole_begin_- rule trans dworkin 145-2456-135-1235-13-35
+
 ## world
 uses not_modifier_<+ - rule trans world 456-2456
 
@@ -1099,10 +1132,11 @@ uses word_whole_begin_+ word_whole_begin_- rule trans overfull 135-1236-12456-12
 @mark_mod_final_letter ity 56-13456
 
 use word_whole_+ word_whole_-
+rule trans antitype 1-1345-2345-24-2345-13456-1234-15
 rule trans biscuity 12-24-234-14-136-24-2345-13456
 rule trans dacoity 145-1-14-135-24-2345-13456
 rule trans fruity 124-1235-136-24-2345-13456
-rule trans hoity-toity 124-135-24-2345-13456-36-2345-135-24-2345-13456
+rule trans hoity-toity 125-135-24-2345-13456-36-2345-135-24-2345-13456
 rule trans rabbity 1235-1-23-24-2345-13456
 rule trans pityard 1234-24-2345-13456-345-145
 use
@@ -1122,6 +1156,7 @@ use
 @mark_mod_final_letter ness 56-234
 
 use word_whole_begin_+ word_whole_begin_-
+rule trans captainess 14-1-1234-2345-1-24-35-15-234-234
 rule trans chieftainess 16-24-15-124-2345-1-35-15-234-234
 rule trans citizeness 14-24-2345-24-1356-26-15-234-234
 rule trans heatheness 125-2-2346-1345-15-234-234
@@ -1867,13 +1902,6 @@ use word_whole_+ word_whole_-
 @shortform_indicator   unrepaid   136-1345-1235-15-234-145 unrepd Unrepd UNREPD
 @shortform_indicator   unsaid     136-1345-234-145 unsd Unsd UNSD
 use
-
-
-########################################
-#   misc
-########################################
-
-uses word_whole_+ word_whole_- rule trans rared 1235-1-1235-1246
 
 
 ########################################

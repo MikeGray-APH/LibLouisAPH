@@ -774,12 +774,14 @@ rule trans      ~ 4-35       # tilde (swung dash)
 rule trans \x00a1 45-46-235   # ¡ inverted exclamation
 rule trans \x00a2 4-14        # ¢ cent
 rule trans \x00a3 4-123       # £ pound
-#ule trans \x00a4 1246        # ¤ curency
+
+rule -forward trans \x00a4 1246   # ¤ curency   conflicts with ring modifier
+
 rule trans \x00a5 4-13456     # ¥ yen
 rule trans \x00a6 46-1256     # ¦ broken bar
 rule trans \x00a7 45-234      # § section
 rule trans \x00a9 45-14       # © copyright
-#ule \x00aa                   # ª feminine ordinal
+#ule trans \x00aa 0           # ª feminine ordinal
 rule trans \x00ab 456-236     # « opening double angle quotation
 rule trans \x00ac 4-1456      # ¬ not
 rule trans \x00ae 45-1235     # ® registered
@@ -808,7 +810,7 @@ rule trans      \x2122 45-2345           # ™ trademark
 @mark_mod_trans \x2193 56-1256-146       # ↓
 @mark_mod_trans \x21b5 56-1256-256-146   # ↵
 
-#ule trans \x25aa 456-256   # ▪
+rule -forward trans \x25aa 456-256   # ▪   conflicts with •
 
 rule trans      \x2640 45-1346    # ♀ female
 rule trans      \x2642 45-13456   # ♂ male
@@ -826,7 +828,8 @@ rule trans \x3003 5-2   # 〃 ditto mark
 rule trans \x00b0 45-245    # ° degree
 rule trans \x00b1 456-235   # ± plus or minus
 rule trans \x00b5 46-134    # µ micro   may be used instead of \x03bc μ
-#ule trans \x00b7 4-16      # · dot   conflicts with solidus modifier
+
+rule -forward trans \x00b7 4-16   # · dot   conflicts with solidus modifier
 
 @mark_mod_trans \x00d7 5-236   # × times
 rule trans \x00f7 5-34         # ÷ divide
@@ -859,11 +862,17 @@ rule trans      \x2227 4-236          # ∧ logical and
 rule trans      \x2228 4-235          # ∨ logical or
 rule trans      \x2229 46-236         # ∩ set intersection
 rule trans      \x222a 46-235         # ∪ set union
-#ule trans      \x222b 2346           # ∫ integral   conflicts with the
+
+rule -forward trans \x222b 2346   # ∫ integral   conflicts with the
+
 rule trans      \x222e 4-2346         # ∮ contour integral
-#ule trans      \x2234 6-16           # ∴ therefore   conlicts with Child
+
+rule -forward trans \x2234 6-16   # ∴ therefore   conlicts with Child
+
 rule trans      \x2235 4-34           # ∵ because
-#ule trans      \x2237 25-25          # ∷ proportion   conflicts with ::
+
+rule -forward trans \x2237 25-25   # ∷ proportion   conflicts with ::
+
 rule trans      \x2243 456-35         # ≃ asymptotically equal to
 rule trans      \x2245 5-456-35       # ≅ approximately equal to
 rule trans      \x2248 45-35          # ≈ almost equal to
@@ -894,6 +903,8 @@ rule trans      \x22c5 5-256          # ⋅ dot operator
 
 rule -after trans \x2329 4-126   # 〈 left angle
 rule -after trans \x232A 4-345   # 〉 right angle
+
+rule trans \x2ae4 46-456-25   # ⫤ reverse 'is valid' sign
 
 rule -after trans \x3008 4-126   # 〈 left angle
 rule -after trans \x3009 4-345   # 〉 right angle
@@ -977,6 +988,8 @@ eom
 @uplo \x03a8 \x03c8 46-13456   # Ψψ Psi
 @uplo \x03a9 \x03c9 46-2456    # Ωω Omega
 
+rule -after trans \x03c2 46-234   # ς
+
 
 #   ambiguous with final-letters
 match premode %a Δ -   @[LETTER_<-] \;56;Δ -
@@ -989,5 +1002,24 @@ match premode %a Τ -   @[LETTER_<-] \;56;Τ -
 match premode %a τ -   @[LETTER_<-] \;56;τ -
 match premode %a Σ -   @[LETTER_<-] \;56;Σ -
 match premode %a σ -   @[LETTER_<-] \;56;σ -
+
+
+########################################
+#   Unicode Miscellaneous
+########################################
+
+rule trans \x21cc 45-456-2356   # ⇌
+
+rule trans \x29b5 46-245   # ⦵
+
+@uplo \x00de \x00fe 3456-2346    # Þþ thorn
+@uplo \x00d0 \x00f0 3456-1246    # Ðð eth
+@uplo \x01f7 \x01bf 3456-2456    # Ƿƿ wynn (wen)
+@uplo \x021c \x021d 3456-13456   # Ȝȝ yogh
+
+rule trans \x02e6 45-46-14   # ˦ high tone
+rule trans \x02e7 45-46-25   # ˧ mid tone
+rule trans \x02e8 45-46-36   # ˨ low tone
+
 
 ################################################################################
