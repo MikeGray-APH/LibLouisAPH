@@ -557,23 +557,12 @@ static void log_callback(const int level, const char *message)
 #define SOFT(tag)      "\uf006" #tag "\uf006"
 #define INTERNAL(tag)  "\uf007" #tag "\uf007"
 
-//#define TEST_INPUT(input)  test_input((const struct table * const*)&table, 1, conversion, input)
-#define TEST_INPUT(input)  test_input_line((const struct table * const*)&table, 1, conversion, input)
-//#define TEST_INPUT(input)  test_input_both_line((const struct table * const*)&table, 1, conversion, input)
-//#define TEST_INPUT(input)  test_input_both_pass((const struct table * const*)&table, 1, conversion, input)
-//#define TEST_INPUT(input)  test_input_mapping((const struct table * const*)&table, 1, conversion, input)
-//#define TEST_INPUT(input)  test_input_both_mapping((const struct table * const*)&table, 1, conversion, input)
-//#define TEST_INPUT(input)  test_input_mapping_vert((const struct table * const*)&table, 1, conversion, input)
+#define TEST_INPUT_TABLE(input)  test_input_line((const struct table * const*)&table, 1, conversion, input)
 
-int main(void)
+static int test_input_compiled(void)
 {
 	struct table *table;
 	struct conversion *conversion;
-
-	//int louis_get_version(char *version, const int version_max);
-	//char version[0x40] = {0};
-	//louis_get_version(version, 0x40);
-	//printf("%s\n", version);
 
 	table = NULL;
 	conversion = NULL;
@@ -585,28 +574,115 @@ int main(void)
 	//unsetenv("LOUIS_TABLEPATH");
 	//setenv("LOUIS_TABLEPATH", "tables", 0);
 	//lookup_add_paths("test/tables:tables");
-	//table = lookup_table("english-ueb-grade2.rst");  if(!table) return 1; don't free table
 
-	//table = table_compile_from_file("debug/table.rst");  if(!table) return 1;
-	table = table_compile_from_file("tables/english-ueb-grade2.rst");  if(!table) return 1;
-	//table = table_compile_from_file("tables/english-ueb-math.rst");  if(!table) return 1;
-	//table = table_compile_from_file("tables/nemeth-ueb.rst");  if(!table) return 1;
-
+	table = table_compile_from_file("debug/table.rst");
+	//table = table_compile_from_file("tables/english-ueb-grade2.rst");
+	if(!table)
+		return 1;
 	//table_output(stdout, table);  puts("");
 
 	//conversion = conversion_compile_from_file("tables/ascii.cvt");  if(!conversion) return 1;
 	//conversion_output(stdout, conversion);  puts("");
 
-	TEST_INPUT("LibLouisAPH");
+	TEST_INPUT_TABLE("liblouisaph");
+	//TEST_INPUT_TABLE("LibLouisAPH");
 
-	if(table)
-		table_free(table);
+	table_free(table);
 	if(conversion)
 		conversion_free(conversion);
+	lookup_fini();
+	MEM_FINI
+
+	return 0;
+}
+
+static int test_input_table(void)
+{
+	struct table *table;
+	struct conversion *conversion;
+
+	table = NULL;
+	conversion = NULL;
+
+	MEM_INIT
+
+	log_set_callback(log_callback);
+
+	//unsetenv("LOUIS_TABLEPATH");
+	//setenv("LOUIS_TABLEPATH", "tables", 0);
+	//lookup_add_paths("test/tables:tables");
+
+	table = lookup_table("debug/table.rst");
+	//table = lookup_table("tables/english-ueb-grade2.rst");
+	if(!table)
+		return 1;
+	//table_output(stdout, table_compiled);  puts("");
+
+	//conversion = lookup_conversion("tables/ascii.cvt");  if(!conversion) return 1;
+	//conversion_output(stdout, conversion);  puts("");
+
+	TEST_INPUT_TABLE("liblouisaph");
+	//TEST_INPUT_TABLE("LibLouisAPH");
 
 	lookup_fini();
 	MEM_FINI
+
 	return 0;
+}
+
+//#define TEST_INPUT(input)  test_input((const struct table * const*)tables, table_cnt, conversion, input)
+#define TEST_INPUT(input)  test_input_line((const struct table * const*)tables, table_cnt, conversion, input)
+//#define TEST_INPUT(input)  test_input_both_line((const struct table * const*)tables, table_cnt, conversion, input)
+//#define TEST_INPUT(input)  test_input_both_pass((const struct table * const*)tables, table_cnt, conversion, input)
+//#define TEST_INPUT(input)  test_input_mapping((const struct table * const*)tables, table_cnt, conversion, input)
+//#define TEST_INPUT(input)  test_input_both_mapping((const struct table * const*)tables, table_cnt, conversion, input)
+//#define TEST_INPUT(input)  test_input_mapping_vert((const struct table * const*)tables, table_cnt, conversion, input)
+
+static int test_input_tables(void)
+{
+	struct table **tables;
+	struct conversion *conversion;
+	int table_cnt, i;
+
+	tables = NULL;
+	conversion = NULL;
+
+	MEM_INIT
+
+	log_set_callback(log_callback);
+
+	//unsetenv("LOUIS_TABLEPATH");
+	//setenv("LOUIS_TABLEPATH", "tables", 0);
+	//lookup_add_paths("test/tables:tables");
+
+	//tables = lookup_tables(&table_cnt, "debug/table.rst");
+	tables = lookup_tables(&table_cnt, "tables/english-ueb-grade2.rst");
+	//tables = lookup_tables(&table_cnt, "debug/table.rst~tables/english-ueb-grade2.rst");
+	//tables = lookup_tables(&table_cnt, "tables/english-ueb-grade2.rst~debug/table.rst");
+	if(!tables)
+		return 1;
+	//for(i = 0; i < table_cnt; i++){  table_output(stdout, tables[i]);  puts("");  }
+
+	//conversion = lookup_conversion("tables/ascii.cvt");  if(!conversion) return 1;
+	//conversion_output(stdout, conversion);  puts("");
+
+	//TEST_INPUT("unicode_braille_chars");
+	//TEST_INPUT("liblouisaph");
+	TEST_INPUT("LibLouisAPH");
+
+	FREE(tables);
+	lookup_fini();
+	MEM_FINI
+
+	return 0;
+}
+
+int main(void)
+{
+	//return test_input_compiled();
+	//return test_input_table();
+	return test_input_tables();
+	//return 0;
 }
 
 /******************************************************************************/
