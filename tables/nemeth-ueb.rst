@@ -489,10 +489,10 @@ rule trans \x0026 456-12346 &
 rule trans \x0028 12356 (
 rule trans \x0029 23456 )
 rule trans \x002a 4-3456 *
-rule trans \x002c 6 ,   decimal point
+rule trans \x002c 6 ,
 rule trans \x002b 346 +
 rule trans \x002d 36 -
-rule trans \x002e 6 .   decimal point
+rule trans \x002e 46 .   decimal point
 rule trans \x002f 456-34   /
 rule trans \x003a 25 :
 rule trans \x003b 23 ;
@@ -523,7 +523,7 @@ rule trans \x2011 36 ‑   non-breaking hyphen
 rule trans \x2016 1256-1256 ‖   double vertical bar
 
 rule trans \x2020 456-12456 †
-rule trans \x2020 456-456-12456 ‡
+rule trans \x2021 456-456-12456 ‡
 
 rule trans \x2032 3 ′   prime
 rule trans \x2033 3-3 ″   double primes
@@ -583,6 +583,7 @@ rule trans \x221e 6-123456 ∞
 rule trans \x2211 46-6-234 ∑
 rule trans \x2212 36 −   minus sign
 rule trans \x2213 36-346 ∓   minus plus
+rule trans \x2220 1246-246 ∠ angle
 rule trans \x2223 1256 ∣
 rule init  \x2224 ⠌∣   ∤
 rule trans \x2227 4-146 ∧
@@ -596,11 +597,24 @@ rule trans \x222e 2346-4-1246-14-12456 ∮
 rule trans \x2234 6-16 ∴
 rule trans \x2235 4-34 ∵
 rule trans \x2238 46-36 ∸   dot minus
+rule trans \x223c 4-156 ∼
+
+rule trans \x2295 1245-14-456-1245-346-12456 ⊕
+rule trans \x2296 1245-14-456-1245-36-12456 ⊖
+rule trans \x2297 1245-14-456-1245-4-16-12456 ⊗
+rule trans \x2299 1245-14-456-1245-16-12456 ⊙
+
+rule trans \x22a5 1246-1234 ⊥   perpendicular
 
 rule trans \x22c5 16 ·   dot operator
 
 rule trans \x2329 46-46-12356 〈   opening angled bracket
 rule trans \x2329 46-46-23456 〉   closing angled bracket
+
+rule trans \x25a1 1246-256 □
+rule trans \x25ad 1246-1235 ▭
+rule trans \x25b3 1246-2345 △
+rule trans \x25cb 1246-14 ○
 
 rule trans \x2605 1246-234 ★
 rule trans \x2606 1246-234 ☆
