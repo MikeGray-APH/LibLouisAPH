@@ -21,13 +21,15 @@ config process nemeth-ueb
 
 #                  01234567890123456789012345678901
 #                  0123456789ABCDEFGHIJKLMNOPQRSTUV
-config attrs_chars _#a~=56789ABCDEFGHIJKLMNOPQRSTUV
+config attrs_chars _#a.-~=789ABCDEFGHIJKLMNOPQRSTUV
 
 set space   bit00
 set digit   bit01
 set letter  bit02
-set script_thru  bit03
-set comparator bit04
+set decimal_separator  bit03
+set decimal_minus  bit04
+set script_thru  bit05
+set comparator bit06
 
 
 ########################################
@@ -185,6 +187,30 @@ rule trans \x03a6 46-6-124 Φ
 rule trans \x03a7 46-6-12346 Χ
 rule trans \x03a8 46-6-125 Ψ
 rule trans \x03a9 46-6-135 Ω
+
+
+########################################
+#   Decimal Separator
+########################################
+
+#
+# Because Nemeth has a specific symbol for a decimal point, ⠨, regardless of
+# what the print character actually is (. or ,), only the ⎖ (U+2396) character
+# should be used to as a decimal point.
+#
+
+#   decimal separator
+chars .⎖ $decimal_separator
+
+#
+# Because the negation sign and the Nemeth decimal point affects the placement
+# of the numerical indicator, only the - (U+002D) character should be used for
+# negation, only the − (U+2212) character should be used for subtraction, and
+# only the ‐ (U+2010) character should be used as a hyphen.
+#
+
+#   decimal minus
+chars - $decimal_minus
 
 
 ########################################
@@ -489,10 +515,10 @@ rule trans \x0026 456-12346 &
 rule trans \x0028 12356 (
 rule trans \x0029 23456 )
 rule trans \x002a 4-3456 *
-rule trans \x002c 6 ,
+rule trans \x002c 6 ,   not decimal point   see Decimal Separator
 rule trans \x002b 346 +
-rule trans \x002d 36 -
-rule trans \x002e 46 .   decimal point
+rule trans \x002d 36 -   negation sign, not minus sign   see Decimal Separator
+rule trans \x002e 46 .   not decimal point   see Decimal Separator
 rule trans \x002f 456-34   /
 rule trans \x003a 25 :
 rule trans \x003b 23 ;
@@ -581,7 +607,7 @@ rule trans \x2218 46-16 ∘   ring operator
 rule trans \x221e 6-123456 ∞
 
 rule trans \x2211 46-6-234 ∑
-rule trans \x2212 36 −   minus sign
+rule trans \x2212 36 −   minus sign, not negation sign   see Decimal Separator
 rule trans \x2213 36-346 ∓   minus plus
 rule trans \x2220 1246-246 ∠ angle
 rule trans \x2223 1256 ∣
@@ -610,6 +636,8 @@ rule trans \x22c5 16 ·   dot operator
 
 rule trans \x2329 46-46-12356 〈   opening angled bracket
 rule trans \x2329 46-46-23456 〉   closing angled bracket
+
+rule trans \x2396 46 ⎖   decimal separator   see Decimal Separator
 
 rule trans \x25a1 1246-256 □
 rule trans \x25ad 1246-1235 ▭

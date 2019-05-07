@@ -35,8 +35,10 @@ enum NEMETH_CHAR_DOT_ATTRIBUTE
 	NEMETH_SPACE = BIT(0),
 	NEMETH_DIGIT = BIT(1),
 	NEMETH_LETTER = BIT(2),
-	NEMETH_SCRIPT_THRU = BIT(3),
-	NEMETH_COMPARATOR = BIT(4),
+	NEMETH_DECIMAL_SEPARATOR = BIT(3),
+	NEMETH_DECIMAL_MINUS = BIT(4),
+	NEMETH_SCRIPT_THRU = BIT(5),
+	NEMETH_COMPARATOR = BIT(6),
 };
 
 /******************************************************************************/
@@ -538,6 +540,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 static int add_numeric_indicators(struct translate *translate)
 {
+	int do_insert;
 	const unichar indicator = u'⠼';
 
 	translate->table_crs = 0;
@@ -545,7 +548,7 @@ static int add_numeric_indicators(struct translate *translate)
 	translate->input_crs =
 	translate->output_len = 0;
 
-	if(translate_has_attributes(translate, NEMETH_DIGIT))
+	if(translate_has_attributes(translate, NEMETH_DIGIT | NEMETH_DECIMAL_SEPARATOR))
 	{
 		CHANGE_MARK
 		if(!translate_insert_dots(translate, &indicator, 1))
@@ -554,18 +557,31 @@ static int add_numeric_indicators(struct translate *translate)
 	if(!translate_copy_to_output(translate, 1, 1))
 		return 0;
 
+	do_insert = 0;
 	while(translate->input_crs < translate->input_len)
 	{
-		if(translate_has_attributes(translate, NEMETH_DIGIT))
+		if(translate_has_attributes(translate, NEMETH_DIGIT | NEMETH_DECIMAL_SEPARATOR))
 		{
 			if(   translate_has_attributes_at(translate, translate->input_crs - 1, NEMETH_SPACE)
 			   || translate->input[translate->input_crs - 1] == TABLE_MARKER_INTERNAL)
+					do_insert = 1;
+			else if(translate_has_attributes_at(translate, translate->input_crs - 1, NEMETH_DECIMAL_MINUS))
 			{
-				CHANGE_MARK
-				if(!translate_insert_dots(translate, &indicator, 1))
-					return 0;
+				if(translate_has_attributes_at(translate, translate->input_crs - 2, NEMETH_SPACE))
+					do_insert = 1;
+				else if(   translate->input_crs - 2 < 0
+				        || translate->input[translate->input_crs - 2] == TABLE_MARKER_INTERNAL)
+					do_insert = 1;
 			}
 		}
+		if(do_insert)
+		{
+			do_insert = 0;
+			CHANGE_MARK
+			if(!translate_insert_dots(translate, &indicator, 1))
+				return 0;
+		}
+
 		if(!translate_copy_to_output(translate, 1, 1))
 			return 0;
 	}

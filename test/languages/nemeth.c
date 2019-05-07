@@ -58,6 +58,7 @@ int test_nemeth(FILE *output)
 	}
 
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/nemeth/nemeth-expect.txt", table, NULL, 0, 0);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/nemeth/nemeth-lesson02.txt", table, NULL, 0, 0);
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/nemeth/nemeth-lesson06.txt", table, NULL, 0, 0);
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/nemeth/nemeth-lesson07.txt", table, NULL, 0, 0);
 
