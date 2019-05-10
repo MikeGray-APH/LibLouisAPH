@@ -71,6 +71,11 @@ int louis_set_paths(const char *paths);
 int louis_add_paths(const char *paths);
 
 
+/* Clears all cached tables.
+*/
+void louis_clear_tables(void);
+
+
 /* Performs forward translation, using table_names and conversion_name, of at
  * most chars_len of chars and stores at most dots_len of the result in dots.
  * The result is not NULL terminated.

@@ -68,6 +68,12 @@ int louis_add_paths(const char *paths)
 	return lookup_add_paths(paths);
 }
 
+ATTRIBUTE_DLL_EXPORT
+void louis_clear_tables(void)
+{
+	lookup_clear();
+}
+
 static int lookup_and_translate(
 	unichar *dots,
 	const int dots_len,

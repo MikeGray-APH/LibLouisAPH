@@ -26,6 +26,11 @@
 
 /******************************************************************************/
 
+/* Frees all cached tables.
+*/
+void lookup_clear(void);
+
+
 /* Frees all resources.  Also resets lookup state to the same as when the
  * library was first loaded to allow continued use.
 */

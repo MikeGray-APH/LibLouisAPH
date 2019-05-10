@@ -310,6 +310,12 @@ Java_org_aph_liblouisaph_LibLouisAPH_louis_1add_1paths(JNIEnv *env, jclass this_
 	return status;
 }
 
+JNIEXPORT void JNICALL
+Java_org_aph_liblouisaph_LibLouisAPH_louis_1clear_1tables(JNIEnv *env ATTRIBUTE_UNUSED, jclass this_class ATTRIBUTE_UNUSED)
+{
+	lookup_clear();
+}
+
 /******************************************************************************/
 
 /*   copied from interface.c   */

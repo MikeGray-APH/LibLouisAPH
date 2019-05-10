@@ -372,10 +372,11 @@ public class LibLouisAPH
 
 /******************************************************************************/
 
-	private static native int louis_get_paths_length();
-	private static native int louis_get_paths(char paths[]);
-	private static native int louis_set_paths(String paths);
-	private static native int louis_add_paths(String paths);
+	private static native int   louis_get_paths_length();
+	private static native int   louis_get_paths(char paths[]);
+	private static native int   louis_set_paths(String paths);
+	private static native int   louis_add_paths(String paths);
+	private static native void  louis_clear_tables();
 
 	/**
 	 * Returns the current table path list.
@@ -434,6 +435,17 @@ public class LibLouisAPH
 			result = louis_add_paths(paths);
 		}
 		return result;
+	}
+
+	/**
+	 * Clears all cached tables.
+	 */
+	public static void clearTables()
+	{
+		synchronized(llaphLock)
+		{
+			louis_clear_tables();
+		}
 	}
 
 /******************************************************************************/

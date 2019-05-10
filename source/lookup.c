@@ -85,7 +85,7 @@ static inline void check_env(void)
 	lookup_env();
 }
 
-void lookup_fini(void)
+void lookup_clear(void)
 {
 	table_free(table_list);
 	table_list = NULL;
@@ -97,6 +97,11 @@ void lookup_fini(void)
 		table_paths = NULL;
 		table_paths_len = 0;
 	}
+}
+
+void lookup_fini(void)
+{
+	lookup_clear();
 	env_checked = 0;
 	lookup_hook = NULL;
 }
