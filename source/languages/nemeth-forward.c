@@ -50,7 +50,7 @@ static int convert_nemeth_roots(struct translate *translate)
 	unichar levels[SEPS_MAX];
 	int level_cnt;
 
-	translate->table_crs = 0;
+	translate->table_crs = translate->table_cnt - 1;
 
 	level_cnt =
 	translate->input_crs =
@@ -116,7 +116,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 	unichar seps[SEPS_MAX];
 	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, crs, seq;
 
-	translate->table_crs = 0;
+	translate->table_crs = translate->table_cnt - 1;
 
 	sep_cnt =
 	sbp_cnt =
@@ -543,7 +543,7 @@ static int add_numeric_indicators(struct translate *translate)
 	int do_insert;
 	const unichar indicator = u'⠼';
 
-	translate->table_crs = 0;
+	translate->table_crs = translate->table_cnt - 1;
 
 	translate->input_crs =
 	translate->output_len = 0;
