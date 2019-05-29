@@ -390,6 +390,11 @@ static int generic_apply_rule_forward(struct translate *translate, const struct 
 	}
 	if(translate->maps_use)
 	for(i = 0; i < rule->chars_len; i++)
+
+	/*   no mapping when rule just removes input   */
+	if(rule->dots_len <= 0)
+		translate_remap_input(translate, i, 1);
+	else
 		translate_remap_input(translate, i, 0);
 
 	translate_increment(translate, rule->chars_len, rule->dots_len);
@@ -413,6 +418,11 @@ static int generic_apply_rule_backward(struct translate *translate, const struct
 	}
 	if(translate->maps_use)
 	for(i = 0; i < rule->dots_len; i++)
+
+	/*   no mapping when rule just removes input   */
+	if(rule->chars_len <= 0)
+		translate_remap_input(translate, i, 1);
+	else
 		translate_remap_input(translate, i, 0);
 
 	translate_increment(translate, rule->dots_len, rule->chars_len);
