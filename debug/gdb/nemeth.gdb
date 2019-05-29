@@ -30,6 +30,9 @@ define out_convert_nemeth_scripts
 	printf "sbp_cnt           = %d\n", sbp_cnt
 	printf "sub_letter_digit  = %d\n", sub_letter_digit
 	printf "need_reset        = %d\n", need_reset
+	printf "in_numeric        = %d\n", in_numeric
+	printf "len               = %d\n", len
+	printf "mrk               = %d\n", mrk
 	printf "crs               = %d\n", crs
 
 	printf "\n"
@@ -45,12 +48,15 @@ end
 break convert_nemeth_scripts
 commands $bpnum
 
-	call memset(translate->output, 0, translate->output_max * sizeof(unichar))
+	call (void*)memset(translate->output, 0, translate->output_max * sizeof(unichar))
 	set translate->output_len = 0
 	set sep_cnt = 0
 	set sbp_cnt = 0
 	set sub_letter_digit = 0
 	set need_reset = 0
+	set in_numeric = 0
+	set len = 0
+	set mrk = 0
 	set crs = 0
 
 	spacer

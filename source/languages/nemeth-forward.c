@@ -97,24 +97,26 @@ static int convert_nemeth_roots(struct translate *translate)
 
 /******************************************************************************/
 
+#define MATH_SUBSCRIPT_BEGIN           u'\uf580'
+#define MATH_SUBSCRIPT_SEPARATOR       u'\uf581'
+#define MATH_SUBSCRIPT_END             u'\uf582'
+#define MATH_SUPERSCRIPT_BEGIN         u'\uf583'
+#define MATH_SUPERSCRIPT_SEPARATOR     u'\uf584'
+#define MATH_SUPERSCRIPT_END           u'\uf585'
+#define MATH_SUBSUPERSCRIPT_BEGIN      u'\uf586'
+#define MATH_SUBSUPERSCRIPT_SEPARATOR  u'\uf587'
+#define MATH_SUBSUPERSCRIPT_END        u'\uf588'
+
+#define NEMETH_SUBSCRIPT     u'⠰'
+#define NEMETH_SUPERSCRIPT   u'⠘'
+#define NEMETH_BASE_RESET    u'⠐'
+#define NEMETH_SCRIPT_COMMA  u'⠪'
+#define NEMETH_NOT_SLASH     u'⠌'
+
 static int convert_nemeth_scripts(struct translate *translate)
 {
-//	const unichar sub_beg       = u'\uf580';
-	const unichar sub_sep       = u'\uf581';
-	const unichar sub_end       = u'\uf582';
-//	const unichar sup_beg       = u'\uf583';
-//	const unichar sup_sep       = u'\uf584';
-	const unichar sup_end       = u'\uf585';
-//	const unichar sbp_beg       = u'\uf586';
-	const unichar sbp_sep       = u'\uf587';
-	const unichar sbp_end       = u'\uf588';
-	const unichar base_sub      = u'⠰';
-	const unichar base_sup      = u'⠘';
-	const unichar base_reset    = u'⠐';
-	const unichar script_comma  = u'⠪';
-	const unichar not_slash     = u'⠌';
 	unichar seps[SEPS_MAX];
-	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, crs, seq;
+	int sep_cnt, sub_letter_digit, need_reset, sbp_cnt, in_numeric, len, mrk, crs;
 
 	translate->table_crs = translate->table_cnt - 1;
 
@@ -144,9 +146,10 @@ static int convert_nemeth_scripts(struct translate *translate)
 			if(crs >= translate->input_len)
 				return 0;//TODO:  log error
 
-			/*   check thru-comparator rule   */
+			/*   check script-thru/comparator rules   */
 			if(sep_cnt)
 			{
+				/*   §79.f   */
 				if(translate_has_attributes(translate, NEMETH_SCRIPT_THRU))
 				{
 					if(crs + 2 < translate->input_len)
@@ -165,13 +168,15 @@ static int convert_nemeth_scripts(struct translate *translate)
 							return 0;//TODO:  log error
 					}
 				}
+
+				/*   §79.g   */
 				else if(translate_has_attributes(translate, NEMETH_COMPARATOR))
 				{
 					CHANGE_MARK
 					if(!translate_insert_dots(translate, seps, sep_cnt))
 						return 0;
 				}
-				else if(translate->input[translate->input_crs] == not_slash)
+				else if(translate->input[translate->input_crs] == NEMETH_NOT_SLASH)
 				{
 					if(translate_has_attributes_at(translate, translate->input_crs + 1, NEMETH_COMPARATOR))
 					if(!translate_insert_dots(translate, seps, sep_cnt))
@@ -183,9 +188,9 @@ static int convert_nemeth_scripts(struct translate *translate)
 				return 0;
 			break;
 
-		case u'\uf580':/*   start subscript   */
+		case MATH_SUBSCRIPT_BEGIN:/*   start subscript   */
 
-			/*   first level letter-number subscript rule   */
+			/*   §77   letter-number subscript rule   */
 			sub_letter_digit = 0;
 			if(sep_cnt == 0)
 			{
@@ -196,7 +201,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 				{
 					crs++;
 
-					/*   check primes   */
+					/*   §83.a   check primes   */
 					while(crs < translate->input_len &&
 					      (   translate->input[crs] == u'\u2032'
 					       || translate->input[crs] == u'\u2033'
@@ -207,7 +212,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 					/*   check separator indicator   */
 					if(crs < translate->input_len)
-					if(translate->input[crs] == sub_sep)
+					if(translate->input[crs] == MATH_SUBSCRIPT_SEPARATOR)
 					{
 						crs++;
 
@@ -221,7 +226,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 						/*   check end indicator   */
 						if(crs < translate->input_len)
-						if(translate->input[crs] == sub_end)
+						if(translate->input[crs] == MATH_SUBSCRIPT_END)
 							sub_letter_digit = 1;
 					}
 				}
@@ -249,13 +254,13 @@ static int convert_nemeth_scripts(struct translate *translate)
 				translate_skip(translate, 1, 1);
 
 				/*   copy digits   */
-				while(translate->input[translate->input_crs] != sub_end)
+				while(translate->input[translate->input_crs] != MATH_SUBSCRIPT_END)
 				if(!translate_copy_to_output(translate, 1, 1))
 					return 0;
 			}
 			goto start_script;
 
-		case u'\uf586':/*   start sbpscript   */
+		case MATH_SUBSUPERSCRIPT_BEGIN:/*   start sbpscript   */
 
 			/*   first level letter-number subscript rule   */
 			sub_letter_digit = 0;
@@ -268,7 +273,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 				{
 					crs++;
 
-					/*   check primes   */
+					/*   §83.a   check primes   */
 					while(crs < translate->input_len &&
 					      (   translate->input[crs] == u'\u2032'
 					       || translate->input[crs] == u'\u2033'
@@ -279,7 +284,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 					/*   check separator indicator   */
 					if(crs < translate->input_len)
-					if(translate->input[crs] == sbp_sep)
+					if(translate->input[crs] == MATH_SUBSUPERSCRIPT_SEPARATOR)
 					{
 						crs++;
 
@@ -293,7 +298,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 						/*   check end indicator   */
 						if(crs < translate->input_len)
-						if(translate->input[crs] == sbp_sep)
+						if(translate->input[crs] == MATH_SUBSUPERSCRIPT_SEPARATOR)
 							sub_letter_digit = 1;
 					}
 				}
@@ -321,58 +326,57 @@ static int convert_nemeth_scripts(struct translate *translate)
 				translate_skip(translate, 1, 1);
 
 				/*   copy digits   */
-				while(translate->input[translate->input_crs] != sbp_sep)
+				while(translate->input[translate->input_crs] != MATH_SUBSUPERSCRIPT_SEPARATOR)
 				if(!translate_copy_to_output(translate, 1, 1))
 					return 0;
 
 				/*   switch to superscript   */
-				seps[sep_cnt++] = base_sup;
+				seps[sep_cnt++] = NEMETH_SUPERSCRIPT;
 				if(!translate_insert_dots(translate, seps, sep_cnt))
 					return 0;
 			}
 			else
 				sbp_cnt = 0;
 
-		case u'\uf583':/*   start supscript   */
+		case MATH_SUPERSCRIPT_BEGIN:/*   start supscript   */
 
 			start_script:
 
-			/*   skip start/fiinish indicator   */
+			/*   skip begin/end indicator   */
 			translate_skip(translate, 1, 1);
 			break;
 
-		case u'\uf581':/*   enter subscript   */
+		case MATH_SUBSCRIPT_SEPARATOR:/*   enter subscript   */
 
 			CHANGE_MARK
-			seps[sep_cnt++] = base_sub;
+			seps[sep_cnt++] = NEMETH_SUBSCRIPT;
 			goto enter_script;
 			break;
 
-		case u'\uf584':/*   enter supscript   */
+		case MATH_SUPERSCRIPT_SEPARATOR:/*   enter supscript   */
 
 			CHANGE_MARK
-			seps[sep_cnt++] = base_sup;
+			seps[sep_cnt++] = NEMETH_SUPERSCRIPT;
 			goto enter_script;
 			break;
 
-		case u'\uf587':/*   enter sbpscript   */
+		case MATH_SUBSUPERSCRIPT_SEPARATOR:/*   enter sbpscript   */
 
 			enter_sbpscript:
 			CHANGE_MARK
 			if(sbp_cnt == 0)
 			{
 				sbp_cnt++;
-				seps[sep_cnt++] = base_sub;
+				seps[sep_cnt++] = NEMETH_SUBSCRIPT;
 			}
 			else
 			{
 				sep_cnt--;
-				seps[sep_cnt++] = base_sup;
+				seps[sep_cnt++] = NEMETH_SUPERSCRIPT;
 			}
 
 			enter_script:
-			translate_skip(translate, 1, 1);
-			if(!translate_insert_dots(translate, seps, sep_cnt))
+			if(!translate_insert_dots_for_chars(translate, seps, sep_cnt, 1))
 				return 0;
 			if(translate->input[translate->input_crs] == TABLE_MARKER_INTERNAL)
 			{
@@ -391,9 +395,9 @@ static int convert_nemeth_scripts(struct translate *translate)
 			}
 			break;
 
-		case u'\uf588':  sbp_cnt--;  /*   finish sbpscript   */
-		case u'\uf582':              /*   finish subscript   */
-		case u'\uf585':              /*   finish supscript   */
+		case MATH_SUBSUPERSCRIPT_END:  sbp_cnt--;  /*   finish sbpscript   */
+		case MATH_SUBSCRIPT_END:                   /*   finish subscript   */
+		case MATH_SUPERSCRIPT_END:                 /*   finish supscript   */
 
 			sep_cnt--;
 
@@ -401,9 +405,9 @@ static int convert_nemeth_scripts(struct translate *translate)
 			crs = translate->input_crs + 1;
 			while(crs < translate->input_len)
 			{
-				if(   translate->input[crs] == sub_end
-				   || translate->input[crs] == sup_end
-				   || translate->input[crs] == sbp_end)
+				if(   translate->input[crs] == MATH_SUBSCRIPT_END
+				   || translate->input[crs] == MATH_SUPERSCRIPT_END
+				   || translate->input[crs] == MATH_SUBSUPERSCRIPT_END)
 				{
 					sep_cnt--;
 					crs++;
@@ -411,19 +415,24 @@ static int convert_nemeth_scripts(struct translate *translate)
 				else
 					break;
 			}
-			translate_skip(translate, crs - translate->input_crs, 1);
+			len = crs - translate->input_crs;
 
-			/*   is reset needed?   */
-			if(translate->input[translate->input_crs] == u'\uf587')
+			if(translate->input[crs] == u'\uf587')
+			{
+				translate_skip(translate, len, 1);
 				goto enter_sbpscript;
+			}
+
+			/*   check for reset   */
+			mrk = crs;
 			need_reset =
 			crs = 0;
-			if(translate->input_crs < translate->input_len)
+			if(mrk < translate->input_len)
 			{
-				if(translate->input[translate->input_crs] == TABLE_MARKER_INTERNAL)
+				if(translate->input[mrk] == TABLE_MARKER_INTERNAL)
 				{
 					/*   find ending marker   */
-					crs = translate->input_crs + 1;
+					crs = mrk + 1;
 					while(crs < translate->input_len)
 					{
 						if(translate->input[crs] == TABLE_MARKER_INTERNAL)
@@ -433,7 +442,8 @@ static int convert_nemeth_scripts(struct translate *translate)
 					if(crs >= translate->input_len)
 						return 0;//TODO:  log error
 
-					if(translate_has_attributes_at(translate, translate->input_crs + 1, NEMETH_SCRIPT_THRU))
+					/*   §79.f   */
+					if(translate_has_attributes_at(translate, mrk + 1, NEMETH_SCRIPT_THRU))
 					{
 						if(crs + 1 >= translate->input_len)
 							need_reset = 1;
@@ -453,7 +463,7 @@ static int convert_nemeth_scripts(struct translate *translate)
 						}
 						else if(crs + 2 >= translate->input_len)
 							need_reset = 1;
-						else if(translate->input[crs + 2] != not_slash)
+						else if(translate->input[crs + 2] != NEMETH_NOT_SLASH)
 							need_reset = 1;
 						else if(translate_has_attributes_at(translate, crs + 3, NEMETH_COMPARATOR))
 						{
@@ -468,9 +478,8 @@ static int convert_nemeth_scripts(struct translate *translate)
 								return 0;//TODO:  log error
 						}
 					}
-
 				}
-				else if(!translate_has_attributes(translate, NEMETH_SPACE))
+				else if(!translate_has_attributes_at(translate, mrk, NEMETH_SPACE))
 					need_reset = 1;
 			}
 			if(need_reset)
@@ -478,15 +487,17 @@ static int convert_nemeth_scripts(struct translate *translate)
 				CHANGE_MARK
 				if(sep_cnt)
 				{
-					if(!translate_insert_dots(translate, seps, sep_cnt))
+					if(!translate_insert_dots_for_chars(translate, seps, sep_cnt, len))
 						return 0;
 				}
 				else
 				{
-					if(!translate_insert_dots(translate, &base_reset, 1))
+					if(!translate_insert_dot_for_chars(translate, NEMETH_BASE_RESET, len))
 						return 0;
 				}
 			}
+			else
+				translate_skip(translate, len, 1);
 			if(crs)
 			{
 				if(need_reset)
@@ -498,31 +509,29 @@ static int convert_nemeth_scripts(struct translate *translate)
 
 		default:
 
+			/*   §78   comma in script level   */
 			if(sep_cnt > 0 && translate->input[translate->input_crs] == u',')
 			{
-				/*   maybe a sequence?   */
-				seq = 0;
+				/*   §79.b   comma as a numeric separator   */
+				in_numeric = 0;
 				if(translate->input_crs + 3 < translate->input_len)
 				if(translate_has_attributes_at(translate, translate->input_crs + 1, NEMETH_DIGIT))
 				if(translate_has_attributes_at(translate, translate->input_crs + 2, NEMETH_DIGIT))
 				if(translate_has_attributes_at(translate, translate->input_crs + 3, NEMETH_DIGIT))
 				if(translate->input_crs > 0)
 				if(translate_has_attributes_at(translate, translate->input_crs - 1, NEMETH_DIGIT))
-					seq = 1;
+					in_numeric = 1;
 
-				if(seq == 0)
+				if(in_numeric == 0)
 				{
 					CHANGE_MARK
-					if(!translate_insert_dots_for_chars(translate, &script_comma, 1, 1))
+					if(!translate_insert_dot_for_chars(translate, NEMETH_SCRIPT_COMMA, 1))
 						return 0;
 					if(translate_has_attributes(translate, NEMETH_SPACE))
 						translate_skip(translate, 1, 1);
 				}
-				else
-				{
-					if(!translate_copy_to_output(translate, 1, 1))
+				else if(!translate_copy_to_output(translate, 1, 1))
 						return 0;
-				}
 			}
 			else if(!translate_copy_to_output(translate, 1, 1))
 				return 0;
