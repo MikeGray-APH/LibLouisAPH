@@ -2017,13 +2017,14 @@ static int add_indicators_numeric(struct translate *translate)
 		}
 	}
 
-	if(nocontract_in)
-	if(table->nocontract.term_len)
-	{
-		CHANGE_MARK
-		if(!generic_insert_marked(translate, table->nocontract.term, table->nocontract.term_len, table->marker_soft))
-			return 0;
-	}
+	//TODO:  characters that rely on matching word endings will chole on terminating indicators
+	//if(nocontract_in)
+	//if(table->nocontract.term_len)
+	//{
+	//	CHANGE_MARK
+	//	if(!generic_insert_marked(translate, table->nocontract.term, table->nocontract.term_len, table->marker_soft))
+	//		return 0;
+	//}
 
 #ifdef DEBUG
 	translate->output[translate->output_len] = 0;
