@@ -683,6 +683,21 @@ rule init \xf330 -   expression-begin
 rule init \xf331 -   expression-separator
 rule init \xf332 -   expression-end
 
+rule init \xf380 -   number-begin
+rule init \xf381 -   number-end
+
+rule init \xf382 -   identifier-begin
+rule init \xf383 -   identifier-end
+
+rule init \xf384 -   operator-begin
+rule init \xf385 -   operator-end
+
+rule init \xf386 -   text-begin
+rule init \xf387 -   text-end
+
+rule init \xf388 -   literal-begin
+rule init \xf389 -   literal-end
+
 rule init \x2061 -   function application
 rule init \x2062 -   invisible times
 rule init \x2063 -   invisible separator
