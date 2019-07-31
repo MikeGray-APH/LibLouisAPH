@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.26
+VERSION := 0.2.27
 
 CC = gcc
 
@@ -288,8 +288,8 @@ build/java:
 build/java/org/aph/liblouisaph/LibLouisAPH.class: java/org/aph/liblouisaph/LibLouisAPH.java java/org/aph/liblouisaph/LogCallback.java java/org/aph/liblouisaph/Translation.java | build/java
 	javac -d build/java -classpath build/java -sourcepath java $<
 
-build/java/org_aph_liblouisaph_LibLouisAPH.h: build/java/org/aph/liblouisaph/LibLouisAPH.class
-	javah -o $@ -classpath build/java -force org.aph.liblouisaph.LibLouisAPH
+build/java/org_aph_liblouisaph_LibLouisAPH.h: | build/java
+	javac -h build/java -d build/java -sourcepath java java/org/aph/liblouisaph/LibLouisAPH.java
 
 build/java/interface-jni.o: java/interface-jni.c build/java/org_aph_liblouisaph_LibLouisAPH.h | build/java
 	$(CC) -o $@ -c $(CPPFLAGS) $(CFLAGS) $< $(LDFLAGS)
