@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.27
+VERSION := 0.2.28
 
 CC = gcc
 
@@ -278,7 +278,24 @@ else
 
 ########################################
 
-java: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+#   determine jni include directory
+ifdef JAVA_HOME
+HAS_WIN32_JNI := $(shell if [ -d $(JAVA_HOME)/include/win32 ] ; then echo 1 ; else echo 0 ; fi )
+HAS_DARWIN_JNI := $(shell if [ -d $(JAVA_HOME)/include/darwin ] ; then echo 1 ; else echo 0 ; fi )
+else
+HAS_WIN32_JNI := -1
+HAS_DARWIN_JNI := -1
+endif
+
+ifeq ($(HAS_WIN32_JNI),1)
+JNI_INCLUDES := -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/win32
+else ifeq ($(HAS_DARWIN_JNI),1)
+JNI_INCLUDES := -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/darwin
+else
+JNI_INCLUDES := -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux
+endif
+
+java: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 java: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 java: build/liblouisAPH-jni.so
 
@@ -301,7 +318,7 @@ build/liblouisAPH-jni.so: $(OBJS_JNI_BUILD) build/java/interface-jni.o | build
 
 ########################################
 
-jar: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 jar: build/LibLouisAPH.jar
 
@@ -444,7 +461,7 @@ test: test-java test-jar
 build/java/test:
 	mkdir -p build/java/test/
 
-test-java: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java -D DEBUG
+test-java: CPPFLAGS += $(JNI_INCLUDES) -I build/java -D DEBUG
 test-java: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 test-java: build/java/org/aph/liblouisaph/Test.class
 	@java -cp build/java/ -Djava.library.path=build org/aph/liblouisaph/Test
@@ -452,7 +469,7 @@ test-java: build/java/org/aph/liblouisaph/Test.class
 build/java/org/aph/liblouisaph/Test.class: java/org/aph/liblouisaph/Test.java build/liblouisAPH-jni.so | build/java build/test
 	javac -d build/java -classpath build/java -sourcepath java $<
 
-test-jar: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java -D DEBUG
+test-jar: CPPFLAGS += $(JNI_INCLUDES) -I build/java -D DEBUG
 test-jar: CFLAGS += -ggdb -fstack-protector -fPIC $(CWARNS_DEBUG)
 test-jar: build/java/test/TestJar.class
 	@java -cp build/java/test/:build/LibLouisAPH.jar TestJar internal
@@ -562,7 +579,7 @@ FILES_RELEASE_LINUX64 := \
 
 jars-linux64: jar-linux64 javadoc-jar-linux64 sources-jar-linux64
 
-jar-linux64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-linux64: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar-linux64: CFLAGS += -O3 -fPIC -fvisibility=hidden $(CWARNS_OPTIMAL)
 jar-linux64: dists/x86_64-linux/LibLouisAPH-linux64-$(VERSION).jar
 
@@ -714,7 +731,7 @@ FILES_RELEASE_LINUX32 := \
 
 jars-linux32: jar-linux32 javadoc-jar-linux32 sources-jar-linux32
 
-jar-linux32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-linux32: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar-linux32: CFLAGS += -O3 -m32 $(CWARNS_OPTIMAL)
 jar-linux32: dists/i686-linux/LibLouisAPH-linux32-$(VERSION).jar
 
@@ -867,7 +884,7 @@ FILES_RELEASE_WIN64 := \
 jars-win64: jar-win64 javadoc-jar-win64 sources-jar-win64
 
 jar-win64: CC = $(CC_WIN64)
-jar-win64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-win64: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar-win64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-win64: dists/x86_64-win/LibLouisAPH-win64-$(VERSION).jar
 
@@ -1002,22 +1019,9 @@ dists/i686-win/lou_translate.exe: $(OBJS_TRANSLATE_WIN32) | dists/i686-win
 
 ########################################
 
-#   check for windows jni.h by looking for win32/jni_md.h
-ifdef JAVA_HOME
-HAS_WIN32_JNI := $(shell if [ -d $(JAVA_HOME)/include/win32 ] ; then echo 1 ; else echo 0 ; fi )
-else
-HAS_WIN32_JNI := -1
-endif
-
 ifneq ($(HAS_JAVAC),1)
 
 jars-win32 jar-win32 javadoc-jar-win32 sources-jar-win32: jar
-
-else ifneq ($(HAS_WIN32_JNI),1)
-
-jars-win32 jar-win32 javadoc-jar-win32 sources-jar-win32: FORCE
-	@echo missing $(JAVA_HOME)/include/win32
-	@false
 
 else
 
@@ -1033,7 +1037,7 @@ FILES_RELEASE_WIN32 := \
 jars-win32: jar-win32 javadoc-jar-win32 sources-jar-win32
 
 jar-win32: CC = $(CC_WIN32)
-jar-win32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/win32 -I build/java
+jar-win32: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar-win32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-win32: dists/i686-win/LibLouisAPH-win32-$(VERSION).jar
 
@@ -1186,7 +1190,7 @@ FILES_RELEASE_MAC64 := \
 jars-mac64: jar-mac64 javadoc-jar-mac64 sources-jar-mac64
 
 jar-mac64: CC = $(CC_MAC64)
-jar-mac64: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-mac64: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar-mac64: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-mac64: dists/x86_64-mac/LibLouisAPH-mac64-$(VERSION).jar
 
@@ -1339,7 +1343,7 @@ FILES_RELEASE_MAC32 := \
 jars-mac32: jar-mac32 javadoc-jar-mac32 sources-jar-mac32
 
 jar-mac32: CC = $(CC_MAC32)
-jar-mac32: CPPFLAGS += -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux -I build/java
+jar-mac32: CPPFLAGS += $(JNI_INCLUDES) -I build/java
 jar-mac32: CFLAGS += -O3 $(CWARNS_OPTIMAL)
 jar-mac32: dists/i386-mac/LibLouisAPH-mac32-$(VERSION).jar
 
