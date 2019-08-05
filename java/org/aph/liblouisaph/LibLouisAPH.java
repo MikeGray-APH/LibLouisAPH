@@ -59,21 +59,31 @@ public class LibLouisAPH
 	{
 		if(tmpDirName == null)
 		{
-			try
+			tmpDirName = System.getenv("LIBLOUISAPH_TMP_DIR");
+			if(tmpDirName != null)
 			{
-				File tmpDirFile = Files.createTempDirectory("llaph").toFile();
-				tmpDirFile.deleteOnExit();
-				tmpDirName = tmpDirFile.getPath();
-			}
-			catch(IOException exception)
-			{
-				tmpDirName = "." + File.separator + "llaph";
-				String tmpDir = System.getProperty("java.io.tmpdir");
-				if(tmpDir != null)
-					tmpDirName = tmpDir + File.separator + "llaph";
 				File tmpDirFile = new File(tmpDirName);
 				tmpDirFile.mkdir();
 				tmpDirFile.deleteOnExit();
+			}
+			else
+			{
+				try
+				{
+					File tmpDirFile = Files.createTempDirectory("llaph").toFile();
+					tmpDirFile.deleteOnExit();
+					tmpDirName = tmpDirFile.getPath();
+				}
+				catch(IOException exception)
+				{
+					tmpDirName = "." + File.separator + "llaph";
+					String tmpDir = System.getProperty("java.io.tmpdir");
+					if(tmpDir != null)
+						tmpDirName = tmpDir + File.separator + "llaph";
+					File tmpDirFile = new File(tmpDirName);
+					tmpDirFile.mkdir();
+					tmpDirFile.deleteOnExit();
+				}
 			}
 		}
 
