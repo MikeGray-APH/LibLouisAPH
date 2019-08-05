@@ -16,7 +16,7 @@
 
 ################################################################################
 
-VERSION := 0.2.28
+VERSION := 0.2.29
 
 CC = gcc
 
@@ -327,6 +327,7 @@ build/java/manifest.txt: | build/java
 	@echo Implementation-Version: $(VERSION) >> $@
 	@echo Implementation-Vender: American Printing House for the Blind >> $@
 	@echo Implementation-URL: www.aph.org >> $@
+	@echo Automatic-Module-Name:  org.aph.liblouisaph >> $@
 	@echo >> $@
 
 build/java/org/aph/liblouisaph/Main.class: java/org/aph/liblouisaph/Main.java
@@ -591,6 +592,7 @@ dists/x86_64-linux/manifest.txt: | dists/x86_64-linux
 	@echo Implementation-Version: $(VERSION) >> $@
 	@echo Implementation-Vender: American Printing House for the Blind >> $@
 	@echo Implementation-URL: www.aph.org >> $@
+	@echo Automatic-Module-Name:  org.aph.liblouisaph >> $@
 	@echo >> $@
 
 dists/x86_64-linux/liblouisaph.properties: | dists/x86_64-linux
@@ -896,6 +898,7 @@ dists/x86_64-win/manifest.txt: | dists/x86_64-win
 	@echo Implementation-Version: $(VERSION) >> $@
 	@echo Implementation-Vender: American Printing House for the Blind >> $@
 	@echo Implementation-URL: www.aph.org >> $@
+	@echo Automatic-Module-Name:  org.aph.liblouisaph >> $@
 	@echo >> $@
 
 dists/x86_64-win/liblouisaph.properties: | dists/x86_64-win
@@ -1202,6 +1205,7 @@ dists/x86_64-mac/manifest.txt: | dists/x86_64-mac
 	@echo Implementation-Version: $(VERSION) >> $@
 	@echo Implementation-Vender: American Printing House for the Blind >> $@
 	@echo Implementation-URL: www.aph.org >> $@
+	@echo Automatic-Module-Name:  org.aph.liblouisaph >> $@
 	@echo >> $@
 
 dists/x86_64-mac/liblouisaph.properties: | dists/x86_64-mac
@@ -1427,6 +1431,7 @@ dists/jar/manifest.txt: | dists/jar
 	@echo Implementation-Version: $(VERSION) >> $@
 	@echo Implementation-Vender: American Printing House for the Blind >> $@
 	@echo Implementation-URL: www.aph.org >> $@
+	@echo Automatic-Module-Name:  org.aph.liblouisaph >> $@
 	@echo >> $@
 
 dists/jar/LibLouisAPH-$(VERSION).jar: dists/jar/manifest.txt dists/jar/org/aph/liblouisaph/LibLouisAPH.class | dists/jar
