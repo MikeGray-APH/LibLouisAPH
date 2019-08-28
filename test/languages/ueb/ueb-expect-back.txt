@@ -1,0 +1,47 @@
+
+"XX XX XX" "⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄"
+"XXxXX XX XX" "⠠⠠⠭⠭⠠⠄⠭⠠⠠⠭⠭⠀⠠⠠⠭⠭⠀⠠⠠⠭⠭"
+"XxX XX XX" "⠠⠭⠭⠠⠭⠀⠠⠠⠭⠭⠀⠠⠠⠭⠭"
+"xxXX XX XX" "⠭⠭⠠⠠⠭⠭⠀⠠⠠⠭⠭⠀⠠⠠⠭⠭"
+"—-,XX XX XX" "⠐⠠⠤⠤⠂⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄"
+"XX-XX-XX XX" "⠠⠠⠭⠭⠤⠠⠠⠭⠭⠤⠠⠠⠭⠭⠀⠠⠠⠭⠭"
+"XX-XX-XX XX XX" "⠠⠠⠠⠭⠭⠤⠭⠭⠤⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄"
+
+"xx \U⠘⠶\Uxx xx xx\U⠘⠄\U xx" "⠭⠭⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀⠭⠭"
+"xx\U⠘⠶\U xx xx xx \U⠘⠄\Uxx" "⠭⠭⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀⠭⠭"
+"xx \U⠘⠶\Uxx xx\U⠘⠄\U xx" "⠭⠭⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx\U⠘⠶\U xx xx \U⠘⠄\Uxx" "⠭⠭⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx \U⠘⠶\Uxx\U⠘⠄\U xx" "⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx\U⠘⠶\U xx \U⠘⠄\Uxx" "⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx \U⠘⠶\Ux\U⠘⠄\U xx" "⠭⠭⠀⠘⠆⠰⠭⠀⠭⠭"
+"xx\U⠘⠶\U x \U⠘⠄\Uxx" "⠭⠭⠀⠘⠆⠰⠭⠀⠭⠭"
+
+" \U⠘⠶\Uxx xx xx\U⠘⠄\U " "⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀"
+"\U⠘⠶\U xx xx xx \U⠘⠄\U" "⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀"
+" \U⠘⠶\Uxx xx\U⠘⠄\U " "⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀"
+"\U⠘⠶\U xx xx \U⠘⠄\U" "⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀"
+" \U⠘⠶\Uxx\U⠘⠄\U " "⠀⠘⠂⠭⠭⠀"
+"\U⠘⠶\U xx \U⠘⠄\U" "⠀⠘⠂⠭⠭⠀"
+" \U⠘⠶\Ux\U⠘⠄\U " "⠀⠘⠆⠰⠭⠀"
+"\U⠘⠶\U x \U⠘⠄\U" "⠀⠘⠆⠰⠭⠀"
+
+"xx \Bbold\Bxx xx xx\Ebold\E xx" "⠭⠭⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀⠭⠭"
+"xx\Bbold\B xx xx xx \Ebold\Exx" "⠭⠭⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀⠭⠭"
+"xx \Bbold\Bxx xx\Ebold\E xx" "⠭⠭⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx\Bbold\B xx xx \Ebold\Exx" "⠭⠭⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx \Bbold\Bxx\Ebold\E xx" "⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx\Bbold\B xx \Ebold\Exx" "⠭⠭⠀⠘⠂⠭⠭⠀⠭⠭"
+"xx \Bbold\Bx\Ebold\E xx" "⠭⠭⠀⠘⠆⠰⠭⠀⠭⠭"
+"xx\Bbold\B x \Ebold\Exx" "⠭⠭⠀⠘⠆⠰⠭⠀⠭⠭"
+
+" \Bbold\Bxx xx xx\Ebold\E " "⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀"
+"\Bbold\B xx xx xx \Ebold\E" "⠀⠘⠶⠭⠭⠀⠭⠭⠀⠭⠭⠘⠄⠀"
+" \Bbold\Bxx xx\Ebold\E " "⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀"
+"\Bbold\B xx xx \Ebold\E" "⠀⠘⠂⠭⠭⠀⠘⠂⠭⠭⠀"
+" \Bbold\Bxx\Ebold\E " "⠀⠘⠂⠭⠭⠀"
+"\Bbold\B xx \Ebold\E" "⠀⠘⠂⠭⠭⠀"
+" \Bbold\Bx\Ebold\E " "⠀⠘⠆⠰⠭⠀"
+"\Bbold\B x \Ebold\E" "⠀⠘⠆⠰⠭⠀"
+
+\H⠰\HBLT's ⠰⠠⠠⠃⠇⠞⠄⠎
+\H⠰\HBlvd ⠰⠠⠃⠇⠧⠙

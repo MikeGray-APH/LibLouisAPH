@@ -58,7 +58,8 @@ int test_ueb(FILE *output)
 	}
 
 	try_cnt++;  pass_cnt += test_back_from_file(output,   "test/languages/ueb/ueb-back.txt", table, NULL, 0);
-	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-expect.txt", table, NULL, 0, 1);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-expect.txt", table, NULL, 0, 0);
+	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-expect-back.txt", table, NULL, 0, 1);
 
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-02-stand_alone.txt", table, conversion, 0, 1);
 	try_cnt++;  pass_cnt += test_expect_from_file(output, "test/languages/ueb/ueb-03-symbols.txt", table, conversion, 0, 1);
