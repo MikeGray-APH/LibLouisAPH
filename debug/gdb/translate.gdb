@@ -143,7 +143,7 @@ define out_translate_output
 
 	set $translate = (struct translate*)$arg0
 
-	set $len = $translate->output_max
+	set $len = $translate->output_len
 	if $len > 125
 		set $len = 125
 	end
@@ -446,10 +446,10 @@ define out_translate_output_to
 	set $translate = (struct translate*)$arg0
 	set $other_to = (int)$arg1
 
-	if $other_to > $translate->output_max
+	if $other_to > $translate->output_len
 		set $len = $other_to
 	else
-		set $len = $translate->output_max
+		set $len = $translate->output_len
 	end
 	if $len > 125
 		set $len = 125
