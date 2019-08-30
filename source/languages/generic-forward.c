@@ -102,15 +102,37 @@ static inline int is_marked_indicator_end(const struct translate *translate, con
 static int convert_user_indicators(struct translate *translate)
 {
 	const struct table *table;
+	int mask;
 
 	/*   only copy indicators from last table in tables   */
 	table = translate->tables[translate->table_cnt - 1];
 	translate->table_crs = translate->table_cnt - 1;
 
+	mask = 0;
 	translate->input_crs =
 	translate->output_len = 0;
 	while(translate->input_crs < translate->input_len)
-	if(translate->input[translate->input_crs] == table->marker_begin)
+
+	/*   no indicator processing inside a notrans block   */
+	if(mask & MASK_NO_TRANSLATION)
+	{
+		if(translate_is_marked_name_at(translate, table->marker_end, u"notrans", 7, translate->input_crs))
+		{
+			CHANGE_MARK
+			mask &= ~MASK_NO_TRANSLATION;
+			if(!translate_skip(translate, 9, 1))
+				return 0;
+		}
+		else
+		{
+			translate->input_mask[translate->input_crs] = mask;
+			if(!translate_copy_to_output(translate, 1, 1))
+				return 0;
+		}
+	}
+
+	/*   begin marker   */
+	else if(translate->input[translate->input_crs] == table->marker_begin)
 	{
 		if(translate_is_nocontract_set(translate) && is_marked_equal_to(translate, u"nocontract", 10))
 		{
@@ -128,9 +150,29 @@ static int convert_user_indicators(struct translate *translate)
 			if(!translate_skip(translate, 9, 1))
 				return 0;
 		}
-		else if(!translate_copy_marked_user(translate))
-			return 0;
+		else if(is_marked_equal_to(translate, u"nocapital", 9))
+		{
+			CHANGE_MARK
+			mask |= MASK_NO_CAPITALIZATION;
+			if(!translate_skip(translate, 11, 1))
+				return 0;
+		}
+		else if(is_marked_equal_to(translate, u"notrans", 7))
+		{
+			CHANGE_MARK
+			mask |= MASK_NO_TRANSLATION;
+			if(!translate_skip(translate, 9, 1))
+				return 0;
+		}
+		else
+		{
+			translate->input_mask[translate->input_crs] = mask;
+			if(!translate_copy_marked_user(translate))
+				return 0;
+		}
 	}
+
+	/*  end marker   */
 	else if(translate->input[translate->input_crs] == table->marker_end)
 	{
 		if(translate_is_nocontract_set(translate) && is_marked_equal_to(translate, u"nocontract", 10))
@@ -149,11 +191,28 @@ static int convert_user_indicators(struct translate *translate)
 			if(!translate_skip(translate, 9, 1))
 				return 0;
 		}
-		else if(!translate_copy_marked_user(translate))
+		else if(is_marked_equal_to(translate, u"nocapital", 9))
+		{
+			CHANGE_MARK
+			mask &= ~MASK_NO_CAPITALIZATION;
+			if(!translate_skip(translate, 11, 1))
+				return 0;
+		}
+		else
+		{
+			translate->input_mask[translate->input_crs] = mask;
+			if(!translate_copy_marked_user(translate))
+				return 0;
+		}
+	}
+
+	/*   no marker   */
+	else
+	{
+		translate->input_mask[translate->input_crs] = mask;
+		if(!translate_copy_to_output(translate, 1, 1))
 			return 0;
 	}
-	else if(!translate_copy_to_output(translate, 1, 1))
-		return 0;
 
 	return 1;
 }
@@ -218,6 +277,10 @@ static void mark_mode(unsigned int *indicators, unsigned char *words, const stru
 	word_mark = WORD_INDICATOR;
 	for(i = 0; i < translate->input_len; i++)
 	{
+		/*   skip when notrans is set   */
+		if(translate->input_mask[translate->input_crs] & MASK_NO_TRANSLATION)
+			continue;
+
 		if(marked_in)
 		{
 			words[i] |= word_mark;
@@ -1198,60 +1261,18 @@ static int is_indicator_delimiter(const struct table *table, const unichar uchar
 static void mark_capitals(unsigned int *indicators, unsigned char *words, struct translate *translate, const struct table *table)
 {
 	unsigned int attrs;
-	int caps_begin, caps_end, caps_cnt, nocaps_in, indicator_in, i;
+	int caps_begin, caps_end, caps_cnt, indicator_in, i;
 
 	caps_begin =
 	caps_end = -1;
 	caps_cnt = 0;
-	indicator_in =
-	nocaps_in = 0;
+	indicator_in = 0;
 
 	for(i = 0; i < translate->input_len; i++)
 	{
-		/*   marked nocapital   */
-		if(nocaps_in)
-		{
-			if(translate->input[i] == table->marker_end)
-			if(is_marked_equal_to_at(translate, u"nocapital", 9, i))
-			{
-				nocaps_in = 0;
-
-				/*   convert indicators so they are removed later   */
-				translate->input[i] = table->marker_soft;
-				translate->input[i + 10] = table->marker_soft;
-
-				i += 11;
-			}
+		/*   skip when notrans or nocapital is set   */
+		if(translate->input_mask[i] & (MASK_NO_TRANSLATION | MASK_NO_CAPITALIZATION))
 			continue;
-		}
-		else
-		{
-			if(translate->input[i] == table->marker_begin)
-			if(is_marked_equal_to_at(translate, u"nocapital", 9, i))
-			{
-				nocaps_in = 1;
-
-				/*   convert indicators so they are removed later   */
-				translate->input[i] = table->marker_soft;
-				translate->input[i + 10] = table->marker_soft;
-
-				indicators[i] |= EMP_RESET;
-				if(caps_begin >= 0)
-				{
-					indicators[caps_begin] |= EMP_BEGIN;
-					if(caps_cnt > 0)
-						indicators[i] |= EMP_END;
-					else
-						indicators[caps_end] |= EMP_END;
-					caps_begin =
-					caps_end = -1;
-					caps_cnt = 0;
-				}
-
-				i += 11;
-				continue;
-			}
-		}
 
 		/*   marked indicators   */
 		if(indicator_in)
@@ -1440,7 +1461,7 @@ static int get_word_capital_whole(unsigned char *words, const int word_start, co
 
 static void capital_words_to_passages(unsigned int *indicators, unsigned char *words, const struct translate *translate, const struct table *table, const int passage_len)
 {
-	int word_in, word_cnt, pass_in, pass_begin, pass_end, indicator_in, word_whole, i;
+	int word_in, word_cnt, pass_in, pass_begin, pass_end, indicator_in, nocaps_in, word_whole, i;
 
 	pass_begin =
 	pass_end = -1;
@@ -1448,9 +1469,39 @@ static void capital_words_to_passages(unsigned int *indicators, unsigned char *w
 	word_in = 0;
 	word_cnt = 0;
 	indicator_in = 0;
+	nocaps_in = 0;
 
 	for(i = 0; i < translate->input_len; i++)
 	{
+		/*   reset passages and skip when notrans or nocapital is set   */
+		if(!nocaps_in)
+		{
+			if(translate->input_mask[i] & (MASK_NO_TRANSLATION | MASK_NO_CAPITALIZATION))
+			{
+				nocaps_in = 1;
+
+				/*   reset passages   */
+				if(word_cnt >= passage_len)
+				{
+					if(word_in)
+						pass_end = i;
+					if(pass_end >= 0)
+						convert_to_passage(indicators, words, pass_begin, pass_end);
+				}
+				pass_in = 0;
+				word_in = 0;
+
+				continue;
+			}
+		}
+		else
+		{
+			if(!(translate->input_mask[i] & (MASK_NO_TRANSLATION | MASK_NO_CAPITALIZATION)))
+				nocaps_in = 0;
+			else
+				continue;
+		}
+
 		/*   indicators   */
 		if(indicator_in)
 		{
@@ -1735,11 +1786,38 @@ static int insert_indicators_capital_at(struct translate *translate, const struc
 static int insert_indicators_capital(struct translate *translate, const struct table *table, const unsigned int *indicators)
 {
 	unichar lower;
+	int notrans_in = 0;
 
 	translate->input_crs =
 	translate->output_len = 0;
 	while(translate->input_crs < translate->input_len)
 	{
+		/*   just copy input when notrans is set   */
+		if(!notrans_in)
+		{
+			if(translate->input_mask[translate->input_crs] & MASK_NO_TRANSLATION)
+			{
+				/*   there may be an end indicator set under the mask   */
+				if(!insert_indicators_capital_at(translate, table, indicators[translate->input_crs], &table->capital))
+					return 0;
+
+				if(!translate_copy_to_output(translate, 1, 1))
+					return 0;
+				continue;
+			}
+		}
+		else
+		{
+			if(!(translate->input_mask[translate->input_crs] & MASK_NO_TRANSLATION))
+				notrans_in = 0;
+			else
+			{
+				if(!translate_copy_to_output(translate, 1, 1))
+					return 0;
+				continue;
+			}
+		}
+
 		if(!insert_indicators_capital_at(translate, table, indicators[translate->input_crs], &table->capital))
 			return 0;
 
@@ -1859,13 +1937,14 @@ static int add_indicators_numeric(struct translate *translate)
 {
 	const struct table *table;
 	unsigned int attrs;
-	int numeric_in, numeric_passage_in, nocontract_in;
+	int notrans_in, numeric_in, numeric_passage_in, nocontract_in;
 	unichar uchar;
 
 	/*   only copy indicators from last table in tables   */
 	table = translate->tables[translate->table_cnt - 1];
 	translate->table_crs = translate->table_cnt - 1;
 
+	notrans_in =
 	numeric_in =
 	numeric_passage_in =
 	nocontract_in = 0;
@@ -1874,6 +1953,35 @@ static int add_indicators_numeric(struct translate *translate)
 	translate->output_len = 0;
 	while(translate->input_crs < translate->input_len)
 	{
+		/*   reset mode and just copy input when notrans is set   */
+		if(!notrans_in)
+		{
+			if(translate->input_mask[translate->input_crs] & MASK_NO_TRANSLATION)
+			{
+				notrans_in = 1;
+
+				/*   reset mode   */
+				numeric_in =
+				numeric_passage_in =
+				nocontract_in = 0;
+
+				if(!translate_copy_to_output(translate, 1, 1))
+					return 0;
+				continue;
+			}
+		}
+		else
+		{
+			if(!(translate->input_mask[translate->input_crs] & MASK_NO_TRANSLATION))
+				notrans_in = 0;
+			else
+			{
+				if(!translate_copy_to_output(translate, 1, 1))
+					return 0;
+				continue;
+			}
+		}
+
 		/*   numeric passages   */
 		if(!numeric_passage_in)
 		{

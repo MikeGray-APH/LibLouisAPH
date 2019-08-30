@@ -16,6 +16,21 @@
 
 ################################################################################
 
+define out_mask_char
+
+	set $mask = (unsigned char)$arg0
+	if $mask == 1
+		printf "_"
+	end
+	if $mask == 2
+		printf "-"
+	end
+	if $mask == 3
+		printf "="
+	end
+
+end
+
 define out_translate_and_rule
 
 	printf "translate:\n"
@@ -78,7 +93,11 @@ define out_translate_input
 			printf "                    "
 			set $i0 = 0
 			while $i0 < $len
-				printf "%x", $i0 % 16
+				if $translate->input_mask[$i0] == 0
+					printf "%x", $i0 % 16
+				else
+					out_mask_char $translate->input_mask[$i0]
+				end
 				set $i0 = $i0 + 1
 			end
 			printf "\n"
@@ -135,7 +154,11 @@ define out_translate_output
 			printf "                    "
 			set $i0 = 0
 			while $i0 <= $len && $translate->output[$i0] != 0
-				printf "%x", $i0 % 16
+				if $translate->output_mask[$i0] == 0
+					printf "%x", $i0 % 16
+				else
+					out_mask_char $translate->output_mask[$i0]
+				end
 				set $i0 = $i0 + 1
 			end
 			printf "\n"
@@ -262,7 +285,11 @@ define out_translate_input_at
 			printf "                    "
 			set $i0 = 0
 			while $i0 < $len
-				printf "%x", $i0 % 16
+				if $translate->input_mask[$i0] == 0
+					printf "%x", $i0 % 16
+				else
+					out_mask_char $translate->input_mask[$i0]
+				end
 				set $i0 = $i0 + 1
 			end
 			printf "\n"
@@ -356,7 +383,11 @@ define out_translate_input_and
 			printf "                    "
 			set $i0 = 0
 			while $i0 < $len
-				printf "%x", $i0 % 16
+				if $translate->input_mask[$i0] == 0
+					printf "%x", $i0 % 16
+				else
+					out_mask_char $translate->input_mask[$i0]
+				end
 				set $i0 = $i0 + 1
 			end
 			printf "\n"

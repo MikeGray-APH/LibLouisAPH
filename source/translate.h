@@ -51,10 +51,12 @@ struct translate
 	unichar *input;
 	int input_crs, input_len;
 	int *input_to_output_map, *input_map;
+	char *input_mask;
 
 	unichar *output;
 	int output_len, output_max, output_inc;
 	int *output_to_input_map;
+	char *output_mask;
 
 	int cursor_pos, cursor_set;
 
@@ -66,6 +68,12 @@ struct translate
 };
 
 /******************************************************************************/
+
+/* Checks if indicator with mark with name is present at at.
+ *
+ * Returns success if named indicator is present.
+*/
+int translate_is_marked_name_at(const struct translate *translate, const unichar mark, const unichar *name, const int name_len, const int at);
 
 /* Checks input_crs if on soft or hard indicator and if indicator is defined by
  * mode.  The table table is used to determine the soft and hard indicators
@@ -145,9 +153,9 @@ int translate_copy_marked_indicators(struct translate *translate);
 int translate_copy_marked_indicators_or_modifiers(struct translate *translate);
 
 
-/* Sets the input and its map buffer to the output and its map buffer.  The
- * original input and map buffer is freed and new output and map buffers are
- * allocated.
+/* Sets the input and its map and mask buffers to the output and its map and
+ * mask buffers.  The original input and its buffers are freed and new output
+ * and buffers are allocated.
 */
 int translate_output_to_input(struct translate *translate);
 

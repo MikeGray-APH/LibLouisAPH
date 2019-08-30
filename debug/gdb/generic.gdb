@@ -151,12 +151,12 @@ define out_mark_mode
 
 	printf "emp_begin          = %d\n", emp_begin
 	printf "word_begin         = %d\n", word_begin
-	printf "in_user_begin      = %d\n", in_user_begin
-	printf "in_user_end        = %d\n", in_user_end
-	printf "in_user_indicator  = %d\n", in_user_indicator
-	printf "in_user_mode       = %d\n", in_user_mode
-	printf "in_marked          = %d\n", in_marked
-	printf "prv_space          = %d\n", prv_space
+	printf "user_begin_in      = %d\n", user_begin_in
+	printf "user_end_in        = %d\n", user_end_in
+	printf "user_indicator_in  = %d\n", user_indicator_in
+	printf "user_mode_in       = %d\n", user_mode_in
+	printf "marked_in          = %d\n", marked_in
+	printf "space_prv          = %d\n", space_prv
 	printf "word_mark          = 0x%02x\n", word_mark
 	printf "attrs              = 0x%08x\n", attrs
 
@@ -178,12 +178,12 @@ commands $bpnum
 
 	set emp_begin = 0
 	set word_begin = 0
-	set in_user_begin = 0
-	set in_user_end = 0
-	set in_user_indicator = 0
-	set in_user_mode = 0
-	set in_marked = 0
-	set prv_space = 0
+	set user_begin_in = 0
+	set user_end_in = 0
+	set user_indicator_in = 0
+	set user_mode_in = 0
+	set marked_in = 0
+	set space_prv = 0
 	set word_mark = 0
 	set attrs = 0
 
@@ -358,9 +358,10 @@ define out_add_indicators_numeric
 
 	printf "\n"
 
-	printf "in_numeric          = %d\n", in_numeric
-	printf "in_nocontract       = %d\n", in_nocontract
-	printf "in_numeric_passage  = %d\n", in_nocontract
+	printf "notrans_in          = %d\n", notrans_in
+	printf "numeric_in          = %d\n", numeric_in
+	printf "nocontract_in       = %d\n", nocontract_in
+	printf "numeric_passage_in  = %d\n", numeric_passage_in
 	printf "attrs               = 0x%08x\n", attrs
 	printf "uchar               = "
 	call debug_output_uchar_escape(uchar)
@@ -378,9 +379,10 @@ end
 break add_indicators_numeric
 commands $bpnum
 
-	set in_numeric = 0
-	set in_nocontract = 0
-	set in_numeric_passage = 0
+	set notrans_in = 0
+	set numeric_in = 0
+	set nocontract_in = 0
+	set numeric_passage_in = 0
 	set attrs = 0
 	set uchar = 0
 
@@ -439,9 +441,15 @@ commands $bpnum
 	spacer
 	out_mark_capitals
 
+	printf "next = mc\n\n"
+
 end
 set $mark_capitals_bpnum = $bpnum
 dis $mark_capitals_bpnum
+
+define mc
+n_mark_capitals
+end
 
 ########################################
 
@@ -605,6 +613,7 @@ define out_capital_words_to_passages
 	printf "word_cnt      = %d\n", word_cnt
 	printf "indicator_in  = %d\n", indicator_in
 	printf "word_whole    = %d\n", word_whole
+	printf "nocaps_in     = %d\n", nocaps_in
 
 	printf "\n"
 
@@ -629,6 +638,7 @@ commands $bpnum
 	set word_cnt = 0
 	set indicator_in = 0
 	set word_whole = 0
+	set nocaps_in = 0
 
 	spacer
 	out_capital_words_to_passages

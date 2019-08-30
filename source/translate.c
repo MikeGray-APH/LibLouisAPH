@@ -48,6 +48,23 @@ unsigned int translate_get_attributes_at(const struct translate *translate, cons
 
 /******************************************************************************/
 
+int translate_is_marked_name_at(const struct translate *translate, const unichar mark, const unichar *name, const int name_len, const int at)
+{
+	int i;
+
+	if(at < 0 || at + name_len + 1 >= translate->input_len)
+		return 0;
+	if(translate->input[at] != mark)
+		return 0;
+	if(translate->input[at + name_len + 1] != mark)
+		return 0;
+	for(i = 0; i < name_len; i++)
+	if(translate->input[at + 1 + i] != name[i])
+		return 0;
+
+	return 1;
+}
+
 enum mode_type translate_get_mode_indicator(const struct translate *translate, const struct table *table, const struct mode *mode)
 {
 
@@ -130,6 +147,7 @@ int translate_insert_dots(struct translate *translate, const unichar *dots, cons
 	{
 		ASSERT(translate->output_len + i < translate->output_max)
 		translate->output[translate->output_len + i] = dots[i];
+		translate->output_mask[translate->output_len + i] = 0;
 
 		if(translate->maps_use)
 			translate->output_to_input_map[translate->output_len + i] = -1;
@@ -151,6 +169,7 @@ int translate_insert_dots_for_chars(struct translate *translate, const unichar *
 	{
 		ASSERT(translate->output_len + i < translate->output_max)
 		translate->output[translate->output_len + i] = dots[i];
+		translate->output_mask[translate->output_len + i] = 0;
 
 		if(translate->maps_use)
 			translate->output_to_input_map[translate->output_len + i] = translate->input_map[translate->input_crs];
@@ -183,6 +202,7 @@ int translate_copy_to_output(struct translate *translate, const int count, const
 	{
 		ASSERT(translate->output_len + i < translate->output_max)
 		translate->output[translate->output_len + i] = translate->input[translate->input_crs + i];
+		translate->output_mask[translate->output_len + i] = translate->input_mask[translate->input_crs + i];
 		if(translate->maps_use)
 		if(do_map)
 		{
@@ -268,7 +288,9 @@ int translate_copy_marked_indicators_or_modifiers(struct translate *translate)
 int translate_output_to_input(struct translate *translate)
 {
 	FREE(translate->input);
+	FREE(translate->input_mask);
 	translate->input = translate->output;
+	translate->input_mask = translate->output_mask;
 	translate->input_len = translate->output_len;
 	translate->input_crs = 0;
 
@@ -280,6 +302,14 @@ int translate_output_to_input(struct translate *translate)
 	}
 	DB_MEMSET(translate->output, 0, translate->output_max * sizeof(unichar));
 	translate->output_len = 0;
+
+	translate->output_mask = MALLOC(translate->output_max);
+	if(!translate->output_mask)
+	{
+		LOG_ALLOCATE_FAIL
+		return -1;
+	}
+	memset(translate->output_mask, 0, translate->output_max);
 
 	if(!translate->maps_use)
 		return 1;
@@ -392,6 +422,14 @@ int translate_start(unichar *dots,
 	translate_auto.input_len = input_len;
 	translate_auto.input_crs = 0;
 
+	translate_auto.input_mask = MALLOC(input_len + 1);
+	if(!translate_auto.input_mask)
+	{
+		LOG_ALLOCATE_FAIL
+		return -1;
+	}
+	memset(translate_auto.input_mask, 0, input_len + 1);
+
 	translate_auto.output_max = input_len;
 	translate_auto.output_inc = ((translate_auto.output_max * 3) / 2) - translate_auto.output_max;
 	if(translate_auto.output_inc < 0x100)
@@ -405,6 +443,14 @@ int translate_start(unichar *dots,
 		return -1;
 	}
 	DB_MEMSET(translate_auto.output, 0, translate_auto.output_max * sizeof(unichar));
+
+	translate_auto.output_mask = MALLOC(translate_auto.output_max);
+	if(!translate_auto.output_mask)
+	{
+		LOG_ALLOCATE_FAIL
+		return -1;
+	}
+	memset(translate_auto.output_mask, 0, translate_auto.output_max);
 
 	if(cursor)
 		translate_auto.cursor_pos = *cursor;
@@ -528,6 +574,8 @@ int translate_start(unichar *dots,
 
 	FREE(translate_auto.input);
 	FREE(translate_auto.output);
+	FREE(translate_auto.input_mask);
+	FREE(translate_auto.output_mask);
 	if(translate_auto.maps_use)
 	{
 		FREE(translate_auto.input_map);

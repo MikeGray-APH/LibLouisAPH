@@ -1,2 +1,37 @@
 
-"XXX \Bnocapital\BXXX\Enocapital\E XXX" "⠠⠠⠭⠭⠭⠀⠭⠭⠭⠀⠠⠠⠭⠭⠭"
+#   notrans
+\Bnotrans\Bxx\Enotrans\E xx
+\Bnotrans\Bxx\Enotrans\Exx xx⠭⠭
+xx\Bnotrans\Bxx\Enotrans\E ⠭⠭xx
+xx\Bnotrans\Bxx\Enotrans\Exx ⠭⠭xx⠭⠭
+
+#   notrans with capitalization
+"XX \Bnotrans\BXX\Enotrans\E XX" ⠠⠠⠭⠭⠀XX⠀⠠⠠⠭⠭
+"XX XX \Bnotrans\BXX\Enotrans\E XX XX" ⠠⠠⠭⠭⠀⠠⠠⠭⠭⠀XX⠀⠠⠠⠭⠭⠀⠠⠠⠭⠭
+"XX XX XX \Bnotrans\BXX\Enotrans\E XX XX" ⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄⠀XX⠀⠠⠠⠭⠭⠀⠠⠠⠭⠭
+"XX XX \Bnotrans\BXX\Enotrans\E XX XX XX" ⠠⠠⠭⠭⠀⠠⠠⠭⠭⠀XX⠀⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄
+"XX XX XX \Bnotrans\BXX\Enotrans\E XX XX XX" ⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄⠀XX⠀⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄
+\Bnotrans\BXX\Enotrans\E XX
+\Bnotrans\BXX\Enotrans\EXX XX⠠⠠⠭⠭
+XX\Bnotrans\BXX\Enotrans\E ⠠⠠⠭⠭XX
+XX\Bnotrans\BXX\Enotrans\EXX ⠠⠠⠭⠭XX⠠⠠⠭⠭
+"XX XX\Bnotrans\BXX\Enotrans\EXX XX" ⠠⠠⠭⠭⠀⠠⠠⠭⠭XX⠠⠠⠭⠭⠀⠠⠠⠭⠭
+"XX XX XX\Bnotrans\BXX\Enotrans\EXX XX" ⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄XX⠠⠠⠭⠭⠀⠠⠠⠭⠭
+"XX XX\Bnotrans\BXX\Enotrans\EXX XX XX" ⠠⠠⠭⠭⠀⠠⠠⠭⠭XX⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄
+"XX XX XX\Bnotrans\BXX\Enotrans\EXX XX XX" ⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄XX⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄
+
+#   notrans with numeric mode
+33\Bnotrans\B33\Enotrans\E33 ⠼⠉⠉33⠼⠉⠉
+
+#   notrans with emphases
+xx\Bbold\Bxx\Bnotrans\Bxx\Enotrans\Exx\Ebold\Exx ⠭⠭⠘⠂⠭⠭xx⠭⠭⠘⠄⠭⠭
+
+C3c3C\Bnotrans\BC3c3C\Enotrans\EC3c3C ⠠⠉⠼⠉⠰⠉⠼⠉⠠⠉C3c3C⠠⠉⠼⠉⠰⠉⠼⠉⠠⠉
+
+#   nocapital
+"XXX \Bnocapital\BXXX\Enocapital\E XXX" ⠠⠠⠭⠭⠭⠀⠭⠭⠭⠀⠠⠠⠭⠭⠭
+XX\Bnocapital\BXX\Enocapital\EXX ⠠⠠⠭⠭⠭⠭⠠⠠⠭⠭
+"XX XX\Bnocapital\BXX\Enocapital\EXX XX" ⠠⠠⠭⠭⠀⠠⠠⠭⠭⠭⠭⠠⠠⠭⠭⠀⠠⠠⠭⠭
+"XX XX XX\Bnocapital\BXX\Enocapital\EXX XX" ⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄⠭⠭⠠⠠⠭⠭⠀⠠⠠⠭⠭
+"XX XX\Bnocapital\BXX\Enocapital\EXX XX XX" ⠠⠠⠭⠭⠀⠠⠠⠭⠭⠭⠭⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄
+"XX XX XX\Bnocapital\BXX\Enocapital\EXX XX XX" ⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄⠭⠭⠠⠠⠠⠭⠭⠀⠭⠭⠀⠭⠭⠠⠄

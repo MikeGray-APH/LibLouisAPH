@@ -53,6 +53,12 @@ enum RULE_ATTRIBUTE
 	RULE_CONTRACTION = BIT(0),
 };
 
+enum MASK_TYPE
+{
+	MASK_NO_TRANSLATION = BIT(0),
+	MASK_NO_CAPITALIZATION = BIT(1),
+};
+
 /******************************************************************************/
 
 /* Appends indicator, with delimiter before and after, to output.  Output map is

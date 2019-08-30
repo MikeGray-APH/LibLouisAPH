@@ -85,6 +85,7 @@ int generic_remove_internal(struct translate *translate)
 		else
 		{
 			translate->output[crs] = translate->input[off];
+			translate->output_mask[crs] = translate->input_mask[off];
 			if(translate->maps_use)
 				translate->output_to_input_map[crs] = translate->input_map[off];
 			off++;
@@ -126,6 +127,7 @@ int generic_remove_soft_delimiters(struct translate *translate)
 		else
 		{
 			translate->output[crs] = translate->input[off];
+			translate->output_mask[crs] = translate->input_mask[off];
 			if(translate->maps_use)
 				translate->output_to_input_map[crs] = translate->input_map[off];
 			off++;
@@ -461,6 +463,14 @@ int generic_process(struct translate *translate, const enum table_hash_type hash
 	translate->output_len = 0;
 	while(translate->input_crs < translate->input_len)
 	{
+		/*   just copy when notrans is set   */
+		if(translate->input_mask[translate->input_crs] & MASK_NO_TRANSLATION)
+		{
+			if(!translate_copy_to_output(translate, 1, 1))
+				return 0;
+			continue;
+		}
+
 		/*   nocontract word stops on space   */
 		if(nocontract_state == WORD)
 		if(table_get_character_attributes(table, translate->input[translate->input_crs]) & CHAR_SPACE)

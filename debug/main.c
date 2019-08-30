@@ -667,6 +667,7 @@ static int test_input_tables(void)
 	//conversion = lookup_conversion("tables/ascii.cvt");  if(!conversion) return 1;
 	//conversion_output(stdout, conversion);  puts("");
 
+	//TEST_INPUT("notransxxnotrans");
 	//TEST_INPUT("unicode_braille_chars");
 	//TEST_INPUT("liblouisaph");
 	TEST_INPUT("LibLouisAPH");
