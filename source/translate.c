@@ -100,6 +100,14 @@ int translate_check_output_max(struct translate *translate, const int increment)
 		LOG_ALLOCATE_FAIL
 		return 0;
 	}
+
+	translate->output_mask = REALLOC(translate->output_mask, translate->output_max);
+	if(!translate->output_mask)
+	{
+		LOG_ALLOCATE_FAIL
+		return 0;
+	}
+
 	if(translate->maps_use)
 	{
 		translate->output_to_input_map = REALLOC(translate->output_to_input_map, translate->output_max * sizeof(int));
