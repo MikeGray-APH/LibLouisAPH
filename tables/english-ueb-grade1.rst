@@ -771,7 +771,7 @@ rule trans      ~ 4-35       # tilde (swung dash)
 #   Unicode Punctuation and Signs
 ########################################
 
-rule trans \x00a1 45-46-235   # ¡ inverted exclamation
+rule trans \x00a1 45-56-235   # ¡ inverted exclamation
 rule trans \x00a2 4-14        # ¢ cent
 rule trans \x00a3 4-123       # £ pound
 
@@ -788,7 +788,7 @@ rule trans \x00ae 45-1235     # ® registered
 #ule trans \x00ba 0           # º masculine ordinal
 rule trans \x00b6 45-1234     # ¶ pilcrow
 rule trans \x00bb 456-356     # » closing double angle quotation
-rule trans \x00bf 45-46-236   # ¿ inverted question
+rule trans \x00bf 45-56-236   # ¿ inverted question
 
 @uplo \x014a \x014b 45-1345   # Ŋŋ eng
 @uplo \x018e \x01dd 456-26    # Ǝǝ not schwa
@@ -857,7 +857,7 @@ rule trans      \x221d 456-5-2356     # ∝ proportional to
 @mark_mod_trans \x221e 3456-123456    # ∞ infinity
 rule trans      \x2220 456-246        # ∠ angle
 rule trans      \x2221 46-456-246     # ∡ measured angle
-@mark_mod_trans \x2225 3456-456       # ∥ parallel to
+@mark_mod_trans \x2225 3456-123       # ∥ parallel to
 rule trans      \x2227 4-236          # ∧ logical and
 rule trans      \x2228 4-235          # ∨ logical or
 rule trans      \x2229 46-236         # ∩ set intersection
@@ -1020,6 +1020,8 @@ rule trans \x29b5 46-245   # ⦵
 rule trans \x02e6 45-46-14   # ˦ high tone
 rule trans \x02e7 45-46-25   # ˧ mid tone
 rule trans \x02e8 45-46-36   # ˨ low tone
+
+rule trans \x2713 4-146   # ✓ check mark
 
 
 ################################################################################
