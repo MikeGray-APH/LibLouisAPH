@@ -49,6 +49,8 @@ rule trans \xf505 34
 rule trans \xf506 34
 rule trans \xf507 -
 
+chars \xf505\xf506 $numeric_cont
+
 #   complex fractions
 rule trans \xf508 12356
 rule trans \xf509 46-34

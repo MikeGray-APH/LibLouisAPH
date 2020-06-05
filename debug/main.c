@@ -658,6 +658,7 @@ static int test_input_tables(void)
 	//tables = lookup_tables(&table_cnt, "debug/table.rst");
 	tables = lookup_tables(&table_cnt, "tables/english-ueb-grade2.rst");
 	//tables = lookup_tables(&table_cnt, "tables/nemeth-ueb.rst");
+	//tables = lookup_tables(&table_cnt, "tables/english-ueb-math.rst");
 	//tables = lookup_tables(&table_cnt, "debug/table.rst~tables/english-ueb-grade2.rst");
 	//tables = lookup_tables(&table_cnt, "tables/english-ueb-grade2.rst~debug/table.rst");
 	if(!tables)

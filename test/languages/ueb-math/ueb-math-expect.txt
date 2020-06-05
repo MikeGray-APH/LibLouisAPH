@@ -150,10 +150,10 @@
 #  fraction-mixed-end
 
 # 3 3/3
-#333   ⠼⠉⠸⠹⠉⠌⠉⠸⠼
+333   ⠼⠉⠼⠉⠌⠉
 
 # 3 3/3 slanted
-#333   ⠼⠉⠸⠹⠉⠸⠌⠉⠸⠼
+333   ⠼⠉⠼⠉⠌⠉
 
 #  fraction-complex-begin
 #  fraction-complex-separator
