@@ -41,8 +41,6 @@ rule trans \xf501 46-34
 rule trans \xf502 46-34
 rule trans \xf503 23456
 
-chars \xf501\xf502 $numeric_cont
-
 #   mixed fractions
 rule trans \xf504 -
 rule trans \xf505 34

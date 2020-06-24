@@ -142,7 +142,7 @@
 33   ⠼⠉⠌⠉
 
 # 3/3  slanted
-#33   ⠼⠉⠸⠌⠼⠉
+33   ⠼⠉⠌⠉
 
 #  fraction-mixed-begin
 #  fraction-mixed-separator

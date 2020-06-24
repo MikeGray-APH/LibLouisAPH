@@ -851,6 +851,9 @@ rule trans      \x220b 4-45-15        # ∋ contains (such that)
 rule trans      \x2211 6-46-234       # ∑ sum (capitol sigma)
 @mark_mod_trans \x2212 5-36           # − minus sign   not hyphen, not delimiter
 rule trans      \x2213 456-36         # ∓ minus or plus
+
+rule -forward trans \x2217 5-35   # ∗ asterick   conflicts with *
+
 rule trans      \x2218 5-356          # ∘ hollow dot (ring operator)
 rule trans      \x221a 5-146          # √ square root
 rule trans      \x221d 456-5-2356     # ∝ proportional to

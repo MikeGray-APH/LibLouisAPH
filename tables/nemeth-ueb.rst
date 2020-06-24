@@ -609,6 +609,7 @@ rule trans \x221e 6-123456 ∞
 rule trans \x2211 46-6-234 ∑
 rule trans \x2212 36 −   minus sign, not negation sign   see Decimal Separator
 rule trans \x2213 36-346 ∓   minus plus
+rule trans \x2217 4-3456 ∗   asterick
 rule trans \x2220 1246-246 ∠ angle
 rule trans \x2223 1256 ∣
 rule init  \x2224 ⠌∣   ∤
@@ -633,6 +634,7 @@ rule trans \x2299 1245-14-456-1245-16-12456 ⊙
 rule trans \x22a5 1246-1234 ⊥   perpendicular
 
 rule trans \x22c5 16 ·   dot operator
+rule trans \x22c6 4-3456 ⋆   star operator
 
 rule trans \x2329 46-46-12356 〈   opening angled bracket
 rule trans \x2329 46-46-23456 〉   closing angled bracket
