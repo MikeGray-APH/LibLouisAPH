@@ -109,6 +109,7 @@ end
 #ena $translate_generic_backward_bpnum
 
 #ena $convert_nemeth_scripts_bpnum
+#ena $add_numeric_indicators_bpnum
 #ena $translate_nemeth_forward_bpnum
 
 ########################################

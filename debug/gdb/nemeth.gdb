@@ -72,6 +72,44 @@ define cns
 n_convert_nemeth_scripts
 end
 
+################################################################################
+
+define out_add_numeric_indicators
+
+	out_translate translate
+	printf "\n"
+
+	printf "do_insert   = %d\n", do_insert
+
+	printf "\n"
+
+end
+
+define n_add_numeric_indicators
+	next
+	spacer
+	out_add_numeric_indicators
+end
+
+break add_numeric_indicators
+commands $bpnum
+
+	call (void*)memset(translate->output, 0, translate->output_max * sizeof(unichar))
+	set do_insert = 0
+
+	spacer
+	out_add_numeric_indicators
+
+	printf "next = ani\n\n"
+
+end
+set $add_numeric_indicators_bpnum = $bpnum
+dis $add_numeric_indicators_bpnum
+
+define ani
+n_add_numeric_indicators
+end
+
 ########################################
 
 break translate_nemeth_forward

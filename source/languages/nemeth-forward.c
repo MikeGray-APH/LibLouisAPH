@@ -39,6 +39,7 @@ enum NEMETH_CHAR_DOT_ATTRIBUTE
 	NEMETH_DECIMAL_MINUS = BIT(4),
 	NEMETH_SCRIPT_THRU = BIT(5),
 	NEMETH_COMPARATOR = BIT(6),
+	NEMETH_NUMERIC_AFTER = BIT(7),
 };
 
 /******************************************************************************/
@@ -582,6 +583,9 @@ static int add_numeric_indicators(struct translate *translate)
 				        || translate->input[translate->input_crs - 2] == TABLE_MARKER_INTERNAL)
 					do_insert = 1;
 			}
+			/*   §9.d   */
+			else if(translate_has_attributes_at(translate, translate->input_crs - 1, NEMETH_NUMERIC_AFTER))
+				do_insert = 1;
 		}
 		if(do_insert)
 		{

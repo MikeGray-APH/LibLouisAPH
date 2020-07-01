@@ -30,6 +30,7 @@ set decimal_separator  bit03
 set decimal_minus  bit04
 set script_thru  bit05
 set comparator bit06
+set numeric_after bit07
 
 
 ########################################
@@ -187,6 +188,14 @@ rule trans \x03a6 46-6-124 Φ
 rule trans \x03a7 46-6-12346 Χ
 rule trans \x03a8 46-6-125 Ψ
 rule trans \x03a9 46-6-135 Ω
+
+
+########################################
+#   Numeric Indicator
+########################################
+
+#   §9.d
+chars #*∗¶§ $numeric_after
 
 
 ########################################

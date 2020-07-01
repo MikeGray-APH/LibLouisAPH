@@ -669,8 +669,7 @@ static int test_input_tables(void)
 	//conversion_output(stdout, conversion);  puts("");
 
 	//TEST_INPUT("notransxxnotrans");
-	//TEST_INPUT("unicode_braille_chars");
-	//TEST_INPUT("liblouisaph");
+	TEST_INPUT("3+3");
 	TEST_INPUT("LibLouisAPH");
 
 	FREE(tables);
