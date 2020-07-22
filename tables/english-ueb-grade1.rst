@@ -874,6 +874,8 @@ rule -forward trans \x2234 6-16   # ∴ therefore   conlicts with Child
 
 rule trans      \x2235 4-34           # ∵ because
 
+rule -forward trans \x2236 25             # ∶ ratio   conflicts with ¨
+
 rule -forward trans \x2237 25-25   # ∷ proportion   conflicts with ::
 
 rule trans      \x2243 456-35         # ≃ asymptotically equal to
