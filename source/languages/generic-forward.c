@@ -1204,9 +1204,11 @@ static int add_indicators_emphases(struct translate *translate)
 		CHANGE_MARK
 		sort_indicators(node_auto.nxt);
 		insert_indicator_nodes(translate, table, node_auto.nxt);
-		if(!generic_remove_internal(translate))
-			goto return_fail_free;
 	}
+
+	/*   always do this in case someone has emphasized just spaces   */
+	if(!generic_remove_internal(translate))
+		goto return_fail_free;
 
 	indicator_node_free(node_auto.nxt);
 	FREE(indicators);
