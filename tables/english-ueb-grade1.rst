@@ -111,12 +111,13 @@ pattern SEQ_CHARS_>-   [⠐⠨⠸]⠜|⠄|⠠?⠴|⠲?⠲?⠲|[⠂⠆⠒⠖⠦]
 pattern SEQ_>-         @[SEQ_INDCS_>]|@[SEQ_CHARS_>-]
 pattern SEQ_>+         %>|@[SEQ_INDCS_>]
 
-#   (^|![⠈⠨])⠤   hyphen, not macron or underscore
-#   ⠐?⠠⠤⠀⠀⠀⠀⠀⠀   dash and longer
-#   ⠐?⠠?⠤⠀⠀⠀⠀⠀   hyphen or dash
+#   (^|![⠈⠨])⠤       hyphen, not macron or underscore
+#   ⠐?⠠⠤⠀⠀⠀⠀⠀⠀       dash and longer
+#   ⠐?⠠?⠤⠀⠀⠀⠀⠀       hyphen or dash
+#   \xf006⠰⠄\xf006   grade 1 terminator usually(?) before a delimiter
 pattern DLT_<+   ^|%[_~]
 pattern DLT_<-   ^|%_|(^|![⠈⠨])⠤|⠐?⠠⠤
-pattern DLT_>+   %[_~]|^
+pattern DLT_>+   %[_~]|^|\xf006⠰⠄\xf006
 pattern DLT_>-   ⠐?⠠?⠤|%_|^
 
 pattern WORD_<+   @[DLT_<+]@[SEQ_<+]*
